@@ -10,6 +10,7 @@ import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/utils/shared_pref.dart';
 import 'package:nexus/router.dart';
+import 'package:nexus/screens/registration_screen/existing_user.dart';
 
 class AuthHandler extends StatefulWidget {
   const AuthHandler({super.key});
@@ -60,15 +61,19 @@ class _AuthHandlerState extends State<AuthHandler> {
             Column(
               children: [
                 CustomButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.createAccount);
+                  },
                   text: 'Create Account',
                   textColor: primary,
                   bgColor: white,
                 ),
                 const SizedBoxH15(),
                 CustomButtonOut(
-                  onPressed: () {},
-                  text: 'Create Account',
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.existingUser);
+                  },
+                  text: 'Sign In',
                   textColor: white,
                   bgColor: white,
                   // bgColor: white,
