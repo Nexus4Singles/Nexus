@@ -72,7 +72,7 @@ class _CongratulationScreenState extends State<CongratulationScreen> {
                           const SizedBoxH25(),
                           CustomButton(
                             onPressed: () {
-                              Get.toNamed(AppRoutes.notification);
+                              Get.toNamed(AppRoutes.profile);
                             },
                             text: 'Set Up Profile',
                           ),
