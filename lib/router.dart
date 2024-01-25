@@ -4,6 +4,7 @@ import 'package:nexus/features/auth/views/login.dart';
 import 'package:nexus/features/auth/views/onboarding.dart';
 import 'package:nexus/features/auth/views/onboarding_handler.dart';
 import 'package:nexus/features/auth/views/splash.dart';
+import 'package:nexus/screens/notificatin_screen/notification.dart';
 import 'package:nexus/screens/registration_screen/congratulations.dart';
 import 'package:nexus/screens/registration_screen/create_account.dart';
 import 'package:nexus/screens/registration_screen/existing_user.dart';
@@ -14,10 +15,12 @@ import 'package:nexus/screens/userprofile_and_settings/addcard.dart';
 import 'package:nexus/screens/userprofile_and_settings/cancel_plan.dart';
 import 'package:nexus/screens/userprofile_and_settings/change_password.dart';
 import 'package:nexus/screens/userprofile_and_settings/delete_account.dart';
+import 'package:nexus/screens/userprofile_and_settings/edit_profile.dart';
 import 'package:nexus/screens/userprofile_and_settings/login_modal_sheet.dart';
 import 'package:nexus/screens/userprofile_and_settings/payment.dart';
 import 'package:nexus/screens/userprofile_and_settings/payment_success.dart';
 import 'package:nexus/screens/userprofile_and_settings/privacy.dart';
+import 'package:nexus/screens/userprofile_and_settings/profile.dart';
 import 'package:nexus/screens/userprofile_and_settings/review.dart';
 import 'package:nexus/screens/userprofile_and_settings/settings.dart';
 import 'package:nexus/screens/userprofile_and_settings/subscription.dart';
@@ -55,6 +58,9 @@ class AppRoutes {
   static String deleteAccount = '/deleteaccountscreen';
   static String changePassword = '/changepasswordscreen';
   static String verifyAcc = '/verifyaccscreen';
+  static String editProfile = '/editprofile';
+  static String notification = '/notificationscreen';
+  static String profile = '/profilescreen';
 }
 
 final appRouter = [
@@ -185,6 +191,21 @@ final appRouter = [
   GetPage(
     name: AppRoutes.verifyAcc,
     page: () => const VerifyAccScreen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.editProfile,
+    page: () => const EditProfile(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.notification,
+    page: () => const NotificationScreen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.profile,
+    page: () => const ProfileScreen(),
     binding: BindingsBuilder(() {}),
   ),
 ];

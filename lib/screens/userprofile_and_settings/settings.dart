@@ -33,7 +33,12 @@ class _SettingScreenState extends State<SettingScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           children: [
-            SettindContainer(text: 'Edit Profile', icon: true, onPress: () {}),
+            SettindContainer(
+                text: 'Edit Profile',
+                icon: true,
+                onPress: () {
+                  Get.toNamed(AppRoutes.editProfile);
+                }),
             const Divider(
               color: Colors.transparent,
             ),

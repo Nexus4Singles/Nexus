@@ -25,7 +25,7 @@ class _AboutNexusScreenState extends State<AboutNexusScreen> {
         foregroundColor: black,
         elevation: 0,
       ),
-      body: Padding(
+      body:SingleChildScrollView(child:  Padding(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
           children: [
@@ -36,7 +36,7 @@ class _AboutNexusScreenState extends State<AboutNexusScreen> {
             )
           ],
         ),
-      ),
+      ),),
     );
   }
 }
