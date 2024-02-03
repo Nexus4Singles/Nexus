@@ -149,13 +149,17 @@ class OnBoardingPage extends StatelessWidget {
                 children: [
                   Text(
                     map['title'],
-                    style: headerStyle,
+                    style: headerStyle.copyWith(
+                      color: white,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBoxH20(),
                   Text(
                     map['subtitle'],
-                    style: textStyle14,
+                    style: textStyle14.copyWith(
+                      color: white,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBoxH20(),

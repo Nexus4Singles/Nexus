@@ -10,14 +10,14 @@ import 'package:nexus/core/text_field.dart';
 import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/router.dart';
 
-class ExistingUserScreen extends StatefulWidget {
-  const ExistingUserScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<ExistingUserScreen> createState() => _ExistingUserScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _ExistingUserScreenState extends State<ExistingUserScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   bool isChecked = true;
   @override
   Widget build(BuildContext context) {
@@ -112,7 +112,7 @@ class _ExistingUserScreenState extends State<ExistingUserScreen> {
                           const SizedBoxH25(),
                           CustomButton(
                             onPressed: () {
-                              Get.toNamed(AppRoutes.existingUser);
+                              Get.toNamed(AppRoutes.mainNav);
                             },
                             text: 'Sign in',
                           ),

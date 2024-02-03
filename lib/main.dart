@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:nexus/features/home/presentation/change_notifier/bottom_nav.dart';
 import 'package:nexus/router.dart';
 import 'package:nexus/theme.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => BottomNavModel()),
       ],
       child: Consumer<ThemeProvider>(builder: (context, theme, _) {
         return ScreenUtilInit(
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
           builder: (context, child) => GetMaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Nexus',
-            theme: theme.isDark ? darkTheme : lightTheme,
+            theme: lightTheme,
             // theme: darkTheme,
             initialRoute: AppRoutes.splash,
             getPages: appRouter,

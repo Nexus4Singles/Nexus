@@ -49,6 +49,7 @@ class OnboardingHandler extends StatelessWidget {
                   'Visibility, Connection, Love',
                   style: headerStyle.copyWith(
                     fontSize: 24.sp,
+                    color: white,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -56,7 +57,7 @@ class OnboardingHandler extends StatelessWidget {
                 Text(
                   'Marriage is God’s idea and we are committed to seeing more Godly marriages exist. \nMatthew 19:4-6',
                   textAlign: TextAlign.center,
-                  style: textStyle16,
+                  style: textStyle16.copyWith(color: white),
                 ),
                 const SizedBoxH15(),
                 CustomButton(

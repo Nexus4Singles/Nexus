@@ -20,7 +20,7 @@ class RowContainer extends StatelessWidget {
         color: grey,
         borderRadius: BorderRadius.circular(10),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -29,7 +29,7 @@ class RowContainer extends StatelessWidget {
             style:
                 textStyle16.copyWith(fontWeight: FontWeight.w700, color: black),
           ),
-          SizedBox(
+          const SizedBox(
             width: 90,
           ),
           SvgPicture.asset(svg)

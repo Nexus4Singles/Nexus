@@ -147,7 +147,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               const SizedBoxW15(),
                               TextButton(
                                 onPressed: () {
-                                  Get.toNamed(AppRoutes.existingUser);
+                                  Get.toNamed(AppRoutes.login);
                                 },
                                 child: Text(
                                   'Sign in',

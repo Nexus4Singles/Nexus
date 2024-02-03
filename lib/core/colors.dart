@@ -40,7 +40,7 @@ const Color fuscousGrey = Color(0xff494846);
 const Color flamingoOrange = Color(0xffE75A21);
 const Color mainColor = Color(0xff121672);
 const Color white = Colors.white;
-const Color black = Color(0xFF231D24);
+const Color black = Color(0xFF000000);
 
 const Color iconGrey = Color(0xff868686);
 const Color otherGrey = Color(0xFF666666);

@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/router.dart';
-import 'package:nexus/screens/userprofile_and_settings/login_modal_sheet.dart';
-import 'package:nexus/screens/userprofile_and_settings/settingContainer.dart';
+import 'package:nexus/features/profile/presentation/widgets/login_modal_sheet.dart';
+import 'package:nexus/features/profile/presentation/widgets/setting_container.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});

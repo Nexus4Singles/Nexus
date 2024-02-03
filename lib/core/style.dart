@@ -47,3 +47,10 @@ final defaultPinTheme = PinTheme(
     // border: Border.all(color: AppColors.whiteColor.withOpacity(0.10),),
   ),
 );
+BoxShadow boxShadow = BoxShadow(
+  offset: const Offset(1, 1),
+  color: altoGrey.withOpacity(.6),
+  spreadRadius: 1,
+  blurStyle: BlurStyle.normal,
+  blurRadius: 5,
+);

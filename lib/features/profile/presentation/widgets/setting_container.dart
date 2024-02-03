@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/style.dart';
 
@@ -20,7 +21,7 @@ class SettindContainer extends StatelessWidget {
       child: Container(
         decoration:
             BoxDecoration(borderRadius: BorderRadius.circular(15), color: grey),
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: EdgeInsets.all(12.sp),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -32,6 +33,7 @@ class SettindContainer extends StatelessWidget {
             Icon(
               Icons.arrow_forward_ios,
               color: primary,
+              size: 16.sp,
             ),
           ],
         ),

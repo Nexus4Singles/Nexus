@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/screens/userprofile_and_settings/text_container.dart';
+import 'package:nexus/features/profile/presentation/widgets/text_container.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -19,6 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: white,
       appBar: AppBar(
         backgroundColor: white,
+        leading: const SizedBox.shrink(),
         title: Text(
           'Profile',
           style: textStyle18.copyWith(
@@ -29,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -74,7 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               style: textStyle12.copyWith(
                   fontWeight: FontWeight.w700, color: black),
             ),
-            SizedBoxH15(),
+            const SizedBoxH15(),
             Row(
               children: [
                 Text(
@@ -89,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ],
             ),
-            SizedBoxH10(),
+            const SizedBoxH10(),
             Row(
               children: [
                 Text(
@@ -104,7 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ],
             ),
-            SizedBoxH10(),
+            const SizedBoxH10(),
             Row(
               children: [
                 Text(
@@ -127,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: black,
               ),
             ),
-            SizedBoxH10(),
+            const SizedBoxH10(),
             const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -189,7 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: black,
               ),
             ),
-            SizedBoxH15(),
+            const SizedBoxH15(),
             Text(
               '1. My salvation story ',
               style: textStyle14.copyWith(
@@ -200,16 +201,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: grey,
                 borderRadius: BorderRadius.circular(15),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Row(
                 children: [
                   SvgPicture.asset('assets/icons/play.svg'),
-                  SizedBoxW10(),
+                  const SizedBoxW10(),
                   SvgPicture.asset('assets/icons/wave.svg'),
                 ],
               ),
             ),
-            SizedBoxH25(),
+            const SizedBoxH25(),
             Text(
               '2. My view on Gender roles in marriage ',
               style: textStyle14.copyWith(
@@ -220,16 +221,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: grey,
                 borderRadius: BorderRadius.circular(15),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Row(
                 children: [
                   SvgPicture.asset('assets/icons/play.svg'),
-                  SizedBoxW10(),
+                  const SizedBoxW10(),
                   SvgPicture.asset('assets/icons/wave.svg'),
                 ],
               ),
             ),
-            SizedBoxH25(),
+            const SizedBoxH25(),
             Text(
               '3. My view  on  the financial stability of a potential \nspouse',
               style: textStyle14.copyWith(
@@ -240,16 +241,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: grey,
                 borderRadius: BorderRadius.circular(15),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Row(
                 children: [
                   SvgPicture.asset('assets/icons/play.svg'),
-                  SizedBoxW10(),
+                  const SizedBoxW10(),
                   SvgPicture.asset('assets/icons/wave.svg'),
                 ],
               ),
             ),
-            SizedBoxH20(),
+            const SizedBoxH20(),
             Text(
               'Gallery',
               style: textStyle18.copyWith(
@@ -264,7 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Image.asset('assets/images/2.png', cacheWidth: 163),
               ],
             ),
-            SizedBoxH10(),
+            const SizedBoxH10(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -272,6 +273,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Image.asset('assets/images/4.png', cacheWidth: 163),
               ],
             ),
+            const SizedBoxH40(),
+            const SizedBoxH40(),
           ],
         ),
       ),

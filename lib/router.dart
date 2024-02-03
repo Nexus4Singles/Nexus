@@ -1,33 +1,34 @@
 import 'package:get/get.dart';
-import 'package:nexus/features/auth/views/auth_handler.dart';
-import 'package:nexus/features/auth/views/login.dart';
-import 'package:nexus/features/auth/views/onboarding.dart';
-import 'package:nexus/features/auth/views/onboarding_handler.dart';
-import 'package:nexus/features/auth/views/splash.dart';
-import 'package:nexus/screens/notificatin_screen/notification.dart';
-import 'package:nexus/screens/registration_screen/congratulations.dart';
-import 'package:nexus/screens/registration_screen/create_account.dart';
-import 'package:nexus/screens/registration_screen/existing_user.dart';
-import 'package:nexus/screens/registration_screen/forgotten_password.dart';
-import 'package:nexus/screens/registration_screen/verify_account.dart';
-import 'package:nexus/screens/userprofile_and_settings/about.dart';
-import 'package:nexus/screens/userprofile_and_settings/addcard.dart';
-import 'package:nexus/screens/userprofile_and_settings/cancel_plan.dart';
-import 'package:nexus/screens/userprofile_and_settings/change_password.dart';
-import 'package:nexus/screens/userprofile_and_settings/delete_account.dart';
-import 'package:nexus/screens/userprofile_and_settings/edit_profile.dart';
-import 'package:nexus/screens/userprofile_and_settings/login_modal_sheet.dart';
-import 'package:nexus/screens/userprofile_and_settings/payment.dart';
-import 'package:nexus/screens/userprofile_and_settings/payment_success.dart';
-import 'package:nexus/screens/userprofile_and_settings/privacy.dart';
-import 'package:nexus/screens/userprofile_and_settings/profile.dart';
-import 'package:nexus/screens/userprofile_and_settings/review.dart';
-import 'package:nexus/screens/userprofile_and_settings/settings.dart';
-import 'package:nexus/screens/userprofile_and_settings/subscription.dart';
+import 'package:nexus/features/auth/presentation/views/auth_handler.dart';
+import 'package:nexus/features/auth/presentation/views/login.dart';
+import 'package:nexus/features/auth/presentation/views/onboarding.dart';
+import 'package:nexus/features/auth/presentation/views/onboarding_handler.dart';
+import 'package:nexus/features/auth/presentation/views/splash.dart';
+import 'package:nexus/features/home/presentation/views/nav.dart';
+import 'package:nexus/features/notifications/presentation/views/notification.dart';
+import 'package:nexus/features/auth/presentation/views/congratulations.dart';
+import 'package:nexus/features/auth/presentation/views/create_account.dart';
+// import 'package:nexus/features/auth/presentation/views/login.dart';
+import 'package:nexus/features/auth/presentation/views/forgotten_password.dart';
+import 'package:nexus/features/auth/presentation/views/verify_account.dart';
+import 'package:nexus/features/profile/presentation/views/about.dart';
+import 'package:nexus/features/profile/presentation/views/add_card.dart';
+import 'package:nexus/features/profile/presentation/views/cancel_plan.dart';
+import 'package:nexus/features/profile/presentation/views/change_password.dart';
+import 'package:nexus/features/profile/presentation/views/delete_account.dart';
+import 'package:nexus/features/profile/presentation/views/edit_profile.dart';
+import 'package:nexus/features/profile/presentation/widgets/login_modal_sheet.dart';
+import 'package:nexus/features/profile/presentation/views/payment.dart';
+import 'package:nexus/features/profile/presentation/views/payment_success.dart';
+import 'package:nexus/features/profile/presentation/views/privacy.dart';
+import 'package:nexus/features/profile/presentation/views/profile.dart';
+import 'package:nexus/features/profile/presentation/views/review.dart';
+import 'package:nexus/features/profile/presentation/views/settings.dart';
+import 'package:nexus/features/profile/presentation/views/subscription.dart';
 import 'package:nexus/screens/userprofile_and_settings/subscription3.dart';
 import 'package:nexus/screens/userprofile_and_settings/subscription4.dart';
-import 'package:nexus/screens/userprofile_and_settings/terms.dart';
-import 'package:nexus/screens/userprofile_and_settings/verify_acc.dart';
+import 'package:nexus/features/profile/presentation/views/terms.dart';
+import 'package:nexus/features/profile/presentation/views/verify_acc.dart';
 
 class AppRoutes {
   static String splash = '/';
@@ -37,7 +38,7 @@ class AppRoutes {
   static String welcome = '/welcome';
   static String login = '/login';
   static String signUp = '/sign_up';
-  static String existingUser = '/existinguserscreen';
+  // static String existingUser = '/existinguserscreen';
   static String createAccount = '/createaccountscreen';
   static String verifyAccount = '/verifyaccountscreen';
   static String congratulations = '/congratulationscreen';
@@ -61,6 +62,7 @@ class AppRoutes {
   static String editProfile = '/editprofile';
   static String notification = '/notificationscreen';
   static String profile = '/profilescreen';
+  static String mainNav = '/main_nav';
 }
 
 final appRouter = [
@@ -88,11 +90,11 @@ final appRouter = [
     page: () => const LoginScreen(),
     binding: BindingsBuilder(() {}),
   ),
-  GetPage(
-    name: AppRoutes.existingUser,
-    page: () => const ExistingUserScreen(),
-    binding: BindingsBuilder(() {}),
-  ),
+  // GetPage(
+  //   name: AppRoutes.login,
+  //   page: () => const LoginScreen(),
+  //   binding: BindingsBuilder(() {}),
+  // ),
   GetPage(
     name: AppRoutes.createAccount,
     page: () => const CreateAccountScreen(),
@@ -206,6 +208,11 @@ final appRouter = [
   GetPage(
     name: AppRoutes.profile,
     page: () => const ProfileScreen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.mainNav,
+    page: () => const MainNav(),
     binding: BindingsBuilder(() {}),
   ),
 ];

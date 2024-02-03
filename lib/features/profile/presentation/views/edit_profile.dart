@@ -3,8 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/screens/userprofile_and_settings/row_container.dart';
-import 'package:nexus/screens/userprofile_and_settings/text_container.dart';
+import 'package:nexus/features/profile/presentation/widgets/row_container.dart';
+import 'package:nexus/features/profile/presentation/widgets/text_container.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});

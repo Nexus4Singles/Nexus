@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/screens/notificatin_screen/notify_container.dart';
+import 'package:nexus/features/notifications/presentation/widgets/notify_container.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
