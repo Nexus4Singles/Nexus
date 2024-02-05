@@ -29,6 +29,18 @@ import 'package:nexus/screens/userprofile_and_settings/subscription3.dart';
 import 'package:nexus/screens/userprofile_and_settings/subscription4.dart';
 import 'package:nexus/features/profile/presentation/views/terms.dart';
 import 'package:nexus/features/profile/presentation/views/verify_acc.dart';
+import 'package:nexus/setting_up_profile/screens/audio/recording/audio1.dart';
+import 'package:nexus/setting_up_profile/screens/audio/recording/audio2.dart';
+import 'package:nexus/setting_up_profile/screens/audio/recording/audio3.dart';
+import 'package:nexus/setting_up_profile/screens/audio/recording/audio4.dart';
+import 'package:nexus/setting_up_profile/views/audio_recording.dart';
+
+import 'package:nexus/setting_up_profile/views/desired_quality.dart';
+import 'package:nexus/setting_up_profile/views/extra_info.dart';
+import 'package:nexus/setting_up_profile/views/gender.dart';
+import 'package:nexus/setting_up_profile/views/hobbies.dart';
+import 'package:nexus/setting_up_profile/views/reg_successful.dart';
+import 'package:nexus/setting_up_profile/views/upload_photo.dart';
 
 class AppRoutes {
   static String splash = '/';
@@ -63,6 +75,17 @@ class AppRoutes {
   static String notification = '/notificationscreen';
   static String profile = '/profilescreen';
   static String mainNav = '/main_nav';
+  static String gender = '/genderscreen';
+  static String extraInfo = '/extrainformationscreen';
+  static String hobbies = '/hobbiesscreen';
+  static String desiredQuality = '/desiredqualityscreen';
+  static String uploadPhoto = '/uploadphotoscreen';
+  static String audioRecording = '/audiorecordingscreen';
+  static String audio1 = '/audio1screen';
+  static String audio2 = '/audio2screen';
+  static String audio3 = '/audio3screen';
+  static String audio4 = '/audio4screen';
+  static String regSuccessful = '/regsuccessful';
 }
 
 final appRouter = [
@@ -213,6 +236,61 @@ final appRouter = [
   GetPage(
     name: AppRoutes.mainNav,
     page: () => const MainNav(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.gender,
+    page: () => const GenderScreen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.extraInfo,
+    page: () => const ExtraInformationScreen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.hobbies,
+    page: () => const HobbiesScreen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.desiredQuality,
+    page: () => const DesiredQualityScreen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.uploadPhoto,
+    page: () => const UploadPhotoScreen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.audioRecording,
+    page: () => const AudioRecordingScreen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.audio1,
+    page: () => const Audio1Screen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.audio2,
+    page: () => const Audio2Screen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.audio3,
+    page: () => const Audio3Screen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.audio4,
+    page: () => const Audio4Screen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.regSuccessful,
+    page: () => const RegSuccessful(),
     binding: BindingsBuilder(() {}),
   ),
 ];

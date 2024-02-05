@@ -132,7 +132,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                TextContainer(text: 'Music'),
+                TextContainer(
+                  text: 'Music',
+                ),
                 SizedBoxW10(),
                 TextContainer(text: 'Travel'),
                 SizedBoxW10(),
