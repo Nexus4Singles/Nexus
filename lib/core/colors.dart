@@ -53,3 +53,5 @@ const Color cardLightBlue = Color(0xFF7B61FF);
 const Color bgColor = Color(0xffffffff);
 const Color darkbgColor = Color(0xff10192D);
 const Color darkGrey = Color(0xff1B2537);
+const Color whiteblue = Color.fromARGB(255, 79, 182, 247);
+const Color babaypink = Color.fromARGB(230, 238, 84, 182);

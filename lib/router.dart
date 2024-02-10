@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:nexus/chat/views/chat_with.dart';
+import 'package:nexus/chat/views/chats.dart';
 import 'package:nexus/features/auth/presentation/views/auth_handler.dart';
 import 'package:nexus/features/auth/presentation/views/login.dart';
 import 'package:nexus/features/auth/presentation/views/onboarding.dart';
@@ -86,6 +88,8 @@ class AppRoutes {
   static String audio3 = '/audio3screen';
   static String audio4 = '/audio4screen';
   static String regSuccessful = '/regsuccessful';
+  static String chats = '/chatsscreen';
+  static String chatWith = '/chatwithscreen';
 }
 
 final appRouter = [
@@ -291,6 +295,16 @@ final appRouter = [
   GetPage(
     name: AppRoutes.regSuccessful,
     page: () => const RegSuccessful(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.chats,
+    page: () => const ChatsScreen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.chatWith,
+    page: () => const ChatWithScreen(),
     binding: BindingsBuilder(() {}),
   ),
 ];

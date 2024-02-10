@@ -33,7 +33,7 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                 fontSize: 12, fontWeight: FontWeight.w300, color: black),
             textAlign: TextAlign.center,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Padding(

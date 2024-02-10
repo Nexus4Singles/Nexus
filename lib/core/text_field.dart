@@ -68,7 +68,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return TextFormField(
       enabled: widget.enabled,
       maxLength: widget.maxLength,
-      keyboardType: widget.keyboardType,
+
       onChanged: widget.onChanged,
       onEditingComplete: widget.onEditingCompleted,
       controller: widget.controller,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nexus/chat/views/chats.dart';
 import 'package:nexus/features/home/presentation/views/home.dart';
 import 'package:nexus/features/profile/presentation/views/profile.dart';
 
@@ -16,7 +17,7 @@ class BottomNavModel extends ChangeNotifier {
     const HomeScreen(),
     const HomeScreen(),
     const HomeScreen(),
-    const HomeScreen(),
+    const ChatsScreen(),
     const ProfileScreen(),
   ];
 
