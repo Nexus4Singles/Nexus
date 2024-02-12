@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
