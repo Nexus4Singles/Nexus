@@ -22,7 +22,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
             Stack(
               children: [
                 Image.asset('assets/images/mofesala.png'),
-                Positioned(
+                const Positioned(
                   bottom: 0,
                   right: 0,
                   child: CircleAvatar(
