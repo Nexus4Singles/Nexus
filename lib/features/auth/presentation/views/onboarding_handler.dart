@@ -33,7 +33,9 @@ class OnboardingHandler extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.authHandler);
+                  },
                   child: Text(
                     'Skip',
                     style: textStyle16.copyWith(

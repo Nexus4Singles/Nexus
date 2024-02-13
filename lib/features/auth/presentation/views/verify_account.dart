@@ -8,9 +8,7 @@ import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/router.dart';
-import 'package:nexus/theme.dart';
 import 'package:pinput/pinput.dart';
-import 'package:provider/provider.dart';
 
 class VerifyAccountScreen extends StatefulWidget {
   const VerifyAccountScreen({super.key});
@@ -24,7 +22,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
   TextEditingController password = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
+    // bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -49,7 +47,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
+                          horizontal: 15, vertical: 15),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,8 +85,8 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                               keyboardAppearance: Brightness.light,
                               listenForMultipleSmsOnAndroid: true,
                               defaultPinTheme: PinTheme(
-                                width: 40,
-                                height: 40,
+                                width: 60,
+                                height: 60,
                                 textStyle: textStyle16.copyWith(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
@@ -96,8 +94,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                                 ),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color:
-                                        isDark ? const Color(0xff1B2537) : grey,
+                                    color: textBorderColor,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
@@ -121,36 +118,36 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                                 ],
                               ),
                               focusedPinTheme: PinTheme(
-                                width: 40,
-                                height: 40,
+                                width: 60,
+                                height: 60,
                                 textStyle: textStyle16.copyWith(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
                                   color: black,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Colors.transparent,
+                                  color: primary,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
                               submittedPinTheme: PinTheme(
-                                width: 40,
-                                height: 40,
+                                width: 60,
+                                height: 60,
                                 textStyle: textStyle16.copyWith(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
                                   color: black,
                                 ),
                                 decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
-                                    color:
-                                        isDark ? const Color(0xff1B2537) : grey,
+                                    color: textBorderColor,
                                   ),
                                 ),
                               ),
                               errorPinTheme: PinTheme(
-                                width: 40,
-                                height: 40,
+                                width: 60,
+                                height: 60,
                                 textStyle: textStyle16.copyWith(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
@@ -158,8 +155,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                                 ),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color:
-                                        isDark ? const Color(0xff1B2537) : grey,
+                                    color: textBorderColor,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
@@ -177,7 +173,9 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                           Text(
                             'Resend Code',
                             style: textStyle14.copyWith(
-                                fontWeight: FontWeight.w500, color: primary),
+                              fontWeight: FontWeight.w500,
+                              color: primary,
+                            ),
                           ),
                           const SizedBoxH25(),
                           CustomButton(
@@ -187,17 +185,12 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
                             text: 'Verify',
                           ),
                           const SizedBoxH20(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Verify Later',
-                                style: textStyle14.copyWith(
-                                    color: black, fontWeight: FontWeight.w400),
-                              ),
-                              const SizedBoxW15(),
-                            ],
-                          )
+                          Text(
+                            'Verify Later',
+                            style: textStyle14.copyWith(
+                                color: black, fontWeight: FontWeight.w400),
+                          ),
+                          const SizedBoxH20(),
                         ],
                       ),
                     ),

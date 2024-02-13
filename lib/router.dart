@@ -35,6 +35,7 @@ import 'package:nexus/setting_up_profile/screens/audio/recording/audio1.dart';
 import 'package:nexus/setting_up_profile/screens/audio/recording/audio2.dart';
 import 'package:nexus/setting_up_profile/screens/audio/recording/audio3.dart';
 import 'package:nexus/setting_up_profile/screens/audio/recording/audio4.dart';
+import 'package:nexus/setting_up_profile/views/age.dart';
 import 'package:nexus/setting_up_profile/views/audio_recording.dart';
 
 import 'package:nexus/setting_up_profile/views/desired_quality.dart';
@@ -90,6 +91,7 @@ class AppRoutes {
   static String regSuccessful = '/regsuccessful';
   static String chats = '/chatsscreen';
   static String chatWith = '/chatwithscreen';
+  static String age = '/age';
 }
 
 final appRouter = [
@@ -245,6 +247,11 @@ final appRouter = [
   GetPage(
     name: AppRoutes.gender,
     page: () => const GenderScreen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.age,
+    page: () => const AgeScreen(),
     binding: BindingsBuilder(() {}),
   ),
   GetPage(

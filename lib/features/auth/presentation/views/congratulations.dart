@@ -43,11 +43,12 @@ class _CongratulationScreenState extends State<CongratulationScreen> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
+                          horizontal: 15, vertical: 15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image.asset('assets/images/congratulation.png'),
+                          const SizedBoxH20(),
                           Text(
                             ' Congratulations ',
                             style: GoogleFonts.nunito(
@@ -56,6 +57,7 @@ class _CongratulationScreenState extends State<CongratulationScreen> {
                               color: black,
                             ),
                           ),
+                          const SizedBoxH20(),
                           Text(
                             'You have successfully created an account on nexus!\nif you have not verified youe account, please do so\nlater. only verified profiles will be visible on search\nresults.',
                             textAlign: TextAlign.center,

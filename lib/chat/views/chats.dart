@@ -107,52 +107,60 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const SizedBoxH10(),
-            TextButton(
-              onPressed: () {
-                Get.toNamed(
-                  AppRoutes.chatWith,
-                );
-              },
-              child: const ChatContainer(
-                image: 'assets/images/mofesala.png',
-                name: 'Mofesolamisi',
-                time: '23 mins',
-                text: 'Hi 👋, you good?',
-                cont: '2',
-              ),
-            ),
-            const SizedBoxH10(),
-            const ChatContainer(
+            const SizedBoxH20(),
+            ChatContainer(
               image: 'assets/images/mofesala.png',
               name: 'Mofesolamisi',
               time: '23 mins',
               text: 'Hi 👋, you good?',
               cont: '2',
+              onPress: () {
+                Get.toNamed(AppRoutes.chatWith);
+              },
             ),
-            const SizedBoxH10(),
-            const ChatContainer(
+            const SizedBoxH20(),
+            ChatContainer(
+              image: 'assets/images/mofesala.png',
+              name: 'Mofesolamisi',
+              time: '23 mins',
+              text: 'Hi 👋, you good?',
+              cont: '2',
+              onPress: () {
+                Get.toNamed(AppRoutes.chatWith);
+              },
+            ),
+            const SizedBoxH20(),
+            ChatContainer(
               image: 'assets/images/mofesala.png',
               name: 'Sarah',
               time: '30 min',
               text: 'and what do you think about the idea ...',
               cont: '2',
+              onPress: () {
+                Get.toNamed(AppRoutes.chatWith);
+              },
             ),
-            const SizedBoxH10(),
-            const ChatContainer(
+            const SizedBoxH20(),
+            ChatContainer(
               image: 'assets/images/mofesala.png',
               name: 'Ashabi',
               time: '23 mins',
               text: 'Hello, i want to make enquireies ...',
               cont: '2',
+              onPress: () {
+                Get.toNamed(AppRoutes.chatWith);
+              },
             ),
-            const SizedBoxH10(),
-            const ChatContainer(
+            const SizedBoxH20(),
+            ChatContainer(
               image: 'assets/images/mofesala.png',
               name: 'Ashabi',
               time: '45 min',
               text: 'Hi 👋, you good?',
               cont: '2',
+              onPress: () {
+                Get.toNamed(AppRoutes.chatWith);
+              },
             ),
           ],
         ),

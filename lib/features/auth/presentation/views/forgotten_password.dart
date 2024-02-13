@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/core/text_field.dart';
+import 'package:nexus/core/text_field_password.dart';
 import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/router.dart';
 
@@ -19,6 +20,8 @@ class ForgottenPasswordScreen extends StatefulWidget {
 }
 
 class _ForgottenPasswordScreenState extends State<ForgottenPasswordScreen> {
+  bool showPassword = true;
+  bool showCPassword = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +48,7 @@ class _ForgottenPasswordScreenState extends State<ForgottenPasswordScreen> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
+                          horizontal: 15, vertical: 15),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,13 +70,37 @@ class _ForgottenPasswordScreenState extends State<ForgottenPasswordScreen> {
                                 fontWeight: FontWeight.w300),
                           ),
                           const SizedBoxH30(),
-                          CustomTextField(
-                              controller: TextEditingController(),
-                              hintText: 'Password'),
+                          CustomTextFieldPassword(
+                            controller: TextEditingController(),
+                            hintText: 'Password',
+                            obsecure: showPassword,
+                            suffixIcon: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  showPassword = !showPassword;
+                                });
+                              },
+                              child: Icon(showPassword
+                                  ? Iconsax.eye_slash
+                                  : Iconsax.eye),
+                            ),
+                          ),
                           const SizedBoxH20(),
-                          CustomTextField(
-                              controller: TextEditingController(),
-                              hintText: 'Confirm Password'),
+                          CustomTextFieldPassword(
+                            controller: TextEditingController(),
+                            hintText: 'Confirm Password',
+                            obsecure: showCPassword,
+                            suffixIcon: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  showCPassword = !showCPassword;
+                                });
+                              },
+                              child: Icon(showCPassword
+                                  ? Iconsax.eye_slash
+                                  : Iconsax.eye),
+                            ),
+                          ),
                           const SizedBoxH25(),
                           CustomButton(
                             onPressed: () {

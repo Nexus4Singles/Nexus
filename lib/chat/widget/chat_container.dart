@@ -9,30 +9,30 @@ class ChatContainer extends StatelessWidget {
   final String time;
   final String text;
   final String cont;
-  const ChatContainer(
-      {super.key,
-      required this.image,
-      required this.name,
-      required this.time,
-      required this.text,
-      required this.cont});
+  final VoidCallback onPress;
+  const ChatContainer({
+    super.key,
+    required this.image,
+    required this.name,
+    required this.time,
+    required this.text,
+    required this.cont,
+    required this.onPress,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: white,
-      ),
-      padding: const EdgeInsets.symmetric(),
+    return InkWell(
+      onTap: onPress,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             children: [
               Stack(
                 children: [
                   Image.asset(image),
-                  Positioned(
+                  const Positioned(
                     bottom: 0,
                     right: 0,
                     child: CircleAvatar(
@@ -42,14 +42,9 @@ class ChatContainer extends StatelessWidget {
                   )
                 ],
               ),
-            ],
-          ),
-          SizedBoxW10(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              const SizedBoxW10(),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     name,
@@ -57,36 +52,90 @@ class ChatContainer extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Text(
-                    time,
-                    style: textStyle12.copyWith(
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                  const SizedBoxH5(),
                   Text(
                     text,
-                    style: textStyle12.copyWith(
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: textStyle12,
                   ),
-                  Container(
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: primary),
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      cont,
-                      style: textStyle12.copyWith(color: white),
-                    ),
-                  )
                 ],
               ),
             ],
-          )
+          ),
+          Column(
+            children: [
+              Text(
+                time,
+                style: textStyle10,
+              ),
+              const SizedBoxH5(),
+              Container(
+                decoration:
+                    const BoxDecoration(shape: BoxShape.circle, color: primary),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  cont,
+                  style: textStyle12.copyWith(color: white),
+                ),
+              )
+            ],
+          ),
+          // Row(
+          //   children: [
+          //     Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+
+          //         Column(
+          //           children: [
+          //             Row(
+          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //               children: [
+          //                 Text(
+          //                   name,
+          //                   style: textStyle14.copyWith(
+          //                     fontWeight: FontWeight.w600,
+          //                   ),
+          //                 ),
+          //                 Text(
+          //                   time,
+          //                   style: textStyle12.copyWith(
+          //                     fontWeight: FontWeight.w400,
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           ],
+          //         ),
+          //       ],
+          //     ),
+          //   ],
+          // ),
+          // const SizedBoxW10(),
+          // Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         Text(
+          //           text,
+          //           style: textStyle12.copyWith(
+          //             fontWeight: FontWeight.w400,
+          //           ),
+          //         ),
+          //         Container(
+          //           decoration: const BoxDecoration(
+          //               shape: BoxShape.circle, color: primary),
+          //           padding: const EdgeInsets.symmetric(horizontal: 10),
+          //           child: Text(
+          //             cont,
+          //             style: textStyle12.copyWith(color: white),
+          //           ),
+          //         )
+          //       ],
+          //     ),
+          //   ],
+          // )
         ],
       ),
     );

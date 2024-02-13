@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/theme.dart';
 
 class CustomTextFieldPassword extends StatefulWidget {
   final TextEditingController controller;
@@ -51,8 +49,8 @@ class CustomTextFieldPassword extends StatefulWidget {
     this.radius = 16,
     this.action,
     this.borderColor,
-    this.fillColor,
-    this.isFilled = false,
+    this.fillColor = white,
+    this.isFilled = true,
   }) : super(key: key);
 
   @override
@@ -63,7 +61,7 @@ class CustomTextFieldPassword extends StatefulWidget {
 class _CustomTextFieldPasswordState extends State<CustomTextFieldPassword> {
   @override
   Widget build(BuildContext context) {
-    bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
+    // bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
     return TextFormField(
       enabled: widget.enabled,
       maxLength: widget.maxLength,
@@ -88,20 +86,20 @@ class _CustomTextFieldPasswordState extends State<CustomTextFieldPassword> {
         contentPadding: const EdgeInsets.all(10),
         border: outlineInputBorder.copyWith(
           borderRadius: BorderRadius.circular(widget.radius!),
-          borderSide: BorderSide(
-            color: isDark ? darkGrey : grey,
+          borderSide: const BorderSide(
+            color: textBorderColor,
           ),
         ),
         enabledBorder: outlineInputBorder.copyWith(
           borderRadius: BorderRadius.circular(widget.radius!),
-          borderSide: BorderSide(
-            color: isDark ? darkGrey : grey,
+          borderSide: const BorderSide(
+            color: textBorderColor,
           ),
         ),
         focusedBorder: outlineInputBorder.copyWith(
           borderRadius: BorderRadius.circular(widget.radius!),
-          borderSide: BorderSide(
-            color: isDark ? darkGrey : grey,
+          borderSide: const BorderSide(
+            color: textBorderColor,
           ),
         ),
       ),

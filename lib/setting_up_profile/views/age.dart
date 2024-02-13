@@ -6,22 +6,25 @@ import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/router.dart';
+import 'package:wheel_slider/wheel_slider.dart';
 
-class GenderScreen extends StatefulWidget {
-  const GenderScreen({super.key});
+class AgeScreen extends StatefulWidget {
+  const AgeScreen({super.key});
 
   @override
-  State<GenderScreen> createState() => _GenderScreenState();
+  State<AgeScreen> createState() => _AgeScreenState();
 }
 
-class _GenderScreenState extends State<GenderScreen> {
+class _AgeScreenState extends State<AgeScreen> {
+  int val = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Slider(
-          value: 0,
+          value: 10,
           onChanged: (val) {},
           activeColor: primary,
           inactiveColor: grey,
@@ -35,21 +38,54 @@ class _GenderScreenState extends State<GenderScreen> {
             Column(
               children: [
                 Text(
-                  'What’s Your Gender?',
+                  'What’s Your Age?',
                   style: textStyle8.copyWith(
                       fontSize: 30, fontWeight: FontWeight.w700, color: black),
                 ),
                 const SizedBoxH20(),
-                genderCard('Male'),
-                const SizedBoxH10(),
-                genderCard('Female'),
+                SizedBox(
+                  height: height(context) * .4,
+                  width: width(context),
+                  child: WheelSlider.customWidget(
+                    horizontal: false,
+                    verticalListHeight: 70.0,
+                    perspective: 0.01,
+                    totalCount: 10,
+                    isInfinite: true,
+                    initValue: 0,
+                    itemSize: 80,
+                    pointerColor: Color(0xffCEA050),
+                    pointerWidth: 0,
+                    pointerHeight: 0,
+                    onValueChanged: (p0) {
+                      setState(() {
+                        val = p0;
+                      });
+                    },
+                    hapticFeedbackType: HapticFeedbackType.heavyImpact,
+                    children: List.generate(
+                      10,
+                      (index) => Center(
+                        child: Text(
+                          (index + 1).toString(),
+                          style: TextStyle(
+                            color: val == index
+                                ? Colors.white
+                                : Colors.grey.withOpacity(.3),
+                            fontSize: 24,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
             Column(
               children: [
                 CustomButton(
                   onPressed: () {
-                    Get.toNamed(AppRoutes.age);
+                    Get.toNamed(AppRoutes.extraInfo);
                   },
                   child: Text(
                     'Next',

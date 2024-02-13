@@ -7,7 +7,7 @@ ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   hintColor: grey,
   primaryColor: primary,
-  scaffoldBackgroundColor: white,
+  scaffoldBackgroundColor: bgColor,
   primaryColorLight: primary,
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
@@ -17,7 +17,7 @@ ThemeData lightTheme = ThemeData(
   ),
   useMaterial3: true,
   appBarTheme: const AppBarTheme(
-    backgroundColor: white,
+    backgroundColor: bgColor,
     elevation: 0,
     foregroundColor: black,
   ),

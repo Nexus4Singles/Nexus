@@ -1,10 +1,6 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/theme.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -53,8 +49,8 @@ class CustomTextField extends StatefulWidget {
     this.radius = 16,
     this.action,
     this.borderColor,
-    this.fillColor,
-    this.isFilled = false,
+    this.fillColor = white,
+    this.isFilled = true,
   }) : super(key: key);
 
   @override
@@ -64,11 +60,9 @@ class CustomTextField extends StatefulWidget {
 class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
-    bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
     return TextFormField(
       enabled: widget.enabled,
       maxLength: widget.maxLength,
-
       onChanged: widget.onChanged,
       onEditingComplete: widget.onEditingCompleted,
       controller: widget.controller,
@@ -91,20 +85,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
         contentPadding: const EdgeInsets.all(10),
         border: outlineInputBorder.copyWith(
           borderRadius: BorderRadius.circular(widget.radius!),
-          borderSide: BorderSide(
-            color: isDark ? darkGrey : grey,
+          borderSide: const BorderSide(
+            color: textBorderColor,
           ),
         ),
         enabledBorder: outlineInputBorder.copyWith(
           borderRadius: BorderRadius.circular(widget.radius!),
-          borderSide: BorderSide(
-            color: isDark ? darkGrey : grey,
+          borderSide: const BorderSide(
+            color: textBorderColor,
           ),
         ),
         focusedBorder: outlineInputBorder.copyWith(
           borderRadius: BorderRadius.circular(widget.radius!),
-          borderSide: BorderSide(
-            color: isDark ? darkGrey : grey,
+          borderSide: const BorderSide(
+            color: textBorderColor,
           ),
         ),
       ),

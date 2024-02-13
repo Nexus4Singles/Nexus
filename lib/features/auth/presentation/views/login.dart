@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
+import 'package:nexus/core/text_field_password.dart';
 import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/router.dart';
 
@@ -19,6 +21,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isChecked = true;
+  bool showPassword = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,17 +68,30 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: black,
                             ),
                           ),
-                          SizedBoxH20(),
-                          CustomTextField(
-                            controller: TextEditingController(),
-                            prefixIcon: Image.asset('assets/images/email.png'),
-                            hintText: 'Email Address / Username',
-                          ),
                           const SizedBoxH20(),
                           CustomTextField(
                             controller: TextEditingController(),
+                            prefixIcon: const Icon(Icons.mail_outline),
+                            hintText: 'Email Address',
+                          ),
+                          const SizedBoxH20(),
+                          CustomTextFieldPassword(
+                            controller: TextEditingController(),
                             hintText: 'Password',
-                            prefixIcon: Image.asset('assets/images/lock2.png'),
+                            prefixIcon: const Icon(
+                              Icons.lock_outline,
+                            ),
+                            obsecure: showPassword,
+                            suffixIcon: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  showPassword = !showPassword;
+                                });
+                              },
+                              child: Icon(showPassword
+                                  ? Iconsax.eye_slash
+                                  : Iconsax.eye),
+                            ),
                           ),
                           const SizedBoxH10(),
                           Row(
