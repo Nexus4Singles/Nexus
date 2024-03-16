@@ -1,4 +1,4 @@
-package com.example.nexus
+package com.nexus.app
 
 import io.flutter.embedding.android.FlutterActivity
 

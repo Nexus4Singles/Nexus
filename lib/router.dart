@@ -5,6 +5,10 @@ import 'package:nexus/features/auth/presentation/views/auth_handler.dart';
 import 'package:nexus/features/auth/presentation/views/login.dart';
 import 'package:nexus/features/auth/presentation/views/onboarding.dart';
 import 'package:nexus/features/auth/presentation/views/onboarding_handler.dart';
+import 'package:nexus/features/auth/presentation/views/setting_up/audio1.dart';
+import 'package:nexus/features/auth/presentation/views/setting_up/audio2.dart';
+import 'package:nexus/features/auth/presentation/views/setting_up/audio3.dart';
+import 'package:nexus/features/auth/presentation/views/setting_up/audio_recoding_completed.dart';
 import 'package:nexus/features/auth/presentation/views/splash.dart';
 import 'package:nexus/features/home/presentation/views/nav.dart';
 import 'package:nexus/features/notifications/presentation/views/notification.dart';
@@ -17,6 +21,7 @@ import 'package:nexus/features/profile/presentation/views/about.dart';
 import 'package:nexus/features/profile/presentation/views/add_card.dart';
 import 'package:nexus/features/profile/presentation/views/cancel_plan.dart';
 import 'package:nexus/features/profile/presentation/views/change_password.dart';
+import 'package:nexus/features/profile/presentation/views/compatibilty_quiz.dart';
 import 'package:nexus/features/profile/presentation/views/delete_account.dart';
 import 'package:nexus/features/profile/presentation/views/edit_profile.dart';
 import 'package:nexus/features/profile/presentation/widgets/login_modal_sheet.dart';
@@ -27,23 +32,19 @@ import 'package:nexus/features/profile/presentation/views/profile.dart';
 import 'package:nexus/features/profile/presentation/views/review.dart';
 import 'package:nexus/features/profile/presentation/views/settings.dart';
 import 'package:nexus/features/profile/presentation/views/subscription.dart';
-import 'package:nexus/screens/userprofile_and_settings/subscription3.dart';
-import 'package:nexus/screens/userprofile_and_settings/subscription4.dart';
+import 'package:nexus/features/settings/presentation/views/subscription3.dart';
+import 'package:nexus/features/settings/presentation/views/subscription4.dart';
 import 'package:nexus/features/profile/presentation/views/terms.dart';
 import 'package:nexus/features/profile/presentation/views/verify_acc.dart';
-import 'package:nexus/setting_up_profile/screens/audio/recording/audio1.dart';
-import 'package:nexus/setting_up_profile/screens/audio/recording/audio2.dart';
-import 'package:nexus/setting_up_profile/screens/audio/recording/audio3.dart';
-import 'package:nexus/setting_up_profile/screens/audio/recording/audio4.dart';
-import 'package:nexus/setting_up_profile/views/age.dart';
-import 'package:nexus/setting_up_profile/views/audio_recording.dart';
+import 'package:nexus/features/auth/presentation/views/setting_up/age.dart';
+import 'package:nexus/features/auth/presentation/views/setting_up/audio_recording.dart';
 
-import 'package:nexus/setting_up_profile/views/desired_quality.dart';
-import 'package:nexus/setting_up_profile/views/extra_info.dart';
-import 'package:nexus/setting_up_profile/views/gender.dart';
-import 'package:nexus/setting_up_profile/views/hobbies.dart';
-import 'package:nexus/setting_up_profile/views/reg_successful.dart';
-import 'package:nexus/setting_up_profile/views/upload_photo.dart';
+import 'package:nexus/features/auth/presentation/views/setting_up/desired_quality.dart';
+import 'package:nexus/features/auth/presentation/views/setting_up/extra_info.dart';
+import 'package:nexus/features/auth/presentation/views/setting_up/gender.dart';
+import 'package:nexus/features/auth/presentation/views/setting_up/hobbies.dart';
+import 'package:nexus/features/auth/presentation/views/setting_up/profile_completed.dart';
+import 'package:nexus/features/auth/presentation/views/setting_up/upload_photo.dart';
 
 class AppRoutes {
   static String splash = '/';
@@ -92,6 +93,7 @@ class AppRoutes {
   static String chats = '/chatsscreen';
   static String chatWith = '/chatwithscreen';
   static String age = '/age';
+  static String compatibilityQuiz = '/compatibility_quiz';
 }
 
 final appRouter = [
@@ -312,6 +314,11 @@ final appRouter = [
   GetPage(
     name: AppRoutes.chatWith,
     page: () => const ChatWithScreen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.compatibilityQuiz,
+    page: () => const CompatibilityQuizScreen(),
     binding: BindingsBuilder(() {}),
   ),
 ];

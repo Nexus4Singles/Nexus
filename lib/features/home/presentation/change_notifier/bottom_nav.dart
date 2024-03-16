@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nexus/chat/views/chats.dart';
+import 'package:nexus/features/explore/presentation/views/explore.dart';
 import 'package:nexus/features/home/presentation/views/home.dart';
+import 'package:nexus/features/match/presentation/views/matches.dart';
 import 'package:nexus/features/profile/presentation/views/profile.dart';
 
 class BottomNavModel extends ChangeNotifier {
@@ -15,8 +17,8 @@ class BottomNavModel extends ChangeNotifier {
   //personnal children of the bottom Nav
   final List<Widget> _navs = [
     const HomeScreen(),
-    const HomeScreen(),
-    const HomeScreen(),
+    const ExploreScreen(),
+    const MatcheScreen(),
     const ChatsScreen(),
     const ProfileScreen(),
   ];

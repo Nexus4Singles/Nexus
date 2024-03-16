@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
 import 'package:nexus/features/profile/presentation/widgets/text_container.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -13,6 +16,36 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _init();
+  }
+
+  FutureOr _init() {
+    Future.delayed(const Duration(seconds: 1), () {
+      showAdaptiveDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return AlertDialog.adaptive(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: Text(
+              'Compatibility Quiz',
+              style: textStyle16,
+            ),
+            content: const CompatabiltyModal(),
+          );
+        },
+      );
+    });
+
+// ada(context: context, builder: )
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

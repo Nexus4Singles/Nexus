@@ -28,6 +28,28 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>NexusApp want to access your Music to use songs</string>
+	<key>NSBluetoothAlwaysUsageDescript</key>
+	<string>NexusApp want to access your Bluetooth to send picture</string>
+	<key>NSBluetoothPeripheralUsageDesc</key>
+	<string>NexusApp want to access your Bluetooth to send picture</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>NexusApp want to access your calander to add date of birth</string>
+	<key>NSCameraUsageDescription</key>
+	<string>NexusApp want to use your camera to upload profile pics</string>
+	<key>NSContactsUsageDescription</key>
+	<string>NexusApp want to access your contacts to notify the user</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>NexusApp want to use your location to find your address</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>NexusApp want to access your Microphone to make voice call</string>
+	<key>NSMotionUsageDescription</key>
+	<string>NexusApp want to access your Motion.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>NexusApp want to access your gallery to upload profile pics</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>NexusApp want to access your SpeechRecognition to increase experiance of voice call.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

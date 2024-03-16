@@ -1,0 +1,147 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// InjectableConfigGenerator
+// **************************************************************************
+
+// ignore_for_file: type=lint
+// coverage:ignore-file
+
+// ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:cloud_firestore/cloud_firestore.dart' as _i6;
+import 'package:cloudinary_public/cloudinary_public.dart' as _i4;
+import 'package:firebase_auth/firebase_auth.dart' as _i5;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i7;
+import 'package:get_it/get_it.dart' as _i1;
+import 'package:injectable/injectable.dart' as _i2;
+import 'package:internet_connection_checker/internet_connection_checker.dart'
+    as _i8;
+import 'package:shared_preferences/shared_preferences.dart' as _i10;
+import 'package:uuid/uuid.dart' as _i11;
+
+import '../../features/auth/data/data-sources/local-datasource/auth_local.dart'
+    as _i3;
+import '../../features/auth/data/data-sources/remote-datasource/auth_remote.dart'
+    as _i16;
+import '../../features/auth/data/repo/auth_repo_impl.dart' as _i23;
+import '../../features/auth/domain/repositories/auth_repo.dart' as _i22;
+import '../../features/auth/domain/usecases/add_reg_code.dart' as _i32;
+import '../../features/auth/domain/usecases/is_auth.dart' as _i24;
+import '../../features/auth/domain/usecases/login.dart' as _i26;
+import '../../features/auth/domain/usecases/login_google.dart' as _i25;
+import '../../features/auth/domain/usecases/profile.dart' as _i28;
+import '../../features/auth/domain/usecases/register.dart' as _i29;
+import '../../features/auth/domain/usecases/register_google.dart' as _i30;
+import '../../features/auth/domain/usecases/update_profile.dart' as _i31;
+import '../../features/auth/presentation/change_notifier/auth_notifier.dart'
+    as _i33;
+import '../network/client.dart' as _i14;
+import '../network/formatter.dart' as _i13;
+import '../network/network_info.dart' as _i9;
+import '../network/remote.dart' as _i17;
+import '../storage/storage.dart' as _i12;
+import '../storage/storage_impl.dart' as _i15;
+import '../usecases/core/get_user.dart' as _i18;
+import '../usecases/core/has_started.dart' as _i19;
+import '../usecases/core/logout.dart' as _i27;
+import '../usecases/core/save_user.dart' as _i20;
+import '../usecases/core/started.dart' as _i21;
+import 'register_module.dart' as _i34;
+
+// initializes the registration of main-scope dependencies inside of GetIt
+Future<_i1.GetIt> init(
+  _i1.GetIt getIt, {
+  String? environment,
+  _i2.EnvironmentFilter? environmentFilter,
+}) async {
+  final gh = _i2.GetItHelper(
+    getIt,
+    environment,
+    environmentFilter,
+  );
+  final registerModule = _$RegisterModule();
+  gh.lazySingleton<_i3.AuthenticationLocalDatasource>(
+      () => _i3.AuthenticationLocalDatasourceImpl());
+  gh.lazySingleton<_i4.CloudinaryPublic>(() => registerModule.cloudinary);
+  gh.lazySingleton<_i5.FirebaseAuth>(() => registerModule.auth);
+  gh.lazySingleton<_i6.FirebaseFirestore>(() => registerModule.firestore);
+  gh.lazySingleton<_i7.FlutterSecureStorage>(
+      () => registerModule.secureStorage);
+  gh.lazySingleton<_i8.InternetConnectionChecker>(
+      () => registerModule.internetConnectionChecker);
+  gh.lazySingleton<_i9.NetworkInfo>(() => _i9.NetworkInfoImpl());
+  await gh.factoryAsync<_i10.SharedPreferences>(
+    () => registerModule.prefs,
+    preResolve: true,
+  );
+  gh.lazySingleton<_i11.Uuid>(() => registerModule.uuid);
+  gh.lazySingleton<_i12.FSS>(() => _i12.FSSImpl(
+        secureStorage: gh<_i7.FlutterSecureStorage>(),
+        preferences: gh<_i10.SharedPreferences>(),
+      ));
+  gh.lazySingleton<_i13.MyFormatter>(
+      () => _i13.MyFormatterImpl(networkInfo: gh<_i9.NetworkInfo>()));
+  gh.lazySingleton<_i14.MyNetwork>(() => _i14.MyNetworkImpl(
+        auth: gh<_i5.FirebaseAuth>(),
+        uuid: gh<_i11.Uuid>(),
+        firestore: gh<_i6.FirebaseFirestore>(),
+      ));
+  gh.lazySingleton<_i15.Storage>(() => _i15.StorageImpl(fss: gh<_i12.FSS>()));
+  gh.lazySingleton<_i16.AuthenticationRemoteDatasource>(
+      () => _i16.AuthenticationRemoteDatasourceImpl(
+            network: gh<_i14.MyNetwork>(),
+            cloudinary: gh<_i4.CloudinaryPublic>(),
+          ));
+  gh.lazySingleton<_i17.GeneralRemote>(
+      () => _i17.GeneralRemoteImpl(network: gh<_i14.MyNetwork>()));
+  gh.lazySingleton<_i18.GetUserUsecase>(
+      () => _i18.GetUserUsecase(storage: gh<_i15.Storage>()));
+  gh.lazySingleton<_i19.HasStratedUsecase>(
+      () => _i19.HasStratedUsecase(storage: gh<_i15.Storage>()));
+  gh.lazySingleton<_i20.SaveUserUsecase>(
+      () => _i20.SaveUserUsecase(storage: gh<_i15.Storage>()));
+  gh.lazySingleton<_i21.StartedUsecase>(
+      () => _i21.StartedUsecase(storage: gh<_i15.Storage>()));
+  gh.lazySingleton<_i22.AuthenticationRepository>(
+      () => _i23.AuthenticationRepositoryImpl(
+            remote: gh<_i16.AuthenticationRemoteDatasource>(),
+            formatter: gh<_i13.MyFormatter>(),
+            storage: gh<_i15.Storage>(),
+            generalRemote: gh<_i17.GeneralRemote>(),
+            uuid: gh<_i11.Uuid>(),
+          ));
+  gh.lazySingleton<_i24.IsAuthUsecase>(() =>
+      _i24.IsAuthUsecase(repository: gh<_i22.AuthenticationRepository>()));
+  gh.lazySingleton<_i25.LoginGoogleUsecase>(() =>
+      _i25.LoginGoogleUsecase(repository: gh<_i22.AuthenticationRepository>()));
+  gh.lazySingleton<_i26.LoginUsecase>(
+      () => _i26.LoginUsecase(repository: gh<_i22.AuthenticationRepository>()));
+  gh.lazySingleton<_i27.LogoutUsecase>(() =>
+      _i27.LogoutUsecase(repository: gh<_i22.AuthenticationRepository>()));
+  gh.lazySingleton<_i28.ReadProfileUsecase>(() =>
+      _i28.ReadProfileUsecase(repository: gh<_i22.AuthenticationRepository>()));
+  gh.lazySingleton<_i29.RegisterUsecase>(() =>
+      _i29.RegisterUsecase(repository: gh<_i22.AuthenticationRepository>()));
+  gh.lazySingleton<_i30.RegisterWithGoogleUsecase>(() =>
+      _i30.RegisterWithGoogleUsecase(
+          repository: gh<_i22.AuthenticationRepository>()));
+  gh.lazySingleton<_i31.UpdateProfileUsecase>(() => _i31.UpdateProfileUsecase(
+      repository: gh<_i22.AuthenticationRepository>()));
+  gh.lazySingleton<_i32.AddRegCodeUsecase>(() =>
+      _i32.AddRegCodeUsecase(repository: gh<_i22.AuthenticationRepository>()));
+  gh.factory<_i33.AuthNotifier>(() => _i33.AuthNotifier(
+        startedUsecase: gh<_i21.StartedUsecase>(),
+        hasStratedUsecase: gh<_i19.HasStratedUsecase>(),
+        loginUsecase: gh<_i26.LoginUsecase>(),
+        registerUsecase: gh<_i29.RegisterUsecase>(),
+        isAuthUsecase: gh<_i24.IsAuthUsecase>(),
+        logoutUsecase: gh<_i27.LogoutUsecase>(),
+        readProfileUsecase: gh<_i28.ReadProfileUsecase>(),
+        updateProfileUsecase: gh<_i31.UpdateProfileUsecase>(),
+        remote: gh<_i16.AuthenticationRemoteDatasource>(),
+        formatter: gh<_i13.MyFormatter>(),
+      ));
+  return getIt;
+}
+
+class _$RegisterModule extends _i34.RegisterModule {}

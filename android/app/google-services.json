@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "196661066636",
+    "project_id": "nexusapp-7bed8",
+    "storage_bucket": "nexusapp-7bed8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196661066636:android:328dd2a0df70a3dd7274a9",
+        "android_client_info": {
+          "package_name": "com.nexus.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCemyTdr4WY_oRJPPk1GCwwEub6FoDWa50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
