@@ -5,22 +5,21 @@ import 'package:pinput/pinput.dart';
 import 'colors.dart';
 
 TextStyle headerStyle =
-    GoogleFonts.nunito(fontSize: 35, fontWeight: FontWeight.w700);
+    GoogleFonts.sen(fontSize: 35, fontWeight: FontWeight.w700);
 TextStyle subHeaderStyle =
-    GoogleFonts.nunito(fontSize: 16.0, fontWeight: FontWeight.w500);
+    GoogleFonts.sen(fontSize: 16.0, fontWeight: FontWeight.w500);
 
-TextStyle textStyle8 = GoogleFonts.nunito(fontSize: 8.0);
-TextStyle textStyle10 = GoogleFonts.nunito(fontSize: 10.0);
-TextStyle textStyle12 = GoogleFonts.nunito(fontSize: 12.0);
-TextStyle textStyle14 = GoogleFonts.nunito(fontSize: 14.0);
-TextStyle textStyle16 = GoogleFonts.nunito(fontSize: 16.0);
-TextStyle textStyle18 = GoogleFonts.nunito(fontSize: 18.0);
+TextStyle textStyle8 = GoogleFonts.sen(fontSize: 8.0);
+TextStyle textStyle10 = GoogleFonts.sen(fontSize: 10.0);
+TextStyle textStyle12 = GoogleFonts.sen(fontSize: 12.0);
+TextStyle textStyle14 = GoogleFonts.sen(fontSize: 14.0);
+TextStyle textStyle16 = GoogleFonts.sen(fontSize: 16.0);
+TextStyle textStyle18 = GoogleFonts.sen(fontSize: 18.0);
 
-TextStyle numberArchivoStyle = GoogleFonts.nunito();
-TextStyle numberReadexStyle = GoogleFonts.nunito();
+TextStyle numberArchivoStyle = GoogleFonts.sen();
+TextStyle numberReadexStyle = GoogleFonts.sen();
 
-TextStyle bold20 =
-    GoogleFonts.nunito(fontWeight: FontWeight.w700, fontSize: 20);
+TextStyle bold20 = GoogleFonts.sen(fontWeight: FontWeight.w700, fontSize: 20);
 
 OutlineInputBorder outlineInputBorder = OutlineInputBorder(
   borderRadius: BorderRadius.circular(25),

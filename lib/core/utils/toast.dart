@@ -18,18 +18,23 @@ class AppToast {
     );
   }
 
-  void showErrorToast(String label) {
+  void showErrorToast(
+    String label, {
+    Color? color,
+    Color? textColor,
+    String? header,
+  }) {
     Get.snackbar(
-      "Error",
+      header ?? "Error",
       label,
       snackPosition: SnackPosition.TOP,
-      backgroundColor: Colors.red,
+      backgroundColor: color ?? primary,
       borderRadius: 10,
       isDismissible: true,
       margin: const EdgeInsets.all(20),
-      colorText: white,
+      colorText: textColor ?? white,
       snackStyle: SnackStyle.FLOATING,
-      duration: const Duration(seconds: 10),
+      duration: const Duration(seconds: 2),
     );
   }
 }

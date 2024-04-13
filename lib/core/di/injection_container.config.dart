@@ -23,18 +23,23 @@ import '../../features/auth/data/data-sources/local-datasource/auth_local.dart'
     as _i3;
 import '../../features/auth/data/data-sources/remote-datasource/auth_remote.dart'
     as _i16;
-import '../../features/auth/data/repo/auth_repo_impl.dart' as _i23;
-import '../../features/auth/domain/repositories/auth_repo.dart' as _i22;
-import '../../features/auth/domain/usecases/add_reg_code.dart' as _i32;
-import '../../features/auth/domain/usecases/is_auth.dart' as _i24;
-import '../../features/auth/domain/usecases/login.dart' as _i26;
-import '../../features/auth/domain/usecases/login_google.dart' as _i25;
-import '../../features/auth/domain/usecases/profile.dart' as _i28;
-import '../../features/auth/domain/usecases/register.dart' as _i29;
-import '../../features/auth/domain/usecases/register_google.dart' as _i30;
-import '../../features/auth/domain/usecases/update_profile.dart' as _i31;
+import '../../features/auth/data/repo/auth_repo_impl.dart' as _i25;
+import '../../features/auth/domain/repositories/auth_repo.dart' as _i24;
+import '../../features/auth/domain/usecases/add_reg_code.dart' as _i35;
+import '../../features/auth/domain/usecases/is_auth.dart' as _i27;
+import '../../features/auth/domain/usecases/login.dart' as _i29;
+import '../../features/auth/domain/usecases/login_google.dart' as _i28;
+import '../../features/auth/domain/usecases/profile.dart' as _i31;
+import '../../features/auth/domain/usecases/register.dart' as _i32;
+import '../../features/auth/domain/usecases/register_google.dart' as _i33;
+import '../../features/auth/domain/usecases/update_profile.dart' as _i34;
 import '../../features/auth/presentation/change_notifier/auth_notifier.dart'
-    as _i33;
+    as _i36;
+import '../../features/home/data/repositories/repo_imple.dart' as _i21;
+import '../../features/home/domain/repositories/repo.dart' as _i20;
+import '../../features/home/domain/usecases/get_users.dart' as _i26;
+import '../../features/home/presentation/change_notifier/home_notifier.dart'
+    as _i37;
 import '../network/client.dart' as _i14;
 import '../network/formatter.dart' as _i13;
 import '../network/network_info.dart' as _i9;
@@ -43,10 +48,10 @@ import '../storage/storage.dart' as _i12;
 import '../storage/storage_impl.dart' as _i15;
 import '../usecases/core/get_user.dart' as _i18;
 import '../usecases/core/has_started.dart' as _i19;
-import '../usecases/core/logout.dart' as _i27;
-import '../usecases/core/save_user.dart' as _i20;
-import '../usecases/core/started.dart' as _i21;
-import 'register_module.dart' as _i34;
+import '../usecases/core/logout.dart' as _i30;
+import '../usecases/core/save_user.dart' as _i22;
+import '../usecases/core/started.dart' as _i23;
+import 'register_module.dart' as _i38;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 Future<_i1.GetIt> init(
@@ -98,50 +103,63 @@ Future<_i1.GetIt> init(
       () => _i18.GetUserUsecase(storage: gh<_i15.Storage>()));
   gh.lazySingleton<_i19.HasStratedUsecase>(
       () => _i19.HasStratedUsecase(storage: gh<_i15.Storage>()));
-  gh.lazySingleton<_i20.SaveUserUsecase>(
-      () => _i20.SaveUserUsecase(storage: gh<_i15.Storage>()));
-  gh.lazySingleton<_i21.StartedUsecase>(
-      () => _i21.StartedUsecase(storage: gh<_i15.Storage>()));
-  gh.lazySingleton<_i22.AuthenticationRepository>(
-      () => _i23.AuthenticationRepositoryImpl(
+  gh.lazySingleton<_i20.HomeRepository>(() => _i21.HomeRepositoryImpl(
+        remote: gh<_i16.AuthenticationRemoteDatasource>(),
+        formatter: gh<_i13.MyFormatter>(),
+        storage: gh<_i15.Storage>(),
+        generalRemote: gh<_i17.GeneralRemote>(),
+      ));
+  gh.lazySingleton<_i22.SaveUserUsecase>(
+      () => _i22.SaveUserUsecase(storage: gh<_i15.Storage>()));
+  gh.lazySingleton<_i23.StartedUsecase>(
+      () => _i23.StartedUsecase(storage: gh<_i15.Storage>()));
+  gh.lazySingleton<_i24.AuthenticationRepository>(
+      () => _i25.AuthenticationRepositoryImpl(
             remote: gh<_i16.AuthenticationRemoteDatasource>(),
             formatter: gh<_i13.MyFormatter>(),
             storage: gh<_i15.Storage>(),
             generalRemote: gh<_i17.GeneralRemote>(),
             uuid: gh<_i11.Uuid>(),
           ));
-  gh.lazySingleton<_i24.IsAuthUsecase>(() =>
-      _i24.IsAuthUsecase(repository: gh<_i22.AuthenticationRepository>()));
-  gh.lazySingleton<_i25.LoginGoogleUsecase>(() =>
-      _i25.LoginGoogleUsecase(repository: gh<_i22.AuthenticationRepository>()));
-  gh.lazySingleton<_i26.LoginUsecase>(
-      () => _i26.LoginUsecase(repository: gh<_i22.AuthenticationRepository>()));
-  gh.lazySingleton<_i27.LogoutUsecase>(() =>
-      _i27.LogoutUsecase(repository: gh<_i22.AuthenticationRepository>()));
-  gh.lazySingleton<_i28.ReadProfileUsecase>(() =>
-      _i28.ReadProfileUsecase(repository: gh<_i22.AuthenticationRepository>()));
-  gh.lazySingleton<_i29.RegisterUsecase>(() =>
-      _i29.RegisterUsecase(repository: gh<_i22.AuthenticationRepository>()));
-  gh.lazySingleton<_i30.RegisterWithGoogleUsecase>(() =>
-      _i30.RegisterWithGoogleUsecase(
-          repository: gh<_i22.AuthenticationRepository>()));
-  gh.lazySingleton<_i31.UpdateProfileUsecase>(() => _i31.UpdateProfileUsecase(
-      repository: gh<_i22.AuthenticationRepository>()));
-  gh.lazySingleton<_i32.AddRegCodeUsecase>(() =>
-      _i32.AddRegCodeUsecase(repository: gh<_i22.AuthenticationRepository>()));
-  gh.factory<_i33.AuthNotifier>(() => _i33.AuthNotifier(
-        startedUsecase: gh<_i21.StartedUsecase>(),
+  gh.lazySingleton<_i26.GetUsersUsecase>(
+      () => _i26.GetUsersUsecase(repository: gh<_i20.HomeRepository>()));
+  gh.lazySingleton<_i27.IsAuthUsecase>(() =>
+      _i27.IsAuthUsecase(repository: gh<_i24.AuthenticationRepository>()));
+  gh.lazySingleton<_i28.LoginGoogleUsecase>(() =>
+      _i28.LoginGoogleUsecase(repository: gh<_i24.AuthenticationRepository>()));
+  gh.lazySingleton<_i29.LoginUsecase>(
+      () => _i29.LoginUsecase(repository: gh<_i24.AuthenticationRepository>()));
+  gh.lazySingleton<_i30.LogoutUsecase>(() =>
+      _i30.LogoutUsecase(repository: gh<_i24.AuthenticationRepository>()));
+  gh.lazySingleton<_i31.ReadProfileUsecase>(() =>
+      _i31.ReadProfileUsecase(repository: gh<_i24.AuthenticationRepository>()));
+  gh.lazySingleton<_i32.RegisterUsecase>(() =>
+      _i32.RegisterUsecase(repository: gh<_i24.AuthenticationRepository>()));
+  gh.lazySingleton<_i33.RegisterWithGoogleUsecase>(() =>
+      _i33.RegisterWithGoogleUsecase(
+          repository: gh<_i24.AuthenticationRepository>()));
+  gh.lazySingleton<_i34.UpdateProfileUsecase>(() => _i34.UpdateProfileUsecase(
+      repository: gh<_i24.AuthenticationRepository>()));
+  gh.lazySingleton<_i35.AddRegCodeUsecase>(() =>
+      _i35.AddRegCodeUsecase(repository: gh<_i24.AuthenticationRepository>()));
+  gh.factory<_i36.AuthNotifier>(() => _i36.AuthNotifier(
+        startedUsecase: gh<_i23.StartedUsecase>(),
         hasStratedUsecase: gh<_i19.HasStratedUsecase>(),
-        loginUsecase: gh<_i26.LoginUsecase>(),
-        registerUsecase: gh<_i29.RegisterUsecase>(),
-        isAuthUsecase: gh<_i24.IsAuthUsecase>(),
-        logoutUsecase: gh<_i27.LogoutUsecase>(),
-        readProfileUsecase: gh<_i28.ReadProfileUsecase>(),
-        updateProfileUsecase: gh<_i31.UpdateProfileUsecase>(),
+        loginUsecase: gh<_i29.LoginUsecase>(),
+        registerUsecase: gh<_i32.RegisterUsecase>(),
+        isAuthUsecase: gh<_i27.IsAuthUsecase>(),
+        logoutUsecase: gh<_i30.LogoutUsecase>(),
+        readProfileUsecase: gh<_i31.ReadProfileUsecase>(),
+        updateProfileUsecase: gh<_i34.UpdateProfileUsecase>(),
         remote: gh<_i16.AuthenticationRemoteDatasource>(),
         formatter: gh<_i13.MyFormatter>(),
+      ));
+  gh.factory<_i37.HomeNotifier>(() => _i37.HomeNotifier(
+        remote: gh<_i16.AuthenticationRemoteDatasource>(),
+        getUsersUsecase: gh<_i26.GetUsersUsecase>(),
+        readProfileUsecase: gh<_i31.ReadProfileUsecase>(),
       ));
   return getIt;
 }
 
-class _$RegisterModule extends _i34.RegisterModule {}
+class _$RegisterModule extends _i38.RegisterModule {}

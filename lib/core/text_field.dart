@@ -26,6 +26,8 @@ class CustomTextField extends StatefulWidget {
   final Color? borderColor;
   final Color? fillColor;
   final bool? isFilled;
+  final bool? autoCorrect;
+  final TextCapitalization textCapitalization;
   const CustomTextField({
     Key? key,
     required this.controller,
@@ -36,6 +38,7 @@ class CustomTextField extends StatefulWidget {
     this.isMulti = false,
     this.readOnly = false,
     this.autofocus = false,
+    this.autoCorrect = false,
     this.errorText,
     this.label,
     this.maxLength,
@@ -51,6 +54,7 @@ class CustomTextField extends StatefulWidget {
     this.borderColor,
     this.fillColor = white,
     this.isFilled = true,
+    this.textCapitalization = TextCapitalization.none,
   }) : super(key: key);
 
   @override
@@ -71,6 +75,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
       validator: widget.validator,
       textInputAction: widget.action,
       style: textStyle14,
+      autocorrect: widget.autoCorrect!,
+      textCapitalization: widget.textCapitalization,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       // obscureText: widget.obsecure! ? true : false,
       decoration: InputDecoration(
         prefixIcon: widget.prefixIcon,
@@ -82,7 +89,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         fillColor: widget.fillColor,
         filled: widget.isFilled,
-        contentPadding: const EdgeInsets.all(10),
+        contentPadding: const EdgeInsets.all(15),
         border: outlineInputBorder.copyWith(
           borderRadius: BorderRadius.circular(widget.radius!),
           borderSide: const BorderSide(

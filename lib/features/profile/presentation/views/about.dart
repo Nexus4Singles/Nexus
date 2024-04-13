@@ -25,18 +25,20 @@ class _AboutNexusScreenState extends State<AboutNexusScreen> {
         foregroundColor: black,
         elevation: 0,
       ),
-      body:SingleChildScrollView(child:  Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        child: Column(
-          children: [
-            Text(
-              'Nexus is more than just another Christian\n dating app; it is an intentional movement to see\n more godly marriages exist in God’s kingdom.\n\nThis application is strictly exclusive to African\nsingles who are not just identifying with \nChristianity as a religion but have a relationship\n with God.\n\nThe goal is not to match-make single \nChristians, but to leverage technology to create\nmore visibility for Christians singles in Africa \nseeking serious relationships leading to \nmarriage. This would increase their chances of \nconnecting to their future spouses, of course, \nwith the help of the Holy Spirit for discernment.\n\nWe are starting from Nigeria and will gradually \nscale to some other African countries.\n\nJoin us on this journey of ours to see more \nkingdom marriages exist in Africa. Tell someone \nabout Nexus today!',
-              style: textStyle16.copyWith(
-                  height: 1.5, color: black, fontWeight: FontWeight.w400),
-            )
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          child: Column(
+            children: [
+              Text(
+                'Nexus is more than just another Christian dating app; it is an intentional movement to see more godly marriages exist in God’s kingdom. \n\nThis platform is strictly exclusive to Christian singles who do not only see Christianity as a religion but actually have a genuine relationship with God. \n\nOur goal is not to match-make single Christians, but to leverage technology to create a centralized platform that offers greater visibility for Christian singles worldwide, who are seeking serious relationships leading to marriage. This would increase their chances of connecting to their future spouses, of course, with the help of the Holy Spirit for discernment & guidance.\n\nWe are starting with Nigerians and will gradually scale to other nationalities.\n\nJoin us on this journey of ours to see more kingdom marriages exist across the world. Tell someone about Nexus today!',
+                style: textStyle16.copyWith(
+                    height: 1.5, color: black, fontWeight: FontWeight.w400),
+              )
+            ],
+          ),
         ),
-      ),),
+      ),
     );
   }
 }

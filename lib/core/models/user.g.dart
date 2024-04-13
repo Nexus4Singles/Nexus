@@ -9,6 +9,7 @@ part of 'user.dart';
 UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       id: json['id'] as String,
       name: json['name'] as String,
+      username: json['username'] as String,
       email: json['email'] as String,
       profileUrl: json['profile_url'] as String?,
       age: json['age'] as int,
@@ -31,11 +32,22 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       notificationToken: json['notification_token'] as String?,
       phoneNumber: json['phone_number'] as String?,
       registrationProgress: json['registration_progress'] as String?,
+      country: json['country'] as String?,
+      churchName: json['church_name'] as String?,
+      compatibility: json['compatibility'] == null
+          ? null
+          : CompatibilityModel.fromJson(
+              json['compatibility'] as Map<String, dynamic>),
+      compatibilitySetted: json['compatibility_setted'] as bool?,
+      location: json['location'] == null
+          ? null
+          : LocationModel.fromJson(json['location'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'username': instance.username,
       'email': instance.email,
       'profile_url': instance.profileUrl,
       'is_verified': instance.isVerified,
@@ -54,4 +66,9 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'notification_token': instance.notificationToken,
       'phone_number': instance.phoneNumber,
       'registration_progress': instance.registrationProgress,
+      'country': instance.country,
+      'church_name': instance.churchName,
+      'compatibility': instance.compatibility,
+      'compatibility_setted': instance.compatibilitySetted,
+      'location': instance.location,
     };

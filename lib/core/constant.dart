@@ -10,10 +10,10 @@ const kCurrentUser = 'current_user';
 
 // ignore_for_file: constant_identifier_names
 
-const String kUSER = 'DC_USER';
+const String kUSER = 'users';
 const String kREGCODE = 'DC_REGCODES';
 const String kGS = 'DC_GET_STARTED_KEY';
-const String kUSER_KEY = 'DC_USER';
+const String kUSER_KEY = 'users';
 
 //! Failure messages
 const String kUNAUTHORIZED_USER_MESSAGE = 'Unauthorized user access';
@@ -51,3 +51,19 @@ const kRELATIONSHIPWITHGOD = 'relationship_with_god';
 const kROLEOFHUSBAND = 'role_of_husband';
 const kBESTQUALITIESORTRAITS = 'best_qualities_or_traits';
 const kREGPROGRESS = 'registration_progress';
+const kCHURCHNAME = 'church_name';
+const kCOUNTRY = 'country';
+const kMARITALSTATUS = 'marital_status';
+const kHAVEKIDS = 'have_kids';
+const kGENOTYPE = 'genotype';
+const kPERSONALITYTYPE = 'personality_type';
+const kREGULARSOURCEOFINCOME = 'regular_source_of_income';
+const kMARRYWHOISNOTFINANCIALLYSTABLE = 'marry_someone_fs';
+const kMENTALLYREADYFORMARRIAGE = 'mentally_ready';
+const kBELIEVEINCOHIABITING = 'believe_cohabiting';
+const kSHOULDCHRISTIANSPEAKINTONGUE = 'should_christian_speak_in_tongue';
+const kBELIEVEINTITHING = 'believe_in_tithing';
+const kCOMPATIBILITY = 'compatibility';
+const kCOMPATIBILITYSETTED = 'compatibility_setted';
+const kLOCATION = 'location';
+const mapAPIKey = 'AIzaSyD1YgWNHVJ49A9cSzrv6RxM8ycP5gA0nI4';

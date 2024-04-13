@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
+import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:nexus/router.dart';
+import 'package:provider/provider.dart';
 
 class CongratulationScreen extends StatefulWidget {
   const CongratulationScreen({super.key});
@@ -19,13 +20,14 @@ class CongratulationScreen extends StatefulWidget {
 class _CongratulationScreenState extends State<CongratulationScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
+    return Consumer<AuthNotifier>(builder: (context, model, _) {
+      return Scaffold(
+        body: Column(
           children: [
             Container(
               height: height(context),
               width: width(context),
+              color: white,
               child: Stack(
                 children: [
                   Image.asset(
@@ -34,7 +36,7 @@ class _CongratulationScreenState extends State<CongratulationScreen> {
                     fit: BoxFit.cover,
                   ),
                   Positioned(
-                    bottom: 0,
+                    bottom: 60,
                     left: 0,
                     right: 0,
                     child: Container(
@@ -46,39 +48,65 @@ class _CongratulationScreenState extends State<CongratulationScreen> {
                           horizontal: 15, vertical: 15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset('assets/images/congratulation.png'),
                           const SizedBoxH20(),
-                          Text(
-                            ' Congratulations ',
-                            style: GoogleFonts.nunito(
-                              fontSize: 32.sp,
-                              fontWeight: FontWeight.w700,
-                              color: black,
-                            ),
+                          Column(
+                            children: [
+                              Image.asset('assets/images/congratulation.png'),
+                              const SizedBoxH20(),
+                              Text(
+                                'Congratulations',
+                                style: headerStyle.copyWith(
+                                  fontSize: 32.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: black,
+                                ),
+                              ),
+                              const SizedBoxH20(),
+                              Text(
+                                ' You have successfully created an account on Nexus! \nKindly click on the verification link sent to your email inbox/spam to activate your account and setup your profile which will be visible to only opposite gender users. ',
+                                textAlign: TextAlign.center,
+                                style: textStyle14.copyWith(
+                                    fontWeight: FontWeight.w400, color: black),
+                              ),
+                              // const SizedBoxH20(),
+                              // Text(
+                              //   'We have sent you a verification link. Kindly click on the link to verify your account',
+                              //   textAlign: TextAlign.center,
+                              //   style: textStyle14.copyWith(
+                              //       fontWeight: FontWeight.w400, color: black),
+                              // ),
+                              const SizedBoxH20(),
+                              Text(
+                                'Didn’t receive verification link?',
+                                style: textStyle14.copyWith(
+                                  color: ash,
+                                ),
+                              ),
+                              const SizedBoxH10(),
+                              InkWell(
+                                onTap: () {
+                                  model.resendVerificatioLink();
+                                },
+                                child: Text(
+                                  'Resend Link',
+                                  style: textStyle14.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: primary,
+                                  ),
+                                ),
+                              ),
+                              const SizedBoxH25(),
+                              CustomButton(
+                                onPressed: () {
+                                  Get.toNamed(AppRoutes.login);
+                                },
+                                text: 'Sign In',
+                              ),
+                              // const SizedBoxH20(),
+                            ],
                           ),
-                          const SizedBoxH20(),
-                          Text(
-                            'You have successfully created an account on nexus!\nif you have not verified youe account, please do so\nlater. only verified profiles will be visible on search\nresults.',
-                            textAlign: TextAlign.center,
-                            style: textStyle12.copyWith(
-                                fontWeight: FontWeight.w300, color: black),
-                          ),
-                          const SizedBoxH20(),
-                          Text(
-                            'You are now ready to setup your profile which will be\nvisible to opposite gender users',
-                            textAlign: TextAlign.center,
-                            style: textStyle12.copyWith(
-                                fontWeight: FontWeight.w300, color: black),
-                          ),
-                          const SizedBoxH25(),
-                          CustomButton(
-                            onPressed: () {
-                              Get.toNamed(AppRoutes.gender);
-                            },
-                            text: 'Set Up Profile',
-                          ),
-                          const SizedBoxH20(),
                         ],
                       ),
                     ),
@@ -88,7 +116,7 @@ class _CongratulationScreenState extends State<CongratulationScreen> {
             ),
           ],
         ),
-      ),
-    );
+      );
+    });
   }
 }

@@ -70,6 +70,7 @@ class _CustomTextFieldPasswordState extends State<CustomTextFieldPassword> {
       onEditingComplete: widget.onEditingCompleted,
       controller: widget.controller,
       validator: widget.validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       textInputAction: widget.action,
       style: textStyle14,
       obscureText: widget.obsecure,
@@ -83,7 +84,7 @@ class _CustomTextFieldPasswordState extends State<CustomTextFieldPassword> {
         ),
         fillColor: widget.fillColor,
         filled: widget.isFilled,
-        contentPadding: const EdgeInsets.all(10),
+        contentPadding: const EdgeInsets.all(15),
         border: outlineInputBorder.copyWith(
           borderRadius: BorderRadius.circular(widget.radius!),
           borderSide: const BorderSide(

@@ -17,9 +17,10 @@ class BaseHelper {
     FocusScope.of(context).unfocus();
   }
 
-  static launchBrowser(url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+  static launchBrowser(String link) async {
+    Uri url = Uri.parse(link);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
     } else {
       throw 'Could not launch $url';
     }

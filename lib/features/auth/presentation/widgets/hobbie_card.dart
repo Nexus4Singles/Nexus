@@ -16,11 +16,11 @@ class HobbieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onPress,
       child: Container(
         decoration: BoxDecoration(
-          color: isChecked ? primary : grey,
+          color: isChecked ? primary : newGrey,
           borderRadius: BorderRadius.circular(25),
         ),
         padding: EdgeInsets.all(10.sp),

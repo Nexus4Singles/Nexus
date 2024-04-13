@@ -14,7 +14,7 @@ dependencies:
   carousel_slider: ^4.2.1
   cloud_firestore: ^4.15.4
   cloudinary_public: ^0.23.1
-  country_picker: ^2.0.20
+  country_picker: ^2.0.25
   cupertino_icons: ^1.0.2
   dartz: ^0.10.1
   dotted_border: ^2.1.0
@@ -34,6 +34,7 @@ dependencies:
   flutter_svg: ^2.0.7
   get: ^4.6.5
   google_fonts: ^5.1.0
+  google_places_flutter: ^2.0.8
   iconly: ^1.0.1
   iconsax: ^0.0.8
   image_picker: ^1.0.7
@@ -43,16 +44,20 @@ dependencies:
   just_audio: ^0.9.36
   local_auth: ^2.1.8
   logger: ^2.0.2+1
+  lottie: ^3.1.0
   material_design_icons_flutter: ^7.0.7296
   path_provider: ^2.1.2
+  permission_handler: ^11.3.1
   pinput: ^3.0.0
   provider: ^6.0.5
   rxdart: ^0.27.7
   shared_preferences: ^2.2.0
   smooth_page_indicator: ^1.1.0
   step_progress_indicator: ^1.0.2
+  story: ^1.1.0
   ticket_widget: ^0.0.1
   url_launcher: ^6.1.12
+  wave: ^0.2.2
   wheel_slider: ^1.2.1
 
 dev_dependencies:
@@ -72,3 +77,10 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/launcher.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  # flutter pub run flutter_launcher_icons

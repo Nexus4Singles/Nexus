@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/style.dart';
+// import 'package:nexus/core/style.dart';
 
 class CompatRadio extends StatelessWidget {
   final String val;
@@ -23,7 +24,7 @@ class CompatRadio extends StatelessWidget {
         value: val,
         title: Text(
           val,
-          style: textStyle14,
+          style: GoogleFonts.robotoCondensed(fontSize: 13),
           overflow: TextOverflow.ellipsis,
         ),
         contentPadding: const EdgeInsets.all(0),

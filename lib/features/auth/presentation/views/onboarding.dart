@@ -25,28 +25,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'id': '1',
       "title": "Create a Profile",
       "subtitle":
-          "As part of your profile set up, you will be required to make audio recordings answering a few questions. \n\nThese questions require highly subjective and personal responses. Hence, seeking external help to answer them will be unnecessary. \n\nThis is to limit unbelievers as much as possible from joining this platform and to ensure users align with your thought process before connecting with you.",
+          "Part of the profile creation process requires users to make audio recordings to answer three (3) questions which require subjective responses. \n\nThe aim is to provide you with insights into the beliefs & thought processes of users, beyond their pictures & bio-data. This would make it easier for you to decide who to connect with. \n\nHence, if you don´t feel confident enough to properly articulate your thoughts, this app may not be ideal for you.",
       "image": iOnboard1,
     },
     {
       'id': '2',
       "title": "Search Profile",
       "subtitle":
-          "Your profile and audio recordings will only be accessible to users of the opposite gender. \n\nYou will also be able to view profiles and connect with opposite gender users from your country who live in the diaspora. \n\nNexus is currently designed only for Nigerian Christian singles all over the world.",
+          "Your profile and audio recordings will only be visible to opposite gender users. \n\nYou will also be able to search and view profiles of opposite gender users living in any country, with the option of filters to narrow down your search.\n\nNexus is currently available to Nigerians living anywhere in the world, but we plan to scale to other countries gradually. Kindly stay patient if you are not Nigerian. ",
       "image": iOnboard2,
     },
     {
       'id': '3',
       "title": "Find your Match",
       "subtitle":
-          "You will receive notifications of opposite gender users who have liked your profile. \n\nHowever, they would not be able to connect with you until you have equally viewed and liked their profiles, which automatically leads to a MATCH. \n\nThis is to ensure only users you approve of are able to connect with you.",
+          "You will receive notifications of opposite gender users who have liked your profile. However, they would not be able to connect with you until you have equally viewed and liked their profiles, which automatically leads to a MATCH.\n\nThis is to preserve your privacy and security by ensuring  only users you approve of are able to connect with you. \n\nIt also becomes pointless for those looking for flings or hookups to create profiles, because they would find it difficult to use this app for such purposes. ",
       "image": iOnboard3,
     },
     {
       'id': '4',
       "title": "Chat",
       "subtitle":
-          "You will only be able to chat with your MATCH list. This means random users will not be able to send messages to you.\n\nThis is not just another dating app or match-making platform, but a tool to help Christian singles seeking Godly relationships leading to marriage, find and connect with each other. \n\nWe provide the visibility you need, while the rest of the work is in your hands.\nWe wish you GODSPEED!!",
+          "You will only be able to chat with your MATCH list. This means random users will not be able to chat with you. \n\nThis is not just another match-making or dating app, but a platform to help devout Christian singles seeking Godly relationships leading to kingdom marriages, find and connect with each other. \n\nWe provide the visibility you need, while the rest is up to you, as you rely on the HolySpirit for discernment. \n\nWe wish you GODSPEED!!",
       "image": iOnboard4,
     },
   ];
@@ -159,18 +159,19 @@ class OnBoardingPage extends StatelessWidget {
                     map['subtitle'],
                     style: textStyle14.copyWith(
                       color: white,
+                      fontSize: 13.5,
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBoxH20(),
+                  const SizedBoxH40(),
                   if (map['id'] != '4')
                     Text(
-                      'Please Swipe',
+                      'Please Swipe Left',
                       style: textStyle14.copyWith(
                         color: white,
                       ),
                     ),
-                  const SizedBoxH20(),
+                  const SizedBoxH10(),
                   map['id'] == '4'
                       ? CustomButton(
                           onPressed: () {

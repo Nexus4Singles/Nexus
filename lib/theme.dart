@@ -15,7 +15,7 @@ ThemeData lightTheme = ThemeData(
       iconColor: primary,
     ),
   ),
-  useMaterial3: true,
+  useMaterial3: false,
   appBarTheme: const AppBarTheme(
     backgroundColor: bgColor,
     elevation: 0,
@@ -35,7 +35,7 @@ ThemeData darkTheme = ThemeData(
       iconColor: primary,
     ),
   ),
-  useMaterial3: true,
+  useMaterial3: false,
   appBarTheme: const AppBarTheme(
     backgroundColor: Color(0xff10192D),
     elevation: 0,

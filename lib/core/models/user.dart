@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:nexus/core/entities/user.dart';
+import 'package:nexus/core/models/compatibility.dart';
+import 'package:nexus/core/models/location.dart';
 
 part 'user.g.dart';
 
@@ -8,6 +10,7 @@ class UserModel extends UserEntity {
   const UserModel({
     required String id,
     required String name,
+    required String username,
     required String email,
     String? profileUrl,
     required int age,
@@ -26,9 +29,15 @@ class UserModel extends UserEntity {
     String? notificationToken,
     String? phoneNumber,
     String? registrationProgress,
+    String? country,
+    String? churchName,
+    CompatibilityModel? compatibility,
+    bool? compatibilitySetted,
+    LocationModel? location,
   }) : super(
           id: id,
           name: name,
+          username: username,
           email: email,
           profileUrl: profileUrl,
           age: age,
@@ -47,6 +56,11 @@ class UserModel extends UserEntity {
           notificationToken: notificationToken,
           phoneNumber: phoneNumber,
           registrationProgress: registrationProgress,
+          country: country,
+          churchName: churchName,
+          compatibility: compatibility,
+          compatibilitySetted: compatibilitySetted,
+          location: location,
         );
 
   factory UserModel.fromJson(Map<String, dynamic> map) =>

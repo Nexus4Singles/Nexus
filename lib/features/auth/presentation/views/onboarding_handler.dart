@@ -46,6 +46,7 @@ class OnboardingHandler extends StatelessWidget {
               ),
             ),
             Column(
+              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Visibility, Connection, Love',
@@ -55,11 +56,14 @@ class OnboardingHandler extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBoxH10(),
+                // const SizedBoxH5(),
                 Text(
-                  'Marriage is God’s idea and we are committed to seeing more Godly marriages exist. \nMatthew 19:4-6',
+                  'Marriage is God’s idea and we are committed to seeing more Godly marriages exist. Matthew 19:4-6',
                   textAlign: TextAlign.center,
-                  style: textStyle16.copyWith(color: white),
+                  style: textStyle12.copyWith(
+                    color: white,
+                    fontSize: 13.sp,
+                  ),
                 ),
                 const SizedBoxH15(),
                 CustomButton(

@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:nexus/core/constant.dart';
+import 'package:nexus/core/models/compatibility.dart';
+import 'package:nexus/core/models/location.dart';
 // import 'package:nexus/core/constant.dart';
 
 class UserEntity extends Equatable {
@@ -8,6 +10,7 @@ class UserEntity extends Equatable {
     required this.id,
     required this.email,
     required this.name,
+    required this.username,
     this.profileUrl,
     this.isVerified,
     required this.gender,
@@ -25,10 +28,16 @@ class UserEntity extends Equatable {
     this.notificationToken,
     this.phoneNumber,
     this.registrationProgress,
+    this.country,
+    this.churchName,
+    this.compatibility,
+    this.compatibilitySetted,
+    this.location,
   });
 
   final String id;
   final String name;
+  final String username;
   final String email;
   @JsonKey(name: KPROFILEURL)
   final String? profileUrl;
@@ -58,6 +67,14 @@ class UserEntity extends Equatable {
   final String? phoneNumber;
   @JsonKey(name: kREGPROGRESS)
   final String? registrationProgress;
+  final String? country;
+  @JsonKey(name: kCHURCHNAME)
+  final String? churchName;
+  @JsonKey(name: kCOMPATIBILITY)
+  final CompatibilityModel? compatibility;
+  @JsonKey(name: kCOMPATIBILITYSETTED)
+  final bool? compatibilitySetted;
+  final LocationModel? location;
 
   @override
   List<Object?> get props => [
@@ -65,6 +82,7 @@ class UserEntity extends Equatable {
         email,
         profileUrl,
         name,
+        username,
         isVerified,
         gender,
         age,
@@ -80,6 +98,11 @@ class UserEntity extends Equatable {
         bestQualotiesOrTraits,
         notificationToken,
         phoneNumber,
-        registrationProgress
+        registrationProgress,
+        country,
+        churchName,
+        compatibility,
+        compatibilitySetted,
+        location,
       ];
 }

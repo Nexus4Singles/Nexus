@@ -115,13 +115,13 @@ class MyNetworkImpl extends MyNetwork {
       data.update(kID, (_) => id);
 
       return await firestore
-          .collection('DC_USER')
+          .collection('users')
           .doc(user!.uid)
           .collection(collection)
           .doc(id)
           .set(data);
     } else {
-      return await firestore.collection('DC_USER').doc(doc).set(data);
+      return await firestore.collection('users').doc(doc).set(data);
     }
   }
 
@@ -129,7 +129,7 @@ class MyNetworkImpl extends MyNetwork {
   Future update(String doc, Map<String, dynamic> data) async {
     var user = auth.currentUser;
 
-    return await firestore.collection('DC_USER').doc(user!.uid).update(data);
+    return await firestore.collection('users').doc(user!.uid).update(data);
   }
 
   @override
@@ -151,14 +151,14 @@ class MyNetworkImpl extends MyNetwork {
       var user = auth.currentUser;
 
       var d = await firestore
-          .collection('DC_USER')
+          .collection('users')
           .doc(user!.uid)
           .collection(col)
           .get();
 
       return d;
     } else {
-      return firestore.collection('DC_USER').get();
+      return firestore.collection('users').get();
     }
   }
 

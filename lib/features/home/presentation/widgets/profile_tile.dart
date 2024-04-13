@@ -5,10 +5,15 @@ import 'package:iconsax/iconsax.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/router.dart';
 
 class ProfileTile extends StatelessWidget {
-  const ProfileTile({super.key});
+  final HomeNotifier model;
+  const ProfileTile({
+    super.key,
+    required this.model,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +28,16 @@ class ProfileTile extends StatelessWidget {
               },
               child: CircleAvatar(
                 radius: 25.r,
+                backgroundImage: NetworkImage(
+                  model.currentUser!.profileUrl!,
+                ),
               ),
             ),
             const SizedBoxW10(),
             Text(
-              'Hi Ayo 👋',
+              model.currentUser == null
+                  ? 'Hi'
+                  : 'Hi ${model.currentUser!.username} 👋',
               style: headerStyle.copyWith(
                 fontSize: 20.sp,
               ),

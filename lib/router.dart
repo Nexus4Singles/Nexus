@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:nexus/chat/views/chat_with.dart';
-import 'package:nexus/chat/views/chats.dart';
+import 'package:nexus/features/chat/views/chat_with.dart';
+import 'package:nexus/features/chat/views/chats.dart';
 import 'package:nexus/features/auth/presentation/views/auth_handler.dart';
 import 'package:nexus/features/auth/presentation/views/login.dart';
 import 'package:nexus/features/auth/presentation/views/onboarding.dart';
@@ -11,6 +11,8 @@ import 'package:nexus/features/auth/presentation/views/setting_up/audio3.dart';
 import 'package:nexus/features/auth/presentation/views/setting_up/audio_recoding_completed.dart';
 import 'package:nexus/features/auth/presentation/views/splash.dart';
 import 'package:nexus/features/home/presentation/views/nav.dart';
+// import 'package:nexus/features/home/presentation/views/photo_view.dart';
+import 'package:nexus/features/home/presentation/views/user_details.dart';
 import 'package:nexus/features/notifications/presentation/views/notification.dart';
 import 'package:nexus/features/auth/presentation/views/congratulations.dart';
 import 'package:nexus/features/auth/presentation/views/create_account.dart';
@@ -94,6 +96,8 @@ class AppRoutes {
   static String chatWith = '/chatwithscreen';
   static String age = '/age';
   static String compatibilityQuiz = '/compatibility_quiz';
+  static String userDetails = '/user_details';
+  static String photoViews = '/photo_views';
 }
 
 final appRouter = [
@@ -321,4 +325,14 @@ final appRouter = [
     page: () => const CompatibilityQuizScreen(),
     binding: BindingsBuilder(() {}),
   ),
+  GetPage(
+    name: AppRoutes.userDetails,
+    page: () => const UserDetailScreen(),
+    binding: BindingsBuilder(() {}),
+  ),
+  // GetPage(
+  //   name: AppRoutes.photoViews,
+  //   page: () => const PhotoViewScreen(),
+  //   binding: BindingsBuilder(() {}),
+  // ),
 ];

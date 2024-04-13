@@ -67,11 +67,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     var res = await formatter.firebaseAuthFmt(() async {
       var user = (await remote.register(map)) as User;
 
-      // if (map[kLICENSE].toString().isNotEmpty) {
-      //   var url = await remote.upload(File(map[kLICENSE]));
-      //   map.update(kLICENSE, (_) => url);
-      // }
-
       map.putIfAbsent(kID, () => user.uid);
       map.remove(kPASSWORD);
 

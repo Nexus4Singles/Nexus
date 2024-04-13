@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/core/utils/toast.dart';
 import 'package:nexus/router.dart';
 import 'package:nexus/features/profile/presentation/widgets/login_modal_sheet.dart';
 import 'package:nexus/features/profile/presentation/widgets/setting_container.dart';
@@ -34,49 +36,55 @@ class _SettingScreenState extends State<SettingScreen> {
         child: Column(
           children: [
             SettindContainer(
-                text: 'Edit Profile',
-                icon: true,
-                onPress: () {
-                  Get.toNamed(AppRoutes.editProfile);
-                }),
-            const Divider(
-              color: Colors.transparent,
-            ),
-            SettindContainer(
-              text: 'Verify Account',
+              text: 'Edit Profile',
               icon: true,
               onPress: () {
-                Get.toNamed(AppRoutes.verifyAcc);
+                // Get.toNamed(AppRoutes.editProfile);
+                AppToast().showErrorToast(
+                  'This feature will be available soon',
+                  header: 'Coming soon',
+                );
               },
             ),
             const Divider(
               color: Colors.transparent,
             ),
             SettindContainer(
-                text: 'Subscription',
+                text: 'Subscription Plans',
                 icon: true,
                 onPress: () {
-                  Get.toNamed(AppRoutes.subscription);
+                  AppToast().showErrorToast(
+                    'This feature will be available soon',
+                    header: 'Coming soon',
+                  );
+                  // Get.toNamed(AppRoutes.subscription);
                 }),
             const Divider(
               color: Colors.transparent,
             ),
             SettindContainer(
-              text: 'Payment Methods',
+              text: 'Your Subsription',
               icon: true,
               onPress: () {
-                Get.toNamed(AppRoutes.payment);
+                AppToast().showErrorToast(
+                  'This feature will be available soon',
+                  header: 'Coming soon',
+                );
               },
             ),
             const Divider(
               color: Colors.transparent,
             ),
-            SettindContainer(text: 'Contact Us', icon: true, onPress: () {}),
-            const Divider(
-              color: Colors.transparent,
-            ),
             SettindContainer(
-                text: 'Invite Friends', icon: true, onPress: () {}),
+              text: 'Contact Us',
+              icon: true,
+              onPress: () {
+                AppToast().showErrorToast(
+                  'This feature will be available soon',
+                  header: 'Coming soon',
+                );
+              },
+            ),
             const Divider(
               color: Colors.transparent,
             ),
@@ -111,8 +119,25 @@ class _SettingScreenState extends State<SettingScreen> {
                 text: 'Change Password',
                 icon: true,
                 onPress: () {
-                  Get.toNamed(AppRoutes.changePassword);
+                  AppToast().showErrorToast(
+                    'This feature will be available soon',
+                    header: 'Coming soon',
+                  );
+                  // Get.toNamed(AppRoutes.changePassword);
                 }),
+            const Divider(
+              color: Colors.transparent,
+            ),
+            SettindContainer(
+              text: 'Report User',
+              icon: true,
+              onPress: () {
+                AppToast().showErrorToast(
+                  'This feature will be available soon',
+                  header: 'Coming soon',
+                );
+              },
+            ),
             const Divider(
               color: Colors.transparent,
             ),
@@ -120,39 +145,33 @@ class _SettingScreenState extends State<SettingScreen> {
                 text: 'Delete Account',
                 icon: true,
                 onPress: () {
-                  Get.toNamed(AppRoutes.deleteAccount);
+                  AppToast().showErrorToast(
+                    'This feature will be available soon',
+                    header: 'Coming soon',
+                  );
+                  // Get.toNamed(AppRoutes.deleteAccount);
                 }),
-            Divider(
+            const Divider(
               color: Colors.transparent,
             ),
-            InkWell(
-              onTap: () {
+            SettindContainer(
+              text: 'Log Out',
+              icon: true,
+              onPress: () {
                 showModalBottomSheet(
-                    context: context,
-                    showDragHandle: true,
-                    shape: RoundedRectangleBorder(),
-                    backgroundColor: black,
-                    builder: (BuildContext context) {
-                      return LoginModalSheet();
-                    });
+                  context: context,
+                  showDragHandle: true,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(25),
+                    ),
+                  ),
+                  backgroundColor: white,
+                  builder: (BuildContext context) {
+                    return const LoginModalSheet();
+                  },
+                );
               },
-              child: SettindContainer(
-                  text: 'Log Out',
-                  icon: true,
-                  onPress: () {
-                    return InkWell(
-                      onTap: () {
-                        showModalBottomSheet(
-                            context: context,
-                            showDragHandle: true,
-                            shape: RoundedRectangleBorder(),
-                            backgroundColor: white,
-                            builder: (BuildContext context) {
-                              return LoginModalSheet();
-                            });
-                      },
-                    );
-                  }),
             ),
             const Divider(
               color: Colors.transparent,

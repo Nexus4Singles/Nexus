@@ -12,106 +12,119 @@ class UserCard extends StatelessWidget {
   final String name;
   final String age;
   final String location;
+  final VoidCallback onRefresh;
+  final VoidCallback onClosed;
+  final VoidCallback onLike;
+  final VoidCallback onSaved;
+  final VoidCallback onClick;
   const UserCard({
     super.key,
     required this.name,
     required this.location,
     required this.age,
     required this.image,
+    required this.onClosed,
+    required this.onLike,
+    required this.onRefresh,
+    required this.onSaved,
+    required this.onClick,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height(context) * .68,
-      width: width(context),
-      padding: EdgeInsets.all(5.sp),
-      decoration: BoxDecoration(
-        color: white,
-        borderRadius: BorderRadius.circular(20.r),
-        boxShadow: [
-          boxShadow,
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            height: height(context) * .55,
-            width: width(context),
-            padding: EdgeInsets.all(15.sp),
-            decoration: BoxDecoration(
-              color: black,
-              borderRadius: BorderRadius.circular(20.r),
-              image: DecorationImage(
-                image: AssetImage(image),
-                fit: BoxFit.cover,
-                opacity: .8,
-              ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '$name $age',
-                  style: headerStyle.copyWith(
-                    fontSize: 30.sp,
-                    color: white,
-                  ),
+    return InkWell(
+      onTap: onClick,
+      child: Container(
+        height: height(context) * .68,
+        width: width(context),
+        padding: EdgeInsets.all(5.sp),
+        decoration: BoxDecoration(
+          color: white,
+          borderRadius: BorderRadius.circular(20.r),
+          boxShadow: [
+            boxShadow,
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: height(context) * .55,
+              width: width(context),
+              padding: EdgeInsets.all(15.sp),
+              decoration: BoxDecoration(
+                color: black,
+                borderRadius: BorderRadius.circular(20.r),
+                image: DecorationImage(
+                  image: NetworkImage(image),
+                  fit: BoxFit.cover,
+                  opacity: .4,
                 ),
-                Row(
-                  children: [
-                    const Icon(
-                      Iconsax.location5,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '$name, $age',
+                    style: headerStyle.copyWith(
+                      fontSize: 30.sp,
                       color: white,
                     ),
-                    const SizedBoxW10(),
-                    Text(
-                      location,
-                      style: textStyle16.copyWith(
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Iconsax.location5,
                         color: white,
                       ),
-                    )
-                  ],
-                ),
-              ],
+                      const SizedBoxW10(),
+                      Text(
+                        location,
+                        style: textStyle16.copyWith(
+                          color: white,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(15.sp),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                InkWell(
-                  onTap: () {},
-                  child: SvgPicture.asset(
-                    'assets/icons/refresh.svg',
+            Padding(
+              padding: EdgeInsets.all(15.sp),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  InkWell(
+                    onTap: onRefresh,
+                    child: SvgPicture.asset(
+                      'assets/icons/refresh.svg',
+                    ),
                   ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: SvgPicture.asset(
-                    'assets/icons/close.svg',
+                  InkWell(
+                    onTap: onClosed,
+                    child: SvgPicture.asset(
+                      'assets/icons/close.svg',
+                    ),
                   ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: SvgPicture.asset(
-                    'assets/icons/fav.svg',
+                  InkWell(
+                    onTap: onLike,
+                    child: SvgPicture.asset(
+                      'assets/icons/fav.svg',
+                    ),
                   ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: Image.asset(
-                    'assets/icons/bookmark.png',
+                  InkWell(
+                    onTap: onSaved,
+                    child: Image.asset(
+                      'assets/icons/bookmark.png',
+                    ),
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

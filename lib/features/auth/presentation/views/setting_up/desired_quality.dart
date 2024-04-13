@@ -3,11 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
+import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/features/auth/data/data-sources/local-datasource/hobbies.dart';
+import 'package:nexus/core/utils/device.dart';
+import 'package:nexus/core/utils/toast.dart';
+import 'package:nexus/features/auth/data/data-sources/local-datasource/list_items.dart';
+import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:nexus/features/auth/presentation/widgets/hobbie_card.dart';
 import 'package:nexus/router.dart';
+import 'package:provider/provider.dart';
 
 class DesiredQualityScreen extends StatefulWidget {
   const DesiredQualityScreen({super.key});
@@ -21,85 +26,120 @@ class _DesiredQualityScreenState extends State<DesiredQualityScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return Consumer<AuthNotifier>(builder: (context, model, _) {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: white,
+          title: SizedBox(
+            width: width(context) * .5,
+            child: LinearProgressIndicator(
+              value: 0.5,
+              backgroundColor: newGrey,
+              color: primary,
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+          elevation: 0,
+        ),
         backgroundColor: white,
-        title: Slider(
-          value: 0.5,
-          onChanged: (val) {},
-          activeColor: primary,
-          inactiveColor: grey,
-        ),
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-          horizontal: 15.sp,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              '    Desired Qualities',
-              style: textStyle8.copyWith(
-                  fontSize: 30, fontWeight: FontWeight.w700, color: black),
-            ),
-            const SizedBoxH10(),
-            const Align(
-              alignment: Alignment.center,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Select 5 Qualities you value the most in the choice of \na life partner,  asides from Godliness  ',
-                  ),
-                ],
+        body: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(
+            horizontal: 15.sp,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Desired Qualities',
+                style: textStyle8.copyWith(
+                    fontSize: 30, fontWeight: FontWeight.w700, color: black),
               ),
-            ),
-            const SizedBoxH20(),
-            Wrap(
-              runSpacing: 10,
-              spacing: 10,
-              children: List.generate(
-                HobbiesLocalData().desireQualities.length,
-                (index) => HobbieCard(
-                  text: HobbiesLocalData().desireQualities[index],
-                  isChecked: selectedDesires.contains(
-                    HobbiesLocalData().desireQualities[index],
-                  ),
-                  onPress: () {
-                    if (selectedDesires
-                        .contains(HobbiesLocalData().desireQualities[index])) {
-                      setState(() {
-                        selectedDesires
-                            .remove(HobbiesLocalData().desireQualities[index]);
-                      });
-                    } else {
-                      setState(() {
-                        selectedDesires.add(
-                          HobbiesLocalData().desireQualities[index],
-                        );
-                      });
-                    }
-                  },
+              const SizedBoxH10(),
+              Align(
+                alignment: Alignment.center,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Select up to 8 Qualities you value the most in the choice of a life partner,  asides from Godliness',
+                      style: textStyle14.copyWith(),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               ),
-            ),
-            const SizedBoxH20(),
-            CustomButton(
-              onPressed: () {
-                Get.toNamed(AppRoutes.uploadPhoto);
-              },
-              child: Text(
-                'Next',
-                style: textStyle16.copyWith(color: white),
+              const SizedBoxH20(),
+              Wrap(
+                runSpacing: 10,
+                spacing: 10,
+                children: List.generate(
+                  LocalData().desireQualities.length,
+                  (index) => HobbieCard(
+                    text: LocalData().desireQualities[index],
+                    isChecked: selectedDesires.contains(
+                      LocalData().desireQualities[index],
+                    ),
+                    onPress: () {
+                      if (selectedDesires
+                          .contains(LocalData().desireQualities[index])) {
+                        setState(() {
+                          selectedDesires
+                              .remove(LocalData().desireQualities[index]);
+                        });
+                      } else {
+                        if (selectedDesires.length == 8) {
+                          return AppToast()
+                              .showErrorToast('Maximum of 8 qualities');
+                        }
+                        setState(() {
+                          selectedDesires.add(
+                            LocalData().desireQualities[index],
+                          );
+                        });
+                      }
+                    },
+                  ),
+                ),
               ),
-            ),
-            const SizedBoxH20()
-          ],
+              const SizedBoxH20(),
+              const SizedBoxH40(),
+              const SizedBoxH20(),
+            ],
+          ),
         ),
-      ),
-    );
+        bottomSheet: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.sp),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CustomButton(
+                onPressed: () {
+                  if (selectedDesires.length < 5) {
+                    AppToast()
+                        .showErrorToast('Please select at least 5 qualities');
+                  } else {
+                    model.updateProfile(
+                      map: {
+                        kDESIREDQUALITIES: selectedDesires,
+                        kREGPROGRESS: 'desired',
+                      },
+                      onCompleted: () {
+                        Get.toNamed(AppRoutes.uploadPhoto);
+                      },
+                    );
+                  }
+                },
+                child: Text(
+                  'Next',
+                  style: textStyle16.copyWith(color: white),
+                ),
+              ),
+              const SizedBoxH30()
+            ],
+          ),
+        ),
+      );
+    });
   }
 }

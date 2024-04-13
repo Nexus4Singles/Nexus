@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nexus/chat/views/chats.dart';
+import 'package:nexus/features/chat/views/chats.dart';
 import 'package:nexus/features/explore/presentation/views/explore.dart';
 import 'package:nexus/features/home/presentation/views/home.dart';
 import 'package:nexus/features/match/presentation/views/matches.dart';

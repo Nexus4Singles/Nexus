@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Get.offAndToNamed(AppRoutes.onboardingHandler);
       // }
     } else {
-      Get.offAndToNamed(AppRoutes.onboardingHandler);
+      Get.offAndToNamed(AppRoutes.login);
     }
   }
 
@@ -64,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Image.asset(iLogo),
             const SizedBoxH15(),
             Text(
-              'Connecting African Christian Singles',
+              'The Visibility App for Christian Singles',
               style: GoogleFonts.novaSquare(
                 fontSize: 16.sp,
                 color: white,

@@ -29,6 +29,7 @@ class CompatabiltyModal extends StatelessWidget {
             hPadding: 10,
             vPadding: 10,
             onPressed: () {
+              Navigator.of(context).pop();
               Get.toNamed(AppRoutes.compatibilityQuiz);
             },
             text: 'Start',

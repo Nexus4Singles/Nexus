@@ -79,51 +79,54 @@ class _MainNav extends State<MainNav> {
   }
 
   Widget tabItemsRow(context, BottomNavModel navController) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        TabItems(
-          navController: navController,
-          iconImage: Iconsax.home,
-          iconImage2: Iconsax.home5,
-          text: '',
-          onTap: () => controller!.jumpToPage(0),
-          currentIndex: 0,
-        ),
-        TabItems(
-          navController: navController,
-          iconImage: Iconsax.discover,
-          iconImage2: Iconsax.discover5,
-          text: '',
-          onTap: () => controller!.jumpToPage(1),
-          currentIndex: 1,
-        ),
-        TabItems(
-          navController: navController,
-          iconImage: Iconsax.heart,
-          iconImage2: Iconsax.heart5,
-          text: '',
-          onTap: () => controller!.jumpToPage(2),
-          currentIndex: 2,
-        ),
-        TabItems(
-          navController: navController,
-          iconImage: Iconsax.message,
-          iconImage2: Iconsax.message5,
-          text: '',
-          onTap: () => controller!.jumpToPage(3),
-          currentIndex: 3,
-        ),
-        TabItems(
-          navController: navController,
-          iconImage: Iconsax.profile_circle,
-          iconImage2: Iconsax.profile_circle5,
-          text: '',
-          onTap: () => controller!.jumpToPage(4),
-          currentIndex: 4,
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          TabItems(
+            navController: navController,
+            iconImage: Iconsax.home,
+            iconImage2: Iconsax.home5,
+            text: '',
+            onTap: () => controller!.jumpToPage(0),
+            currentIndex: 0,
+          ),
+          TabItems(
+            navController: navController,
+            iconImage: Iconsax.discover,
+            iconImage2: Iconsax.discover5,
+            text: '',
+            onTap: () => controller!.jumpToPage(1),
+            currentIndex: 1,
+          ),
+          TabItems(
+            navController: navController,
+            iconImage: Iconsax.heart,
+            iconImage2: Iconsax.heart5,
+            text: '',
+            onTap: () => controller!.jumpToPage(2),
+            currentIndex: 2,
+          ),
+          TabItems(
+            navController: navController,
+            iconImage: Iconsax.message,
+            iconImage2: Iconsax.message5,
+            text: '',
+            onTap: () => controller!.jumpToPage(3),
+            currentIndex: 3,
+          ),
+          TabItems(
+            navController: navController,
+            iconImage: Iconsax.profile_circle,
+            iconImage2: Iconsax.profile_circle5,
+            text: '',
+            onTap: () => controller!.jumpToPage(4),
+            currentIndex: 4,
+          ),
+        ],
+      ),
     );
   }
 }
