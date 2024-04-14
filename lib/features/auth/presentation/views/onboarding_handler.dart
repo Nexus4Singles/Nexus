@@ -21,6 +21,7 @@ class OnboardingHandler extends StatelessWidget {
         padding: EdgeInsets.all(15.sp),
         decoration: const BoxDecoration(
           image: DecorationImage(
+            fit: BoxFit.cover,
             image: AssetImage(
               iWelcomeBg,
             ),

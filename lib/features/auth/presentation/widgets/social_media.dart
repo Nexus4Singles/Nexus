@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nexus/core/helper.dart';
+import 'package:nexus/core/utils/helper.dart';
 import 'package:nexus/core/size_boxes.dart';
 
 class SocialMediaWidget extends StatelessWidget {

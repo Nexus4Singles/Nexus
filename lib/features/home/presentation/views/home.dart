@@ -3,16 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
+import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
 // import 'package:nexus/features/home/presentation/change_notifier/bottom_nav.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/home/presentation/widgets/coming_soon_modal.dart';
 import 'package:nexus/features/home/presentation/widgets/profile_tile.dart';
 import 'package:nexus/features/home/presentation/widgets/user_card.dart';
-import 'package:nexus/router.dart';
+import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
+// import 'package:nexus/router.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,11 +35,34 @@ class _HomeScreenState extends State<HomeScreen> {
     _init();
   }
 
-  FutureOr _init() {
-    Provider.of<HomeNotifier>(context, listen: false).getProfile();
+  FutureOr _init() async {
+    await Provider.of<HomeNotifier>(context, listen: false).getProfile();
     // if (pageArgu['fromSignUp']) {
     //   Provider.of<BottomNavModel>(context).(4);
     // } else {}
+    var currentUser =
+        Provider.of<HomeNotifier>(context, listen: false).currentUser!;
+    if (currentUser.compatibilitySetted == null ||
+        currentUser.compatibilitySetted == false) {
+      Future.delayed(const Duration(seconds: 5), () {
+        showAdaptiveDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return AlertDialog.adaptive(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              title: Text(
+                'Compatibility Quiz',
+                style: textStyle16,
+              ),
+              content: const CompatabiltyModal(),
+            );
+          },
+        );
+      });
+    }
   }
 
   @override
@@ -92,15 +117,23 @@ class _HomeScreenState extends State<HomeScreen> {
                               image: model.allUsers.first.profileUrl!,
                               location:
                                   '${model.allUsers.first.city}, ${model.allUsers.first.country}',
-                              onClosed: () {},
-                              onLike: () {},
-                              onRefresh: () {},
-                              onSaved: () {},
+                              onClosed: () {
+                                showModal();
+                              },
+                              onLike: () {
+                                showModal();
+                              },
+                              onRefresh: () {
+                                showModal();
+                              },
+                              onSaved: () {
+                                showModal();
+                              },
                               onClick: () {
                                 setState(() {
                                   model.selectedUser = model.allUsers.first;
                                 });
-                                Get.toNamed(AppRoutes.userDetails);
+                                // Get.toNamed(AppRoutes.userDetails);
                               },
                             )
                           : CardSwiper(
@@ -111,8 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const AllowedSwipeDirection.only(
                                 up: false,
                                 down: false,
-                                right: true,
-                                left: true,
+                                right: false,
+                                left: false,
                               ),
                               padding: const EdgeInsets.all(0),
                               cardBuilder: (context, index, percentThresholdX,
@@ -124,23 +157,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                   image: user.profileUrl!,
                                   location: '${user.city}, ${user.country}',
                                   onClosed: () {
-                                    if (model.allUsers.length == (index + 1)) {
-                                    } else {
-                                      cardSwiperController
-                                          .swipe(CardSwiperDirection.left);
-                                    }
+                                    showModal();
+                                    // if (model.allUsers.length == (index + 1)) {
+                                    // } else {
+                                    //   cardSwiperController
+                                    //       .swipe(CardSwiperDirection.left);
+                                    // }
                                   },
-                                  onLike: () {},
+                                  onLike: () {
+                                    showModal();
+                                  },
                                   onRefresh: () {
-                                    cardSwiperController
-                                        .swipe(CardSwiperDirection.right);
+                                    showModal();
+                                    // cardSwiperController
+                                    //     .swipe(CardSwiperDirection.right);
                                   },
-                                  onSaved: () {},
+                                  onSaved: () {
+                                    showModal();
+                                  },
                                   onClick: () {
                                     setState(() {
                                       model.selectedUser = user;
                                     });
-                                    Get.toNamed(AppRoutes.userDetails);
+                                    // Get.toNamed(AppRoutes.userDetails);
                                     // Logger().d(model.selectedUser!.toJson());
                                   },
                                 );
@@ -150,6 +189,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
+          ),
+        );
+      },
+    );
+  }
+
+  void showModal() {
+    showAdaptiveDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return AlertDialog.adaptive(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          content: const ComingSoonModal(
+            text:
+                'You will be able to view profile recommendations here as soon as we launch fully.',
           ),
         );
       },

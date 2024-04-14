@@ -56,7 +56,7 @@ class _RegSuccessfulState extends State<RegSuccessful> {
               ),
               const SizedBoxH20(),
               Text(
-                ' You have successfully created a profile on Nexus! \n\nWe are launching soon and you will be able to search and view profiles. In the mean time, please go to your profile to fill a short questionnaire. \n\nKindly tell your Christian single friends about Nexus & follow us on social media to stay updated!',
+                ' You have successfully created a profile on Nexus! \n\nWe are launching soon and you will be able to search and view profiles. \n\nKindly tell your Christian single friends about Nexus & follow us on social media to stay updated!',
                 style: textStyle18.copyWith(
                     fontSize: 12, fontWeight: FontWeight.w300, color: black),
                 textAlign: TextAlign.center,
@@ -77,7 +77,7 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                     //       arguments: {'fromSignUp': true});
                     // });
                   },
-                  text: 'Go to your Profile',
+                  text: 'Go to Home',
                 ),
               ),
             ],

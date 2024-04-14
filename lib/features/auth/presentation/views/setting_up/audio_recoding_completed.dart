@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -29,53 +30,53 @@ class Audio4Screen extends StatefulWidget {
 }
 
 class _Audio4ScreenState extends State<Audio4Screen> {
-  late AudioPlayer player;
-  late AudioPlayer player2;
-  late AudioPlayer player3;
+  AudioPlayer player = AudioPlayer();
+  AudioPlayer player2 = AudioPlayer();
+  AudioPlayer player3 = AudioPlayer();
   late Duration duration;
   late Duration playerPosition;
-
+// bool isLoading =
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    player = AudioPlayer();
-    player2 = AudioPlayer();
-    player3 = AudioPlayer();
+    _setAudioPlayer();
   }
 
-  Future _setAudioPlayer(String audioPath, String playerId) async {
-    if (playerId == '1') {
-      await player.setFilePath(audioPath);
+  Future _setAudioPlayer() async {
+    EasyLoading.show();
+    var model = Provider.of<AuthNotifier>(context, listen: false);
+    // if (playerId == '1') {
+    await player.setFilePath(model.audioPath1);
 
-      player.durationStream.listen((d) {
-        duration = d!;
-      });
+    player.durationStream.listen((d) {
+      duration = d!;
+    });
 
-      player.positionStream.listen((p) {
-        playerPosition = p;
-      });
-    } else if (playerId == '2') {
-      await player2.setFilePath(audioPath);
+    player.positionStream.listen((p) {
+      playerPosition = p;
+    });
+    // } else if (playerId == '2') {
+    await player2.setFilePath(model.audioPath2);
 
-      player2.durationStream.listen((d) {
-        duration = d!;
-      });
+    player2.durationStream.listen((d) {
+      duration = d!;
+    });
 
-      player2.positionStream.listen((p) {
-        playerPosition = p;
-      });
-    } else {
-      await player3.setFilePath(audioPath);
+    player2.positionStream.listen((p) {
+      playerPosition = p;
+    });
+    // } else {
+    await player3.setFilePath(model.audioPath3);
 
-      player3.durationStream.listen((d) {
-        duration = d!;
-      });
+    player3.durationStream.listen((d) {
+      duration = d!;
+    });
 
-      player3.positionStream.listen((p) {
-        playerPosition = p;
-      });
-    }
+    player3.positionStream.listen((p) {
+      playerPosition = p;
+    });
+    EasyLoading.dismiss();
   }
 
   @override
@@ -140,12 +141,14 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                 player: player,
                 onPlay: () async {
                   player2.stop();
+                  player2.seek(Duration.zero);
                   player3.stop();
-                  await _setAudioPlayer(model.audioPath1, '1');
+                  player3.seek(Duration.zero);
+                  // await _setAudioPlayer();
                   player.play();
                 },
                 onPause: () async {
-                  await _setAudioPlayer(model.audioPath1, '1');
+                  // await _setAudioPlayer();
                   player.pause();
                 },
               ),
@@ -176,12 +179,14 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                 player: player2,
                 onPlay: () async {
                   player.stop();
+                  player.seek(Duration.zero);
                   player3.stop();
-                  await _setAudioPlayer(model.audioPath2, '2');
+                  player3.seek(Duration.zero);
+                  // await _setAudioPlayer(model.audioPath2, '2');
                   player2.play();
                 },
                 onPause: () async {
-                  await _setAudioPlayer(model.audioPath2, '2');
+                  // await _setAudioPlayer(model.audioPath2, '2');
                   player2.pause();
                 },
               ),
@@ -213,12 +218,14 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                 player: player3,
                 onPlay: () async {
                   player.stop();
+                  player.seek(Duration.zero);
                   player2.stop();
-                  await _setAudioPlayer(model.audioPath3, '3');
+                  player2.seek(Duration.zero);
+                  // await _setAudioPlayer(model.audioPath3, '3');
                   player3.play();
                 },
                 onPause: () async {
-                  await _setAudioPlayer(model.audioPath3, '3');
+                  // await _setAudioPlayer(model.audioPath3, '3');
                   player3.pause();
                 },
               ),

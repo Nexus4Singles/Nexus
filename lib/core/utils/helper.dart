@@ -96,4 +96,9 @@ class BaseHelper {
 
     return numericRegex.hasMatch(string);
   }
+
+  static String getTwoDigit(int number) {
+    String val = number < 10 ? '0$number' : '$number';
+    return val;
+  }
 }

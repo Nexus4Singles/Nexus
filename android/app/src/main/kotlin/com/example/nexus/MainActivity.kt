@@ -1,4 +1,4 @@
-package com.nexus.app
+package com.nexusapptest.app
 
 import io.flutter.embedding.android.FlutterActivity
 

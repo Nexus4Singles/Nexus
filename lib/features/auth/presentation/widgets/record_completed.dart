@@ -98,48 +98,57 @@ class _AudioFilePlayerState extends State<AudioFilePlayer> {
     );
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //   widget.player.dispose();
+  // }
 
   void audioStream() {
-    widget.player.playerStateStream.listen((state) {
-      if (state.playing) {
-      } else {}
-      switch (state.processingState) {
-        case ProcessingState.idle:
-          {
-            Logger().d('idle');
-          }
-          break;
-        case ProcessingState.loading:
-          {
-            Logger().d('loading');
-          }
-          break;
-        case ProcessingState.buffering:
-          {
-            Logger().d('buffering');
-          }
-          break;
-        case ProcessingState.ready:
-          {
-            Logger().d('ready');
-          }
-          break;
-        case ProcessingState.completed:
-          {
-            Logger().d('completed');
-            setState(() {
-              isPlaying = false;
-            });
-            widget.player.seek(Duration.zero);
-            widget.player.stop();
-          }
-          break;
-      }
-    });
+    widget.player.playerStateStream.listen(
+      (state) {
+        if (state.playing) {
+        } else {
+          // setState(() {
+          //   isPlaying = false;
+          // });
+        }
+        switch (state.processingState) {
+          case ProcessingState.idle:
+            {
+              // setState(() {
+              //   isPlaying = false;
+              // });
+            }
+            break;
+          case ProcessingState.loading:
+            {
+              Logger().d('loading');
+            }
+            break;
+          case ProcessingState.buffering:
+            {
+              Logger().d('buffering');
+            }
+            break;
+          case ProcessingState.ready:
+            {
+              Logger().d('ready');
+            }
+            break;
+          case ProcessingState.completed:
+            {
+              Logger().d('completed');
+              setState(() {
+                isPlaying = false;
+              });
+              widget.player.seek(Duration.zero);
+              widget.player.stop();
+            }
+            break;
+        }
+      },
+    );
   }
 }

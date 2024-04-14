@@ -98,8 +98,8 @@ class UserCard extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: onRefresh,
-                    child: SvgPicture.asset(
-                      'assets/icons/refresh.svg',
+                    child: Image.asset(
+                      'assets/icons/refresh-r.png',
                     ),
                   ),
                   InkWell(
@@ -117,7 +117,7 @@ class UserCard extends StatelessWidget {
                   InkWell(
                     onTap: onSaved,
                     child: Image.asset(
-                      'assets/icons/bookmark.png',
+                      'assets/icons/bookmark-r.png',
                     ),
                   ),
                 ],

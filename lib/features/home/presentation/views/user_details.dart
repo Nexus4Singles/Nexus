@@ -112,21 +112,32 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                   children: [
                     SafeArea(
                       bottom: false,
-                      child: CachedNetworkImage(
-                        height: height(context) * .5,
-                        width: width(context),
-                        fit: BoxFit.cover,
-                        imageUrl: model.selectedUser!.profileUrl!,
-                        progressIndicatorBuilder:
-                            (context, url, downloadProgress) => SizedBox(
-                          width: 30,
-                          height: 30,
-                          child: CircularProgressIndicator(
-                            value: downloadProgress.progress,
-                            color: primary,
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(
+                            () => PhotoViewScreen(
+                              selectedIndex: 0,
+                              photos: model.selectedUser!.photos!,
+                            ),
+                          );
+                        },
+                        child: CachedNetworkImage(
+                          height: height(context) * .5,
+                          width: width(context),
+                          fit: BoxFit.cover,
+                          imageUrl: model.selectedUser!.profileUrl!,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) =>
+                                  const SizedBox(
+                            width: 30,
+                            height: 30,
+                            // child: CircularProgressIndicator(
+                            //   value: downloadProgress.progress,
+                            //   color: primary,
+                            // ),
                           ),
+                          errorWidget: (context, url, error) => Container(),
                         ),
-                        errorWidget: (context, url, error) => Container(),
                       ),
                     ),
                     const Positioned(
@@ -142,7 +153,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                       child: Container(
                         width: width(context),
                         padding: EdgeInsets.all(20.sp),
-                        decoration: BoxDecoration(color: black.withOpacity(.3)),
+                        decoration: BoxDecoration(
+                          color: black.withOpacity(.3),
+                        ),
                         child: Column(
                           children: [
                             Text(
@@ -180,8 +193,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                   child: CircleAvatar(
                                     backgroundColor: white,
                                     radius: 25,
-                                    child: SvgPicture.asset(
-                                      'assets/icons/refresh.svg',
+                                    child: Image.asset(
+                                      'assets/icons/refresh-w.png',
                                     ),
                                   ),
                                 ),
@@ -208,14 +221,13 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                   onTap: () {
                                     showModal();
                                   },
-                                  child: const CircleAvatar(
-                                      backgroundColor: white,
-                                      radius: 25,
-                                      child: Icon(
-                                        Icons.bookmark_outline,
-                                        color: black,
-                                        size: 24,
-                                      )),
+                                  child: CircleAvatar(
+                                    backgroundColor: white,
+                                    radius: 25,
+                                    child: Image.asset(
+                                      'assets/icons/bookmark-w.png',
+                                    ),
+                                  ),
                                 ),
                               ],
                             )
@@ -243,8 +255,10 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                       const SizedBoxH20(),
                       Text(
                         'About',
-                        style: textStyle12.copyWith(
-                            fontWeight: FontWeight.w700, color: black),
+                        style: textStyle18.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: black,
+                        ),
                       ),
                       const SizedBoxH15(),
                       Row(
@@ -306,7 +320,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                           ),
                         ],
                       ),
-                      const SizedBoxH20(),
+                      const SizedBoxH30(),
                       Text(
                         'Hobbies / Interests',
                         style: textStyle18.copyWith(
@@ -325,7 +339,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             ),
                         ],
                       ),
-                      const SizedBoxH15(),
+                      const SizedBoxH30(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -350,7 +364,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             ),
                         ],
                       ),
-                      const SizedBoxH15(),
+                      const SizedBoxH40(),
                       Text(
                         'Audio Recording',
                         style: textStyle18.copyWith(
@@ -412,7 +426,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                           player3.pause();
                         },
                       ),
-                      const SizedBoxH20(),
+                      const SizedBoxH30(),
                       Text(
                         'Gallery',
                         style: textStyle18.copyWith(

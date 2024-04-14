@@ -43,7 +43,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>NexusApp want to use your location to find your address</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>NexusApp want to access your Microphone to make voice call</string>
+	<string>NexusApp want to access your Microphone to make voice call or record audio</string>
 	<key>NSMotionUsageDescription</key>
 	<string>NexusApp want to access your Motion.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

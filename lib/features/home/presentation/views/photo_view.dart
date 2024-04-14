@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
+
 import 'package:provider/provider.dart';
 import 'package:story/story_image.dart';
 import 'package:story/story_page_view.dart';
@@ -39,47 +40,62 @@ class _PhotoViewScreenState extends State<PhotoViewScreen> {
   Widget build(BuildContext context) {
     return Consumer<HomeNotifier>(builder: (context, model, _) {
       return Scaffold(
-        body: StoryPageView(
-          initialPage: widget.selectedIndex,
-          itemBuilder: (context, pageIndex, storyIndex) {
-            final story = widget.photos[storyIndex];
-            return Container(
-              color: black,
-              width: double.infinity,
-              height: height(context),
-              child: Column(
-                children: [
-                  Stack(
+        body: Stack(
+          children: [
+            StoryPageView(
+              initialPage: widget.selectedIndex,
+              itemBuilder: (context, pageIndex, storyIndex) {
+                final story = widget.photos[storyIndex];
+                return Container(
+                  color: black,
+                  width: double.infinity,
+                  height: height(context),
+                  child: Column(
                     children: [
-                      StoryImage(
-                        key: ValueKey(story),
-                        imageProvider: NetworkImage(
-                          story,
-                        ),
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: height(context),
+                      Stack(
+                        children: [
+                          StoryImage(
+                            key: ValueKey(story),
+                            imageProvider: NetworkImage(
+                              story,
+                            ),
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: height(context),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                );
+              },
+              indicatorAnimationController: indicatorAnimationController,
+              // initialStoryIndex: (pageIndex) {
+              //   if (pageIndex == 0) {
+              //     return 1;
+              //   }
+              //   return 0;
+              // },
+              pageLength: 1,
+              storyLength: (int pageIndex) {
+                return model.selectedUser!.photos!.length;
+              },
+              onPageLimitReached: () {
+                Navigator.pop(context);
+              },
+            ),
+            const SafeArea(
+              child: Padding(
+                padding: EdgeInsets.all(15.0),
+                child: CircleAvatar(
+                  backgroundColor: white,
+                  child: BackButton(
+                    color: primary,
+                  ),
+                ),
               ),
-            );
-          },
-          indicatorAnimationController: indicatorAnimationController,
-          // initialStoryIndex: (pageIndex) {
-          //   if (pageIndex == 0) {
-          //     return 1;
-          //   }
-          //   return 0;
-          // },
-          pageLength: 1,
-          storyLength: (int pageIndex) {
-            return model.selectedUser!.photos!.length;
-          },
-          onPageLimitReached: () {
-            Navigator.pop(context);
-          },
+            ),
+          ],
         ),
       );
     });

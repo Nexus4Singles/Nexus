@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
@@ -11,6 +12,7 @@ import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/features/auth/presentation/widgets/record_completed.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
+import 'package:nexus/features/home/presentation/views/photo_view.dart';
 import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
 import 'package:nexus/features/profile/presentation/widgets/text_container.dart';
 import 'package:provider/provider.dart';
@@ -114,7 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           backgroundColor: white,
           leading: const SizedBox.shrink(),
           title: Text(
-            'Profile',
+            'Your Profile',
             style: textStyle18.copyWith(
                 fontSize: 24, fontWeight: FontWeight.w700, color: black),
           ),
@@ -152,11 +154,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             fontSize: 24,
                             fontWeight: FontWeight.w500),
                       ),
+                      const SizedBoxH5(),
                       Row(
                         children: [
                           SvgPicture.asset('assets/icons/location.svg'),
+                          const SizedBoxW5(),
                           Text(
-                            '${homeModel.currentUser!.stateOfOrigin}, ${homeModel.currentUser!.country}',
+                            '${homeModel.currentUser!.city}, ${homeModel.currentUser!.country}',
                             style: textStyle16.copyWith(
                                 fontWeight: FontWeight.w300, color: black),
                           ),
@@ -348,23 +352,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 spacing: 15,
                 children: [
                   for (var item in homeModel.currentUser!.photos!)
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15.r),
-                      child: CachedNetworkImage(
-                        width: width(context) * .4,
-                        height: 100.h,
-                        fit: BoxFit.cover,
-                        imageUrl: item,
-                        progressIndicatorBuilder:
-                            (context, url, downloadProgress) => SizedBox(
-                          width: 30,
-                          height: 30,
-                          child: CircularProgressIndicator(
-                            value: downloadProgress.progress,
-                            color: primary,
+                    InkWell(
+                      onTap: () {
+                        Get.to(
+                          () => PhotoViewScreen(
+                            selectedIndex: 0,
+                            photos: homeModel.currentUser!.photos!,
                           ),
+                        );
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15.r),
+                        child: CachedNetworkImage(
+                          width: width(context) * .4,
+                          height: 100.h,
+                          fit: BoxFit.cover,
+                          imageUrl: item,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) => SizedBox(
+                            width: 30,
+                            height: 30,
+                            child: CircularProgressIndicator(
+                              value: downloadProgress.progress,
+                              color: primary,
+                            ),
+                          ),
+                          errorWidget: (context, url, error) => Container(),
                         ),
-                        errorWidget: (context, url, error) => Container(),
                       ),
                     ),
                 ],

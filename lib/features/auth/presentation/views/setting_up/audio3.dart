@@ -11,6 +11,7 @@ import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
+import 'package:nexus/core/utils/helper.dart';
 import 'package:nexus/core/utils/toast.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:nexus/features/auth/presentation/widgets/seek_bar.dart';
@@ -84,6 +85,7 @@ class _Audio3ScreenState extends State<Audio3Screen> {
   @override
   void dispose() {
     recorderController.dispose();
+    player.dispose();
     super.dispose();
   }
 
@@ -163,10 +165,14 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                     child: Text(
                       'What are your favorite qualities or traits about yourself?',
                       style: textStyle12.copyWith(
-                          fontWeight: FontWeight.w700, height: 2),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        height: 2,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ),
+                  const SizedBoxH30(),
                   const SizedBoxH30(),
                   if (!isRecording && !isRecordingCompleted)
                     Column(
@@ -174,8 +180,8 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                         Text(
                           '00:00',
                           style: textStyle18.copyWith(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w200,
+                              fontSize: 28,
+                              fontWeight: FontWeight.w600,
                               color: friendGrey),
                         ),
                         const SizedBoxH10(),
@@ -194,22 +200,15 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                               return Container();
                             }
                             return Text(
-                              '${snapshot.data!.inMinutes.toString()}:${snapshot.data!.inSeconds.toString()}',
+                              '${BaseHelper.getTwoDigit(snapshot.data!.inMinutes).toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds).toString()}',
                               style: textStyle18.copyWith(
                                   fontSize: 28,
-                                  fontWeight: FontWeight.w200,
+                                  fontWeight: FontWeight.w600,
                                   color: friendGrey),
                             );
                           },
                         ),
-                        // if (isPlaying) Lottie.asset('assets/images/wave.json'),
-                        // if (!isPlaying)
-                        //   Padding(
-                        //     padding: EdgeInsets.only(top: 10.sp),
-                        //     child: SvgPicture.asset(
-                        //       'assets/icons/audio1.svg',
-                        //     ),
-                        //   ),
+
                         Row(children: [
                           Expanded(
                             child: StreamBuilder<PositionData>(
@@ -229,6 +228,11 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                                     setState(() {
                                       isPlaying = false;
                                     });
+                                  },
+                                  onChanged: (value) {
+                                    // if (value.inSeconds == 10) {
+                                    Logger().d(value.inSeconds.toString());
+                                    // }
                                   },
                                 );
                               },
@@ -263,14 +267,12 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                             if (!snapshot.hasData) {
                               return Container();
                             }
-
                             return Text(
-                              '0${snapshot.data!.inHours.toString()}:0${snapshot.data!.inMinutes.toString()}:${snapshot.data!.inSeconds.toString()}',
+                              '${BaseHelper.getTwoDigit(snapshot.data!.inMinutes).toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds).toString()}',
                               style: textStyle18.copyWith(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w200,
-                                color: friendGrey,
-                              ),
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w600,
+                                  color: friendGrey),
                             );
                           },
                         ),
