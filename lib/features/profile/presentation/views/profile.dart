@@ -33,9 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   FutureOr _init() {
-    player = AudioPlayer();
-    player2 = AudioPlayer();
-    player3 = AudioPlayer();
+    _setAudioPlayer();
     var currentUser =
         Provider.of<HomeNotifier>(context, listen: false).currentUser!;
     if (currentUser.compatibilitySetted == null ||
@@ -64,9 +62,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 // ada(context: context, builder: )
   }
 
-  late AudioPlayer player;
-  late AudioPlayer player2;
-  late AudioPlayer player3;
+  AudioPlayer player = AudioPlayer();
+  AudioPlayer player2 = AudioPlayer();
+  AudioPlayer player3 = AudioPlayer();
   late Duration duration;
   late Duration playerPosition;
 
@@ -300,6 +298,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               AudioFilePlayer(
                 player: player,
                 onPlay: () async {
+                  player2.stop();
+                  player2.seek(Duration.zero);
+                  player3.stop();
+                  player3.seek(Duration.zero);
                   player.play();
                 },
                 onPause: () async {
@@ -316,6 +318,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               AudioFilePlayer(
                 player: player2,
                 onPlay: () async {
+                  player.stop();
+                  player.seek(Duration.zero);
+                  player3.stop();
+                  player3.seek(Duration.zero);
                   player2.play();
                 },
                 onPause: () async {
@@ -332,6 +338,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               AudioFilePlayer(
                 player: player3,
                 onPlay: () async {
+                  player.stop();
+                  player.seek(Duration.zero);
+                  player2.stop();
+                  player2.seek(Duration.zero);
                   player3.play();
                 },
                 onPause: () async {

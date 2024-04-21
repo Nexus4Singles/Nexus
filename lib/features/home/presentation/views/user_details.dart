@@ -36,14 +36,12 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
   }
 
   FutureOr _init() {
-    player = AudioPlayer();
-    player2 = AudioPlayer();
-    player3 = AudioPlayer();
+    _setAudioPlayer();
   }
 
-  late AudioPlayer player;
-  late AudioPlayer player2;
-  late AudioPlayer player3;
+  AudioPlayer player = AudioPlayer();
+  AudioPlayer player2 = AudioPlayer();
+  AudioPlayer player3 = AudioPlayer();
   late Duration duration;
   late Duration playerPosition;
 
@@ -384,6 +382,10 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                       AudioFilePlayer(
                         player: player,
                         onPlay: () async {
+                          player2.stop();
+                          player2.seek(Duration.zero);
+                          player3.stop();
+                          player3.seek(Duration.zero);
                           player.play();
                         },
                         onPause: () async {
@@ -402,6 +404,10 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                       AudioFilePlayer(
                         player: player2,
                         onPlay: () async {
+                          player.stop();
+                          player.seek(Duration.zero);
+                          player3.stop();
+                          player3.seek(Duration.zero);
                           player2.play();
                         },
                         onPause: () async {
@@ -420,6 +426,10 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                       AudioFilePlayer(
                         player: player3,
                         onPlay: () async {
+                          player.stop();
+                          player.seek(Duration.zero);
+                          player2.stop();
+                          player2.seek(Duration.zero);
                           player3.play();
                         },
                         onPause: () async {

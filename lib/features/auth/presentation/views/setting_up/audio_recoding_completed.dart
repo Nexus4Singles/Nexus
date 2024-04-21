@@ -221,11 +221,9 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                   player.seek(Duration.zero);
                   player2.stop();
                   player2.seek(Duration.zero);
-                  // await _setAudioPlayer(model.audioPath3, '3');
                   player3.play();
                 },
                 onPause: () async {
-                  // await _setAudioPlayer(model.audioPath3, '3');
                   player3.pause();
                 },
               ),

@@ -18,24 +18,24 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
     return Scaffold(
       backgroundColor: white,
       body: Padding(
-        padding: EdgeInsets.symmetric(),
+        padding: const EdgeInsets.symmetric(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/images/sadface.png'),
-            SizedBoxH20(),
+            const SizedBoxH20(),
             Text(
               'We are sad to see you go. If you want to\npermanently delete your account, click Delete',
               style:
                   textStyle16.copyWith(fontWeight: FontWeight.w600, color: ash),
             ),
-            SizedBoxH25(),
+            const SizedBoxH25(),
             CustomButton(
               onPressed: () {},
               text: 'Keep Account',
               textColor: white,
             ),
-            SizedBoxH15(),
+            const SizedBoxH15(),
             CustomButtonOut(
               onPressed: () {},
               bgColor: primary,

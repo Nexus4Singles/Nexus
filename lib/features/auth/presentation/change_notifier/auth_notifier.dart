@@ -364,5 +364,5 @@ class AuthNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  int recordingEndSecs = 10;
+  int recordingEndSecs = 60;
 }

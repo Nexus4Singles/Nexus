@@ -197,7 +197,7 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                               return Container();
                             }
                             return Text(
-                              '${BaseHelper.getTwoDigit(snapshot.data!.inMinutes).toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds).toString()}',
+                              '${BaseHelper.getTwoDigit(snapshot.data!.inMinutes).toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? 00 : BaseHelper.getTwoDigit(snapshot.data!.inSeconds).toString()}',
                               style: textStyle18.copyWith(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,

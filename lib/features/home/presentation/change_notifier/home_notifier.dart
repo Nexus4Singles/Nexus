@@ -26,8 +26,10 @@ class HomeNotifier with ChangeNotifier {
   Future<void> getUsers() async {
     getUsersUsecase.call(const NoParams()).then((value) {
       value.fold((l) => l, (r) {
-        allUsers =
-            users = r.where((e) => e.gender != currentUser!.gender).toList();
+        allUsers = users = r
+            .where((e) => e.gender != currentUser!.gender)
+            .where((el) => el.registrationProgress == 'completed')
+            .toList();
 
         notifyListeners();
         // Logger().d(allUsers);

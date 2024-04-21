@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void nextScreen() async {
     bool firstTime = await SharedPref.getBool(kFirstTime) ?? true;
-    if (!firstTime) {
+    if (firstTime) {
       Get.offAndToNamed(AppRoutes.onboardingHandler);
       // }
     } else {

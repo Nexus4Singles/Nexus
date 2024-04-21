@@ -266,6 +266,8 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                       radius: 10.r,
                     ),
                     const SizedBoxH40(),
+                    const SizedBoxH40(),
+                    const SizedBoxH40(),
                     // Align(
                     //   alignment: Alignment.bottomCenter,
                     //   child: CustomButton(

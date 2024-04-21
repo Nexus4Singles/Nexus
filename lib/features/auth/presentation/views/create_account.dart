@@ -12,6 +12,7 @@ import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
 import 'package:nexus/core/text_field_password.dart';
 import 'package:nexus/core/utils/device.dart';
+import 'package:nexus/core/utils/shared_pref.dart';
 import 'package:nexus/core/utils/toast.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:nexus/router.dart';
@@ -254,7 +255,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 ),
                                 const SizedBoxH25(),
                                 CustomButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     // Get.toNamed(AppRoutes.verifyAccount);
                                     if (!isChecked) {
                                       return AppToast().showErrorToast(
@@ -263,6 +264,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                     bool validate =
                                         _formkey.currentState!.validate();
                                     if (validate) {
+                                      await SharedPref.setBool(
+                                          kFirstTime, false);
                                       Map<String, dynamic> map = {
                                         kEMAIL: email.text,
                                         kPASSWORD: password.text,
