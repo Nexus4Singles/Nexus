@@ -36,11 +36,11 @@ abstract class RegisterModule {
 
   @lazySingleton
   CloudinaryPublic get cloudinary => CloudinaryPublic(
-        'oghenekparobor',
-        'drugmap',
+        '',
+        '',
         cache: true,
       );
-      
+
   @LazySingleton()
   Uuid get uuid => const Uuid();
 }

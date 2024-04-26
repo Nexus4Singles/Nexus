@@ -173,7 +173,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                 ),
                                 const SizedBoxW10(),
                                 Text(
-                                  '${model.selectedUser!.stateOfOrigin!} ${model.selectedUser!.country}',
+                                  model.selectedUser!.location!.place!
+                                      .toString(),
                                   style: textStyle12.copyWith(
                                     color: white,
                                   ),

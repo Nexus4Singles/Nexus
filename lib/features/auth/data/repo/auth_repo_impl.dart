@@ -55,7 +55,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       // call firestore collections
       var data = await remote.read(kUSER_KEY, user.uid);
       await storage.saveUser(UserModel.fromJson(data));
-// updateProfile(map: {kNotificationToken: _credential[kNotificationToken]});
+
       return UserModel.fromJson(data);
     });
 
@@ -79,22 +79,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     });
 
     return res.fold((l) => Left(l), (r) => Right(r));
-  }
-
-  @override
-  Future<Either<void, bool>> addRegistrationCode(
-      Map<String, dynamic> map) async {
-    var res = await formatter.firestorFmt(() async {
-      var firestore = await generalRemote.firebaseFirestore();
-      var id = uuid.v1();
-
-      map.addAll({kID: id});
-      return firestore.collection(kREGCODE).doc(id).set(map);
-    });
-
-    return res.fold((l) => Left(l), (r) {
-      return const Right(true);
-    });
   }
 
   @override

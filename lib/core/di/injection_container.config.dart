@@ -25,7 +25,6 @@ import '../../features/auth/data/data-sources/remote-datasource/auth_remote.dart
     as _i16;
 import '../../features/auth/data/repo/auth_repo_impl.dart' as _i25;
 import '../../features/auth/domain/repositories/auth_repo.dart' as _i24;
-import '../../features/auth/domain/usecases/add_reg_code.dart' as _i35;
 import '../../features/auth/domain/usecases/is_auth.dart' as _i27;
 import '../../features/auth/domain/usecases/login.dart' as _i29;
 import '../../features/auth/domain/usecases/login_google.dart' as _i28;
@@ -34,12 +33,12 @@ import '../../features/auth/domain/usecases/register.dart' as _i32;
 import '../../features/auth/domain/usecases/register_google.dart' as _i33;
 import '../../features/auth/domain/usecases/update_profile.dart' as _i34;
 import '../../features/auth/presentation/change_notifier/auth_notifier.dart'
-    as _i36;
+    as _i35;
 import '../../features/home/data/repositories/repo_imple.dart' as _i21;
 import '../../features/home/domain/repositories/repo.dart' as _i20;
 import '../../features/home/domain/usecases/get_users.dart' as _i26;
 import '../../features/home/presentation/change_notifier/home_notifier.dart'
-    as _i37;
+    as _i36;
 import '../network/client.dart' as _i14;
 import '../network/formatter.dart' as _i13;
 import '../network/network_info.dart' as _i9;
@@ -51,7 +50,7 @@ import '../usecases/core/has_started.dart' as _i19;
 import '../usecases/core/logout.dart' as _i30;
 import '../usecases/core/save_user.dart' as _i22;
 import '../usecases/core/started.dart' as _i23;
-import 'register_module.dart' as _i38;
+import 'register_module.dart' as _i37;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 Future<_i1.GetIt> init(
@@ -140,9 +139,7 @@ Future<_i1.GetIt> init(
           repository: gh<_i24.AuthenticationRepository>()));
   gh.lazySingleton<_i34.UpdateProfileUsecase>(() => _i34.UpdateProfileUsecase(
       repository: gh<_i24.AuthenticationRepository>()));
-  gh.lazySingleton<_i35.AddRegCodeUsecase>(() =>
-      _i35.AddRegCodeUsecase(repository: gh<_i24.AuthenticationRepository>()));
-  gh.factory<_i36.AuthNotifier>(() => _i36.AuthNotifier(
+  gh.factory<_i35.AuthNotifier>(() => _i35.AuthNotifier(
         startedUsecase: gh<_i23.StartedUsecase>(),
         hasStratedUsecase: gh<_i19.HasStratedUsecase>(),
         loginUsecase: gh<_i29.LoginUsecase>(),
@@ -154,7 +151,7 @@ Future<_i1.GetIt> init(
         remote: gh<_i16.AuthenticationRemoteDatasource>(),
         formatter: gh<_i13.MyFormatter>(),
       ));
-  gh.factory<_i37.HomeNotifier>(() => _i37.HomeNotifier(
+  gh.factory<_i36.HomeNotifier>(() => _i36.HomeNotifier(
         remote: gh<_i16.AuthenticationRemoteDatasource>(),
         getUsersUsecase: gh<_i26.GetUsersUsecase>(),
         readProfileUsecase: gh<_i31.ReadProfileUsecase>(),
@@ -162,4 +159,4 @@ Future<_i1.GetIt> init(
   return getIt;
 }
 
-class _$RegisterModule extends _i38.RegisterModule {}
+class _$RegisterModule extends _i37.RegisterModule {}

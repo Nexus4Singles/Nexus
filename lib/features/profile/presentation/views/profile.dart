@@ -158,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SvgPicture.asset('assets/icons/location.svg'),
                           const SizedBoxW5(),
                           Text(
-                            '${homeModel.currentUser!.city}, ${homeModel.currentUser!.country}',
+                            '${homeModel.currentUser!.location!.place}',
                             style: textStyle16.copyWith(
                                 fontWeight: FontWeight.w300, color: black),
                           ),
@@ -379,13 +379,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fit: BoxFit.cover,
                           imageUrl: item,
                           progressIndicatorBuilder:
-                              (context, url, downloadProgress) => SizedBox(
+                              (context, url, downloadProgress) =>
+                                  const SizedBox(
                             width: 30,
                             height: 30,
-                            child: CircularProgressIndicator(
-                              value: downloadProgress.progress,
-                              color: primary,
-                            ),
                           ),
                           errorWidget: (context, url, error) => Container(),
                         ),

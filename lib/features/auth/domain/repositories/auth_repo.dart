@@ -12,5 +12,4 @@ abstract class AuthenticationRepository {
   Future<bool> isAuth();
   Future<Either<void, UserModel>> readProfile();
   Future<Either<void, bool>> updateProfile(Map<String, dynamic> map);
-  Future<Either<void, bool>> addRegistrationCode(Map<String, dynamic> map);
 }
