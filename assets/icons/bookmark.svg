@@ -1,10 +1,3 @@
-<svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<rect x="0.5" y="0.5" width="43" height="43" rx="21.5" stroke="#A7A9B7"/>
-<rect x="10" y="11" width="24" height="24" fill="url(#pattern0)" fill-opacity="0.8"/>
-<defs>
-<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image0_794_8983" transform="scale(0.015625)"/>
-</pattern>
-<image id="image0_794_8983" width="64" height="64" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAzJJREFUeF7t22urlFUUB/DfyajsRkalRmaR+KJSkkjRiF5EVkZ20ehK2QfQTyDUKz9BL7uJClpGRQaVRZFhJEUphSiWFXYlym5WWhQL1sBwODGPpzPnGZg1b2Zg9rP3Xv9nrf9/7cVeI5p9zsdDWIGfmj3S2qgpeAfrmux1pOE25+FhzMEzDZ9pY9gpWIgTsAZ7e23ieAH4A/f3mrTF/6djNRb1A4BH8HsBUB5QIVAc0CLJ9Vq6SLBUoGSw8oBKhCoTrFS4zgJ9OQzFcXioT4MFwLB7QNUDqiBSFaEqiVVNsIqiVRQd3qJoZYLDngmWB5QH1HG46gFVEBnmTLBUoFSgVKBUoFSgVGCI6wElgyWDJYMlgxMlg3FH+RzMx0nYja963YFr8H9fr8lNFAmejItwI27HVLyELfgEfzUw9L+GDDwAp+Mq3JZX7/fjb1yDD7Epv38eJwgDDcDZuB534kRsxfb8fQ+W4zCew8v4ehwgDCQAEeMX4Abciu/weHZ1HE0jA5zrcDdmjgqJf44DiIEDIFz+ijT88nTvjfh4DKOCC6Iz5V4swS6sz66PXxuCMFAATMu3Gi4frSwvpGv3YvtZeAA345sMldfxbQMQBgKAiO9osropWf6HdPm38WcDI2JISGSEzF2I8HgRT+Ngj+dbB+BUXJaEFs1LH6Ub72loePewmCvC575shAoAIyT25U2VsaZsFYCzcC1WIn6Htm/DoXEY3/3IbKzKvOELbMYOfD/GvK0AEC1qM7As+wpDw5/EWzjyP43vPH5uckLwyWl4PuXy81HzTzoAQW5zcUu+/XDPJ/DBBBnePU0YfmWGxAK8iQ0ZEh05nVQAzsTV6fKx8CvJ9OGm/fxcnF2sS3EAIavv4kdMGgDhkuHyEe/B7E/hDfzWT8u75j4viTZCIlpln02lONbPlpk4DEVWtjbjMWTqUzyG9yfJ8O5lIskKpYkutkvxKl5DeEbfLktH7/BOXJhvPJD/rAXjO0sGAV+CBzPpClKMlxR5RF96hyNfD1fvuPwvLRrfvXTE/h2pQkHKQcYTCkAQT6SnEXshce8NiOHd2zgDi/OoHS3+j+LLXvv8F1dUZVDnUnpVAAAAAElFTkSuQmCC"/>
-</defs>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5 7.8C5 6.11984 5 5.27976 5.32698 4.63803C5.6146 4.07354 6.07354 3.6146 6.63803 3.32698C7.27976 3 8.11984 3 9.8 3H14.2C15.8802 3 16.7202 3 17.362 3.32698C17.9265 3.6146 18.3854 4.07354 18.673 4.63803C19 5.27976 19 6.11984 19 7.8V21L12 17L5 21V7.8Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

@@ -85,7 +85,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             right: 5,
                             child: InkWell(
                               onTap: () {
-                                showModal();
+                                showModal(
+                                    "You will be able to manually search profiles here as soon as we launch.");
                               },
                               child: Container(
                                 padding: EdgeInsets.all(5.sp),
@@ -94,7 +95,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                   color: primary,
                                 ),
                                 child: const Icon(
-                                  Iconsax.search_normal,
+                                  Icons.search_sharp,
                                   color: white,
                                   size: 20,
                                 ),
@@ -107,17 +108,20 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     const SizedBoxW10(),
                     InkWell(
                       onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(25.r),
-                            ),
-                          ),
-                          showDragHandle: true,
-                          builder: (context) {
-                            return const ExploreFilterModal();
-                          },
+                        // showModalBottomSheet(
+                        //   context: context,
+                        //   shape: RoundedRectangleBorder(
+                        //     borderRadius: BorderRadius.vertical(
+                        //       top: Radius.circular(25.r),
+                        //     ),
+                        //   ),
+                        //   showDragHandle: true,
+                        //   builder: (context) {
+                        //     return const ExploreFilterModal();
+                        //   },
+                        // );
+                        showModal(
+                          'You will be able to filter by Age, Church, Nationality & Education level as soon as we launch.',
                         );
                       },
                       child: const Icon(
@@ -163,7 +167,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     );
   }
 
-  void showModal() {
+  void showModal(String text) {
     showAdaptiveDialog(
       context: context,
       barrierDismissible: true,
@@ -172,10 +176,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          content: const ComingSoonModal(
-            text:
-                'You will be able to manually search profiles here as soon as we launch.',
-          ),
+          content: ComingSoonModal(text: text),
         );
       },
     );

@@ -1,6 +1,7 @@
 const String iLogo = 'assets/images/logo.png';
 const String iWelcomeBg = 'assets/images/welcome-bg.png';
-const String iOnboard1 = 'assets/images/onboard-create.png';
-const String iOnboard2 = 'assets/images/onboard-search.png';
-const String iOnboard3 = 'assets/images/onboard-find.png';
-const String iOnboard4 = 'assets/images/onboard-chat.png';
+const String iOnboard1 = '$svgPath/HOW1.svg';
+const String iOnboard2 = '$svgPath/HOW2.svg';
+const String iOnboard3 = '$svgPath/HOW3.svg';
+const String iOnboard4 = '$svgPath/HOW4.svg';
+const String svgPath = 'assets/icons';

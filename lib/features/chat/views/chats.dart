@@ -22,18 +22,13 @@ class _ChatsScreenState extends State<ChatsScreen> {
       backgroundColor: white,
       appBar: AppBar(
         backgroundColor: white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Chats',
-              style: textStyle18.copyWith(
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-                color: black,
-              ),
-            ),
-          ],
+        title: Text(
+          'Chats',
+          style: textStyle18.copyWith(
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+            color: black,
+          ),
         ),
         centerTitle: true,
         foregroundColor: black,

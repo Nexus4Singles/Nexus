@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/button.dart';
@@ -19,7 +21,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final _pageController = PageController();
 
   // late Timer _autoScrollTimer;
-
+  var currentIndex = 0;
   final List<Map<String, dynamic>> _pagesModel = [
     {
       'id': '1',
@@ -79,6 +81,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: const BackButton(
+          color: white,
+        ),
+      ),
+      extendBodyBehindAppBar: true,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [
@@ -87,17 +96,56 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             secondary2,
           ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
         ),
-        child: SafeArea(
-          child: PageView(
-            controller: _pageController,
-            children: _pagesModel.map((pageData) {
-              return OnBoardingPage(
-                map: pageData,
+        child: Column(
+          children: [
+            Expanded(
+              child: PageView(
                 controller: _pageController,
-                count: _pagesModel.length,
-              );
-            }).toList(),
-          ),
+                onPageChanged: (val) {
+                  setState(() {
+                    currentIndex = val;
+                  });
+                },
+                children: _pagesModel.map((pageData) {
+                  return OnBoardingPage(
+                    map: pageData,
+                    controller: _pageController,
+                    count: _pagesModel.length,
+                  );
+                }).toList(),
+              ),
+            ),
+            _pagesModel[currentIndex]['id'] == '4'
+                ? const SizedBox()
+                : Text(
+                    'Please Swipe Left',
+                    style: textStyle14.copyWith(color: white),
+                  ),
+            const SizedBoxH15(),
+            _pagesModel[currentIndex]['id'] == '4'
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: CustomButton(
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.authHandler);
+                      },
+                      text: 'Get Started',
+                    ),
+                  )
+                : SmoothPageIndicator(
+                    controller: _pageController,
+                    count: _pagesModel.length,
+                    effect: const ExpandingDotsEffect(
+                      dotColor: Color(0xFFD6DAE1),
+                      activeDotColor: primary,
+                      dotHeight: 8,
+                      dotWidth: 8,
+                    ),
+                  ),
+            const SizedBox(
+              height: 32,
+            )
+          ],
         ),
       ),
     );
@@ -123,73 +171,38 @@ class OnBoardingPage extends StatelessWidget {
         vertical: 15,
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: BackButton(
-              color: white,
-            ),
-          ),
-          const SizedBoxH15(),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
                 backgroundColor: white,
                 foregroundColor: primary,
                 child: Text(
                   map['id'],
+                  style: textStyle18.copyWith(
+                      fontWeight: FontWeight.w600, fontSize: 20),
                 ),
               ),
               const SizedBoxH20(),
-              Image.asset(map['image']),
+              SvgPicture.asset(map['image']),
               const SizedBoxH20(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    map['title'],
-                    style: headerStyle.copyWith(
-                      color: white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBoxH20(),
-                  Text(
-                    map['subtitle'],
-                    style: textStyle14.copyWith(
-                      color: white,
-                      fontSize: 13.5,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBoxH40(),
-                  if (map['id'] != '4')
-                    Text(
-                      'Please Swipe Left',
-                      style: textStyle14.copyWith(
-                        color: white,
-                      ),
-                    ),
-                  const SizedBoxH10(),
-                  map['id'] == '4'
-                      ? CustomButton(
-                          onPressed: () {
-                            Get.toNamed(AppRoutes.authHandler);
-                          },
-                          text: 'Get Started',
-                        )
-                      : SmoothPageIndicator(
-                          controller: controller,
-                          count: count,
-                          effect: const ExpandingDotsEffect(
-                            dotColor: Color(0xFFD6DAE1),
-                            activeDotColor: primary,
-                            dotHeight: 8,
-                            dotWidth: 8,
-                          ),
-                        ),
-                ],
+              Text(
+                map['title'],
+                style: headerStyle.copyWith(
+                  color: white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBoxH20(),
+              Text(
+                map['subtitle'],
+                style: textStyle14.copyWith(
+                  color: white,
+                  fontSize: 13.5,
+                ),
+                textAlign: TextAlign.center,
               ),
             ],
           ),

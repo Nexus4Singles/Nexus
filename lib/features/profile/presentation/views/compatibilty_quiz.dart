@@ -29,7 +29,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
   String personalityType = '';
   String regularSourceOfIncome = '';
   String dateWhoIsNotFinanciallyStable = '';
-  String mentallyReadyForMarriage = '';
+  String longDistanceRelationship = '';
   String believeInCohabitingBeforeMarriage = '';
   String shouldChristianSpeakInTongue = '';
   String believeInTithing = '';
@@ -248,24 +248,24 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                 const SizedBoxH20(),
                 const CampaTitle(
                   num: '7',
-                  title: 'Are you mentally ready for marriage?',
+                  title: 'Are you open to a long distance relationship?',
                 ),
 
                 CompatRadio(
-                  groupVal: mentallyReadyForMarriage,
+                  groupVal: longDistanceRelationship,
                   val: 'Yes',
                   onChanged: (p0) {
                     setState(() {
-                      mentallyReadyForMarriage = p0!;
+                      longDistanceRelationship = p0!;
                     });
                   },
                 ),
                 CompatRadio(
-                  groupVal: mentallyReadyForMarriage,
+                  groupVal: longDistanceRelationship,
                   val: 'No',
                   onChanged: (p0) {
                     setState(() {
-                      mentallyReadyForMarriage = p0!;
+                      longDistanceRelationship = p0!;
                     });
                   },
                 ),
@@ -350,7 +350,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                         personalityType.isEmpty ||
                         regularSourceOfIncome.isEmpty ||
                         dateWhoIsNotFinanciallyStable.isEmpty ||
-                        mentallyReadyForMarriage.isEmpty ||
+                        longDistanceRelationship.isEmpty ||
                         believeInCohabitingBeforeMarriage.isEmpty ||
                         shouldChristianSpeakInTongue.isEmpty ||
                         believeInTithing.isEmpty) {
@@ -368,7 +368,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                           kREGULARSOURCEOFINCOME: regularSourceOfIncome,
                           kMARRYWHOISNOTFINANCIALLYSTABLE:
                               dateWhoIsNotFinanciallyStable,
-                          kMENTALLYREADYFORMARRIAGE: mentallyReadyForMarriage,
+                          kLONGDISTANCERELATIONSHIP: longDistanceRelationship,
                           kBELIEVEINCOHIABITING:
                               believeInCohabitingBeforeMarriage,
                           kSHOULDCHRISTIANSPEAKINTONGUE:

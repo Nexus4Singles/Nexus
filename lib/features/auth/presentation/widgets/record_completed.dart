@@ -34,6 +34,13 @@ class _AudioFilePlayerState extends State<AudioFilePlayer> {
           (position, bufferedPosition, duration) => PositionData(
               position, bufferedPosition, duration ?? Duration.zero));
 
+
+  @override
+  void dispose() {
+    widget.player.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,16 +70,25 @@ class _AudioFilePlayerState extends State<AudioFilePlayer> {
             child: CircleAvatar(
               backgroundColor: primary,
               radius: 30,
-              child: isPlaying
-                  ? const Icon(
-                      Iconsax.pause,
-                      color: white,
+              child: widget.player.processingState == ProcessingState.buffering
+                  ? const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(Colors.white),
+                        strokeWidth: 3,
+                      ),
                     )
-                  : const Icon(
-                      Icons.play_arrow,
-                      color: white,
-                      size: 40,
-                    ),
+                  : isPlaying
+                      ? const Icon(
+                          Iconsax.pause,
+                          color: white,
+                        )
+                      : const Icon(
+                          Icons.play_arrow,
+                          color: white,
+                          size: 40,
+                        ),
             ),
           ),
           const SizedBoxW10(),
@@ -117,6 +133,7 @@ class _AudioFilePlayerState extends State<AudioFilePlayer> {
         switch (state.processingState) {
           case ProcessingState.idle:
             {
+              setState(() {});
               // setState(() {
               //   isPlaying = false;
               // });
@@ -124,16 +141,19 @@ class _AudioFilePlayerState extends State<AudioFilePlayer> {
             break;
           case ProcessingState.loading:
             {
+              setState(() {});
               Logger().d('loading');
             }
             break;
           case ProcessingState.buffering:
             {
+              setState(() {});
               Logger().d('buffering');
             }
             break;
           case ProcessingState.ready:
             {
+              setState(() {});
               Logger().d('ready');
             }
             break;

@@ -144,38 +144,18 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               const SizedBoxH10(),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        value: isChecked,
-                                        onChanged: (value) {},
-                                        activeColor: primary,
-                                        side: const BorderSide(color: black),
-                                      ),
-                                      Text(
-                                        'Remember me',
-                                        style:
-                                            textStyle14.copyWith(color: black),
-                                      ),
-                                    ],
+                                  TextButton(
+                                    onPressed: () {
+                                      Get.toNamed(
+                                          AppRoutes.forgottenPassword);
+                                    },
+                                    child: Text(
+                                      'Forgotten password?',
+                                      style: textStyle14,
+                                    ),
                                   ),
-                                  Column(
-                                    children: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Get.toNamed(
-                                              AppRoutes.forgottenPassword);
-                                        },
-                                        child: Text(
-                                          'Forgotten password?',
-                                          style: textStyle14,
-                                        ),
-                                      ),
-                                    ],
-                                  )
                                 ],
                               ),
                               const SizedBoxH25(),

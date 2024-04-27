@@ -28,7 +28,7 @@ class CompatibilityEntity extends Equatable {
   final String? regularSourceOfIncome;
   @JsonKey(name: kMARRYWHOISNOTFINANCIALLYSTABLE)
   final String? marrySomeoneNotFS;
-  @JsonKey(name: kMENTALLYREADYFORMARRIAGE)
+  @JsonKey(name: kLONGDISTANCERELATIONSHIP)
   final String? mentallyReady;
   @JsonKey(name: kBELIEVEINCOHIABITING)
   final String? believeInCohiabiting;

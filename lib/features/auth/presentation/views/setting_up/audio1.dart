@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:logger/logger.dart';
-// import 'package:lottie/lottie.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
@@ -23,8 +20,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart' as rx;
-// import 'package:wave/config.dart';
-// import 'package:wave/wave.dart';
+import '../../../../../core/assets.dart';
 
 class Audio1Screen extends StatefulWidget {
   const Audio1Screen({super.key});
@@ -197,7 +193,7 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                               return Container();
                             }
                             return Text(
-                              '${BaseHelper.getTwoDigit(snapshot.data!.inMinutes).toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? 00 : BaseHelper.getTwoDigit(snapshot.data!.inSeconds).toString()}',
+                             '${snapshot.data!.inMinutes.toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? "00" : ('${snapshot.data!.inSeconds}0')}',
                               style: textStyle18.copyWith(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
@@ -345,21 +341,13 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                         child: CircleAvatar(
                           radius: 40,
                           backgroundColor: warGrey,
-                          child: CircleAvatar(
-                            backgroundColor: primary,
-                            radius: 30,
-                            child: isRecordingCompleted
-                                ? Icon(
-                                    isPlaying ? Iconsax.pause : Iconsax.play,
-                                    color: white,
-                                  )
-                                : Icon(
-                                    isRecording
-                                        ? Iconsax.pause
-                                        : Iconsax.microphone,
-                                    color: white,
-                                  ),
-                          ),
+                          child: isRecordingCompleted
+                              ? SvgPicture.asset(isPlaying
+                              ? "$svgPath/playing.svg"
+                              : "$svgPath/play.svg")
+                              :SvgPicture.asset(isRecording
+                              ? "$svgPath/playing.svg"
+                              : "$svgPath/mic2.svg"),
                         ),
                       ),
                     ),

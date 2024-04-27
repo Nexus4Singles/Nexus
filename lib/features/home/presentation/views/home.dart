@@ -14,8 +14,11 @@ import 'package:nexus/features/home/presentation/widgets/coming_soon_modal.dart'
 import 'package:nexus/features/home/presentation/widgets/profile_tile.dart';
 import 'package:nexus/features/home/presentation/widgets/user_card.dart';
 import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
+import 'package:pinput/pinput.dart';
 // import 'package:nexus/router.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../core/utils/shared_pref.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // } else {}
     var currentUser =
         Provider.of<HomeNotifier>(context, listen: false).currentUser!;
+    SharedPref.setString("email", currentUser.email);
     if (currentUser.compatibilitySetted == null ||
         currentUser.compatibilitySetted == false) {
       Future.delayed(const Duration(seconds: 5), () {

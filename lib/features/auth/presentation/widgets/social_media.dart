@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/utils/helper.dart';
 import 'package:nexus/core/size_boxes.dart';
 
@@ -15,8 +17,10 @@ class SocialMediaWidget extends StatelessWidget {
             BaseHelper.launchBrowser(
                 'https://www.facebook.com/nexusgodlydatingapp?mibextid=kFxxJD');
           },
-          child: Image.asset(
-            'assets/icons/fb.png',
+          child: SvgPicture.asset(
+            '$svgPath/fb.svg',
+            width: 32,
+            color: Color(0xff1877F2),
           ),
         ),
         const SizedBoxW15(),
@@ -24,9 +28,7 @@ class SocialMediaWidget extends StatelessWidget {
           onTap: () {
             BaseHelper.launchBrowser('https://twitter.com/nexus4singles');
           },
-          child: Image.asset(
-            'assets/icons/x.png',
-          ),
+          child: SvgPicture.asset('$svgPath/x.svg', width: 32,),
         ),
         const SizedBoxW15(),
         InkWell(
@@ -34,8 +36,9 @@ class SocialMediaWidget extends StatelessWidget {
             BaseHelper.launchBrowser(
                 'https://www.instagram.com/nexus4singles?igsh=N25rZWRoYmtpbGNv&utm_source=qr');
           },
-          child: Image.asset(
-            'assets/icons/instragram.png',
+          child: SvgPicture.asset(
+            '$svgPath/ig.svg',
+            width: 32,
           ),
         ),
       ],

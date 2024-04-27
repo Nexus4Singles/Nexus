@@ -65,7 +65,7 @@ class _CongratulationScreenState extends State<CongratulationScreen> {
                               ),
                               const SizedBoxH20(),
                               Text(
-                                'You have successfully created an account on Nexus! \nKindly click on the verification link sent to your email inbox/spam to activate your account and setup your profile which will be visible to only opposite gender users. ',
+                                "You have successfully created an account on Nexus! \nKindly click on the verification link sent to your email inbox/spam to activate your account. Please note that you won't be able to sign in until you have verified your account ",
                                 textAlign: TextAlign.center,
                                 style: textStyle14.copyWith(
                                     fontWeight: FontWeight.w400, color: black),

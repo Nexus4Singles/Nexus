@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
@@ -98,8 +99,14 @@ class UserCard extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: onRefresh,
-                    child: Image.asset(
-                      'assets/icons/refresh-r.png',
+                    child:Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(shape: BoxShape.circle,border: Border.all(color: primary)),
+                      child: SvgPicture.asset(
+                        '$svgPath/back.svg',
+                        width: 24,
+                        color: primary.withOpacity(0.6),
+                      ),
                     ),
                   ),
                   InkWell(
@@ -116,8 +123,14 @@ class UserCard extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: onSaved,
-                    child: Image.asset(
-                      'assets/icons/bookmark-r.png',
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(shape: BoxShape.circle,border: Border.all(color: primary)),
+                      child: SvgPicture.asset(
+                        '$svgPath/bookmark.svg',
+                        width: 24,
+                        color: primary.withOpacity(0.6),
+                      ),
                     ),
                   ),
                 ],

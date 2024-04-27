@@ -24,7 +24,7 @@ class CompatRadio extends StatelessWidget {
         value: val,
         title: Text(
           val,
-          style: GoogleFonts.robotoCondensed(fontSize: 13),
+          style: GoogleFonts.sen(fontSize: 13),
           overflow: TextOverflow.ellipsis,
         ),
         contentPadding: const EdgeInsets.all(0),

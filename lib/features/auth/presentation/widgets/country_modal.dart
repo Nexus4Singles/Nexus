@@ -51,7 +51,7 @@ class _CountryModalState extends State<CountryModal> {
                 child: Text(
                   'Nigeria',
                   style: textStyle16.copyWith(
-                    color: model.country == 'Nigeria' ? white : iconGrey,
+                    color: model.country == 'Nigeria' ? white : black,
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),

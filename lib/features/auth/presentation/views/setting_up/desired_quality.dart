@@ -61,11 +61,17 @@ class _DesiredQualityScreenState extends State<DesiredQualityScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Select up to 8 Qualities you value the most in the choice of a life partner,  asides from Godliness',
-                      style: textStyle14.copyWith(),
-                      textAlign: TextAlign.center,
-                    ),
+                    Text.rich(
+                        TextSpan(children: [
+                          const TextSpan(
+                              text:
+                                  'Select up to 8 Qualities you value the most in the choice of a life partner,  asides from '),
+                          TextSpan(
+                              text: 'Godliness',
+                              style: textStyle14.copyWith(
+                                  fontWeight: FontWeight.bold))
+                        ]),
+                        style: textStyle14),
                   ],
                 ),
               ),

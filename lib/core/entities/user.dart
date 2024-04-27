@@ -3,7 +3,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/models/compatibility.dart';
 import 'package:nexus/core/models/location.dart';
-// import 'package:nexus/core/constant.dart';
 
 class UserEntity extends Equatable {
   const UserEntity({

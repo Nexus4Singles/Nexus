@@ -78,7 +78,7 @@ class _PhotoViewScreenState extends State<PhotoViewScreen> {
               // },
               pageLength: 1,
               storyLength: (int pageIndex) {
-                return model.selectedUser!.photos!.length;
+                return model.selectedUser?.photos?.length ?? 0;
               },
               onPageLimitReached: () {
                 Navigator.pop(context);

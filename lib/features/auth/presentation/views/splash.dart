@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nexus/core/assets.dart';
@@ -30,9 +31,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void nextScreen() async {
     bool firstTime = await SharedPref.getBool(kFirstTime) ?? true;
+    var email = await SharedPref.getString("email") ?? "";
     if (firstTime) {
-      Get.offAndToNamed(AppRoutes.onboardingHandler);
-      // }
+      Get.offAndToNamed(AppRoutes.login);
+    } else if (email.isNotEmpty) {
+      Get.offAndToNamed(AppRoutes.mainNav);
     } else {
       Get.offAndToNamed(AppRoutes.login);
     }
@@ -61,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             const SizedBoxH15(),
-            Image.asset(iLogo),
+            SvgPicture.asset("$svgPath/logo.svg"),
             const SizedBoxH15(),
             Text(
               'The Visibility App for Christian Singles',

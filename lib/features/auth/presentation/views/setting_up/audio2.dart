@@ -22,6 +22,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart' as rx;
+
+import '../../../../../core/assets.dart';
 // import 'package:wave/config.dart';
 // import 'package:wave/wave.dart';
 
@@ -200,7 +202,7 @@ class _Audio2ScreenState extends State<Audio2Screen> {
                               return Container();
                             }
                             return Text(
-                              '${BaseHelper.getTwoDigit(snapshot.data!.inMinutes).toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? 00 : BaseHelper.getTwoDigit(snapshot.data!.inSeconds).toString()}',
+                              '${snapshot.data!.inMinutes.toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? "00" : ('${snapshot.data!.inSeconds}0')}',
                               style: textStyle18.copyWith(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
@@ -269,7 +271,7 @@ class _Audio2ScreenState extends State<Audio2Screen> {
                             }
 
                             return Text(
-                              '${BaseHelper.getTwoDigit(snapshot.data!.inMinutes).toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds).toString()}',
+                             '${BaseHelper.getTwoDigit(snapshot.data!.inMinutes).toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds).toString()}',
                               style: textStyle18.copyWith(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
@@ -346,21 +348,13 @@ class _Audio2ScreenState extends State<Audio2Screen> {
                         child: CircleAvatar(
                           radius: 40,
                           backgroundColor: warGrey,
-                          child: CircleAvatar(
-                            backgroundColor: primary,
-                            radius: 30,
-                            child: isRecordingCompleted
-                                ? Icon(
-                                    isPlaying ? Iconsax.pause : Iconsax.play,
-                                    color: white,
-                                  )
-                                : Icon(
-                                    isRecording
-                                        ? Iconsax.pause
-                                        : Iconsax.microphone,
-                                    color: white,
-                                  ),
-                          ),
+                          child: isRecordingCompleted
+                              ? SvgPicture.asset(isPlaying
+                                  ? "$svgPath/playing.svg"
+                                  : "$svgPath/play.svg")
+                              : SvgPicture.asset(isRecording
+                                  ? "$svgPath/playing.svg"
+                                  : "$svgPath/mic2.svg"),
                         ),
                       ),
                     ),

@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
@@ -16,6 +19,8 @@ import 'package:nexus/features/home/presentation/views/photo_view.dart';
 import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
 import 'package:nexus/features/profile/presentation/widgets/text_container.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../router.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -113,6 +118,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
         appBar: AppBar(
           backgroundColor: white,
           leading: const SizedBox.shrink(),
+          actions: [
+            InkWell(
+              onTap: (){
+                Get.toNamed(AppRoutes.settings);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Icon(
+                  Iconsax.setting_4,
+                ),
+              ),
+            ),
+          ],
           title: Text(
             'Your Profile',
             style: textStyle18.copyWith(
@@ -138,34 +156,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ],
               ),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '${homeModel.currentUser!.username}, ${homeModel.currentUser!.age}',
-                        style: textStyle8.copyWith(
-                            color: black,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      const SizedBoxH5(),
-                      Row(
-                        children: [
-                          SvgPicture.asset('assets/icons/location.svg'),
-                          const SizedBoxW5(),
-                          Text(
-                            '${homeModel.currentUser!.location!.place}',
-                            style: textStyle16.copyWith(
-                                fontWeight: FontWeight.w300, color: black),
-                          ),
-                        ],
-                      )
-                    ],
+                  Text(
+                    '${homeModel.currentUser!.username}, ${homeModel.currentUser!.age}',
+                    style: textStyle8.copyWith(
+                        color: black,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600),
                   ),
+                  const SizedBoxH5(),
+                  Row(
+                    children: [
+                      SvgPicture.asset('assets/icons/location.svg'),
+                      const SizedBoxW5(),
+                      Expanded(
+                        child: Text(
+                          '${homeModel.currentUser!.location!.place}',
+                          overflow: TextOverflow.ellipsis,
+                          style: textStyle16.copyWith(
+                              fontWeight: FontWeight.w300, color: black),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
               const SizedBoxH25(),
@@ -282,7 +298,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               const SizedBoxH25(),
               Text(
-                'Audio Recording',
+                'Audio Recordings ',
                 style: textStyle18.copyWith(
                   fontWeight: FontWeight.w700,
                   color: black,
@@ -359,7 +375,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBoxH10(),
               Wrap(
                 runSpacing: 15,
-                spacing: 15,
+                spacing: 24,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                alignment: WrapAlignment.spaceEvenly,
                 children: [
                   for (var item in homeModel.currentUser!.photos!)
                     InkWell(
@@ -374,7 +392,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.r),
                         child: CachedNetworkImage(
-                          width: width(context) * .4,
+                          width: Get.width/2.3,
                           height: 100.h,
                           fit: BoxFit.cover,
                           imageUrl: item,

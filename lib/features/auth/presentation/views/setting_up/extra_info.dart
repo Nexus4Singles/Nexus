@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -31,6 +32,7 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
   String eduLevel = '';
   String profession = '';
   String country = '';
+  String church = '';
 
   final GlobalKey<FormState> _formkey = GlobalKey();
   TextEditingController cityController = TextEditingController();
@@ -95,50 +97,20 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'Nexus is currently available to only Nigerians \nliving in Nigeria and in diaspora',
-                            style: textStyle14.copyWith(
-                              color: black.withOpacity(.8),
+                          Expanded(
+                            child: Text(
+                              'Search for the name of your church from the list. If you don’t find it, kindly select “Other” and type the full name of your Church',
+                              style: textStyle14.copyWith(
+                                color: black.withOpacity(.8),
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
                           ),
                         ],
                       ),
                     ),
                     const SizedBoxH40(),
                     const SizedBoxH20(),
-                    // InkWell(
-                    //   onTap: () {
-                    //     showCountryPicker(
-                    //       context: context,
-                    //       showPhoneCode: false,
-                    //       favorite: ['ng'],
-                    //       onSelect: (Country co) {
-                    //         setState(() {
-                    //           country = co.name;
-                    //           cityController.text = co.name;
-                    //         });
-                    //         Logger().d(co.name);
-                    //       },
-                    //     );
-                    //   },
-                    //   child: CustomTextField(
-                    //     borderColor: white,
-                    //     controller: cityController,
-                    //     validator: (value) {
-                    //       if (value!.isEmpty) {
-                    //         return 'Please select country';
-                    //       } else {
-                    //         return null;
-                    //       }
-                    //     },
-                    //     enabled: false,
-                    //     fillColor: white,
-                    //     hintText: 'Select your City, Country of Residence',
-                    //     radius: 10.r,
-                    //   ),
-                    // ),
-
                     GooglePlaceAutoCompleteTextField(
                       textEditingController: model.search,
                       googleAPIKey: 'AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y',
@@ -208,7 +180,6 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                       isCrossBtnShown: true,
                     ),
                     const SizedBoxH15(),
-                    // if (cityController.text.toLowerCase() == 'nigeria')
                     ProfileDropDown(
                       items: LocalData().states,
                       val: state,
@@ -219,16 +190,6 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                         });
                       },
                     ),
-                    // : CustomTextField(
-                    //     controller: stateController,
-                    //     validator: (v) => fieldValidation(v!),
-                    //     hintText: 'Enter state',
-                    //     onChanged: (value) {
-                    //       setState(() {
-                    //         state = value;
-                    //       });
-                    //     },
-                    //   ),
                     const SizedBoxH10(),
                     ProfileDropDown(
                       items: LocalData().educationalLevels,
@@ -252,51 +213,25 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                       },
                     ),
                     const SizedBoxH10(),
-                    CustomTextField(
-                      borderColor: white,
-                      controller: churchController,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Enter church name';
-                        } else {
-                          return null;
-                        }
+                    ProfileDropDown(
+                      items: LocalData().church,
+                      val: church,
+                      hintText: 'Church',
+                      onChanged: (p0) {
+                        setState(() {
+                          church = p0!;
+                        });
                       },
-                      hintText: 'Church (Full name)',
-                      radius: 10.r,
                     ),
+                    const SizedBoxH10(),
+                    church == "Other"
+                        ? CustomTextField(
+                            controller: churchController,
+                            hintText: "Enter your Church's full name")
+                        : const SizedBox(),
                     const SizedBoxH40(),
                     const SizedBoxH40(),
                     const SizedBoxH40(),
-                    // Align(
-                    //   alignment: Alignment.bottomCenter,
-                    //   child: CustomButton(
-                    //     onPressed: () {
-                    //       bool validate = _formkey.currentState!.validate();
-                    //       if (validate) {
-                    //         Map<String, dynamic> map = {
-                    //           kCOUNTRY: 'Nigeria', //todo Nigeria as default
-                    //           kCHURCHNAME: churchController.text,
-                    //           kEDULEVEL: eduLevel,
-                    //           kSTATEOFORIGIN: state,
-                    //           kPROFESSION: profession,
-                    //           kREGPROGRESS: 'extra',
-                    //           kCITY: '' //todo set city
-                    //         };
-                    //         model.updateProfile(
-                    //           map: map,
-                    //           onCompleted: () {
-                    //             Get.toNamed(AppRoutes.hobbies);
-                    //           },
-                    //         );
-                    //       }
-                    //     },
-                    //     child: Text(
-                    //       'Next',
-                    //       style: textStyle16.copyWith(color: white),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               );
@@ -316,7 +251,9 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                   if (validate) {
                     Map<String, dynamic> map = {
                       kCOUNTRY: 'Nigeria', //todo Nigeria as default
-                      kCHURCHNAME: churchController.text,
+                      kCHURCHNAME: churchController.text.isEmpty
+                          ? church
+                          : churchController.text,
                       kEDULEVEL: eduLevel,
                       kSTATEOFORIGIN: state,
                       kPROFESSION: profession,
