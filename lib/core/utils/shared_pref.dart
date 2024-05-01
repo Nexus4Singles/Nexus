@@ -23,4 +23,8 @@ class SharedPref {
     final SharedPreferences pref = await _preferences;
     return pref.getBool(key);
   }
+  static Future<bool?> deleteAll() async {
+    final SharedPreferences pref = await _preferences;
+    return pref.clear();
+  }
 }
