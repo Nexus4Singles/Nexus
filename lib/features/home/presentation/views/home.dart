@@ -143,14 +143,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           : CardSwiper(
                               cardsCount: model.allUsers.length,
                               controller: cardSwiperController,
-                              isLoop: false,
+                              isLoop: true,
                               allowedSwipeDirection:
-                                  const AllowedSwipeDirection.only(
-                                up: false,
-                                down: false,
-                                right: false,
-                                left: false,
-                              ),
+                                  const AllowedSwipeDirection.symmetric(
+                                      horizontal: true),
                               padding: const EdgeInsets.all(0),
                               cardBuilder: (context, index, percentThresholdX,
                                   percentThresholdY) {

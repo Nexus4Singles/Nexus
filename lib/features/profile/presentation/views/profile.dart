@@ -120,11 +120,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           leading: const SizedBox.shrink(),
           actions: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Get.toNamed(AppRoutes.settings);
               },
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Icon(
                   Iconsax.setting_4,
                 ),
@@ -392,7 +392,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.r),
                         child: CachedNetworkImage(
-                          width: Get.width/2.3,
+                          width: Get.width / 2.3,
                           height: 100.h,
                           fit: BoxFit.cover,
                           imageUrl: item,

@@ -93,15 +93,17 @@ class UserCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(15.sp),
+              padding: EdgeInsets.all(11.sp),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   InkWell(
                     onTap: onRefresh,
-                    child:Container(
+                    child: Container(
                       padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(shape: BoxShape.circle,border: Border.all(color: primary)),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: primary)),
                       child: SvgPicture.asset(
                         '$svgPath/back.svg',
                         width: 24,
@@ -125,7 +127,9 @@ class UserCard extends StatelessWidget {
                     onTap: onSaved,
                     child: Container(
                       padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(shape: BoxShape.circle,border: Border.all(color: primary)),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: primary)),
                       child: SvgPicture.asset(
                         '$svgPath/bookmark.svg',
                         width: 24,
