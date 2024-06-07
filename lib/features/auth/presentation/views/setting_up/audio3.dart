@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:logger/logger.dart';
 import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/colors.dart';
@@ -348,11 +347,11 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                           backgroundColor: warGrey,
                           child: isRecordingCompleted
                               ? SvgPicture.asset(isPlaying
-                              ? "$svgPath/playing.svg"
-                              : "$svgPath/play.svg")
-                              :SvgPicture.asset(isRecording
-                              ? "$svgPath/playing.svg"
-                              : "$svgPath/mic2.svg"),
+                                  ? "$svgPath/playing.svg"
+                                  : "$svgPath/play.svg")
+                              : SvgPicture.asset(isRecording
+                                  ? "$svgPath/playing.svg"
+                                  : "$svgPath/mic2.svg"),
                         ),
                       ),
                     ),

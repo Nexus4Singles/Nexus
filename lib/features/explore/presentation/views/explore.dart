@@ -1,16 +1,14 @@
 import 'package:country_picker/country_picker.dart';
-// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
-import 'package:nexus/features/explore/presentation/widgets/filter_modal.dart';
-// import 'package:nexus/features/explore/presentation/widgets/user_tile.dart';
-// import 'package:nexus/features/home/presentation/widgets/coming_soon.dart';
+import 'package:nexus/features/explore/controllers/explore_ctr.dart';
 import 'package:nexus/features/home/presentation/widgets/coming_soon_modal.dart';
 
 class ExploreScreen extends StatefulWidget {
@@ -22,6 +20,8 @@ class ExploreScreen extends StatefulWidget {
 
 class _ExploreScreenState extends State<ExploreScreen> {
   TextEditingController search = TextEditingController();
+
+  final ctr = Get.put(ExploreCtr());
 
   @override
   Widget build(BuildContext context) {

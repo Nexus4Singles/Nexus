@@ -28,7 +28,7 @@ class _SubsciptionScreenState extends State<SubsciptionScreen> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -51,7 +51,8 @@ class _SubsciptionScreenState extends State<SubsciptionScreen> {
                   border: Border.all(color: primary),
                   borderRadius: BorderRadius.circular(25),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: Center(
                   child: Column(
                     children: [
@@ -62,7 +63,7 @@ class _SubsciptionScreenState extends State<SubsciptionScreen> {
                             fontWeight: FontWeight.w800,
                             color: black),
                       ),
-                      SizedBoxH10(),
+                      const SizedBoxH10(),
                       Text(
                         'Your current plan',
                         style: textStyle18.copyWith(
@@ -76,15 +77,15 @@ class _SubsciptionScreenState extends State<SubsciptionScreen> {
               ),
             ),
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [primary, white],
                 ),
               ),
-              padding: EdgeInsets.symmetric(),
-              child: Column(
+              padding: const EdgeInsets.symmetric(),
+              child: const Column(
                 children: [Text('hdhdhdhdh')],
               ),
             )

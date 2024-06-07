@@ -31,7 +31,7 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
             style: textStyle18.copyWith(
                 fontSize: 12, fontWeight: FontWeight.w300, color: black),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Padding(

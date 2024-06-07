@@ -110,7 +110,8 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                     AppToast().showErrorToast(
                         'Audio must be not be less than 45 secs');
                   }
-                  debugPrint("is completed = > $recordingCompleted ${recPosition!.inSeconds}");
+                  debugPrint(
+                      "is completed = > $recordingCompleted ${recPosition!.inSeconds}");
                 },
                 child: Text(
                   'Next',
@@ -312,7 +313,8 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                           } else {
                             _startOrStopRecording(model);
                           }
-                          debugPrint("is recording complete => $isRecordingCompleted ${player.playing}");
+                          debugPrint(
+                              "is recording complete => $isRecordingCompleted ${player.playing}");
                         },
                         child: CircleAvatar(
                           radius: 40,
@@ -404,9 +406,7 @@ class _Audio1ScreenState extends State<Audio1Screen> {
     }
   }
 
-
-
-  void resetPlayer() async{
+  void resetPlayer() async {
     await recorderController.stop(true);
     _positionDataStream.listen((event) {
       event.position = Duration.zero;
@@ -440,7 +440,6 @@ class _Audio1ScreenState extends State<Audio1Screen> {
       debugPrint("Recorded file size: ${model.audioPath1}");
     }
   }
-
 
   void audioStream() {
     player.playerStateStream.listen((state) {

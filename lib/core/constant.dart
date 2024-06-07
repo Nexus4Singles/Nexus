@@ -66,4 +66,5 @@ const kBELIEVEINTITHING = 'believe_in_tithing';
 const kCOMPATIBILITY = 'compatibility';
 const kCOMPATIBILITYSETTED = 'compatibility_setted';
 const kLOCATION = 'location';
+const kMATCHESKEY = 'likeMe';
 const mapAPIKey = 'AIzaSyD1YgWNHVJ49A9cSzrv6RxM8ycP5gA0nI4';

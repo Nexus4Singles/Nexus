@@ -75,7 +75,7 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
             max: 60,
             activeColor: primary,
             values: rangeValues,
-            labels: RangeLabels('21', '60'),
+            labels: const RangeLabels('21', '60'),
             onChanged: (value) {
               setState(() {
                 rangeValues = value;

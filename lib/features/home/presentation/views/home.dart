@@ -1,23 +1,17 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:get/get.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
-// import 'package:nexus/features/home/presentation/change_notifier/bottom_nav.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/home/presentation/widgets/coming_soon_modal.dart';
 import 'package:nexus/features/home/presentation/widgets/profile_tile.dart';
 import 'package:nexus/features/home/presentation/widgets/user_card.dart';
 import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
-import 'package:pinput/pinput.dart';
-// import 'package:nexus/router.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../core/utils/shared_pref.dart';
 
 class HomeScreen extends StatefulWidget {

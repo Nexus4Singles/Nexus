@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void nextScreen() async {
     bool firstTime = await SharedPref.getBool(kFirstTime) ?? true;
-    var email = await SharedPref.getString("email") ?? "";
+    var email = await SharedPref.getString("email");
     if (firstTime) {
       Get.offAndToNamed(AppRoutes.login);
     } else if (email.isNotEmpty) {
