@@ -52,7 +52,7 @@ class HomeNotifier with ChangeNotifier {
       },
       (userList) {
         allUsers = users = userList.toList();
-        print(allUsers);
+        // print(allUsers);
         notifyListeners();
       },
     );
