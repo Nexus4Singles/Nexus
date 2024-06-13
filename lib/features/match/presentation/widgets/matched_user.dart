@@ -8,12 +8,13 @@ import 'package:nexus/core/style.dart';
 
 class MatchedUserCard extends StatelessWidget {
   final String age;
-  final String name;
+  final String name, photo;
   final String location;
   final VoidCallback onPress;
   const MatchedUserCard({
     super.key,
     required this.name,
+    required this.photo,
     required this.age,
     required this.onPress,
     required this.location,
@@ -21,50 +22,56 @@ class MatchedUserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // width: width(context) * .45,
-      padding: EdgeInsets.all(15.sp),
-      height: 317.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.r),
-        color: black,
-        image: const DecorationImage(
-          fit: BoxFit.cover,
-          opacity: .8,
-          image: AssetImage(
-            'assets/images/user1.png',
-          ),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
-            '$name, $age',
-            style: textStyle16.copyWith(
-              color: white,
-              fontWeight: FontWeight.w600,
+    return InkWell(
+      onTap: onPress,
+      child: Container(
+        // width: width(context) * .45,
+        padding: EdgeInsets.all(15.sp),
+        height: 317.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.r),
+          color: black,
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            opacity: .8,
+            image: NetworkImage(
+              photo,
             ),
           ),
-          Row(
-            children: [
-              const Icon(
-                Iconsax.location5,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              '$name, $age',
+              style: textStyle16.copyWith(
                 color: white,
-                size: 14,
+                fontWeight: FontWeight.w600,
               ),
-              const SizedBoxW5(),
-              Text(
-                location,
-                style: textStyle12.copyWith(
+            ),
+            Row(
+              children: [
+                const Icon(
+                  Iconsax.location5,
                   color: white,
+                  size: 14,
                 ),
-              ),
-            ],
-          ),
-        ],
+                const SizedBoxW5(),
+                Flexible(
+                  child: Text(
+                    location,
+                    overflow: TextOverflow.ellipsis,
+                    style: textStyle12.copyWith(
+                      color: white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

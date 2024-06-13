@@ -325,7 +325,9 @@ final appRouter = [
   ),
   GetPage(
     name: AppRoutes.userDetails,
-    page: () => const UserDetailScreen(),
+    page: () => UserDetailScreen(
+      userModel: Get.arguments,
+    ),
     binding: BindingsBuilder(() {}),
   ),
   // GetPage(

@@ -23,20 +23,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   CardSwiperController cardSwiperController = CardSwiperController();
-  // Map<String, dynamic> pageArgu = Get.arguments;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _init();
   }
 
   FutureOr _init() async {
     await Provider.of<HomeNotifier>(context, listen: false).getProfile();
-    // if (pageArgu['fromSignUp']) {
-    //   Provider.of<BottomNavModel>(context).(4);
-    // } else {}
     var currentUser =
         Provider.of<HomeNotifier>(context, listen: false).currentUser!;
     SharedPref.setString("email", currentUser.email);
@@ -80,10 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.all(15.sp),
               child: Column(
                 children: [
-                  if (model.currentUser != null)
-                    ProfileTile(
-                      model: model,
-                    ),
+                  if (model.currentUser != null) ProfileTile(model: model),
                   const SizedBoxH15(),
                   // TextButton(
                   //     onPressed: () {
