@@ -212,9 +212,10 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
                 await Permission.microphone.request();
 
                 await Permission.microphone.status.then((value) {
+                  print(value);
                   if (value.isGranted) {
                     Get.toNamed(AppRoutes.audio1);
-                  }
+                  } else {}
                 });
               },
               child: Text(
