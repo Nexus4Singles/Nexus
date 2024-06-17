@@ -19,7 +19,7 @@ import 'package:nexus/features/auth/presentation/views/forgotten_password.dart';
 import 'package:nexus/features/auth/presentation/views/verify_account.dart';
 import 'package:nexus/features/profile/presentation/views/about.dart';
 import 'package:nexus/features/profile/presentation/views/add_card.dart';
-import 'package:nexus/features/profile/presentation/views/cancel_plan.dart';
+import 'package:nexus/features/profile/presentation/views/change_plan.dart';
 import 'package:nexus/features/profile/presentation/views/change_password.dart';
 import 'package:nexus/features/profile/presentation/views/compatibilty_quiz.dart';
 import 'package:nexus/features/profile/presentation/views/delete_account.dart';

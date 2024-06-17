@@ -62,6 +62,11 @@ class HomeRepositoryImpl implements HomeRepository {
     var oppositeGender = gender == 'Male' ? 'Female' : 'Male';
     int maxAge = user.age + (user.gender == 'Male' ? 3 : 8);
 
+    int minAge = user.age + (user.gender == 'Male' ? 10 : 3);
+
+    // female -> 3
+    // male -> 8
+
     var res = await formatter.firestorFmt(() async {
       var firestore = await generalRemote.firebaseFirestore();
       var query = firestore
@@ -91,17 +96,20 @@ class HomeRepositoryImpl implements HomeRepository {
         if (user.id == curUser!.uid) {
           continue;
         }
-        var matchesHobbies = similarHobbies == null ||
-            similarHobbies.isEmpty ||
-            user.hobbies!.any((hobby) => similarHobbies.contains(hobby));
-        var matchesQualities = similarDesiredQualities == null ||
-            similarDesiredQualities.isEmpty ||
-            user.desiredQualities!
-                .any((quality) => similarDesiredQualities.contains(quality));
+        // minAge
+        // var matchesHobbies = similarHobbies == null ||
+        //     similarHobbies.isEmpty ||
+        //     user.hobbies!.any((hobby) => similarHobbies.contains(hobby));
+        // var matchesQualities = similarDesiredQualities == null ||
+        //     similarDesiredQualities.isEmpty ||
+        //     user.desiredQualities!
+        //         .any((quality) => similarDesiredQualities.contains(quality));
 
-        if (matchesHobbies && matchesQualities) {
-          list.add(user);
-        }
+        // if (matchesHobbies && matchesQualities) {
+        //   list.add(user);
+        // }
+
+        list.add(user);
       }
 
       // Sorting logic (based on the priority mentioned)
