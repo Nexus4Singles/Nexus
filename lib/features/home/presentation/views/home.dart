@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
@@ -13,6 +14,7 @@ import 'package:nexus/features/home/presentation/widgets/user_card.dart';
 import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/utils/shared_pref.dart';
+import '../../../explore/controllers/explore_ctr.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,6 +24,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ctr = Get.put(ExploreCtr());
+
   CardSwiperController cardSwiperController = CardSwiperController();
 
   @override
@@ -37,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     SharedPref.setString("email", currentUser.email);
     if (currentUser.compatibilitySetted == null ||
         currentUser.compatibilitySetted == false) {
+      WidgetsFlutterBinding.ensureInitialized();
       Future.delayed(const Duration(seconds: 5), () {
         showAdaptiveDialog(
           context: context,

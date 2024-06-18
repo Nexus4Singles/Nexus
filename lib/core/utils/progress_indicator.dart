@@ -11,7 +11,7 @@ class CustomCircularProgressIndicator extends StatelessWidget {
     return const SizedBox(
       width: 32, // Default size, adjust as needed
       height: 32,
-      child: CircularProgressIndicator(
+      child: CircularProgressIndicator.adaptive(
         strokeWidth: 1,
         valueColor: AlwaysStoppedAnimation<Color>(primary),
       ),

@@ -29,6 +29,9 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
           (json['myLikes'] as List<dynamic>?)?.map((e) => e as String).toList(),
       mySaves:
           (json['mySaves'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      matchedUsers: (json['matchedUsers'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       educationLevel: json['education_level'] as String?,
       profession: json['profession'] as String?,
       relationshipWithGod: json['relationship_with_god'] as String?,
@@ -64,6 +67,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'education_level': instance.educationLevel,
       'profession': instance.profession,
       'hobbies': instance.hobbies,
+      'matchedUsers': instance.matchedUsers,
       'likeMe': instance.likeMe,
       'myLikes': instance.myLikes,
       'mySaves': instance.mySaves,

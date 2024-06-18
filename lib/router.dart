@@ -315,7 +315,7 @@ final appRouter = [
   ),
   GetPage(
     name: AppRoutes.chatWith,
-    page: () => const ChatWithScreen(),
+    page: () => ChatWithScreen(chatModel: Get.arguments),
     binding: BindingsBuilder(() {}),
   ),
   GetPage(

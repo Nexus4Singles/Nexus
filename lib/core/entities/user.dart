@@ -15,6 +15,7 @@ class UserEntity extends Equatable {
     required this.gender,
     required this.age,
     this.city,
+    this.matchedUsers,
     this.educationLevel,
     this.stateOfOrigin,
     this.profession,
@@ -54,6 +55,8 @@ class UserEntity extends Equatable {
   final String? educationLevel;
   final String? profession;
   final List<String>? hobbies;
+  @JsonKey(name: kMATCHESUSERSKEY)
+  final List<String>? matchedUsers;
   @JsonKey(name: kMATCHESKEY)
   final List<String>? likeMe;
   final List<String>? myLikes;
@@ -105,6 +108,7 @@ class UserEntity extends Equatable {
         bestQualotiesOrTraits,
         notificationToken,
         phoneNumber,
+        matchedUsers,
         registrationProgress,
         country,
         churchName,
