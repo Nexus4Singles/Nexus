@@ -110,6 +110,13 @@ class ExploreCtr extends GetxController {
     Get.back();
   }
 
+  setOnlineStatus(bool isOnline) {
+    db
+        .collection(kUSER)
+        .doc(auth.currentUser!.uid)
+        .update({"isOnline": isOnline});
+  }
+
   @override
   void onInit() {
     getAllUsers();

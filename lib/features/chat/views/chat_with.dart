@@ -2,13 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/models/chats_model.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/features/chat/controllers/chat_ctr.dart';
+import 'package:nexus/features/home/presentation/views/user_details.dart';
 
 import '../../../core/models/message_model.dart';
 
@@ -33,9 +37,15 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
           title: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(
-                  backgroundImage:
-                      NetworkImage(widget.chatModel.userModel!.photos![0])),
+              InkWell(
+                onTap: () {
+                  Get.to(() =>
+                      UserDetailScreen(userModel: widget.chatModel.userModel!));
+                },
+                child: CircleAvatar(
+                    backgroundImage:
+                        NetworkImage(widget.chatModel.userModel!.photos![0])),
+              ),
               const SizedBoxW10(),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,12 +85,81 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                 }
                 return DashChat(
                   currentUser: ChatUser(id: ctr.auth.currentUser!.uid),
-                  inputOptions: InputOptions(),
+                  inputOptions: InputOptions(
+                      alwaysShowSend: true,
+                      sendButtonBuilder: (val) {
+                        return InkWell(
+                          onTap: val,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CircleAvatar(
+                              backgroundColor: primary,
+                              child: SvgPicture.asset("$svgPath/send.svg"),
+                            ),
+                          ),
+                        );
+                      },
+                      inputDecoration: InputDecoration(
+                          hintText: "Send a message",
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          prefixIcon: PopupMenuButton<Map<String, IconData>>(
+                            position: PopupMenuPosition.over,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            onSelected: (item) {
+                              print('Selected: $item');
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: CircleAvatar(
+                                  backgroundColor: primary,
+                                  child: Icon(
+                                    Icons.add_box_rounded,
+                                    color: Colors.white,
+                                  )),
+                            ),
+                            itemBuilder: (BuildContext context) {
+                              return {
+                                'Audio': Iconsax.microphone5,
+                                'Video': Iconsax.video_add5,
+                                'Image': Iconsax.image1,
+                              }.entries.map((entry) {
+                                return PopupMenuItem<Map<String, IconData>>(
+                                  value: {
+                                    entry.key: entry.value
+                                  }, // Map as value
+                                  textStyle: textStyle14.copyWith(color: black),
+                                  child: InkWell(
+                                    onTap: () {
+                                      entry.key == "Image"
+                                          ? ctr.pickImage()
+                                          : ctr.pickImage();
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(entry.value),
+                                        const SizedBox(width: 8),
+                                        Text(entry.key),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }).toList();
+                            },
+                            // ... rest of your code ...
+                          ),
+                          contentPadding: EdgeInsets.zero,
+                          filled: true,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(100),
+                              borderSide: const BorderSide(color: grey)))),
                   messageOptions: const MessageOptions(
                       showOtherUsersAvatar: false,
                       containerColor: babyPink,
                       currentUserContainerColor: whiteblue),
-                  onSend: (ChatMessage message) {},
+                  onSend: (ChatMessage message) {
+                    ctr.sendMessage(widget.chatModel.messageID, message.text);
+                  },
                   messages: messages,
                 );
               }
@@ -88,149 +167,31 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
   }
 }
 
-// Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-//         child: Column(
-//           children: [
-//             Align(
-//               alignment: Alignment.topRight,
-//               child: Container(
-//                 decoration: BoxDecoration(
-//                   color: whiteblue,
-//                   borderRadius: BorderRadius.circular(15),
-//                 ),
-//                 padding:
-//                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-//                 child: const Column(
-//                   children: [
-//                     Text('😊 I noticed we just matched . How are you \ndoing?'),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             const SizedBoxH10(),
-//             Align(
-//               alignment: Alignment.topRight,
-//               child: Text(
-//                 '3:50 PM',
-//                 style: textStyle12,
-//               ),
-//             ),
-//             const SizedBoxH10(),
-//             Align(
-//               alignment: Alignment.topLeft,
-//               child: Container(
-//                 decoration: BoxDecoration(
-//                   color: babyPink,
-//                   borderRadius: BorderRadius.circular(15),
-//                 ),
-//                 padding:
-//                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-//                 child: const Column(
-//                   children: [
-//                     Text(
-//                         'Hello! Im doing well, thank you. Its \ngreat to connect with someone who \nshares the same faith. How about \nyou?'),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             const SizedBoxH10(),
-//             Align(
-//               alignment: Alignment.topLeft,
-//               child: Text(
-//                 '3:50 PM',
-//                 style: textStyle12,
-//               ),
-//             ),
-//             const SizedBoxH10(),
-//             Align(
-//               alignment: Alignment.topRight,
-//               child: Container(
-//                 decoration: BoxDecoration(
-//                   color: whiteblue,
-//                   borderRadius: BorderRadius.circular(15),
-//                 ),
-//                 padding:
-//                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-//                 child: const Column(
-//                   children: [
-//                     Text(
-//                         'Im good too, thanks! Yeah, its refreshing to\nfind someone who values their faith. So, \nwhat drew you to this app?'),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             const SizedBoxH10(),
-//             Align(
-//               alignment: Alignment.topRight,
-//               child: Text(
-//                 '3:50 PM',
-//                 style: textStyle12,
-//               ),
-//             ),
-//             const SizedBoxH10(),
-//             Align(
-//               alignment: Alignment.topLeft,
-//               child: Container(
-//                 decoration: BoxDecoration(
-//                   color: babyPink,
-//                   borderRadius: BorderRadius.circular(15),
-//                 ),
-//                 padding:
-//                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-//                 child: const Column(
-//                   children: [
-//                     Text(
-//                         'Hello! Im doing well, thank you. Its \ngreat to connect with someone who \nshares the same faith. How about \nyou?'),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             const SizedBoxH10(),
-//             Align(
-//               alignment: Alignment.topLeft,
-//               child: Text(
-//                 '3:50 PM',
-//                 style: textStyle12,
-//               ),
-//             ),
-//             const SizedBoxH40(),
-//             Row(
-//               children: [
-//                 Expanded(
-//                   child: TextField(
-//                     decoration: InputDecoration(
-//                       suffixIcon: const Icon(Icons.send_rounded),
-//                       hintText: 'Send message',
-//                       hintStyle: textStyle14.copyWith(
-//                         color: otherGrey,
-//                         fontSize: 14,
-//                       ),
-//                       fillColor: black,
-//                       border: OutlineInputBorder(
-//                         borderRadius: BorderRadius.circular(25),
-//                         borderSide: const BorderSide(color: warGrey),
-//                       ),
-//                       enabledBorder: OutlineInputBorder(
-//                         borderRadius: BorderRadius.circular(25),
-//                         borderSide: const BorderSide(color: warGrey),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBoxW10(),
-//                 Container(
-//                   decoration: const BoxDecoration(
-//                       shape: BoxShape.circle, color: primary),
-//                   padding:
-//                       const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-//                   child: const Icon(
-//                     Icons.add_box_rounded,
-//                     color: white,
-//                   ),
-//                 )
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
+assetPopOver() {
+  return PopupMenuButton<Map<String, IconData>>(
+    // Use Map for value
+    onSelected: (item) {
+      print('Selected: $item');
+    },
+    itemBuilder: (BuildContext context) {
+      return {
+        'Audio': Icons.mic,
+        'Video': Icons.videocam,
+        'Image': Icons.image,
+      }.entries.map((entry) {
+        return PopupMenuItem<Map<String, IconData>>(
+          value: {entry.key: entry.value}, // Map as value
+          textStyle: textStyle14.copyWith(color: black),
+          child: Row(
+            children: [
+              Icon(entry.value),
+              const SizedBox(width: 8),
+              Text(entry.key),
+            ],
+          ),
+        );
+      }).toList();
+    },
+    // ... rest of your code ...
+  );
+}

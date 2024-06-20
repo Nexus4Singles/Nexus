@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_instance/get_instance.dart';
+import 'package:nexus/core/utils/empty_state.dart';
 import 'package:nexus/features/chat/controllers/chat_ctr.dart';
 import 'package:nexus/features/chat/views/chat_with.dart';
 import 'package:nexus/features/chat/widget/chat_container.dart';
@@ -10,9 +10,6 @@ import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
-import 'package:nexus/features/home/presentation/widgets/coming_soon.dart';
-
-import '../../../router.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -51,72 +48,85 @@ class _ChatsScreenState extends State<ChatsScreen> {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 15.sp),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomTextField(
-                  controller: TextEditingController(),
-                  hintText: 'Search',
-                  prefixIcon: const Icon(Icons.search_sharp),
-                  radius: 25,
-                  fillColor: white,
-                  borderColor: black,
-                ),
-                const SizedBoxH20(),
-                Text(
-                  'Recent Matches',
-                  style: textStyle18.copyWith(
-                    fontWeight: FontWeight.w500,
+            child: Obx(
+              () => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomTextField(
+                    controller: TextEditingController(),
+                    hintText: 'Search',
+                    prefixIcon: const Icon(Icons.search_sharp),
+                    radius: 25,
+                    fillColor: white,
+                    borderColor: black,
                   ),
-                ),
-                const SizedBoxH15(),
-                Obx(
-                  () => Row(
-                    children: [
-                      ...ctr.allChatUsers
+                  const SizedBoxH20(),
+                  Text(
+                    'Recent Matches',
+                    style: textStyle16.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBoxH15(),
+                  ctr.allChatUsers
                           .where((val) => val.lastMessage.isEmpty)
-                          .map((vals) {
-                        return InkWell(
-                          onTap: () {
-                            print(vals.userModel);
-                            Get.to(() => ChatWithScreen(chatModel: vals));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: CircleAvatar(
-                              radius: 32,
-                              backgroundImage:
-                                  NetworkImage(vals.userModel!.photos![0]),
-                            ),
-                          ),
-                        );
-                      }).toList()
-                    ],
-                  ),
-                ),
-                const SizedBoxH20(),
-                Text(
-                  'Chats',
-                  style: textStyle18.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBoxH20(),
-                ...ctr.allChatUsers
-                    .where((val) => val.lastMessage.isNotEmpty)
-                    .map((val) {
-                  return ChatContainer(
-                    image: val.userModel!.photos![0],
-                    name: val.userModel!.username,
-                    time: val.timestamp.toDate(),
-                    text: val.lastMessage,
-                    count: val.unreadCount,
-                    onPress: () {
-                      Get.to(() => ChatWithScreen(chatModel: val));
-                    },
-                  );
-                }).toList(),
-              ],
+                          .isNotEmpty
+                      ? Row(
+                          children: [
+                            ...ctr.allChatUsers
+                                .where((val) => val.lastMessage.isEmpty)
+                                .map((users) {
+                              return InkWell(
+                                onTap: () {
+                                  Get.to(
+                                      () => ChatWithScreen(chatModel: users));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: CircleAvatar(
+                                    radius: 32,
+                                    backgroundImage: NetworkImage(
+                                        users.userModel!.photos![0]),
+                                  ),
+                                ),
+                              );
+                            }).toList()
+                          ],
+                        )
+                      : const EmptyStateWidget(
+                          message: "You don’t have any matches yet"),
+                  const SizedBoxH20(),
+                  Text('Chats',
+                      style: textStyle18.copyWith(fontWeight: FontWeight.w500)),
+                  const SizedBoxH20(),
+                  ctr.allChatUsers
+                          .where((val) => val.lastMessage.isNotEmpty)
+                          .isNotEmpty
+                      ? Column(
+                          children: [
+                            ...ctr.allChatUsers
+                                .where((val) => val.lastMessage.isNotEmpty)
+                                .map((val) {
+                              return ChatContainer(
+                                image: val.userModel!.photos![0],
+                                name: val.userModel!.username,
+                                time: val.timestamp.toDate(),
+                                text: val.lastMessage,
+                                count: ctr.auth.currentUser!.uid ==
+                                        val.userSentLastMessage
+                                    ? 0
+                                    : val.unreadCount,
+                                onPress: () {
+                                  Get.to(() => ChatWithScreen(chatModel: val));
+                                },
+                              );
+                            }).toList(),
+                          ],
+                        )
+                      : const EmptyStateWidget(
+                          message: 'You don’t have any chat yet')
+                ],
+              ),
             ),
           ),
         ],
