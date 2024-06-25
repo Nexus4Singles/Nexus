@@ -1,13 +1,18 @@
+import 'dart:io';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:nexus/features/profile/presentation/change_notifier/settings_notifier.dart';
+import 'package:nexus/features/profile/presentation/constants/payment.dart';
+import 'package:provider/provider.dart';
+import 'package:pay/pay.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/router.dart';
 
 class SubsciptionScreen extends StatefulWidget {
   const SubsciptionScreen({super.key});
@@ -17,6 +22,85 @@ class SubsciptionScreen extends StatefulWidget {
 }
 
 class _SubsciptionScreenState extends State<SubsciptionScreen> {
+  void _showPaymentBottomSheet(BuildContext context, double price) {
+    final paymentProvider =
+        Provider.of<SettingsNotifier>(context, listen: false);
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(5)),
+            child: Container(
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              height: 200,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Select a Payment Method',
+                    style: TextStyle(
+                      fontSize: 24,
+                    ),
+                  ),
+                  const Divider(),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(children: [
+                      if (Platform.isAndroid)
+                        GooglePayButton(
+                          width: double.infinity,
+                          // height: 40,
+                          paymentItems: paymentProvider.getPaymentItems(price),
+                          theme: GooglePayButtonTheme.dark,
+                          type: GooglePayButtonType.subscribe,
+                          onPaymentResult: paymentProvider.onGooglePayResult,
+                          onPressed: () {
+                            Get.back();
+                          },
+                          loadingIndicator: const Center(
+                            child: AppCircularProgressIndicator(),
+                          ),
+                          paymentConfiguration:
+                              PaymentConfiguration.fromJsonString(
+                            defaultGooglePay,
+                          ),
+                        )
+                      else
+                        ApplePayButton(
+                          width: double.infinity,
+                          height: 40,
+                          paymentItems: paymentProvider.getPaymentItems(price),
+                          style: ApplePayButtonStyle.black,
+                          type: ApplePayButtonType.subscribe,
+                          onPaymentResult: paymentProvider.onApplePayResult,
+                          onPressed: () {
+                            Get.back();
+                          },
+                          loadingIndicator: const Center(
+                            child: AppCircularProgressIndicator(),
+                          ),
+                          paymentConfiguration:
+                              PaymentConfiguration.fromJsonString(
+                            defaultApplePay,
+                          ),
+                        ),
+                    ]),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,246 +130,120 @@ class _SubsciptionScreenState extends State<SubsciptionScreen> {
               ),
             ),
             SizedBox(height: 10.h),
-            Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(color: Color(0xffEAEAEA)),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                margin: EdgeInsets.all(16.sp),
-                padding: EdgeInsets.all(10.sp),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Free',
-                      style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '- Unlimited Access to Search & View Profiles',
-                      style: textStyle12.copyWith(
-                        fontSize: 11.sp,
-                        color: const Color(0xff575757),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '- Unlimited Access to Like Profiles',
-                      style: textStyle12.copyWith(
-                        fontSize: 11.sp,
-                        color: const Color(0xff575757),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '- Unlimited Access to View Profiles You Liked',
-                      style: textStyle12.copyWith(
-                        fontSize: 11.sp,
-                        color: const Color(0xff575757),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '- Unlimited Access to View Who Liked Your Profile',
-                      style: textStyle12.copyWith(
-                        fontSize: 11.sp,
-                        color: const Color(0xff575757),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '- Unlimited Access to View Compatibility Data',
-                      style: textStyle12.copyWith(
-                        fontSize: 11.sp,
-                        color: const Color(0xff575757),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '- Limited Access to Chat with Matched Users (1 User)',
-                      style: textStyle12.copyWith(
-                        fontSize: 11.sp, //#575757
-                        color: const Color(0xff575757),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            _buildPlanContainer(
+              title: 'Free',
+              features: [
+                'Unlimited Access to Search & View Profiles',
+                'Unlimited Access to Like Profiles',
+                'Unlimited Access to View Profiles You Liked',
+                'Unlimited Access to View Who Liked Your Profile',
+                'Unlimited Access to View Compatibility Data',
+                'Limited Access to Chat with Matched Users (1 User)',
+              ],
             ),
-            SizedBox(
-              height: 10.h,
+            SizedBox(height: 10.h),
+            _buildPlanContainer(
+              title: '\$5/month',
+              features: [
+                'Unlimited Messaging',
+                'Save Profiles to View Later',
+                'Backtrack if you mistakenly swiped left',
+                'Access to Advanced Filters on Explore Page',
+              ],
+              onSelectPlan: () => _showPaymentBottomSheet(context, 5),
             ),
-            Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(color: Color(0xffEAEAEA)),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                margin: EdgeInsets.all(16.sp),
-                padding: EdgeInsets.all(10.sp),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '\$5',
-                          style: TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          '/month',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color(0xffA7A9B7),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      '- Unlimited Messaging',
-                      style: textStyle12.copyWith(
-                        fontSize: 11.sp,
-                        color: const Color(0xff575757),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '- Save Profiles to View Later',
-                      style: textStyle12.copyWith(
-                        fontSize: 11.sp,
-                        color: const Color(0xff575757),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '- Backtrack if you mistakenly swiped left',
-                      style: textStyle12.copyWith(
-                        fontSize: 11.sp,
-                        color: const Color(0xff575757),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '- Access to Advanced Filters on Explore Page',
-                      style: textStyle12.copyWith(
-                        fontSize: 11.sp,
-                        color: const Color(0xff575757),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomButton(
-                      onPressed: () {
-                        Get.toNamed(AppRoutes.paymentSuccess);
-                      },
-                      child: const Text(
-                        'Select Plan',
-                        style: TextStyle(color: Colors.white, fontSize: 13),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(color: Color(0xffEAEAEA)),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                margin: EdgeInsets.all(16.sp),
-                padding: EdgeInsets.all(10.sp),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '\$12',
-                          style: TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          '/3 months',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color(0xffA7A9B7),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      '- Unlimited Messaging',
-                      style: textStyle12.copyWith(
-                        fontSize: 11.sp,
-                        color: const Color(0xff575757),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '- Save Profiles to View Later',
-                      style: textStyle12.copyWith(
-                        fontSize: 11.sp,
-                        color: const Color(0xff575757),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '- Backtrack if you mistakenly swiped left',
-                      style: textStyle12.copyWith(
-                        fontSize: 11.sp,
-                        color: const Color(0xff575757),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '- Access to Advanced Filters on Explore Page',
-                      style: textStyle12.copyWith(
-                        fontSize: 11.sp,
-                        color: const Color(0xff575757),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Select Plan',
-                        style: TextStyle(color: Colors.white, fontSize: 13),
-                      ),
-                    ),
-                    const SizedBox(height: 10)
-                  ],
-                ),
-              ),
+            SizedBox(height: 10.h),
+            _buildPlanContainer(
+              title: '\$12/3 months',
+              features: [
+                'Unlimited Messaging',
+                'Save Profiles to View Later',
+                'Backtrack if you mistakenly swiped left',
+                'Access to Advanced Filters on Explore Page',
+              ],
+              onSelectPlan: () => _showPaymentBottomSheet(context, 12),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildPlanContainer({
+    required String title,
+    required List<String> features,
+    dynamic onSelectPlan,
+  }) {
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(color: Color(0xffEAEAEA)),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        margin: EdgeInsets.all(16.sp),
+        padding: EdgeInsets.all(10.sp),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title.split('/')[0],
+                  style: const TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                if (title.contains('/'))
+                  Text(
+                    '/${title.split('/')[1]}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: Color(0xffA7A7A7),
+                    ),
+                  ),
+              ],
+            ),
+            ...features.map(
+              (feature) => Text(
+                feature,
+                style: textStyle12.copyWith(
+                  fontSize: 11.sp,
+                  color: const Color(0xff575757),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            if (onSelectPlan != null)
+              CustomButton(
+                onPressed: onSelectPlan,
+                child: const Text(
+                  'Select Plan',
+                  style: TextStyle(color: Colors.white, fontSize: 13),
+                ),
+              ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AppCircularProgressIndicator extends StatelessWidget {
+  const AppCircularProgressIndicator({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const CircularProgressIndicator(
+      valueColor: AlwaysStoppedAnimation(Colors.white),
+      strokeWidth: 3,
     );
   }
 }

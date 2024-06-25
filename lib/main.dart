@@ -13,6 +13,7 @@ import 'package:nexus/core/di/injection_container.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:nexus/features/home/presentation/change_notifier/bottom_nav.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
+import 'package:nexus/features/profile/presentation/change_notifier/settings_notifier.dart';
 import 'package:nexus/router.dart';
 import 'package:nexus/theme.dart';
 import 'package:provider/provider.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => BottomNavModel()),
+        ChangeNotifierProvider(create: (_) => SettingsNotifier()),
         ChangeNotifierProvider(create: (_) => sl<AuthNotifier>()),
         ChangeNotifierProvider(create: (_) => sl<HomeNotifier>()),
       ],
