@@ -41,8 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     SharedPref.setString("email", currentUser.email);
     if (currentUser.compatibilitySetted == null ||
         currentUser.compatibilitySetted == false) {
-      WidgetsFlutterBinding.ensureInitialized();
-      Future.delayed(const Duration(seconds: 5), () {
+      await Future.delayed(const Duration(seconds: 5), () {
         showAdaptiveDialog(
           context: context,
           barrierDismissible: false,

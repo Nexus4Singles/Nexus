@@ -54,7 +54,9 @@ class MatchStats extends StatelessWidget {
                     style: textStyle16,
                   ),
                   Text(
-                    '${ctr.ctr.myProfile.value.myLikes!.length}',
+                    ctr.ctr.myProfile.value.myLikes == null
+                        ? "0"
+                        : '${ctr.ctr.myProfile.value.myLikes!.length}',
                     style: textStyle16.copyWith(
                       color: primary,
                       fontWeight: FontWeight.bold,

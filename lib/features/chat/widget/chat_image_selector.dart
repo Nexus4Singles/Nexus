@@ -12,7 +12,13 @@ import '../../../../core/colors.dart';
 
 class ChatImageSelector extends StatelessWidget {
   final File imagePath;
-  ChatImageSelector({super.key, required this.imagePath});
+  final String message;
+  final String messageID;
+  ChatImageSelector(
+      {super.key,
+      required this.imagePath,
+      required this.message,
+      required this.messageID});
 
   var ctr = Get.put(ChatCtr());
 
@@ -63,11 +69,16 @@ class ChatImageSelector extends StatelessWidget {
                   child: CustomTextField(
                       radius: 100,
                       fillColor: grey,
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CircleAvatar(
-                          backgroundColor: black,
-                          child: SvgPicture.asset("$svgPath/send.svg"),
+                      suffixIcon: InkWell(
+                        onTap: () {
+                          ctr.sendMessage(messageID, message);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircleAvatar(
+                            backgroundColor: black,
+                            child: SvgPicture.asset("$svgPath/send.svg"),
+                          ),
                         ),
                       ),
                       controller: TextEditingController(),
