@@ -29,7 +29,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         elevation: 0,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
             CustomTextField(
@@ -55,7 +55,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 controller: TextEditingController(),
                 hintText: 'Confirm Password'),
             const SizedBoxH25(),
-            SizedBoxH40(),
+            const SizedBoxH40(),
             CustomButton(
               onPressed: () {},
               text: 'save',

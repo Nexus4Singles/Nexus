@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -41,7 +39,6 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _init();
   }
@@ -52,7 +49,6 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     cityController.dispose();
   }

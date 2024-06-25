@@ -34,7 +34,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         children: [
           AnimatedOpacity(
             duration: const Duration(seconds: 1),
-            opacity: .2,
+            opacity: 1,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.sp),
               child: Column(
@@ -101,10 +101,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
             ),
           ),
-          const ComingSoonWidget(
-            text:
-                'You will be able to see notifications here as soon as we launch fully. ',
-          ),
+          // const ComingSoonWidget(
+          //   text:
+          //       'You will be able to see notifications here as soon as we launch fully. ',
+          // ),
         ],
       ),
     );

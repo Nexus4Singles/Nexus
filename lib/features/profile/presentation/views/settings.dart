@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/style.dart';
@@ -44,37 +43,41 @@ class _SettingScreenState extends State<SettingScreen> {
                   'This feature will be available soon',
                   header: 'Coming soon',
                 );
+
+                Get.toNamed(AppRoutes.audioRecording);
               },
             ),
             const Divider(
               color: Colors.transparent,
             ),
-            // SettindContainer(
-            //     text: 'Subscription Plans',
-            //     icon: true,
-            //     onPress: () {
-            //       AppToast().showErrorToast(
-            //         'This feature will be available soon',
-            //         header: 'Coming soon',
-            //       );
-            //       // Get.toNamed(AppRoutes.subscription);
-            //     }),
-            // const Divider(
-            //   color: Colors.transparent,
-            // ),
-            // SettindContainer(
-            //   text: 'Your Subsription',
-            //   icon: true,
-            //   onPress: () {
-            //     AppToast().showErrorToast(
-            //       'This feature will be available soon',
-            //       header: 'Coming soon',
-            //     );
-            //   },
-            // ),
-            // const Divider(
-            //   color: Colors.transparent,
-            // ),
+            SettindContainer(
+                text: 'Subscription Plans',
+                icon: true,
+                onPress: () {
+                  // AppToast().showErrorToast(
+                  //   'This feature will be available soon',
+                  //   header: 'Coming soon',
+                  // );
+                  Get.toNamed(AppRoutes.subscription);
+                }),
+            const Divider(
+              color: Colors.transparent,
+            ),
+            SettindContainer(
+              text: 'Your Subsription',
+              icon: true,
+              onPress: () {
+                // AppToast().showErrorToast(
+                //   'This feature will be available soon',
+                //   header: 'Coming soon',
+                // );
+
+                Get.toNamed(AppRoutes.cancelPlan);
+              },
+            ),
+            const Divider(
+              color: Colors.transparent,
+            ),
             SettindContainer(
               text: 'Contact Us',
               icon: true,

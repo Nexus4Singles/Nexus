@@ -3,4 +3,7 @@ import 'package:nexus/core/models/user.dart';
 
 abstract class HomeRepository {
   Future<Either<void, List<UserModel>>> getUsers();
+  Future<Either<void, List<UserModel>>> getUsersFilterable({
+    required UserModel user,
+  });
 }

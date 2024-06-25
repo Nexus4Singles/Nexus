@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
@@ -39,27 +38,27 @@ class _AddCardScreenState extends State<AddCardScreen> {
             Center(
               child: Image.asset('assets/images/atm.png'),
             ),
-            SizedBoxH30(),
+            const SizedBoxH30(),
             CustomTextField(
               controller: TextEditingController(),
               hintText: 'Card Holder Name',
             ),
-            Divider(
+            const Divider(
               color: white,
             ),
             CustomTextField(
               controller: TextEditingController(),
               hintText: 'Card Holder Name',
             ),
-            SizedBoxH20(),
+            const SizedBoxH20(),
             CustomTextField(
               controller: TextEditingController(),
               hintText: 'Country',
             ),
-            Row(
+            const Row(
               children: [],
             ),
-            SizedBoxH30(),
+            const SizedBoxH30(),
             CustomButton(
               onPressed: () {
                 Get.toNamed(AppRoutes.review);

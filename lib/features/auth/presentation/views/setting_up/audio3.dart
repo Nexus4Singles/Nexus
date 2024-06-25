@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:logger/logger.dart';
 import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/colors.dart';
@@ -130,7 +129,7 @@ class _Audio3ScreenState extends State<Audio3Screen> {
           elevation: 0,
         ),
         body: Padding(
-          padding: EdgeInsets.all(15.sp),
+          padding: EdgeInsets.all(13.sp),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -172,6 +171,15 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                       ),
                       textAlign: TextAlign.center,
                     ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '(If you have a good sense of humor, this is also an opportunity to make a great impression on listeners by being creative with your response)',
+                    style: textStyle12.copyWith(
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBoxH30(),
                   const SizedBoxH30(),
@@ -348,11 +356,11 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                           backgroundColor: warGrey,
                           child: isRecordingCompleted
                               ? SvgPicture.asset(isPlaying
-                              ? "$svgPath/playing.svg"
-                              : "$svgPath/play.svg")
-                              :SvgPicture.asset(isRecording
-                              ? "$svgPath/playing.svg"
-                              : "$svgPath/mic2.svg"),
+                                  ? "$svgPath/playing.svg"
+                                  : "$svgPath/play.svg")
+                              : SvgPicture.asset(isRecording
+                                  ? "$svgPath/playing.svg"
+                                  : "$svgPath/mic2.svg"),
                         ),
                       ),
                     ),

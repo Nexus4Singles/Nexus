@@ -34,6 +34,7 @@ class _ProfileDropDownState extends State<ProfileDropDown> {
   Widget build(BuildContext context) {
     return DropdownButtonFormField2<String>(
       onChanged: widget.onChanged,
+      isExpanded: true,
       dropdownSearchData: DropdownSearchData(
         searchController: textEditingController,
         searchInnerWidgetHeight: 50,

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:nexus/core/utils/empty_state.dart';
+import 'package:nexus/features/chat/controllers/chat_ctr.dart';
+import 'package:nexus/features/chat/views/chat_with.dart';
 import 'package:nexus/features/chat/widget/chat_container.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
-import 'package:nexus/features/home/presentation/widgets/coming_soon.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -16,6 +19,7 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
+  var ctr = Get.put(ChatCtr());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,15 +44,12 @@ class _ChatsScreenState extends State<ChatsScreen> {
           const SizedBoxW15(),
         ],
       ),
-      body: Stack(
-        alignment: Alignment.center,
+      body: Column(
         children: [
-          AnimatedOpacity(
-            duration: const Duration(seconds: 1),
-            opacity: .2,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 15.sp),
-              child: Column(
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 15.sp),
+            child: Obx(
+              () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomTextField(
@@ -62,94 +63,72 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   const SizedBoxH20(),
                   Text(
                     'Recent Matches',
-                    style: textStyle18.copyWith(
+                    style: textStyle16.copyWith(
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   const SizedBoxH15(),
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: primary,
-                          ),
-                        ),
-                        child: Image.asset(
-                          'assets/images/temi.png',
-                        ),
-                      ),
-                      const SizedBoxW15(),
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: primary,
-                          ),
-                        ),
-                        child: Image.asset(
-                          'assets/images/mofe.png',
-                        ),
-                      ),
-                      const SizedBoxW15(),
-                      Image.asset(
-                        'assets/images/jessica.png',
-                      ),
-                      const SizedBoxW15(),
-                      Image.asset(
-                        'assets/images/mariam.png',
-                      ),
-                    ],
-                  ),
+                  ctr.allChatUsers
+                          .where((val) => val.lastMessage.isEmpty)
+                          .isNotEmpty
+                      ? Row(
+                          children: [
+                            ...ctr.allChatUsers
+                                .where((val) => val.lastMessage.isEmpty)
+                                .map((users) {
+                              return InkWell(
+                                onTap: () {
+                                  Get.to(
+                                      () => ChatWithScreen(chatModel: users));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: CircleAvatar(
+                                    radius: 32,
+                                    backgroundImage: NetworkImage(
+                                        users.userModel!.photos![0]),
+                                  ),
+                                ),
+                              );
+                            }).toList()
+                          ],
+                        )
+                      : const EmptyStateWidget(
+                          message: "You don’t have any matches yet"),
                   const SizedBoxH20(),
-                  Text(
-                    'Chats',
-                    style: textStyle18.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  Text('Chats',
+                      style: textStyle18.copyWith(fontWeight: FontWeight.w500)),
                   const SizedBoxH20(),
-                  ChatContainer(
-                    image: 'assets/images/mofesala.png',
-                    name: 'Mofesolamisi',
-                    time: '23 mins',
-                    text: 'Hi 👋, you good?',
-                    cont: '2',
-                    onPress: () {
-                      // Get.toNamed(AppRoutes.chatWith);
-                    },
-                  ),
-                  const SizedBoxH20(),
-                  ChatContainer(
-                    image: 'assets/images/mofesala.png',
-                    name: 'Mofesolamisi',
-                    time: '23 mins',
-                    text: 'Hi 👋, you good?',
-                    cont: '2',
-                    onPress: () {
-                      // Get.toNamed(AppRoutes.chatWith);
-                    },
-                  ),
-                  const SizedBoxH20(),
-                  ChatContainer(
-                    image: 'assets/images/mofesala.png',
-                    name: 'Sarah',
-                    time: '30 min',
-                    text: 'and what do you think about the idea ...',
-                    cont: '2',
-                    onPress: () {
-                      // Get.toNamed(AppRoutes.chatWith);
-                    },
-                  ),
+                  ctr.allChatUsers
+                          .where((val) => val.lastMessage.isNotEmpty)
+                          .isNotEmpty
+                      ? Column(
+                          children: [
+                            ...ctr.allChatUsers
+                                .where((val) => val.lastMessage.isNotEmpty)
+                                .map((val) {
+                              return ChatContainer(
+                                image: val.userModel!.photos![0],
+                                name: val.userModel!.username,
+                                time: val.timestamp.toDate(),
+                                text: val.lastMessage,
+                                count: ctr.auth.currentUser!.uid ==
+                                        val.userSentLastMessage
+                                    ? 0
+                                    : val.unreadCount,
+                                onPress: () {
+                                  Get.to(() => ChatWithScreen(chatModel: val));
+                                },
+                              );
+                            }).toList(),
+                          ],
+                        )
+                      : const EmptyStateWidget(
+                          message: 'You don’t have any chat yet')
                 ],
               ),
             ),
           ),
-          const ComingSoonWidget(
-            text:
-                'You will be able to chat with your MATCH list here as soon as we launch',
-          )
         ],
       ),
     );

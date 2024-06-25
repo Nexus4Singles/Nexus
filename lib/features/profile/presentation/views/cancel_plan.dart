@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
@@ -33,7 +32,7 @@ class _ChangePlanScreenState extends State<ChangePlanScreen> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -43,7 +42,8 @@ class _ChangePlanScreenState extends State<ChangePlanScreen> {
                 height: 170.sp,
                 decoration: BoxDecoration(
                     color: primary, borderRadius: BorderRadius.circular(15)),
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: Column(
                   children: [
                     Text(
@@ -60,7 +60,7 @@ class _ChangePlanScreenState extends State<ChangePlanScreen> {
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w400),
                     ),
-                    SizedBoxH10(),
+                    const SizedBoxH10(),
                     CustomButton(
                       onPressed: () {},
                       text: 'Cancel plan',
@@ -72,7 +72,7 @@ class _ChangePlanScreenState extends State<ChangePlanScreen> {
                 ),
               ),
             ),
-            SizedBoxH40(),
+            const SizedBoxH40(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -88,13 +88,13 @@ class _ChangePlanScreenState extends State<ChangePlanScreen> {
                 ),
               ],
             ),
-            SizedBoxH20(),
+            const SizedBoxH20(),
             Text(
               '**** **** *** **** 4325',
               style: textStyle16.copyWith(
                   fontWeight: FontWeight.w600, color: black),
             ),
-            SizedBoxH40(),
+            const SizedBoxH40(),
             CustomButton(
               onPressed: () {
                 Get.toNamed(AppRoutes.subscription3);

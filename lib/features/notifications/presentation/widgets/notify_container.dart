@@ -17,12 +17,12 @@ class NotifyContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: white),
-      padding: EdgeInsets.symmetric(),
+      decoration: const BoxDecoration(color: white),
+      padding: const EdgeInsets.symmetric(),
       child: Row(
         children: [
           Image.asset(image),
-          SizedBoxW10(),
+          const SizedBoxW10(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

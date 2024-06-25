@@ -56,7 +56,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
               key: _formkey,
               child: Column(
                 children: [
-                  Container(
+                  SizedBox(
                     height: height(context),
                     width: width(context),
                     child: Stack(

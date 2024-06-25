@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nexus/core/assets.dart';
@@ -29,9 +30,7 @@ class _AuthHandlerState extends State<AuthHandler> {
         backgroundColor: primary,
         body: Container(
           padding: const EdgeInsets.all(20),
-          decoration: const BoxDecoration(
-            color: primary,
-          ),
+          decoration: const BoxDecoration(color: primary),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -50,7 +49,10 @@ class _AuthHandlerState extends State<AuthHandler> {
                     ),
                   ),
                   const SizedBoxH15(),
-                  Image.asset(iLogo),
+                  // Image.asset(iLogo),
+                  SvgPicture.asset("$svgPath/logo.svg"),
+                  // Image.asset('$svgPath/nexus-logo2.gif'),
+
                   const SizedBoxH15(),
                   Text(
                     'Get the Visibility You Need \nto Connect with Your Future Spouse',
@@ -59,7 +61,7 @@ class _AuthHandlerState extends State<AuthHandler> {
                       color: white,
                     ),
                     textAlign: TextAlign.center,
-                  ),
+                  )
                 ],
               ),
               Column(

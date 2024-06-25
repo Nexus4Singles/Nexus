@@ -49,156 +49,44 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
                     fontSize: 30, fontWeight: FontWeight.w700, color: black),
               ),
             ),
-            const SizedBoxH10(),
-            Align(
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  Text(
-                    'Please record short but genuine responses to the questions below. Each response has a limit of 60 seconds. Kindly note that you will not be able to change these recordings after you have completed your profile, so please ensure your voice is loud & clear enough. Your responses don´t need to be perfect, they just need to be audible & authentic.',
-                    style: textStyle12.copyWith(color: black.withOpacity(.8)),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBoxH30(),
             const SizedBoxH20(),
             Text(
-              'Questions',
+              'Instructions',
               style: textStyle16.copyWith(fontWeight: FontWeight.w700),
             ),
-            const SizedBoxH20(),
-            DottedBorder(
-              borderType: BorderType.RRect,
-              strokeWidth: 1,
-              stackFit: StackFit.passthrough,
-              // customPath: (size) => customPath,
-              dashPattern: const [6, 3, 0, 3],
-              color: Colors.blue.withOpacity(.2),
-              radius: Radius.circular(20.r),
-              child: Container(
-                padding: EdgeInsets.all(15.sp),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
-                  color: const Color(0xffeeeeee),
+            const SizedBoxH5(),
+            Column(
+              children: [
+                Text.rich(
+                  TextSpan(
+                    style: textStyle12.copyWith(color: black.withOpacity(.8)),
+                    children: const [
+                      TextSpan(
+                        text:
+                            'Please record genuine responses to the questions you see on the subsequent screens. These three (3) questions are centered around your ',
+                      ),
+                      TextSpan(
+                        text:
+                            'christian faith, marriage beliefs & personality ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                            '''respectively, and each response has a limit       of 60 seconds. 
+Kindly note that you will not be able to change your responses after your  profile is completed. Your responses don´t need to be perfect, they just need    to be audible & authentic. 
+Remember that people can easily tell when a response is not genuine, so we urge you to refrain from seeking external help to answer these questions. 
+It is also clear that any user who records gibberish or submits empty recordings will not be taken seriously by other users,  and such profiles will be deleted.
+
+Happy Recording!''',
+                      ),
+                    ],
+                  ),
+                  style: textStyle14,
                 ),
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '1. ',
-                          style: textStyle12.copyWith(
-                            color: primary,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                          ),
-                        ),
-                        Expanded(
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text:
-                                      'How would you describe your current relationship with God & why is this relationship important to you? ',
-                                  style: textStyle14.copyWith(
-                                    color: primary,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text:
-                                      '(Please answer both parts of this question)',
-                                  style: textStyle14.copyWith(
-                                    color: black.withOpacity(.4),
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBoxH20(),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '2. ',
-                          style: textStyle14.copyWith(
-                            color: primary,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                          ),
-                        ),
-                        Expanded(
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text:
-                                      'What are your thoughts on the role of a husband and a wife in marriage?',
-                                  style: textStyle14.copyWith(
-                                    color: primary,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBoxH20(),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '3. ',
-                          style: textStyle14.copyWith(
-                            color: primary,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                          ),
-                        ),
-                        Expanded(
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text:
-                                      'What are the best qualities or traits about yourself?',
-                                  style: textStyle14.copyWith(
-                                    color: primary,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBoxH40(),
-            Text(
-              'Remember that people can easily tell when a response is not authentic, so we encourage you to refrain from seeking external \nhelp to answer these questions. Please note that your profile will \nbe deleted, if your recordings are empty or you record gibberish \njust to bypass this process.',
-              style: textStyle12.copyWith(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w500,
-                  color: black.withOpacity(.8)),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBoxH40(),
+              ],
+            )
           ],
         ),
       ),
@@ -212,9 +100,10 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
                 await Permission.microphone.request();
 
                 await Permission.microphone.status.then((value) {
+                  print(value);
                   if (value.isGranted) {
                     Get.toNamed(AppRoutes.audio1);
-                  }
+                  } else {}
                 });
               },
               child: Text(

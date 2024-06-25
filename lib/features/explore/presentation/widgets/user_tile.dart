@@ -11,6 +11,7 @@ class ExploreUserTile extends StatelessWidget {
   final String name;
   final String location;
   final String age;
+  final String image;
   final VoidCallback onPress;
   const ExploreUserTile({
     super.key,
@@ -18,56 +19,49 @@ class ExploreUserTile extends StatelessWidget {
     required this.age,
     required this.location,
     required this.onPress,
+    required this.image,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            CircleAvatar(
-              radius: 30.r,
+    return ListTile(
+      leading: CircleAvatar(
+        radius: 24.r,
+        backgroundColor: altoGrey,
+        backgroundImage: NetworkImage(image),
+      ),
+      onTap: onPress,
+      contentPadding: EdgeInsets.zero,
+      title: Text('$name, $age', style: textStyle16),
+      subtitle: Row(
+        children: [
+          const Icon(
+            Iconsax.location5,
+            color: otherGrey,
+            size: 14,
+          ),
+          const SizedBoxW5(),
+          Flexible(
+            child: Text(
+              location,
+              overflow: TextOverflow.ellipsis,
+              style: textStyle12.copyWith(color: otherGrey),
             ),
-            const SizedBoxW5(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '$name, $age',
-                  style: textStyle16,
-                ),
-                const SizedBoxH5(),
-                Row(
-                  children: [
-                    const Icon(
-                      Iconsax.location5,
-                      color: otherGrey,
-                      size: 14,
-                    ),
-                    const SizedBoxW5(),
-                    Text(
-                      location,
-                      style: textStyle12.copyWith(
-                        color: otherGrey,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-        SizedBox(
-          width: width(context) * .33,
-          child: CustomButton(
-            onPressed: () {},
-            vPadding: 10,
-            text: 'View Profile',
+          ),
+        ],
+      ),
+      trailing: InkWell(
+        onTap: onPress,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+          decoration: BoxDecoration(
+              color: primary, borderRadius: BorderRadius.circular(100)),
+          child: Text(
+            "View Profile",
+            style: textStyle14.copyWith(color: white),
           ),
         ),
-      ],
+      ),
     );
   }
 }

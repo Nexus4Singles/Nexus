@@ -12,7 +12,6 @@ import 'package:just_audio/just_audio.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/features/auth/presentation/widgets/record_completed.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/home/presentation/views/photo_view.dart';
@@ -120,11 +119,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           leading: const SizedBox.shrink(),
           actions: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Get.toNamed(AppRoutes.settings);
               },
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Icon(
                   Iconsax.setting_4,
                 ),
@@ -169,10 +168,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBoxH5(),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SvgPicture.asset('assets/icons/location.svg'),
                       const SizedBoxW5(),
-                      Expanded(
+                      Flexible(
                         child: Text(
                           '${homeModel.currentUser!.location!.place}',
                           overflow: TextOverflow.ellipsis,
@@ -392,7 +393,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.r),
                         child: CachedNetworkImage(
-                          width: Get.width/2.3,
+                          width: Get.width / 2.3,
                           height: 100.h,
                           fit: BoxFit.cover,
                           imageUrl: item,
