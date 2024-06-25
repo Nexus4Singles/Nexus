@@ -43,8 +43,6 @@ class _SettingScreenState extends State<SettingScreen> {
                   'This feature will be available soon',
                   header: 'Coming soon',
                 );
-
-                Get.toNamed(AppRoutes.audioRecording);
               },
             ),
             const Divider(
