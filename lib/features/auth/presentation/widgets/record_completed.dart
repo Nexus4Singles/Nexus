@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
-// import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:logger/logger.dart';
@@ -33,7 +31,6 @@ class _AudioFilePlayerState extends State<AudioFilePlayer> {
           widget.player.durationStream,
           (position, bufferedPosition, duration) => PositionData(
               position, bufferedPosition, duration ?? Duration.zero));
-
 
   @override
   void dispose() {

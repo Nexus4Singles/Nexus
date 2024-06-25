@@ -28,7 +28,6 @@ class _GenderScreenState extends State<GenderScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _init();
   }

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/button_outline.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/features/auth/data/data-sources/local-datasource/list_items.dart';
 import 'package:nexus/features/auth/presentation/widgets/drop_down.dart';
+
+import '../../controllers/explore_ctr.dart';
 
 class ExploreFilterModal extends StatefulWidget {
   const ExploreFilterModal({super.key});
@@ -17,7 +21,9 @@ class ExploreFilterModal extends StatefulWidget {
 class _ExploreFilterModalState extends State<ExploreFilterModal> {
   String state = '';
   String eduLevel = '';
-  RangeValues rangeValues = const RangeValues(25, 40);
+  String church = '';
+
+  final ctr = Get.put(ExploreCtr());
 
   @override
   Widget build(BuildContext context) {
@@ -35,33 +41,30 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
             ),
           ),
           const SizedBoxH15(),
+          AbsorbPointer(
+            child: ProfileDropDown(
+              items: ["Nigeria"],
+              val: "Nigeria",
+              hintText: 'Nationality',
+              onChanged: (p0) {},
+            ),
+          ),
+          const SizedBoxH15(),
           ProfileDropDown(
-            items: const [
-              'Option1',
-              'Option2',
-              'Option3',
-            ],
-            val: state,
-            hintText: 'State of Origin',
+            items: LocalData().educationalLevels,
+            val: ctr.education.value,
+            hintText: 'Education Level',
             onChanged: (p0) {
-              setState(() {
-                state = p0!;
-              });
+              ctr.education.value = p0!;
             },
           ),
           const SizedBoxH15(),
           ProfileDropDown(
-            items: const [
-              'Option1',
-              'Option2',
-              'Option3',
-            ],
-            val: eduLevel,
-            hintText: 'Education Level',
+            items: LocalData().church,
+            val: ctr.church.value,
+            hintText: 'Church',
             onChanged: (p0) {
-              setState(() {
-                eduLevel = p0!;
-              });
+              ctr.church.value = p0!;
             },
           ),
           const SizedBoxH20(),
@@ -70,31 +73,52 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
             style: textStyle16.copyWith(color: otherGrey),
           ),
           const SizedBoxH10(),
-          RangeSlider(
-            min: 21,
-            max: 60,
-            activeColor: primary,
-            values: rangeValues,
-            labels: RangeLabels('21', '60'),
-            onChanged: (value) {
-              setState(() {
-                rangeValues = value;
-              });
-            },
+          Row(
+            children: [
+              Text(
+                '21',
+                style: textStyle16.copyWith(color: otherGrey),
+              ),
+              Obx(
+                () => Expanded(
+                  child: RangeSlider(
+                    min: 20,
+                    max: 70,
+                    divisions: 50,
+                    activeColor: primary,
+                    values: ctr.rangeValues.value,
+                    labels: RangeLabels(
+                        ctr.rangeValues.value.start.round().toString(),
+                        ctr.rangeValues.value.end.round().toString()),
+                    onChanged: (value) {
+                      ctr.rangeValues.value = value;
+                    },
+                  ),
+                ),
+              ),
+              Text(
+                '70',
+                style: textStyle16.copyWith(color: otherGrey),
+              ),
+            ],
           ),
           const SizedBoxH20(),
           Row(
             children: [
               Expanded(
                 child: CustomButtonOut(
-                  onPressed: () {},
+                  onPressed: () {
+                    ctr.resetFilter();
+                  },
                   text: 'Reset Filter',
                 ),
               ),
               const SizedBoxW10(),
               Expanded(
                 child: CustomButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    ctr.filterUsers();
+                  },
                   text: 'Apply',
                 ),
               ),

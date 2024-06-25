@@ -43,14 +43,14 @@ class _CancelSubScreenState extends State<CancelSubScreen> {
                 style: textStyle16.copyWith(
                     fontWeight: FontWeight.w600, color: ash),
               ),
-              SizedBoxH20(),
+              const SizedBoxH20(),
               CustomButton(
                 onPressed: () {
                   Get.toNamed(AppRoutes.subscription3);
                 },
                 text: 'Keep Subscription',
               ),
-              SizedBoxH10(),
+              const SizedBoxH10(),
               CustomButtonOut(
                 onPressed: () {
                   Get.toNamed(AppRoutes.subscription4);

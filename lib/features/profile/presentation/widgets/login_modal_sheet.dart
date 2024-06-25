@@ -9,6 +9,8 @@ import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/router.dart';
 
+import '../../../../core/utils/shared_pref.dart';
+
 class LoginModalSheet extends StatefulWidget {
   const LoginModalSheet({super.key});
 
@@ -58,6 +60,7 @@ class _LoginModalSheetState extends State<LoginModalSheet> {
                     child: CustomButton(
                       onPressed: () {
                         Get.offAndToNamed(AppRoutes.login);
+                        SharedPref.deleteAll();
                       },
                       text: 'Yes, Logout',
                     ),

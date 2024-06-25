@@ -44,7 +44,7 @@ ThemeData darkTheme = ThemeData(
 );
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeData _selectedTheme = darkTheme;
+  final ThemeData _selectedTheme = darkTheme;
   bool _isDark = false;
   bool get isDark => _isDark;
 

@@ -12,7 +12,6 @@ import 'package:just_audio/just_audio.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/features/auth/presentation/widgets/record_completed.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/home/presentation/views/photo_view.dart';
@@ -169,10 +168,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBoxH5(),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SvgPicture.asset('assets/icons/location.svg'),
                       const SizedBoxW5(),
-                      Expanded(
+                      Flexible(
                         child: Text(
                           '${homeModel.currentUser!.location!.place}',
                           overflow: TextOverflow.ellipsis,

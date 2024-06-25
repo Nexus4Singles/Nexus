@@ -230,9 +230,7 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
   List<File> imageFiles = [];
   void _pickImage(AuthNotifier model) async {
     final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(
-      source: ImageSource.gallery,
-    );
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       setState(() {
         imageFiles.add(File(image.path));

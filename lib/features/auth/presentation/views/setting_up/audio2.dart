@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:logger/logger.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
@@ -74,6 +73,7 @@ class _Audio2ScreenState extends State<Audio2Screen> {
       ..sampleRate = 44100;
   }
 
+  // ignore: unused_element
   void _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {

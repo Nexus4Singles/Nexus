@@ -1,27 +1,30 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/colors.dart';
+import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/features/auth/presentation/widgets/record_completed.dart';
+import 'package:nexus/features/explore/controllers/explore_ctr.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/home/presentation/views/photo_view.dart';
 import 'package:nexus/features/home/presentation/widgets/coming_soon_modal.dart';
+import 'package:nexus/features/match/controllers/matches_ctr.dart';
 import 'package:nexus/features/profile/presentation/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 
 class UserDetailScreen extends StatefulWidget {
-  const UserDetailScreen({super.key});
+  final UserModel userModel;
+  const UserDetailScreen({super.key, required this.userModel});
 
   @override
   State<UserDetailScreen> createState() => _UserDetailScreenState();
@@ -30,7 +33,6 @@ class UserDetailScreen extends StatefulWidget {
 class _UserDetailScreenState extends State<UserDetailScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _init();
   }
@@ -50,7 +52,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
         Provider.of<HomeNotifier>(context, listen: false).currentUser!;
 
     // if (playerId == '1') {
-    await player.setUrl(currentUser.relationshipWithGod!);
+    await player.setUrl(widget.userModel.relationshipWithGod!);
 
     player.durationStream.listen((d) {
       duration = d!;
@@ -60,7 +62,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
       playerPosition = p;
     });
     // } else if (playerId == '2') {
-    await player2.setUrl(currentUser.roleOfHusband!);
+    await player2.setUrl(widget.userModel.roleOfHusband!);
 
     player2.durationStream.listen((d) {
       duration = d!;
@@ -70,7 +72,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
       playerPosition = p;
     });
     // } else {
-    await player3.setUrl(currentUser.bestQualotiesOrTraits!);
+    await player3.setUrl(widget.userModel.bestQualotiesOrTraits!);
 
     player3.durationStream.listen((d) {
       duration = d!;
@@ -82,407 +84,327 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
     // }
   }
 
+  var ctr = Get.put(MatchesCtr());
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeNotifier>(builder: (context, model, _) {
-      return Scaffold(
-        backgroundColor: black,
-        appBar: AppBar(
-          backgroundColor: black,
-          leading: const SizedBox(
-            width: 20,
-          ),
-          toolbarHeight: 00,
-        ),
-        body: Container(
-          decoration: BoxDecoration(
-            // color: black,
-            image: DecorationImage(
-              image: NetworkImage(model.selectedUser!.profileUrl!),
-              opacity: .1,
-              fit: BoxFit.cover,
+    return Scaffold(
+      backgroundColor: black,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          splashColor: Colors.black26,
+          splashRadius: 24,
+          icon: const Center(
+            child: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: Colors.white,
             ),
           ),
-          child: SingleChildScrollView(
+          onPressed: () {
+            Get.back();
+          },
+        ),
+      ),
+      body: Stack(
+        children: [
+          ShaderMask(
+            shaderCallback: (Rect bounds) {
+              return const LinearGradient(
+                colors: [Colors.transparent, Colors.black],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.1, 1],
+              ).createShader(bounds);
+            },
+            blendMode: BlendMode.darken,
+            child: Container(
+              height: Get.height / 1.5,
+              alignment: Alignment.bottomCenter,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                    colors: [Colors.transparent, Colors.transparent, black]),
+                image: DecorationImage(
+                  image: NetworkImage(widget.userModel.photos![0]),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Stack(
-                  children: [
-                    SafeArea(
-                      bottom: false,
-                      child: InkWell(
-                        onTap: () {
-                          Get.to(
-                            () => PhotoViewScreen(
-                              selectedIndex: 0,
-                              photos: model.selectedUser!.photos!,
-                            ),
-                          );
-                        },
-                        child: CachedNetworkImage(
-                          height: height(context) * .5,
-                          width: width(context),
-                          fit: BoxFit.cover,
-                          imageUrl: model.selectedUser!.profileUrl!,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) =>
-                                  const SizedBox(
-                            width: 30,
-                            height: 30,
-                            // child: CircularProgressIndicator(
-                            //   value: downloadProgress.progress,
-                            //   color: primary,
-                            // ),
-                          ),
-                          errorWidget: (context, url, error) => Container(),
-                        ),
-                      ),
-                    ),
-                    const Positioned(
-                      top: 10,
-                      child: SafeArea(
-                        child: BackButton(
-                          color: white,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      child: Container(
+                Transform.translate(
+                  offset: Offset(0, Get.height / 3),
+                  child: Column(
+                    children: [
+                      userBio(),
+                      Container(
                         width: width(context),
-                        padding: EdgeInsets.all(20.sp),
+                        // height: height(context),
                         decoration: BoxDecoration(
-                          color: black.withOpacity(.3),
+                          color: white,
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20.r),
+                          ),
                         ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 10),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            const SizedBoxH20(),
                             Text(
-                              '${model.selectedUser!.username}, ${model.selectedUser!.age}',
-                              style: headerStyle.copyWith(
-                                fontSize: 22.sp,
-                                color: white,
+                              'About',
+                              style: textStyle18.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: black,
                               ),
                             ),
+                            const SizedBoxH15(),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Icon(
-                                  Iconsax.location5,
-                                  color: white,
-                                  size: 14,
-                                ),
-                                const SizedBoxW10(),
                                 Text(
-                                  model.selectedUser!.location!.place!
-                                      .toString(),
-                                  style: textStyle12.copyWith(
-                                    color: white,
-                                  ),
-                                )
+                                  'State of Origin: ',
+                                  style: textStyle18.copyWith(
+                                      fontWeight: FontWeight.w500, color: ash),
+                                ),
+                                Text(
+                                  widget.userModel.stateOfOrigin ?? '',
+                                  style: textStyle18.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      color: black),
+                                ),
                               ],
                             ),
                             const SizedBoxH10(),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                InkWell(
-                                  onTap: () {
-                                    showModal();
-                                  },
-                                  child: CircleAvatar(
-                                    backgroundColor: white,
-                                    radius: 25,
-                                    child: Image.asset(
-                                      'assets/icons/refresh-w.png',
-                                    ),
-                                  ),
+                                Text(
+                                  'Education Level: ',
+                                  style: textStyle18.copyWith(
+                                      fontWeight: FontWeight.w500, color: ash),
                                 ),
-                                const SizedBoxW20(),
-                                InkWell(
-                                  onTap: () {
-                                    showModal();
-                                  },
-                                  child: SvgPicture.asset(
-                                    'assets/icons/close.svg',
-                                  ),
+                                Text(
+                                  widget.userModel.educationLevel ?? '',
+                                  style: textStyle18.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      color: black),
                                 ),
-                                const SizedBoxW20(),
-                                InkWell(
-                                  onTap: () {
-                                    showModal();
-                                  },
-                                  child: SvgPicture.asset(
-                                    'assets/icons/fav.svg',
-                                  ),
+                              ],
+                            ),
+                            const SizedBoxH10(),
+                            Row(
+                              children: [
+                                Text(
+                                  'Profession/Industry: ',
+                                  style: textStyle18.copyWith(
+                                      fontWeight: FontWeight.w500, color: ash),
                                 ),
-                                const SizedBoxW20(),
-                                InkWell(
-                                  onTap: () {
-                                    showModal();
-                                  },
-                                  child: CircleAvatar(
-                                    backgroundColor: white,
-                                    radius: 25,
-                                    child: Image.asset(
-                                      'assets/icons/bookmark-w.png',
-                                    ),
+                                Flexible(
+                                  child: Text(
+                                    widget.userModel.profession ?? '',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: textStyle18.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        color: black),
                                   ),
                                 ),
                               ],
-                            )
+                            ),
+                            const SizedBoxH10(),
+                            Row(
+                              children: [
+                                Text(
+                                  'Church: ',
+                                  style: textStyle18.copyWith(
+                                      fontWeight: FontWeight.w500, color: ash),
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    widget.userModel.churchName ?? '',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: textStyle18.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        color: black),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBoxH30(),
+                            Text(
+                              'Hobbies / Interests',
+                              style: textStyle18.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: black,
+                              ),
+                            ),
+                            const SizedBoxH10(),
+                            Wrap(
+                              spacing: 15,
+                              runSpacing: 15,
+                              children: [
+                                for (var hob in widget.userModel.hobbies!)
+                                  TextContainer(
+                                    text: hob,
+                                  ),
+                              ],
+                            ),
+                            const SizedBoxH30(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Most Desired Qualities',
+                                  style: textStyle18.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBoxH10(),
+                            Wrap(
+                              spacing: 15,
+                              runSpacing: 15,
+                              children: [
+                                for (var des
+                                    in widget.userModel.desiredQualities!)
+                                  TextContainer(
+                                    text: des,
+                                  ),
+                              ],
+                            ),
+                            const SizedBoxH40(),
+                            Text(
+                              'Audio Recording',
+                              style: textStyle18.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: black,
+                              ),
+                            ),
+                            const SizedBoxH15(),
+                            Text(
+                              '1. The summary of my relationship with God',
+                              style: textStyle14.copyWith(
+                                  color: black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            const SizedBoxH10(),
+                            AudioFilePlayer(
+                              player: player,
+                              onPlay: () async {
+                                player2.stop();
+                                player2.seek(Duration.zero);
+                                player3.stop();
+                                player3.seek(Duration.zero);
+                                player.play();
+                              },
+                              onPause: () async {
+                                player.pause();
+                              },
+                            ),
+                            const SizedBoxH25(),
+                            Text(
+                              '2. My view on Gender roles in marriage',
+                              style: textStyle14.copyWith(
+                                  color: black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            const SizedBoxH10(),
+                            AudioFilePlayer(
+                              player: player2,
+                              onPlay: () async {
+                                player.stop();
+                                player.seek(Duration.zero);
+                                player3.stop();
+                                player3.seek(Duration.zero);
+                                player2.play();
+                              },
+                              onPause: () async {
+                                player2.pause();
+                              },
+                            ),
+                            const SizedBoxH25(),
+                            Text(
+                              '3. Favourite qualities or traits about myself',
+                              style: textStyle14.copyWith(
+                                  color: black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            const SizedBoxH10(),
+                            AudioFilePlayer(
+                              player: player3,
+                              onPlay: () async {
+                                player.stop();
+                                player.seek(Duration.zero);
+                                player2.stop();
+                                player2.seek(Duration.zero);
+                                player3.play();
+                              },
+                              onPause: () async {
+                                player3.pause();
+                              },
+                            ),
+                            const SizedBoxH30(),
+                            Text(
+                              'Gallery',
+                              style: textStyle18.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: black,
+                              ),
+                            ),
+                            const SizedBoxH10(),
+                            Wrap(
+                              runSpacing: 15,
+                              spacing: 15,
+                              children: [
+                                for (var item in widget.userModel.photos!)
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.r),
+                                    child: InkWell(
+                                      onTap: () {
+                                        int index = widget.userModel.photos!
+                                            .indexOf(item);
+                                        Get.to(() => PhotoViewScreen(
+                                            selectedIndex: index,
+                                            photos: widget.userModel.photos!));
+                                      },
+                                      child: CachedNetworkImage(
+                                        width: width(context) * .4,
+                                        height: 100.h,
+                                        fit: BoxFit.cover,
+                                        imageUrl: item,
+                                        progressIndicatorBuilder:
+                                            (context, url, downloadProgress) =>
+                                                SizedBox(
+                                          width: 30,
+                                          height: 30,
+                                          child: CircularProgressIndicator(
+                                            value: downloadProgress.progress,
+                                            color: primary,
+                                          ),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            Container(),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                            const SizedBoxH10(),
                           ],
                         ),
                       ),
-                    )
-                  ],
-                ),
-                Container(
-                  width: width(context),
-                  // height: height(context),
-                  decoration: BoxDecoration(
-                    color: white,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20.r),
-                    ),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBoxH20(),
-                      Text(
-                        'About',
-                        style: textStyle18.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: black,
-                        ),
-                      ),
-                      const SizedBoxH15(),
-                      Row(
-                        children: [
-                          Text(
-                            'State of Origin: ',
-                            style: textStyle18.copyWith(
-                                fontWeight: FontWeight.w500, color: ash),
-                          ),
-                          Text(
-                            model.selectedUser!.stateOfOrigin ?? '',
-                            style: textStyle18.copyWith(
-                                fontWeight: FontWeight.w500, color: black),
-                          ),
-                        ],
-                      ),
-                      const SizedBoxH10(),
-                      Row(
-                        children: [
-                          Text(
-                            'Education Level: ',
-                            style: textStyle18.copyWith(
-                                fontWeight: FontWeight.w500, color: ash),
-                          ),
-                          Text(
-                            model.selectedUser!.educationLevel ?? '',
-                            style: textStyle18.copyWith(
-                                fontWeight: FontWeight.w500, color: black),
-                          ),
-                        ],
-                      ),
-                      const SizedBoxH10(),
-                      Row(
-                        children: [
-                          Text(
-                            'Profession/Industry: ',
-                            style: textStyle18.copyWith(
-                                fontWeight: FontWeight.w500, color: ash),
-                          ),
-                          Text(
-                            model.selectedUser!.profession ?? '',
-                            style: textStyle18.copyWith(
-                                fontWeight: FontWeight.w500, color: black),
-                          ),
-                        ],
-                      ),
-                      const SizedBoxH10(),
-                      Row(
-                        children: [
-                          Text(
-                            'Church: ',
-                            style: textStyle18.copyWith(
-                                fontWeight: FontWeight.w500, color: ash),
-                          ),
-                          Text(
-                            model.selectedUser!.city ?? '',
-                            style: textStyle18.copyWith(
-                                fontWeight: FontWeight.w500, color: black),
-                          ),
-                        ],
-                      ),
-                      const SizedBoxH30(),
-                      Text(
-                        'Hobbies / Interests',
-                        style: textStyle18.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: black,
-                        ),
-                      ),
-                      const SizedBoxH10(),
-                      Wrap(
-                        spacing: 15,
-                        runSpacing: 15,
-                        children: [
-                          for (var hob in model.selectedUser!.hobbies!)
-                            TextContainer(
-                              text: hob,
-                            ),
-                        ],
-                      ),
-                      const SizedBoxH30(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Most Desired Qualities',
-                            style: textStyle18.copyWith(
-                              fontWeight: FontWeight.w500,
-                              color: black,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBoxH10(),
-                      Wrap(
-                        spacing: 15,
-                        runSpacing: 15,
-                        children: [
-                          for (var des in model.selectedUser!.desiredQualities!)
-                            TextContainer(
-                              text: des,
-                            ),
-                        ],
-                      ),
                       const SizedBoxH40(),
-                      Text(
-                        'Audio Recording',
-                        style: textStyle18.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: black,
-                        ),
-                      ),
-                      const SizedBoxH15(),
-                      Text(
-                        '1. The summary of my relationship with God',
-                        style: textStyle14.copyWith(
-                            color: black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      const SizedBoxH10(),
-                      AudioFilePlayer(
-                        player: player,
-                        onPlay: () async {
-                          player2.stop();
-                          player2.seek(Duration.zero);
-                          player3.stop();
-                          player3.seek(Duration.zero);
-                          player.play();
-                        },
-                        onPause: () async {
-                          player.pause();
-                        },
-                      ),
-                      const SizedBoxH25(),
-                      Text(
-                        '2. My view on Gender roles in marriage',
-                        style: textStyle14.copyWith(
-                            color: black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      const SizedBoxH10(),
-                      AudioFilePlayer(
-                        player: player2,
-                        onPlay: () async {
-                          player.stop();
-                          player.seek(Duration.zero);
-                          player3.stop();
-                          player3.seek(Duration.zero);
-                          player2.play();
-                        },
-                        onPause: () async {
-                          player2.pause();
-                        },
-                      ),
-                      const SizedBoxH25(),
-                      Text(
-                        '3. Favourite qualities or traits about myself',
-                        style: textStyle14.copyWith(
-                            color: black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      const SizedBoxH10(),
-                      AudioFilePlayer(
-                        player: player3,
-                        onPlay: () async {
-                          player.stop();
-                          player.seek(Duration.zero);
-                          player2.stop();
-                          player2.seek(Duration.zero);
-                          player3.play();
-                        },
-                        onPause: () async {
-                          player3.pause();
-                        },
-                      ),
-                      const SizedBoxH30(),
-                      Text(
-                        'Gallery',
-                        style: textStyle18.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: black,
-                        ),
-                      ),
-                      const SizedBoxH10(),
-                      Wrap(
-                        runSpacing: 15,
-                        spacing: 15,
-                        children: [
-                          for (var item in model.selectedUser!.photos!)
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(15.r),
-                              child: InkWell(
-                                onTap: () {
-                                  int index =
-                                      model.selectedUser!.photos!.indexOf(item);
-                                  Get.to(() => PhotoViewScreen(
-                                      selectedIndex: index,
-                                      photos: model.selectedUser!.photos!));
-                                },
-                                child: CachedNetworkImage(
-                                  width: width(context) * .4,
-                                  height: 100.h,
-                                  fit: BoxFit.cover,
-                                  imageUrl: item,
-                                  progressIndicatorBuilder:
-                                      (context, url, downloadProgress) =>
-                                          SizedBox(
-                                    width: 30,
-                                    height: 30,
-                                    child: CircularProgressIndicator(
-                                      value: downloadProgress.progress,
-                                      color: primary,
-                                    ),
-                                  ),
-                                  errorWidget: (context, url, error) =>
-                                      Container(),
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
                       const SizedBoxH40(),
                     ],
                   ),
@@ -490,9 +412,99 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
               ],
             ),
           ),
-        ),
-      );
-    });
+        ],
+      ),
+    );
+  }
+
+  Widget userBio() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 28.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            '${widget.userModel.username}, ${widget.userModel.age}',
+            style: headerStyle.copyWith(fontSize: 22.sp, color: white),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Iconsax.location5,
+                  color: white,
+                  size: 14,
+                ),
+                const SizedBoxW10(),
+                Flexible(
+                  child: Text(
+                    widget.userModel.location!.place!.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    style: textStyle14.copyWith(color: white),
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBoxH10(),
+          Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {
+                    ctr.ctr.myProfile.value.matchedUsers == null ||
+                            !ctr.ctr.myProfile.value.matchedUsers!
+                                .contains(widget.userModel.id)
+                        ? ctr.toggleLike(widget.userModel)
+                        : print("This users are matched");
+                  },
+                  child: CircleAvatar(
+                      backgroundColor: ctr.ctr.myProfile.value.myLikes!
+                              .contains(widget.userModel.id)
+                          ? primary
+                          : white,
+                      radius: 25,
+                      child: SvgPicture.asset(
+                        ctr.ctr.myProfile.value.matchedUsers == null ||
+                                !ctr.ctr.myProfile.value.matchedUsers!
+                                    .contains(widget.userModel.id)
+                            ? "$svgPath/like.svg"
+                            : '$svgPath/sms.svg',
+                        color: ctr.ctr.myProfile.value.myLikes!
+                                .contains(widget.userModel.id)
+                            ? white
+                            : primary,
+                      )),
+                ),
+                const SizedBoxW20(),
+                InkWell(
+                  onTap: () {
+                    ctr.toggleSave(widget.userModel.id);
+                    print(ctr.ctr.myProfile.value.mySaves!
+                        .contains(widget.userModel.id));
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: ctr.ctr.myProfile.value.mySaves!
+                            .contains(widget.userModel.id)
+                        ? primary
+                        : white,
+                    radius: 25,
+                    child: SvgPicture.asset("$svgPath/bookmark.svg",
+                        color: ctr.ctr.myProfile.value.mySaves!
+                                .contains(widget.userModel.id)
+                            ? white
+                            : primary),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   void showModal() {

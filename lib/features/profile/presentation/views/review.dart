@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
@@ -35,7 +34,7 @@ class _ReviewSummaryScreenState extends State<ReviewSummaryScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             vertical: 10,
             horizontal: 10,
           ),
@@ -48,7 +47,8 @@ class _ReviewSummaryScreenState extends State<ReviewSummaryScreen> {
                   decoration: BoxDecoration(
                       color: grey.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(15)),
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Column(
                     children: [
                       Text(
@@ -65,7 +65,7 @@ class _ReviewSummaryScreenState extends State<ReviewSummaryScreen> {
                             fontSize: 12,
                             fontWeight: FontWeight.w400),
                       ),
-                      SizedBoxH10(),
+                      const SizedBoxH10(),
                       CustomButton(
                           onPressed: () {},
                           text: 'Select another plan',
@@ -74,7 +74,7 @@ class _ReviewSummaryScreenState extends State<ReviewSummaryScreen> {
                   ),
                 ),
               ),
-              SizedBoxH20(),
+              const SizedBoxH20(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -89,7 +89,7 @@ class _ReviewSummaryScreenState extends State<ReviewSummaryScreen> {
                   )
                 ],
               ),
-              SizedBoxH10(),
+              const SizedBoxH10(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -104,7 +104,7 @@ class _ReviewSummaryScreenState extends State<ReviewSummaryScreen> {
                   ),
                 ],
               ),
-              SizedBoxH10(),
+              const SizedBoxH10(),
               Container(
                 decoration: BoxDecoration(
                   color: white.withOpacity(0.5),
@@ -124,7 +124,7 @@ class _ReviewSummaryScreenState extends State<ReviewSummaryScreen> {
                   ],
                 ),
               ),
-              SizedBoxH30(),
+              const SizedBoxH30(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -135,7 +135,7 @@ class _ReviewSummaryScreenState extends State<ReviewSummaryScreen> {
                     child: Row(
                       children: [
                         Image.asset('assets/images/smallcard.png'),
-                        SizedBoxW10(),
+                        const SizedBoxW10(),
                         Text(
                           'Taxes & Fees',
                           style: textStyle18.copyWith(color: ash),
@@ -150,7 +150,7 @@ class _ReviewSummaryScreenState extends State<ReviewSummaryScreen> {
                   ),
                 ],
               ),
-              SizedBoxH20(),
+              const SizedBoxH20(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

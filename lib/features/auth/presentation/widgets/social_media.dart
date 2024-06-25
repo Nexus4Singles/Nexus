@@ -20,7 +20,7 @@ class SocialMediaWidget extends StatelessWidget {
           child: SvgPicture.asset(
             '$svgPath/fb.svg',
             width: 32,
-            color: Color(0xff1877F2),
+            color: const Color(0xff1877F2),
           ),
         ),
         const SizedBoxW15(),
@@ -28,7 +28,10 @@ class SocialMediaWidget extends StatelessWidget {
           onTap: () {
             BaseHelper.launchBrowser('https://twitter.com/nexus4singles');
           },
-          child: SvgPicture.asset('$svgPath/x.svg', width: 32,),
+          child: SvgPicture.asset(
+            '$svgPath/x.svg',
+            width: 32,
+          ),
         ),
         const SizedBoxW15(),
         InkWell(

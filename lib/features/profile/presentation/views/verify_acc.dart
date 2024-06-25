@@ -29,13 +29,13 @@ class _VerifyAccountScreenState extends State<VerifyAccScreen> {
         elevation: 0,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 100),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 100),
         child: Column(
           children: [
             CustomTextField(
                 controller: TextEditingController(),
                 hintText: 'Enter Email Address'),
-            SizedBoxH40(),
+            const SizedBoxH40(),
             CustomButton(
               onPressed: () {},
               text: 'save',

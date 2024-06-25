@@ -15,6 +15,7 @@ class UserEntity extends Equatable {
     required this.gender,
     required this.age,
     this.city,
+    this.matchedUsers,
     this.educationLevel,
     this.stateOfOrigin,
     this.profession,
@@ -30,6 +31,9 @@ class UserEntity extends Equatable {
     this.country,
     this.churchName,
     this.compatibility,
+    this.mySaves,
+    this.myLikes,
+    this.likeMe,
     this.compatibilitySetted,
     this.location,
   });
@@ -51,6 +55,12 @@ class UserEntity extends Equatable {
   final String? educationLevel;
   final String? profession;
   final List<String>? hobbies;
+  @JsonKey(name: kMATCHESUSERSKEY)
+  final List<String>? matchedUsers;
+  @JsonKey(name: kMATCHESKEY)
+  final List<String>? likeMe;
+  final List<String>? myLikes;
+  final List<String>? mySaves;
   @JsonKey(name: kDESIREDQUALITIES)
   final List<String>? desiredQualities;
   final List<String>? photos;
@@ -73,6 +83,7 @@ class UserEntity extends Equatable {
   final CompatibilityModel? compatibility;
   @JsonKey(name: kCOMPATIBILITYSETTED)
   final bool? compatibilitySetted;
+  @JsonKey(name: kLOCATION)
   final LocationModel? location;
 
   @override
@@ -97,11 +108,15 @@ class UserEntity extends Equatable {
         bestQualotiesOrTraits,
         notificationToken,
         phoneNumber,
+        matchedUsers,
         registrationProgress,
         country,
         churchName,
         compatibility,
         compatibilitySetted,
         location,
+        myLikes,
+        mySaves,
+        likeMe
       ];
 }

@@ -38,7 +38,8 @@ class _SubCancelledScreenState extends State<SubCancelledScreen> {
                 height: 120.sp,
                 decoration: BoxDecoration(
                     color: primary, borderRadius: BorderRadius.circular(15)),
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +51,7 @@ class _SubCancelledScreenState extends State<SubCancelledScreen> {
                             color: white, fontWeight: FontWeight.w700),
                       ),
                     ),
-                    SizedBoxH20()
+                    const SizedBoxH20()
                   ],
                 ),
               ),

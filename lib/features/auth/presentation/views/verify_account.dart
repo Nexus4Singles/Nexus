@@ -44,7 +44,7 @@ class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 height: height(context),
                 width: width(context),
                 child: Stack(

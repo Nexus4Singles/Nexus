@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-// import 'package:flutter_stripe/flutter_stripe.dart
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';

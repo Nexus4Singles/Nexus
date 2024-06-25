@@ -1,24 +1,20 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
-// import 'package:nexus/features/home/presentation/change_notifier/bottom_nav.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/home/presentation/widgets/coming_soon_modal.dart';
 import 'package:nexus/features/home/presentation/widgets/profile_tile.dart';
 import 'package:nexus/features/home/presentation/widgets/user_card.dart';
 import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
-import 'package:pinput/pinput.dart';
-// import 'package:nexus/router.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../core/utils/shared_pref.dart';
+import '../../../explore/controllers/explore_ctr.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,26 +24,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ctr = Get.put(ExploreCtr());
+
   CardSwiperController cardSwiperController = CardSwiperController();
-  // Map<String, dynamic> pageArgu = Get.arguments;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _init();
   }
 
   FutureOr _init() async {
     await Provider.of<HomeNotifier>(context, listen: false).getProfile();
-    // if (pageArgu['fromSignUp']) {
-    //   Provider.of<BottomNavModel>(context).(4);
-    // } else {}
     var currentUser =
         Provider.of<HomeNotifier>(context, listen: false).currentUser!;
     SharedPref.setString("email", currentUser.email);
     if (currentUser.compatibilitySetted == null ||
         currentUser.compatibilitySetted == false) {
+      WidgetsFlutterBinding.ensureInitialized();
       Future.delayed(const Duration(seconds: 5), () {
         showAdaptiveDialog(
           context: context,
@@ -86,10 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.all(15.sp),
               child: Column(
                 children: [
-                  if (model.currentUser != null)
-                    ProfileTile(
-                      model: model,
-                    ),
+                  if (model.currentUser != null) ProfileTile(model: model),
                   const SizedBoxH15(),
                   // TextButton(
                   //     onPressed: () {

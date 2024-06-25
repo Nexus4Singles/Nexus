@@ -15,7 +15,6 @@ import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.d
 import 'package:nexus/features/auth/presentation/widgets/seek_bar.dart';
 import 'package:nexus/router.dart';
 import 'package:audio_waveforms/audio_waveforms.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +34,7 @@ class _Audio1ScreenState extends State<Audio1Screen> {
 
   StreamSubscription? streamSubscription;
 
-  Duration? position;
+  Duration? recPosition = Duration.zero;
 
   String? path;
   String? musicFile;
@@ -46,6 +45,7 @@ class _Audio1ScreenState extends State<Audio1Screen> {
   bool isLoading = true;
   bool recordingCompleted = false;
   late Directory appDirectory;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -67,16 +67,6 @@ class _Audio1ScreenState extends State<Audio1Screen> {
       ..androidOutputFormat = AndroidOutputFormat.mpeg4
       ..iosEncoder = IosEncoder.kAudioFormatMPEG4AAC
       ..sampleRate = 44100;
-  }
-
-  void _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      musicFile = result.files.single.path;
-      setState(() {});
-    } else {
-      debugPrint("File not picked");
-    }
   }
 
   @override
@@ -110,9 +100,18 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                 onTap: () {
                   if (recordingCompleted) {
                     Get.toNamed(AppRoutes.audio2);
+                  } else if (recPosition!.inSeconds.isGreaterThan(45) &&
+                      isRecording == false) {
+                    Get.toNamed(AppRoutes.audio2);
+                  } else if (recPosition!.inSeconds.isGreaterThan(45)) {
+                    AppToast()
+                        .showErrorToast('Stop the audio below to continue');
                   } else {
-                    AppToast().showErrorToast('Audio must be upto 60 secs');
+                    AppToast().showErrorToast(
+                        'Audio must be not be less than 45 secs');
                   }
+                  debugPrint(
+                      "is completed = > $recordingCompleted ${recPosition!.inSeconds}");
                 },
                 child: Text(
                   'Next',
@@ -201,7 +200,7 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                               return Container();
                             }
                             return Text(
-                              '${snapshot.data!.inMinutes.toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? "00" : ('${snapshot.data!.inSeconds}0')}',
+                              '${snapshot.data!.inMinutes.toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? "00" : ('${snapshot.data!.inSeconds}')}',
                               style: textStyle18.copyWith(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
@@ -209,7 +208,6 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                             );
                           },
                         ),
-
                         Row(children: [
                           Expanded(
                             child: StreamBuilder<PositionData>(
@@ -240,23 +238,6 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                             ),
                           ),
                         ]),
-                        // StreamBuilder<Duration?>(
-                        //   stream: player.durationStream,
-                        //   builder: (context, snapshot) {
-                        //     if (!snapshot.hasData) {
-                        //       return Container();
-                        //     }
-                        //     return Text(
-                        //       '${snapshot.data!.inMinutes.toString()}:${snapshot.data!.inSeconds.toString()}',
-                        //       style: textStyle18.copyWith(
-                        //           fontSize: 28,
-                        //           fontWeight: FontWeight.w200,
-                        //           color: friendGrey),
-                        //     );
-                        //   },
-                        // ),
-                        //   ],
-                        // ),
                       ],
                     ),
                   if (isRecording)
@@ -280,7 +261,6 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                         ),
                         const SizedBoxH30(),
                         if (!isRecordingCompleted)
-                          // Lottie.asset('assets/images/wave.json'),
                           AudioWaveforms(
                             recorderController: recorderController,
                             size: Size(width(context) * .5, 100.h),
@@ -298,7 +278,6 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                           ),
                       ],
                     ),
-                  // SvgPicture.asset('assets/icons/audio1.svg'),
                 ],
               ),
               const SizedBoxH25(),
@@ -310,10 +289,7 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                   children: [
                     InkWell(
                       onTap: () {
-                        setState(() {
-                          isRecording = false;
-                          isRecordingCompleted = false;
-                        });
+                        resetPlayer();
                       },
                       child: CircleAvatar(
                         backgroundColor: warGrey,
@@ -345,6 +321,8 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                           } else {
                             _startOrStopRecording(model);
                           }
+                          debugPrint(
+                              "is recording complete => $isRecordingCompleted ${player.playing}");
                         },
                         child: CircleAvatar(
                           radius: 40,
@@ -395,12 +373,11 @@ class _Audio1ScreenState extends State<Audio1Screen> {
               position, bufferedPosition, duration ?? Duration.zero));
 
   void _startOrStopRecording(AuthNotifier model) async {
+    debugPrint("This has been called...");
     try {
       if (isRecording) {
         recorderController.reset();
-
         final path = await recorderController.stop(false);
-
         if (path != null) {
           debugPrint(path);
           setState(() {
@@ -417,9 +394,16 @@ class _Audio1ScreenState extends State<Audio1Screen> {
         }
         // Future.delayed(Duration(seconds: 4));
         await recorderController.record(path: path!);
-        Timer(Duration(seconds: model.recordingEndSecs), () {
-          _stopRecording(model);
+
+        _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+          setState(() {
+            recPosition = Duration(seconds: recPosition!.inSeconds + 1);
+          });
+          if (recPosition!.inSeconds.isEqual(model.recordingEndSecs)) {
+            _stopRecording(model);
+          }
         });
+        debugPrint("this is recording duration ${recPosition!.inSeconds}");
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -430,9 +414,19 @@ class _Audio1ScreenState extends State<Audio1Screen> {
     }
   }
 
-  void _stopPlaying() {
+  void resetPlayer() async {
+    await recorderController.stop(true);
+    _positionDataStream.listen((event) {
+      event.position = Duration.zero;
+      event.bufferedPosition = Duration.zero;
+      event.duration = Duration.zero;
+    });
+    player.stop();
+    _timer!.cancel();
     setState(() {
-      isPlaying = false;
+      isRecording = false;
+      isRecordingCompleted = false;
+      recPosition = Duration.zero;
     });
   }
 
@@ -453,10 +447,6 @@ class _Audio1ScreenState extends State<Audio1Screen> {
       model.setAudio1(path);
       debugPrint("Recorded file size: ${model.audioPath1}");
     }
-  }
-
-  void _refreshWave() {
-    if (isRecording) recorderController.refresh();
   }
 
   void audioStream() {
