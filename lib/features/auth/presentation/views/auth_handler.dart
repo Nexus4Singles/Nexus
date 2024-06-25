@@ -51,6 +51,8 @@ class _AuthHandlerState extends State<AuthHandler> {
                   const SizedBoxH15(),
                   // Image.asset(iLogo),
                   SvgPicture.asset("$svgPath/logo.svg"),
+                  // Image.asset('$svgPath/nexus-logo2.gif'),
+
                   const SizedBoxH15(),
                   Text(
                     'Get the Visibility You Need \nto Connect with Your Future Spouse',
@@ -59,7 +61,7 @@ class _AuthHandlerState extends State<AuthHandler> {
                       color: white,
                     ),
                     textAlign: TextAlign.center,
-                  ),
+                  )
                 ],
               ),
               Column(
