@@ -133,18 +133,19 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
             ),
           ),
           SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Transform.translate(
-                  offset: Offset(0, Get.height / 3),
+                  offset: Offset(0, Get.height / 4),
                   child: Column(
                     children: [
                       userBio(),
                       Container(
                         width: width(context),
-                        // height: height(context),
+                        height: Get.height / 0.65,
                         decoration: BoxDecoration(
                           color: white,
                           borderRadius: BorderRadius.vertical(
@@ -404,11 +405,12 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                           ],
                         ),
                       ),
-                      const SizedBoxH40(),
-                      const SizedBoxH40(),
                     ],
                   ),
                 ),
+                SizedBoxH40(),
+                SizedBoxH40(),
+                SizedBoxH40(),
               ],
             ),
           ),
