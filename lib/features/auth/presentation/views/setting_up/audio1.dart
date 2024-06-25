@@ -166,6 +166,14 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                       textAlign: TextAlign.center,
                     ),
                   ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '(Please answer both parts of this question)',
+                    style: textStyle14.copyWith(
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                   const SizedBoxH30(),
                   if (!isRecording && !isRecordingCompleted)
                     Column(
@@ -193,7 +201,7 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                               return Container();
                             }
                             return Text(
-                             '${snapshot.data!.inMinutes.toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? "00" : ('${snapshot.data!.inSeconds}0')}',
+                              '${snapshot.data!.inMinutes.toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? "00" : ('${snapshot.data!.inSeconds}0')}',
                               style: textStyle18.copyWith(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
@@ -343,11 +351,11 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                           backgroundColor: warGrey,
                           child: isRecordingCompleted
                               ? SvgPicture.asset(isPlaying
-                              ? "$svgPath/playing.svg"
-                              : "$svgPath/play.svg")
-                              :SvgPicture.asset(isRecording
-                              ? "$svgPath/playing.svg"
-                              : "$svgPath/mic2.svg"),
+                                  ? "$svgPath/playing.svg"
+                                  : "$svgPath/play.svg")
+                              : SvgPicture.asset(isRecording
+                                  ? "$svgPath/playing.svg"
+                                  : "$svgPath/mic2.svg"),
                         ),
                       ),
                     ),

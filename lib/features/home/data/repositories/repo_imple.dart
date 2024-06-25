@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:dartz/dartz.dart';
+import 'package:logger/logger.dart';
 import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/network/formatter.dart';
 import 'package:nexus/core/network/remote.dart';
@@ -72,7 +73,9 @@ class HomeRepositoryImpl implements HomeRepository {
       var query = firestore
           .collection(kUSER_KEY)
           // .where('id', isNotEqualTo: curUser!.uid);
-          .where('registration_progress', isEqualTo: 'completed');
+          .where('registration_progress', isEqualTo: 'completed')
+          .where('age', isLessThanOrEqualTo: maxAge)
+          .where('age', isGreaterThanOrEqualTo: minAge);
 
       if (country != null) {
         query = query.where('country', isEqualTo: country);
@@ -80,7 +83,7 @@ class HomeRepositoryImpl implements HomeRepository {
       // if (minAge != null) {
       //   query = query.where('age', isGreaterThanOrEqualTo: minAge);
       // }
-      query = query.where('age', isLessThanOrEqualTo: maxAge);
+      // query = query.where('age', isLessThanOrEqualTo: maxAge);
       query = query.where('gender', isEqualTo: oppositeGender);
 
       var result = await query.get();

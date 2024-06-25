@@ -110,7 +110,10 @@ class _SubsciptionScreenState extends State<SubsciptionScreen> {
         title: Text(
           'Subscription Plans',
           style: textStyle18.copyWith(
-              fontSize: 24, fontWeight: FontWeight.w700, color: black),
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+            color: black,
+          ),
         ),
         centerTitle: true,
         foregroundColor: black,
