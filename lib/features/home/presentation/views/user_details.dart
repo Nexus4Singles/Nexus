@@ -133,18 +133,19 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
             ),
           ),
           SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Transform.translate(
-                  offset: Offset(0, Get.height / 3),
+                  offset: Offset(0, Get.height / 4),
                   child: Column(
                     children: [
                       userBio(),
                       Container(
                         width: width(context),
-                        // height: height(context),
+                        height: Get.height / 0.65,
                         decoration: BoxDecoration(
                           color: white,
                           borderRadius: BorderRadius.vertical(
@@ -404,11 +405,12 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                           ],
                         ),
                       ),
-                      const SizedBoxH40(),
-                      const SizedBoxH40(),
                     ],
                   ),
                 ),
+                const SizedBoxH40(),
+                const SizedBoxH40(),
+                const SizedBoxH40(),
               ],
             ),
           ),
@@ -462,10 +464,12 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                         : print("This users are matched");
                   },
                   child: CircleAvatar(
-                      backgroundColor: ctr.ctr.myProfile.value.myLikes!
-                              .contains(widget.userModel.id)
-                          ? primary
-                          : white,
+                      backgroundColor:
+                          ctr.ctr.myProfile.value.myLikes == null ||
+                                  ctr.ctr.myProfile.value.myLikes!
+                                      .contains(widget.userModel.id)
+                              ? primary
+                              : white,
                       radius: 25,
                       child: SvgPicture.asset(
                         ctr.ctr.myProfile.value.matchedUsers == null ||
@@ -473,8 +477,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                     .contains(widget.userModel.id)
                             ? "$svgPath/like.svg"
                             : '$svgPath/sms.svg',
-                        color: ctr.ctr.myProfile.value.myLikes!
-                                .contains(widget.userModel.id)
+                        color: ctr.ctr.myProfile.value.myLikes == null ||
+                                ctr.ctr.myProfile.value.myLikes!
+                                    .contains(widget.userModel.id)
                             ? white
                             : primary,
                       )),
@@ -487,14 +492,16 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                         .contains(widget.userModel.id));
                   },
                   child: CircleAvatar(
-                    backgroundColor: ctr.ctr.myProfile.value.mySaves!
-                            .contains(widget.userModel.id)
+                    backgroundColor: ctr.ctr.myProfile.value.mySaves == null ||
+                            ctr.ctr.myProfile.value.mySaves!
+                                .contains(widget.userModel.id)
                         ? primary
                         : white,
                     radius: 25,
                     child: SvgPicture.asset("$svgPath/bookmark.svg",
-                        color: ctr.ctr.myProfile.value.mySaves!
-                                .contains(widget.userModel.id)
+                        color: ctr.ctr.myProfile.value.mySaves == null ||
+                                ctr.ctr.myProfile.value.mySaves!
+                                    .contains(widget.userModel.id)
                             ? white
                             : primary),
                   ),

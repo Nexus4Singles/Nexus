@@ -21,7 +21,7 @@ class MessageModel {
         media: json["media"] ?? "",
         message: json["message"] ?? "",
         timestamp: json['timestamp'] ?? Timestamp.now(),
-        messageType: json['messageType'] ?? '',
+        messageType: json['message_type'] ?? '',
         sentBy: json['sentBy'] ?? "",
       );
 

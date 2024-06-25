@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
-import 'package:dash_chat_2/dash_chat_2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_instance/get_instance.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/colors.dart';
@@ -13,7 +14,6 @@ import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/features/chat/controllers/chat_ctr.dart';
 import 'package:nexus/features/home/presentation/views/user_details.dart';
-
 import '../../../core/models/message_model.dart';
 
 class ChatWithScreen extends StatefulWidget {
@@ -80,12 +80,24 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                 for (var element in message) {
                   messages.add(ChatMessage(
                       text: element.message,
+                      customProperties: {"id": element.id},
+                      medias: element.media.isEmpty
+                          ? []
+                          : [
+                              ChatMedia(
+                                  url: element.media,
+                                  fileName: element.media,
+                                  type: element.messageType == "Video"
+                                      ? MediaType.video
+                                      : MediaType.image)
+                            ],
                       user: ChatUser(id: element.sentBy, profileImage: ""),
                       createdAt: element.timestamp.toDate()));
                 }
                 return DashChat(
                   currentUser: ChatUser(id: ctr.auth.currentUser!.uid),
                   inputOptions: InputOptions(
+                      textInputAction: TextInputAction.newline,
                       alwaysShowSend: true,
                       sendButtonBuilder: (val) {
                         return InkWell(
@@ -106,17 +118,21 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                             position: PopupMenuPosition.over,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12)),
-                            onSelected: (item) {
-                              print('Selected: $item');
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: CircleAvatar(
-                                  backgroundColor: primary,
-                                  child: Icon(
-                                    Icons.add_box_rounded,
-                                    color: Colors.white,
-                                  )),
+                            onSelected: (item) {},
+                            child: Obx(
+                              () => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CircleAvatar(
+                                    backgroundColor: primary,
+                                    backgroundImage:
+                                        FileImage(ctr.imageFile.value),
+                                    child: ctr.imageFile.value.path.isEmpty
+                                        ? const Icon(
+                                            Icons.add_box_rounded,
+                                            color: Colors.white,
+                                          )
+                                        : const SizedBox()),
+                              ),
                             ),
                             itemBuilder: (BuildContext context) {
                               return {
@@ -133,7 +149,9 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                                     onTap: () {
                                       entry.key == "Image"
                                           ? ctr.pickImage()
-                                          : ctr.pickImage();
+                                          : entry.key == "Video"
+                                              ? ctr.pickVideo()
+                                              : ctr.pickVideo();
                                     },
                                     child: Row(
                                       children: [
@@ -153,7 +171,10 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(100),
                               borderSide: const BorderSide(color: grey)))),
-                  messageOptions: const MessageOptions(
+                  messageOptions: MessageOptions(
+                      onLongPressMessage: (message) {
+                        openModal(context, message);
+                      },
                       showOtherUsersAvatar: false,
                       containerColor: babyPink,
                       currentUserContainerColor: whiteblue),
@@ -165,33 +186,59 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
               }
             }));
   }
+
+  openModal(context, ChatMessage message) {
+    var ctr = Get.put(ChatCtr());
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoActionSheet(
+            title: const Text('Options for Chat'),
+            actions: [
+              CupertinoActionSheetAction(
+                child: const Text('Reply'),
+                onPressed: () {
+                  Get.back();
+                  print('');
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: const Text('Copy Message'),
+                onPressed: () {
+                  Get.back();
+                  Clipboard.setData(ClipboardData(text: message.text));
+                  EasyLoading.showToast("Message copied");
+                },
+              ),
+              CupertinoActionSheetAction(
+                isDestructiveAction: true,
+                child: const Text('Delete'),
+                onPressed: () {
+                  ctr.deleteAMessage(widget.chatModel.messageID,
+                      message.customProperties!['id']);
+                  Get.back();
+                },
+              ),
+            ]);
+      },
+    );
+  }
 }
 
-assetPopOver() {
-  return PopupMenuButton<Map<String, IconData>>(
-    // Use Map for value
-    onSelected: (item) {
-      print('Selected: $item');
+var listOfOptions = [
+  CupertinoActionSheetAction(
+    child: const Text('Action 1'),
+    onPressed: () {
+      // Navigator.pop(context);
+      print('Action 1 selected');
     },
-    itemBuilder: (BuildContext context) {
-      return {
-        'Audio': Icons.mic,
-        'Video': Icons.videocam,
-        'Image': Icons.image,
-      }.entries.map((entry) {
-        return PopupMenuItem<Map<String, IconData>>(
-          value: {entry.key: entry.value}, // Map as value
-          textStyle: textStyle14.copyWith(color: black),
-          child: Row(
-            children: [
-              Icon(entry.value),
-              const SizedBox(width: 8),
-              Text(entry.key),
-            ],
-          ),
-        );
-      }).toList();
+  ),
+  CupertinoActionSheetAction(
+    child: const Text('Action 2'),
+    onPressed: () {
+      // Navigator.pop(context);
+      print('Action 2 selected');
     },
-    // ... rest of your code ...
-  );
-}
+  ),
+  const Text("")
+];
