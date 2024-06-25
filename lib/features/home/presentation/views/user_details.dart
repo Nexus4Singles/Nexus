@@ -133,7 +133,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
             ),
           ),
           SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -408,9 +408,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                     ],
                   ),
                 ),
-                SizedBoxH40(),
-                SizedBoxH40(),
-                SizedBoxH40(),
+                const SizedBoxH40(),
+                const SizedBoxH40(),
+                const SizedBoxH40(),
               ],
             ),
           ),
