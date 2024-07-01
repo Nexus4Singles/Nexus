@@ -49,10 +49,10 @@ class ChatCtr extends GetxController {
     allChatUsers.assignAll(filteredUsers);
   }
 
-  saveToChat(String id) {
-    db.collection(kCHAT).doc("${DateTime.now().millisecondsSinceEpoch}").set({
+  saveToChat(String id, messageID) {
+    db.collection(kCHAT).doc("$messageID").set({
       "lastMessage": "",
-      'messageID': "${DateTime.now().millisecondsSinceEpoch}",
+      'messageID': "$messageID",
       'participant': FieldValue.arrayUnion([id, auth.currentUser!.uid]),
       'userSentLastMessage': "",
       'timestamp': DateTime.now(),

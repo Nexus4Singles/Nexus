@@ -1,18 +1,27 @@
+import 'dart:async';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/colors.dart';
+import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
+import 'package:provider/provider.dart';
+import '../../../auth/presentation/widgets/record_completed.dart';
+import '../../../match/controllers/matches_ctr.dart';
+import '../../../profile/presentation/widgets/text_container.dart';
+import '../change_notifier/home_notifier.dart';
+import '../views/photo_view.dart';
 
-class UserCard extends StatelessWidget {
-  final String image;
-  final String name;
-  final String age;
-  final String location;
+class UserCard extends StatefulWidget {
+  final UserModel userModel;
   final VoidCallback onRefresh;
   final VoidCallback onClosed;
   final VoidCallback onLike;
@@ -20,10 +29,7 @@ class UserCard extends StatelessWidget {
   final VoidCallback onClick;
   const UserCard({
     super.key,
-    required this.name,
-    required this.location,
-    required this.age,
-    required this.image,
+    required this.userModel,
     required this.onClosed,
     required this.onLike,
     required this.onRefresh,
@@ -32,11 +38,69 @@ class UserCard extends StatelessWidget {
   });
 
   @override
+  State<UserCard> createState() => _UserCardState();
+}
+
+class _UserCardState extends State<UserCard> {
+  AudioPlayer player = AudioPlayer();
+  AudioPlayer player2 = AudioPlayer();
+  AudioPlayer player3 = AudioPlayer();
+  late Duration duration;
+  late Duration playerPosition;
+
+  Future _setAudioPlayer() async {
+    var currentUser =
+        Provider.of<HomeNotifier>(context, listen: false).currentUser!;
+
+    // if (playerId == '1') {
+    await player.setUrl(widget.userModel.relationshipWithGod!);
+
+    player.durationStream.listen((d) {
+      duration = d!;
+    });
+
+    player.positionStream.listen((p) {
+      playerPosition = p;
+    });
+    // } else if (playerId == '2') {
+    await player2.setUrl(widget.userModel.roleOfHusband!);
+
+    player2.durationStream.listen((d) {
+      duration = d!;
+    });
+
+    player2.positionStream.listen((p) {
+      playerPosition = p;
+    });
+    // } else {
+    await player3.setUrl(widget.userModel.bestQualotiesOrTraits!);
+
+    player3.durationStream.listen((d) {
+      duration = d!;
+    });
+
+    player3.positionStream.listen((p) {
+      playerPosition = p;
+    });
+    // }
+  }
+
+  FutureOr _init() {
+    _setAudioPlayer();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _init();
+  }
+
+  var ctr = Get.put(MatchesCtr());
+  @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onClick,
+      onTap: widget.onClick,
       child: Container(
-        height: height(context) * .68,
         width: width(context),
         padding: EdgeInsets.all(5.sp),
         decoration: BoxDecoration(
@@ -57,7 +121,7 @@ class UserCard extends StatelessWidget {
                 color: black,
                 borderRadius: BorderRadius.circular(20.r),
                 image: DecorationImage(
-                  image: NetworkImage(image),
+                  image: NetworkImage(widget.userModel.photos![0]),
                   fit: BoxFit.cover,
                   opacity: .4,
                 ),
@@ -65,16 +129,18 @@ class UserCard extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    '$name, $age',
+                    '${widget.userModel.username}, ${widget.userModel.age}',
                     style: headerStyle.copyWith(
                       fontSize: 30.sp,
                       color: white,
                     ),
                   ),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Icon(
                         Iconsax.location5,
@@ -82,60 +148,326 @@ class UserCard extends StatelessWidget {
                       ),
                       const SizedBoxW10(),
                       Text(
-                        location,
+                        '${widget.userModel.city}, ${widget.userModel.country}',
                         style: textStyle16.copyWith(
                           color: white,
                         ),
                       )
                     ],
                   ),
+                  Obx(
+                    () => Padding(
+                      padding: EdgeInsets.all(15.sp),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          InkWell(
+                            onTap: widget.onRefresh,
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: primary)),
+                              child: SvgPicture.asset(
+                                '$svgPath/back.svg',
+                                width: 24,
+                                color: primary.withOpacity(0.6),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: widget.onClosed,
+                            child: SvgPicture.asset(
+                              'assets/icons/close.svg',
+                            ),
+                          ),
+                          InkWell(
+                            onTap: widget.onLike,
+                            child: CircleAvatar(
+                                backgroundColor:
+                                    ctr.ctr.myProfile.value.myLikes == null ||
+                                            !ctr.ctr.myProfile.value.myLikes!
+                                                .contains(widget.userModel.id)
+                                        ? white
+                                        : primary,
+                                radius: 25,
+                                child: SvgPicture.asset(
+                                  ctr.ctr.myProfile.value.matchedUsers ==
+                                              null ||
+                                          !ctr.ctr.myProfile.value.matchedUsers!
+                                              .contains(widget.userModel.id)
+                                      ? "$svgPath/like.svg"
+                                      : '$svgPath/sms.svg',
+                                  color:
+                                      ctr.ctr.myProfile.value.myLikes == null ||
+                                              !ctr.ctr.myProfile.value.myLikes!
+                                                  .contains(widget.userModel.id)
+                                          ? primary
+                                          : white,
+                                )),
+                          ),
+                          InkWell(
+                            onTap: widget.onSaved,
+                            child: CircleAvatar(
+                              backgroundColor:
+                                  ctr.ctr.myProfile.value.mySaves == null ||
+                                          !ctr.ctr.myProfile.value.mySaves!
+                                              .contains(widget.userModel.id)
+                                      ? white
+                                      : primary,
+                              radius: 25,
+                              child: SvgPicture.asset("$svgPath/bookmark.svg",
+                                  color:
+                                      ctr.ctr.myProfile.value.mySaves == null ||
+                                              !ctr.ctr.myProfile.value.mySaves!
+                                                  .contains(widget.userModel.id)
+                                          ? primary
+                                          : white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(15.sp),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  InkWell(
-                    onTap: onRefresh,
-                    child:Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(shape: BoxShape.circle,border: Border.all(color: primary)),
-                      child: SvgPicture.asset(
-                        '$svgPath/back.svg',
-                        width: 24,
-                        color: primary.withOpacity(0.6),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBoxH20(),
+                Text(
+                  'About',
+                  style: textStyle14.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: black,
+                  ),
+                ),
+                const SizedBoxH15(),
+                Row(
+                  children: [
+                    Text(
+                      'State of Origin: ',
+                      style: textStyle14.copyWith(
+                          fontWeight: FontWeight.w500, color: ash),
+                    ),
+                    Text(
+                      widget.userModel.stateOfOrigin ?? '',
+                      style: textStyle16.copyWith(
+                          fontWeight: FontWeight.w500, color: black),
+                    ),
+                  ],
+                ),
+                const SizedBoxH10(),
+                Row(
+                  children: [
+                    Text(
+                      'Education Level: ',
+                      style: textStyle14.copyWith(
+                          fontWeight: FontWeight.w500, color: ash),
+                    ),
+                    Text(
+                      widget.userModel.educationLevel ?? '',
+                      style: textStyle16.copyWith(
+                          fontWeight: FontWeight.w500, color: black),
+                    ),
+                  ],
+                ),
+                const SizedBoxH10(),
+                Row(
+                  children: [
+                    Text(
+                      'Profession/Industry: ',
+                      style: textStyle14.copyWith(
+                          fontWeight: FontWeight.w500, color: ash),
+                    ),
+                    Flexible(
+                      child: Text(
+                        widget.userModel.profession ?? '',
+                        overflow: TextOverflow.ellipsis,
+                        style: textStyle16.copyWith(
+                            fontWeight: FontWeight.w500, color: black),
                       ),
                     ),
-                  ),
-                  InkWell(
-                    onTap: onClosed,
-                    child: SvgPicture.asset(
-                      'assets/icons/close.svg',
+                  ],
+                ),
+                const SizedBoxH10(),
+                Row(
+                  children: [
+                    Text(
+                      'Church: ',
+                      style: textStyle14.copyWith(
+                          fontWeight: FontWeight.w500, color: ash),
                     ),
-                  ),
-                  InkWell(
-                    onTap: onLike,
-                    child: SvgPicture.asset(
-                      'assets/icons/fav.svg',
-                    ),
-                  ),
-                  InkWell(
-                    onTap: onSaved,
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(shape: BoxShape.circle,border: Border.all(color: primary)),
-                      child: SvgPicture.asset(
-                        '$svgPath/bookmark.svg',
-                        width: 24,
-                        color: primary.withOpacity(0.6),
+                    Flexible(
+                      child: Text(
+                        widget.userModel.churchName ?? '',
+                        overflow: TextOverflow.ellipsis,
+                        style: textStyle16.copyWith(
+                            fontWeight: FontWeight.w500, color: black),
                       ),
                     ),
+                  ],
+                ),
+                const SizedBoxH30(),
+                Text(
+                  'Hobbies / Interests',
+                  style: textStyle14.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: black,
                   ),
-                ],
-              ),
-            )
+                ),
+                const SizedBoxH10(),
+                Wrap(
+                  spacing: 15,
+                  runSpacing: 15,
+                  children: [
+                    for (var hob in widget.userModel.hobbies!)
+                      TextContainer(
+                        text: hob,
+                      ),
+                  ],
+                ),
+                const SizedBoxH30(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Most Desired Qualities',
+                      style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: black,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBoxH10(),
+                Wrap(
+                  spacing: 15,
+                  runSpacing: 15,
+                  children: [
+                    for (var des in widget.userModel.desiredQualities!)
+                      TextContainer(
+                        text: des,
+                      ),
+                  ],
+                ),
+                const SizedBoxH40(),
+                Text(
+                  'Audio Recording',
+                  style: textStyle14.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: black,
+                  ),
+                ),
+                const SizedBoxH15(),
+                Text(
+                  '1. The summary of ${widget.userModel.username} relationship with God',
+                  style: textStyle14.copyWith(
+                      color: black, fontSize: 14, fontWeight: FontWeight.w700),
+                ),
+                const SizedBoxH10(),
+                AudioFilePlayer(
+                  player: player,
+                  onPlay: () async {
+                    player2.stop();
+                    player2.seek(Duration.zero);
+                    player3.stop();
+                    player3.seek(Duration.zero);
+                    player.play();
+                  },
+                  onPause: () async {
+                    player.pause();
+                  },
+                ),
+                const SizedBoxH25(),
+                Text(
+                  '2. ${widget.userModel.username} view on Gender roles in marriage',
+                  style: textStyle14.copyWith(
+                      color: black, fontSize: 14, fontWeight: FontWeight.w700),
+                ),
+                const SizedBoxH10(),
+                AudioFilePlayer(
+                  player: player2,
+                  onPlay: () async {
+                    player.stop();
+                    player.seek(Duration.zero);
+                    player3.stop();
+                    player3.seek(Duration.zero);
+                    player2.play();
+                  },
+                  onPause: () async {
+                    player2.pause();
+                  },
+                ),
+                const SizedBoxH25(),
+                Text(
+                  '3. Favourite qualities or traits about ${widget.userModel.username}',
+                  style: textStyle14.copyWith(
+                      color: black, fontSize: 14, fontWeight: FontWeight.w700),
+                ),
+                const SizedBoxH10(),
+                AudioFilePlayer(
+                  player: player3,
+                  onPlay: () async {
+                    player.stop();
+                    player.seek(Duration.zero);
+                    player2.stop();
+                    player2.seek(Duration.zero);
+                    player3.play();
+                  },
+                  onPause: () async {
+                    player3.pause();
+                  },
+                ),
+                const SizedBoxH30(),
+                Text(
+                  'Gallery',
+                  style: textStyle14.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: black,
+                  ),
+                ),
+                const SizedBoxH10(),
+                Wrap(
+                  runSpacing: 15,
+                  spacing: 15,
+                  children: [
+                    for (var item in widget.userModel.photos!)
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15.r),
+                        child: InkWell(
+                          onTap: () {
+                            int index = widget.userModel.photos!.indexOf(item);
+                            Get.to(() => PhotoViewScreen(
+                                selectedIndex: index,
+                                photos: widget.userModel.photos!));
+                          },
+                          child: CachedNetworkImage(
+                            width: width(context) * .4,
+                            height: 100.h,
+                            fit: BoxFit.cover,
+                            imageUrl: item,
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) => SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: CircularProgressIndicator(
+                                value: downloadProgress.progress,
+                                color: primary,
+                              ),
+                            ),
+                            errorWidget: (context, url, error) => Container(),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBoxH20(),
+              ],
+            ),
           ],
         ),
       ),
