@@ -33,3 +33,6 @@ class EmptyStateWidget extends StatelessWidget {
     );
   }
 }
+
+const defaultImage =
+    "https://cdn.dribbble.com/users/28726/screenshots/1192614/img-placeholder.gif";

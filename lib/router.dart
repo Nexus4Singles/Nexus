@@ -46,6 +46,8 @@ import 'package:nexus/features/auth/presentation/views/setting_up/hobbies.dart';
 import 'package:nexus/features/auth/presentation/views/setting_up/profile_completed.dart';
 import 'package:nexus/features/auth/presentation/views/setting_up/upload_photo.dart';
 
+import 'features/chat/views/chat_rep.dart';
+
 class AppRoutes {
   static String splash = '/';
   static String authHandler = '/auth_handler';

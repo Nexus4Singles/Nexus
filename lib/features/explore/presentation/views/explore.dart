@@ -10,6 +10,7 @@ import 'package:nexus/core/text_field.dart';
 import 'package:nexus/features/explore/controllers/explore_ctr.dart';
 import 'package:nexus/features/explore/presentation/widgets/filter_modal.dart';
 import 'package:nexus/features/home/presentation/widgets/coming_soon_modal.dart';
+import '../../../../core/utils/progress_indicator.dart';
 import '../../../home/presentation/views/user_details.dart';
 import '../widgets/user_tile.dart';
 
@@ -44,6 +45,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         InkWell(
                           onTap: () {
                             showCountryPicker(
+                              countryListTheme: CountryListThemeData(
+                                  textStyle: textStyle14,
+                                  inputDecoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50))),
+                                  borderRadius: BorderRadius.circular(24)),
                               context: context,
                               showPhoneCode: false,
                               onSelect: (Country country) {
@@ -52,11 +60,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             );
                           },
                           child: CustomTextField(
-                            prefixIcon: const Icon(
-                              Iconsax.location5,
-                              color: altoGrey,
-                            ),
-                            radius: 25.sp,
+                            prefixIcon:
+                                const Icon(Iconsax.location5, color: altoGrey),
+                            radius: 215.sp,
                             controller: search,
                             hintText: 'Search by Country of Residence',
                             enabled: false,
@@ -123,48 +129,44 @@ class _ExploreScreenState extends State<ExploreScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Obx(
-                () => Column(
-                  children: [
-                    ctr.isLoading.value
-                        ? const Center(
-                            child: CircularProgressIndicator.adaptive(
-                                valueColor: AlwaysStoppedAnimation(primary),
-                                strokeWidth: 1),
+          child: Obx(
+            () => Column(
+              children: [
+                ctr.isLoading.value
+                    ? const Center(child: CustomCircularProgressIndicator())
+                    : ctr.searchedUsers.isEmpty
+                        ? SizedBox(
+                            width: Get.width,
+                            height: Get.height / 1.5,
+                            child: Center(
+                              child: Text(
+                                'Stay in control of profiles you see! Use the explore feature to search for profiles and get more desired results using filters',
+                                style: textStyle14.copyWith(
+                                  color: black.withOpacity(.8),
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           )
-                        : ctr.searchedUsers.isEmpty
-                            ? Center(
-                                child: Text(
-                                  'Stay in control of profiles you see! Use the explore feature to search for profiles and get more desired results using filters',
-                                  style: textStyle14.copyWith(
-                                    color: black.withOpacity(.8),
-                                  ),
-                                  textAlign: TextAlign.center,
+                        : Column(
+                            children: [
+                              ...ctr.searchedUsers.map(
+                                (val) => ExploreUserTile(
+                                  image: val.photos![0],
+                                  name: val.username,
+                                  age: val.age.toString(),
+                                  location: val.location!.place ?? "",
+                                  onPress: () {
+                                    Get.to(
+                                        () => UserDetailScreen(userModel: val));
+                                  },
                                 ),
                               )
-                            : Column(
-                                children: [
-                                  ...ctr.searchedUsers.map(
-                                    (val) => ExploreUserTile(
-                                      image: val.photos![0],
-                                      name: val.username,
-                                      age: val.age.toString(),
-                                      location: val.location!.place ?? "",
-                                      onPress: () {
-                                        Get.to(() =>
-                                            UserDetailScreen(userModel: val));
-                                      },
-                                    ),
-                                  )
-                                ],
-                              )
-                  ],
-                ),
-              ),
-              const SizedBoxH40()
-            ],
+                            ],
+                          ),
+                const SizedBoxH40()
+              ],
+            ),
           ),
         ),
       ),

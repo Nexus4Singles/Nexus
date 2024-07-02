@@ -1,6 +1,4 @@
-import 'dart:ffi';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +6,9 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/models/message_model.dart';
-import 'package:nexus/features/chat/widget/chat_image_selector.dart';
 import 'package:nexus/features/explore/controllers/explore_ctr.dart';
 import '../../../core/models/chats_model.dart';
-import '../../auth/data/data-sources/remote-datasource/auth_remote.dart';
+import '../../../core/utils/methods.dart';
 
 class ChatCtr extends GetxController {
   final db = FirebaseFirestore.instance;
@@ -23,7 +20,6 @@ class ChatCtr extends GetxController {
   var imageFile = File('').obs;
   var mediaType = "".obs;
   var mediaFile = "".obs;
-  AuthenticationRemoteDatasource? remote;
 
   getAllMyChats() async {
     allChatUsers.clear();
@@ -51,13 +47,12 @@ class ChatCtr extends GetxController {
         .where((val) => val.userModel!.id != auth.currentUser!.uid)
         .toList();
     allChatUsers.assignAll(filteredUsers);
-    print("this is all chats .... ${allChatUsers.length}");
   }
 
-  saveToChat(String id) {
-    db.collection(kCHAT).doc("${DateTime.now().millisecondsSinceEpoch}").set({
+  saveToChat(String id, messageID) {
+    db.collection(kCHAT).doc("$messageID").set({
       "lastMessage": "",
-      'messageID': "${DateTime.now().millisecondsSinceEpoch}",
+      'messageID': "$messageID",
       'participant': FieldValue.arrayUnion([id, auth.currentUser!.uid]),
       'userSentLastMessage': "",
       'timestamp': DateTime.now(),
@@ -75,10 +70,8 @@ class ChatCtr extends GetxController {
   }
 
   sendMessage(String messageID, String messages) async {
-    print("called..");
-    imageFile.value.path.isNotEmpty ? uploadFile(file: imageFile.value) : () {};
     var message = MessageModel(
-        media: mediaFile.value,
+        media: imageFile.value.path.isNotEmpty ? imageFile.value.path : "",
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         message: messages,
         messageType: mediaType.value.isEmpty ? 'text' : mediaType.value,
@@ -93,6 +86,30 @@ class ChatCtr extends GetxController {
           .set(message.toJson());
       updateLastMessage(messageID, messages);
     }
+    if (imageFile.value.path.isNotEmpty) {
+      mediaFile.value = await uploadFile(file: imageFile.value);
+      db.runTransaction((transactions) async {
+        DocumentReference messageRef = db
+            .collection(kCONVERSATION)
+            .doc(messageID)
+            .collection(kMESSAGES)
+            .doc(message.id);
+        transactions.update(messageRef,
+            {"media": mediaFile.value, "message_type": mediaType.value});
+        imageFile.value = File('');
+        mediaFile.value = "";
+        mediaType.value = "";
+      });
+    } else {}
+  }
+
+  deleteAMessage(conversationID, messageID) {
+    db
+        .collection(kCONVERSATION)
+        .doc(conversationID)
+        .collection(kMESSAGES)
+        .doc(messageID)
+        .delete();
   }
 
   updateLastMessage(String messageID, String message) async {
@@ -101,8 +118,7 @@ class ChatCtr extends GetxController {
       DocumentSnapshot snapshot = await transaction.get(chatDoc);
       if (snapshot.exists) {
         var data = ChatModel.fromJson(snapshot.data() as Map<String, dynamic>);
-
-        transaction.update(chatDoc, {
+        await transaction.update(chatDoc, {
           "lastMessage": message,
           "userSentLastMessage": auth.currentUser!.uid,
           'timestamp': Timestamp.now(),
@@ -120,20 +136,27 @@ class ChatCtr extends GetxController {
         await picker.value.pickImage(source: ImageSource.gallery);
     if (image != null) {
       imageFile.value = File(image.path);
-      Get.to(
-          () => ChatImageSelector(
-                imagePath: imageFile.value,
-              ),
-          fullscreenDialog: true);
+      mediaType.value = "image";
+      Get.back();
+    }
+  }
+
+  void pickVideo() async {
+    final XFile? image = await picker.value.pickVideo(
+        source: ImageSource.gallery, maxDuration: const Duration(seconds: 30));
+    if (image != null) {
+      imageFile.value = File(image.path);
+      mediaType.value = "Video";
     }
   }
 
   Future<String> uploadFile({required File file}) async {
     try {
-      var url = await remote!.upload(file);
+      var url = await upload(file);
       mediaFile.value = url;
       return url;
     } catch (e) {
+      debugPrint("This is the url error  $e");
       return '';
     }
   }
