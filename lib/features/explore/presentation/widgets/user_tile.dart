@@ -58,7 +58,7 @@ class ExploreUserTile extends StatelessWidget {
               color: primary, borderRadius: BorderRadius.circular(100)),
           child: Text(
             "View Profile",
-            style: textStyle14.copyWith(color: white),
+            style: textStyle10.copyWith(color: white),
           ),
         ),
       ),
