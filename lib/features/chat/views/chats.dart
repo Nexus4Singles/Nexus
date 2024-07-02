@@ -11,6 +11,8 @@ import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
 
+import 'chat_rep.dart';
+
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
 

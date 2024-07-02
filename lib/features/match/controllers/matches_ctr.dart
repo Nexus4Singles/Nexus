@@ -9,8 +9,10 @@ import '../../../core/constant.dart';
 import '../../chat/controllers/chat_ctr.dart';
 
 class MatchesCtr extends GetxController {
+  static MatchesCtr instance = Get.find<MatchesCtr>();
+
   var isLoading = false.obs;
-  var ctr = Get.put(ExploreCtr());
+  var ctr = ExploreCtr.instance;
   var chatCtr = Get.put(ChatCtr());
   var emptyText = "".obs;
   var userData = <UserModel>[].obs;
@@ -48,44 +50,58 @@ class MatchesCtr extends GetxController {
         ctr.allUsers.where((user) => savedIds.contains(user.id)).toList());
   }
 
-  checkLikedAlready(String id) {
-    return ctr.myProfile.value.myLikes!.contains(id);
-  }
-
   checkSavedAlready(String id) {
     return ctr.myProfile.value.mySaves!.contains(id);
   }
 
-  Future<void> toggleLike(userModel) async {
+  Future<void> toggleLike(UserModel userModel) async {
     EasyLoading.show();
-    if (ctr.myProfile.value.likeMe!.contains(userModel.id)) {
-      await removeFromLikeMe(userModel.id);
-      await removeUserMyLike(userModel.id);
-      saveBothToMatched(userModel);
+    // this is for users that was liked by someone already
+    if (ctr.myProfile.value.likeMe != null &&
+        ctr.myProfile.value.likeMe!.contains(userModel.id)) {
+      print("I was called here first");
+      await removeFromLikeMe(userModel.id, false);
+      await removeUserMyLike(userModel.id, false);
+      await saveBothToMatched(userModel);
       // go to matched user screen & remove the myLike  from the other users & remove like Me from the and create a chat view instead
     } else {
-      final updateOperation = checkLikedAlready(userModel.id)
-          ? FieldValue.arrayRemove([userModel.id])
-          : FieldValue.arrayUnion([userModel.id]);
-      await db
-          .collection(kUSER)
-          .doc(auth.currentUser!.uid)
-          .update({"myLikes": updateOperation});
+      if (ctr.myProfile.value.myLikes != null &&
+          ctr.myProfile.value.myLikes!.contains(userModel.id)) {
+        print("I was called here second");
+        await removeUserMyLike(userModel.id, true);
+        await removeFromLikeMe(userModel.id, true);
+      } else {
+        print("I was called here third");
+        addUserToMyLike(userModel.id);
+        addUserToLikeMe(userModel.id);
+      }
       await ctr.getMyProfile();
       setMyLikes();
     }
     EasyLoading.dismiss();
   }
 
-  removeUserMyLike(id) async {
-    await db.collection(kUSER).doc(id).update({
-      "myLikes": FieldValue.arrayRemove([auth.currentUser!.uid])
+  removeUserMyLike(id, bool isUser) async {
+    await db.collection(kUSER).doc(isUser ? auth.currentUser!.uid : id).update({
+      "myLikes": FieldValue.arrayRemove([isUser ? id : auth.currentUser!.uid])
     });
   }
 
-  removeFromLikeMe(id) async {
+  addUserToMyLike(id) async {
     await db.collection(kUSER).doc(auth.currentUser!.uid).update({
-      "likeMe": FieldValue.arrayRemove([id])
+      "myLikes": FieldValue.arrayUnion([id])
+    });
+  }
+
+  removeFromLikeMe(id, bool isUser) async {
+    await db.collection(kUSER).doc(isUser ? id : auth.currentUser!.uid).update({
+      "likeMe": FieldValue.arrayRemove([isUser ? auth.currentUser!.uid : id])
+    });
+  }
+
+  addUserToLikeMe(id) async {
+    await db.collection(kUSER).doc(id).update({
+      "likeMe": FieldValue.arrayUnion([auth.currentUser!.uid])
     });
   }
 
@@ -99,8 +115,9 @@ class MatchesCtr extends GetxController {
         "matchedUsers": FieldValue.arrayUnion([currentUserId])
       }),
     ]);
-    await chatCtr.saveToChat(userModel.id);
-    Get.to(() => Matched(userModel: userModel));
+    var messageID = DateTime.now().millisecondsSinceEpoch;
+    await chatCtr.saveToChat(userModel.id, messageID);
+    Get.to(() => Matched(userModel: userModel, messageID: messageID));
   }
 
   Future<void> toggleSave(String id) async {
@@ -118,6 +135,12 @@ class MatchesCtr extends GetxController {
     await ctr.getMyProfile();
     setSaved();
     EasyLoading.dismiss();
+  }
+
+  addToUnRecommend(String id) {
+    db.collection(kUSER).doc(auth.currentUser!.uid).update({
+      "unRecommendUsers": FieldValue.arrayUnion([id])
+    });
   }
 
   @override

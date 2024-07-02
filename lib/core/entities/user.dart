@@ -15,6 +15,7 @@ class UserEntity extends Equatable {
     required this.gender,
     required this.age,
     this.city,
+    this.unrecommendedUser,
     this.matchedUsers,
     this.educationLevel,
     this.stateOfOrigin,
@@ -36,6 +37,7 @@ class UserEntity extends Equatable {
     this.likeMe,
     this.compatibilitySetted,
     this.location,
+    this.fcmToken,
   });
 
   final String id;
@@ -64,6 +66,7 @@ class UserEntity extends Equatable {
   @JsonKey(name: kDESIREDQUALITIES)
   final List<String>? desiredQualities;
   final List<String>? photos;
+  final List<String>? unrecommendedUser;
   @JsonKey(name: kRELATIONSHIPWITHGOD)
   final String? relationshipWithGod;
   @JsonKey(name: kROLEOFHUSBAND)
@@ -85,6 +88,8 @@ class UserEntity extends Equatable {
   final bool? compatibilitySetted;
   @JsonKey(name: kLOCATION)
   final LocationModel? location;
+  @JsonKey(name: kFCMTOKEN)
+  final String? fcmToken;
 
   @override
   List<Object?> get props => [
@@ -99,6 +104,7 @@ class UserEntity extends Equatable {
         city,
         stateOfOrigin,
         educationLevel,
+        unrecommendedUser,
         profession,
         hobbies,
         desiredQualities,
@@ -117,6 +123,7 @@ class UserEntity extends Equatable {
         location,
         myLikes,
         mySaves,
-        likeMe
+        likeMe,
+        fcmToken,
       ];
 }

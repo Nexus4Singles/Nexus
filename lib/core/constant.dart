@@ -72,4 +72,5 @@ const kLOCATION = 'location';
 const kMATCHESKEY = 'likeMe';
 const kMATCHESUSERSKEY = 'matchedUsers';
 const kPARTICIPANT = 'participant';
+const kFCMTOKEN = 'fcm_token';
 const mapAPIKey = 'AIzaSyD1YgWNHVJ49A9cSzrv6RxM8ycP5gA0nI4';

@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 // import 'package:logger/logger.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/usecases/usecases.dart';
+import 'package:nexus/core/utils/app_logger.dart';
 import 'package:nexus/features/auth/data/data-sources/remote-datasource/auth_remote.dart';
 import 'package:nexus/features/auth/domain/usecases/profile.dart';
 import 'package:nexus/features/home/domain/usecases/get_users.dart';
@@ -52,7 +53,8 @@ class HomeNotifier with ChangeNotifier {
       },
       (userList) {
         allUsers = users = userList.toList();
-        // print(allUsers);
+
+        appLog(allUsers);
         notifyListeners();
       },
     );

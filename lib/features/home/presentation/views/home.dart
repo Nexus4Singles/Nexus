@@ -11,6 +11,7 @@ import 'package:nexus/features/home/presentation/change_notifier/home_notifier.d
 import 'package:nexus/features/home/presentation/widgets/coming_soon_modal.dart';
 import 'package:nexus/features/home/presentation/widgets/profile_tile.dart';
 import 'package:nexus/features/home/presentation/widgets/user_card.dart';
+import 'package:nexus/features/match/controllers/matches_ctr.dart';
 import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/utils/shared_pref.dart';
@@ -24,7 +25,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final ctr = Get.put(ExploreCtr());
+  final ctr = ExploreCtr.instance;
+  final matchCtr = MatchesCtr.instance;
 
   CardSwiperController cardSwiperController = CardSwiperController();
 
@@ -71,6 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Provider.of<HomeNotifier>(context, listen: false).getUsers();
+
     return Consumer<HomeNotifier>(
       builder: (context, model, _) {
         return Scaffold(
@@ -80,37 +84,21 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   if (model.currentUser != null) ProfileTile(model: model),
-                  const SizedBoxH15(),
-                  // TextButton(
-                  //     onPressed: () {
-                  //       showAdaptiveDialog(
-                  //         context: context,
-                  //         barrierDismissible: true,
-                  //         builder: (context) {
-                  //           return AlertDialog.adaptive(
-                  //             shape: RoundedRectangleBorder(
-                  //               borderRadius: BorderRadius.circular(20),
-                  //             ),
-                  //             content: const ComingSoonModal(
-                  //               text:
-                  //                   'You will be able to view profile recommendations here as soon as we launch fully.',
-                  //             ),
-                  //           );
-                  //         },
-                  //       );
-                  //     },
-                  //     child: Text('show modal')),
-                  // const SizedBoxH15(),
+                  const SizedBoxH20(),
+                  Text(
+                    "Recommendations For You",
+                    style: textStyle18.copyWith(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBoxH10(),
                   if (model.currentUser != null && model.allUsers.isNotEmpty)
                     SizedBox(
-                      height: height(context) * .68,
+                      height: Get.height / 1.3,
                       child: model.allUsers.length == 1
                           ? UserCard(
-                              age: model.allUsers.first.age.toString(),
-                              name: model.allUsers.first.username,
-                              image: model.allUsers.first.profileUrl!,
-                              location:
-                                  '${model.allUsers.first.city}, ${model.allUsers.first.country}',
+                              userModel: model.allUsers.first,
                               onClosed: () {
                                 showModal();
                               },
@@ -131,47 +119,49 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                             )
                           : CardSwiper(
+                              numberOfCardsDisplayed: 1,
                               cardsCount: model.allUsers.length,
                               controller: cardSwiperController,
                               isLoop: true,
+                              onSwipeDirectionChange: (direction, directions) {
+                                print("THis is first $direction $directions");
+                              },
                               allowedSwipeDirection:
-                                  const AllowedSwipeDirection.symmetric(
-                                      horizontal: true),
+                                  const AllowedSwipeDirection.only(
+                                up: false,
+                                down: false,
+                                right: true,
+                                left: true,
+                              ),
                               padding: const EdgeInsets.all(0),
                               cardBuilder: (context, index, percentThresholdX,
                                   percentThresholdY) {
                                 UserModel user = model.allUsers[index];
-                                return UserCard(
-                                  age: user.age.toString(),
-                                  name: user.username,
-                                  image: user.profileUrl!,
-                                  location: '${user.city}, ${user.country}',
-                                  onClosed: () {
-                                    showModal();
-                                    // if (model.allUsers.length == (index + 1)) {
-                                    // } else {
-                                    //   cardSwiperController
-                                    //       .swipe(CardSwiperDirection.left);
-                                    // }
-                                  },
-                                  onLike: () {
-                                    showModal();
-                                  },
-                                  onRefresh: () {
-                                    showModal();
-                                    // cardSwiperController
-                                    //     .swipe(CardSwiperDirection.right);
-                                  },
-                                  onSaved: () {
-                                    showModal();
-                                  },
-                                  onClick: () {
-                                    setState(() {
-                                      model.selectedUser = user;
-                                    });
-                                    // Get.toNamed(AppRoutes.userDetails);
-                                    // Logger().d(model.selectedUser!.toJson());
-                                  },
+                                return SingleChildScrollView(
+                                  child: UserCard(
+                                    userModel: user,
+                                    onClosed: () {
+                                      matchCtr.addToUnRecommend(user.id);
+                                      cardSwiperController
+                                          .swipe(CardSwiperDirection.left);
+                                      model.getUsers();
+                                    },
+                                    onLike: () {
+                                      ctr.myProfile.value.matchedUsers ==
+                                                  null ||
+                                              !ctr.myProfile.value.matchedUsers!
+                                                  .contains(user.id)
+                                          ? matchCtr.toggleLike(user)
+                                          : print("This users are matched");
+                                    },
+                                    onRefresh: () {
+                                      cardSwiperController.undo();
+                                    },
+                                    onSaved: () {
+                                      matchCtr.toggleSave(user.id);
+                                    },
+                                    onClick: () {},
+                                  ),
                                 );
                               },
                             ),

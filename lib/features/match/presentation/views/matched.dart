@@ -8,13 +8,18 @@ import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
+import 'package:nexus/core/utils/modals.dart';
+import 'package:nexus/features/chat/controllers/chat_ctr.dart';
+import 'package:nexus/features/match/presentation/widgets/matchUsersCompatibilityModal.dart';
 import 'package:nexus/router.dart';
 
 import '../../../../core/colors.dart';
 
 class Matched extends StatelessWidget {
   final UserModel userModel;
-  const Matched({super.key, required this.userModel});
+  final int messageID;
+  Matched({super.key, required this.userModel, required this.messageID});
+  var ctr = Get.put(ChatCtr());
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +27,10 @@ class Matched extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(12.0),
         child: TextButton(
-            onPressed: () {},
-            child: Text(
-              "View Compatibility Data",
-              style: textStyle16,
-            )),
+            onPressed: () {
+              compatibilityModal(context, userModel);
+            },
+            child: Text("View Compatibility Data", style: textStyle16)),
       ),
       appBar: AppBar(
         leading: IconButton(
@@ -76,14 +80,21 @@ class Matched extends StatelessWidget {
                   child: CustomTextField(
                       radius: 100,
                       fillColor: grey,
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CircleAvatar(
-                          backgroundColor: black,
-                          child: SvgPicture.asset("$svgPath/send.svg"),
+                      suffixIcon: InkWell(
+                        onTap: () {
+                          ctr.sendMessage(
+                              messageID.toString(), ctr.chatController.text);
+                          ctr.chatController.clear();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircleAvatar(
+                            backgroundColor: black,
+                            child: SvgPicture.asset("$svgPath/send.svg"),
+                          ),
                         ),
                       ),
-                      controller: TextEditingController(),
+                      controller: ctr.chatController,
                       hintText: "Send a message"),
                 )
               ],

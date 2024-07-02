@@ -40,7 +40,6 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
       return Consumer<HomeNotifier>(builder: (context, homeModel, _) {
         return Scaffold(
           appBar: AppBar(
-            // backgroundColor: white,
             title: Text(
               'Compatibility Quiz',
               style: textStyle18.copyWith(

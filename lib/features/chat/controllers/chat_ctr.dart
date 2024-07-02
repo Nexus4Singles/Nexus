@@ -13,7 +13,7 @@ import '../../../core/utils/methods.dart';
 class ChatCtr extends GetxController {
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
-  var exploreCtr = Get.put(ExploreCtr());
+  var exploreCtr = ExploreCtr.instance;
   var allChatUsers = <ChatModel>[].obs;
   var chatController = TextEditingController();
   var picker = ImagePicker().obs;
@@ -49,10 +49,10 @@ class ChatCtr extends GetxController {
     allChatUsers.assignAll(filteredUsers);
   }
 
-  saveToChat(String id) {
-    db.collection(kCHAT).doc("${DateTime.now().millisecondsSinceEpoch}").set({
+  saveToChat(String id, messageID) {
+    db.collection(kCHAT).doc("$messageID").set({
       "lastMessage": "",
-      'messageID': "${DateTime.now().millisecondsSinceEpoch}",
+      'messageID': "$messageID",
       'participant': FieldValue.arrayUnion([id, auth.currentUser!.uid]),
       'userSentLastMessage': "",
       'timestamp': DateTime.now(),
@@ -118,7 +118,7 @@ class ChatCtr extends GetxController {
       DocumentSnapshot snapshot = await transaction.get(chatDoc);
       if (snapshot.exists) {
         var data = ChatModel.fromJson(snapshot.data() as Map<String, dynamic>);
-        await transaction.update(chatDoc, {
+        transaction.update(chatDoc, {
           "lastMessage": message,
           "userSentLastMessage": auth.currentUser!.uid,
           'timestamp': Timestamp.now(),
