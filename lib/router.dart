@@ -10,6 +10,7 @@ import 'package:nexus/features/auth/presentation/views/setting_up/audio2.dart';
 import 'package:nexus/features/auth/presentation/views/setting_up/audio3.dart';
 import 'package:nexus/features/auth/presentation/views/setting_up/audio_recoding_completed.dart';
 import 'package:nexus/features/auth/presentation/views/splash.dart';
+import 'package:nexus/features/home/bindings/home_bindings.dart';
 import 'package:nexus/features/home/presentation/views/nav.dart';
 import 'package:nexus/features/home/presentation/views/user_details.dart';
 import 'package:nexus/features/notifications/presentation/views/notification.dart';
@@ -248,7 +249,7 @@ final appRouter = [
   GetPage(
     name: AppRoutes.mainNav,
     page: () => const MainNav(),
-    binding: BindingsBuilder(() {}),
+    binding: HomeBindings(), // here
   ),
   GetPage(
     name: AppRoutes.gender,

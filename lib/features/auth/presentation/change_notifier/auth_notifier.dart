@@ -295,15 +295,17 @@ class AuthNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateProfile(
-      {required Map<String, dynamic> map,
-      required VoidCallback onCompleted}) async {
-    EasyLoading.show();
+  Future<void> updateProfile({
+    required Map<String, dynamic> map,
+    required VoidCallback onCompleted,
+    bool load = true,
+  }) async {
+    if (load) EasyLoading.show();
     var response = await updateProfileUsecase.call(map);
     response.fold((l) {
-      EasyLoading.dismiss();
+      if (load) EasyLoading.dismiss();
     }, (r) {
-      EasyLoading.dismiss();
+      if (load) EasyLoading.dismiss();
       onCompleted();
       setIsLoading(false);
     });

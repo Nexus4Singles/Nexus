@@ -37,6 +37,7 @@ class UserEntity extends Equatable {
     this.likeMe,
     this.compatibilitySetted,
     this.location,
+    this.fcmToken,
   });
 
   final String id;
@@ -87,6 +88,8 @@ class UserEntity extends Equatable {
   final bool? compatibilitySetted;
   @JsonKey(name: kLOCATION)
   final LocationModel? location;
+  @JsonKey(name: kFCMTOKEN)
+  final String? fcmToken;
 
   @override
   List<Object?> get props => [
@@ -120,6 +123,7 @@ class UserEntity extends Equatable {
         location,
         myLikes,
         mySaves,
-        likeMe
+        likeMe,
+        fcmToken,
       ];
 }

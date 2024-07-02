@@ -9,8 +9,10 @@ import '../../../core/constant.dart';
 import '../../chat/controllers/chat_ctr.dart';
 
 class MatchesCtr extends GetxController {
+  static MatchesCtr instance = Get.find<MatchesCtr>();
+
   var isLoading = false.obs;
-  var ctr = Get.put(ExploreCtr());
+  var ctr = ExploreCtr.instance;
   var chatCtr = Get.put(ChatCtr());
   var emptyText = "".obs;
   var userData = <UserModel>[].obs;

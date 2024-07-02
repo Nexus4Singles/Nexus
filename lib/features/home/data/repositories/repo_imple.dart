@@ -62,8 +62,7 @@ class HomeRepositoryImpl implements HomeRepository {
     var churchName = user.churchName;
     var oppositeGender = gender == 'Male' ? 'Female' : 'Male';
     int maxAge = user.age + (user.gender == 'Male' ? 3 : 8);
-
-    int minAge = user.age + (user.gender == 'Male' ? 10 : 3);
+    int minAge = user.age - (user.gender == 'Male' ? 10 : 3);
 
     // female -> 3
     // male -> 8
@@ -74,8 +73,8 @@ class HomeRepositoryImpl implements HomeRepository {
           .collection(kUSER_KEY)
           // .where('id', isNotEqualTo: curUser!.uid);
           .where('registration_progress', isEqualTo: 'completed')
-          .where('age', isLessThanOrEqualTo: maxAge)
-          .where('age', isGreaterThanOrEqualTo: minAge);
+          .where('age', isGreaterThanOrEqualTo: minAge)
+          .where('age', isLessThanOrEqualTo: maxAge);
 
       if (country != null) {
         query = query.where('country', isEqualTo: country);

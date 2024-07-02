@@ -25,8 +25,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final ctr = Get.put(ExploreCtr());
-  final matchCtr = Get.put(MatchesCtr());
+  final ctr = ExploreCtr.instance;
+  final matchCtr = MatchesCtr.instance;
 
   CardSwiperController cardSwiperController = CardSwiperController();
 
@@ -73,6 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Provider.of<HomeNotifier>(context, listen: false).getUsers();
+
     return Consumer<HomeNotifier>(
       builder: (context, model, _) {
         return Scaffold(
@@ -82,7 +84,15 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   if (model.currentUser != null) ProfileTile(model: model),
-                  const SizedBoxH15(),
+                  const SizedBoxH20(),
+                  Text(
+                    "Recommendations For You",
+                    style: textStyle18.copyWith(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBoxH10(),
                   if (model.currentUser != null && model.allUsers.isNotEmpty)
                     SizedBox(
                       height: Get.height / 1.3,
