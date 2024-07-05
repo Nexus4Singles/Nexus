@@ -63,7 +63,10 @@ class _HobbiesEditState extends State<HobbiesEdit> {
         height: 50,
         child: CustomButton(
           onPressed: () {
-            ctr.updateHobbies(selectedHobbies);
+            ctr.updateHobbies(selectedHobbies, () async {
+              await Provider.of<HomeNotifier>(context, listen: false)
+                  .getProfile();
+            });
           },
           text: "Update Hobbies",
         ),

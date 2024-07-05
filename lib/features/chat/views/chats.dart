@@ -4,13 +4,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/utils/empty_state.dart';
 import 'package:nexus/features/chat/controllers/chat_ctr.dart';
-import 'package:nexus/features/chat/views/chat_with.dart';
 import 'package:nexus/features/chat/widget/chat_container.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/core/text_field.dart';
-
 import '../../../router.dart';
 import 'chat_rep.dart';
 
@@ -31,11 +28,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
         backgroundColor: white,
         title: Text(
           'Chats',
-          style: textStyle18.copyWith(
-            fontSize: 24,
-            fontWeight: FontWeight.w700,
-            color: black,
-          ),
+          style: textStyle18.copyWith(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         foregroundColor: black,

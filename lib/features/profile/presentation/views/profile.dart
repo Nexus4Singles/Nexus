@@ -132,8 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
           title: Text(
             'Your Profile',
-            style: textStyle18.copyWith(
-                fontSize: 24, fontWeight: FontWeight.w700, color: black),
+            style: textStyle18.copyWith(fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
           foregroundColor: black,
@@ -383,7 +382,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onTap: () {
                         Get.to(
                           () => PhotoViewScreen(
-                            selectedIndex: 0,
+                            selectedIndex:
+                                homeModel.currentUser!.photos!.indexOf(item),
                             photos: homeModel.currentUser!.photos!,
                           ),
                         );

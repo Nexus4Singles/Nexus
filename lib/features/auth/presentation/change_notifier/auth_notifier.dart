@@ -253,7 +253,9 @@ class AuthNotifier with ChangeNotifier {
         EasyLoading.dismiss();
       }, (r) {
         // EasyLoading.showSuccess('Accoount created');
+        FirebaseAuth.instance.currentUser!.updateDisplayName(map[kUSERNAME]);
         FirebaseAuth.instance.currentUser!.sendEmailVerification();
+
         Get.toNamed(AppRoutes.congratulations);
         EasyLoading.dismiss();
       });

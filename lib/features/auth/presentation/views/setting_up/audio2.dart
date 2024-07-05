@@ -50,6 +50,8 @@ class _Audio2ScreenState extends State<Audio2Screen> {
   bool isLoading = true;
   bool recordingCompleted = false;
   late Directory appDirectory;
+  Duration? recPosition = Duration.zero;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -115,9 +117,18 @@ class _Audio2ScreenState extends State<Audio2Screen> {
                 onTap: () {
                   if (recordingCompleted) {
                     Get.toNamed(AppRoutes.audio3);
+                  } else if (recPosition!.inSeconds.isGreaterThan(45) &&
+                      isRecording == false) {
+                    Get.toNamed(AppRoutes.audio3);
+                  } else if (recPosition!.inSeconds.isGreaterThan(45)) {
+                    AppToast()
+                        .showErrorToast('Stop the audio below to continue');
                   } else {
-                    AppToast().showErrorToast('Audio must be upto 60 secs');
+                    AppToast().showErrorToast(
+                        'Audio must be not be less than 45 secs');
                   }
+                  debugPrint(
+                      "is completed = > $recordingCompleted ${recPosition!.inSeconds}");
                 },
                 child: Text(
                   'Next',
@@ -202,7 +213,7 @@ class _Audio2ScreenState extends State<Audio2Screen> {
                               return Container();
                             }
                             return Text(
-                              '${snapshot.data!.inMinutes.toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? "00" : ('${snapshot.data!.inSeconds}0')}',
+                              '${snapshot.data!.inMinutes.toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? "00" : ('${snapshot.data!.inSeconds}')}',
                               style: textStyle18.copyWith(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
@@ -210,7 +221,6 @@ class _Audio2ScreenState extends State<Audio2Screen> {
                             );
                           },
                         ),
-
                         Row(children: [
                           Expanded(
                             child: StreamBuilder<PositionData>(
@@ -241,23 +251,6 @@ class _Audio2ScreenState extends State<Audio2Screen> {
                             ),
                           ),
                         ]),
-                        // StreamBuilder<Duration?>(
-                        //   stream: player.durationStream,
-                        //   builder: (context, snapshot) {
-                        //     if (!snapshot.hasData) {
-                        //       return Container();
-                        //     }
-                        //     return Text(
-                        //       '${snapshot.data!.inMinutes.toString()}:${snapshot.data!.inSeconds.toString()}',
-                        //       style: textStyle18.copyWith(
-                        //           fontSize: 28,
-                        //           fontWeight: FontWeight.w200,
-                        //           color: friendGrey),
-                        //     );
-                        //   },
-                        // ),
-                        //   ],
-                        // ),
                       ],
                     ),
                   if (isRecording)
@@ -311,10 +304,7 @@ class _Audio2ScreenState extends State<Audio2Screen> {
                   children: [
                     InkWell(
                       onTap: () {
-                        setState(() {
-                          isRecording = false;
-                          isRecordingCompleted = false;
-                        });
+                        resetPlayer();
                       },
                       child: CircleAvatar(
                         backgroundColor: warGrey,
@@ -393,12 +383,11 @@ class _Audio2ScreenState extends State<Audio2Screen> {
               position, bufferedPosition, duration ?? Duration.zero));
 
   void _startOrStopRecording(AuthNotifier model) async {
+    debugPrint("This has been called...");
     try {
       if (isRecording) {
         recorderController.reset();
-
         final path = await recorderController.stop(false);
-
         if (path != null) {
           debugPrint(path);
           setState(() {
@@ -410,10 +399,21 @@ class _Audio2ScreenState extends State<Audio2Screen> {
           debugPrint("Recorded file size: ${model.audioPath2}");
         }
       } else {
+        if (!recorderController.hasPermission) {
+          //  recorderController.
+        }
+        // Future.delayed(Duration(seconds: 4));
         await recorderController.record(path: path!);
-        Timer(Duration(seconds: model.recordingEndSecs), () {
-          _stopRecording(model);
+
+        _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+          setState(() {
+            recPosition = Duration(seconds: recPosition!.inSeconds + 1);
+          });
+          if (recPosition!.inSeconds.isEqual(model.recordingEndSecs)) {
+            _stopRecording(model);
+          }
         });
+        debugPrint("this is recording duration ${recPosition!.inSeconds}");
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -422,6 +422,22 @@ class _Audio2ScreenState extends State<Audio2Screen> {
         isRecording = !isRecording;
       });
     }
+  }
+
+  void resetPlayer() async {
+    await recorderController.stop(true);
+    _positionDataStream.listen((event) {
+      event.position = Duration.zero;
+      event.bufferedPosition = Duration.zero;
+      event.duration = Duration.zero;
+    });
+    player.stop();
+    _timer!.cancel();
+    setState(() {
+      isRecording = false;
+      isRecordingCompleted = false;
+      recPosition = Duration.zero;
+    });
   }
 
   void _stopRecording(AuthNotifier model) async {

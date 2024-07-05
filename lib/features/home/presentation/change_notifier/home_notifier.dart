@@ -34,7 +34,7 @@ class HomeNotifier with ChangeNotifier {
             .where((el) => el.registrationProgress == 'completed')
             .where((u) => !unrecommendedUsers.contains(u.id))
             .toList();
-
+        allUsers.shuffle();
         notifyListeners();
         // Logger().d(allUsers);
       });
@@ -44,6 +44,7 @@ class HomeNotifier with ChangeNotifier {
   UserModel? currentUser;
 
   Future<void> getProfile() async {
+    print("called again");
     var data = await readProfileUsecase.call(const NoParams());
     data.fold(
       (l) => l,

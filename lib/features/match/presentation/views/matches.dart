@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/empty_state.dart';
 import 'package:nexus/core/utils/progress_indicator.dart';
-import 'package:nexus/features/home/presentation/widgets/coming_soon.dart';
 import 'package:nexus/features/match/controllers/matches_ctr.dart';
 import 'package:nexus/features/match/presentation/widgets/match_stat.dart';
 import 'package:nexus/features/match/presentation/widgets/matched_user.dart';
@@ -32,9 +30,7 @@ class _MatcheScreenState extends State<MatcheScreen> {
         leading: const SizedBox.shrink(),
         title: Text(
           'Potential Matches',
-          style: textStyle18.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: textStyle18.copyWith(fontWeight: FontWeight.bold),
         ),
         actions: [
           InkWell(

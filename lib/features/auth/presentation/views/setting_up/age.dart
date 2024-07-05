@@ -43,7 +43,7 @@ class _AgeScreenState extends State<AgeScreen> {
     return Consumer<AuthNotifier>(builder: (context, model, _) {
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: white,
+          backgroundColor: Colors.transparent,
           title: SizedBox(
             width: width(context) * .5,
             child: LinearProgressIndicator(

@@ -1,15 +1,15 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:nexus/features/auth/presentation/widgets/social_media.dart';
-// import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/router.dart';
 import 'package:provider/provider.dart';
 
@@ -42,8 +42,8 @@ class _RegSuccessfulState extends State<RegSuccessful> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/images/congratulation.png',
+              SvgPicture.asset(
+                '$svgPath/congrats.svg',
               ),
               const SizedBoxH20(),
               Text(

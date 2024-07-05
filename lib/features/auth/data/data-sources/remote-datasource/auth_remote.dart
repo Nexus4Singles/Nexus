@@ -25,10 +25,7 @@ abstract class AuthenticationRemoteDatasource {
   Future<bool> isAuth();
   Future<String> upload(File file);
   Future<QuerySnapshot<Map<String, dynamic>>> listen(String col, bool useId);
-  Future<dynamic> update(
-    String doc,
-    Map<String, dynamic> data,
-  );
+  Future<dynamic> update(String doc, Map<String, dynamic> data);
 }
 
 @LazySingleton(as: AuthenticationRemoteDatasource)
@@ -103,7 +100,7 @@ class AuthenticationRemoteDatasourceImpl
     // var res = await cloudinary.uploadFile(CloudinaryFile.fromFile(file.path));
 
     // return res.secureUrl;
-    String fileName = path.basename(file.path);
+    String fileName = path.basename("audio/${file.path}");
     TaskSnapshot storageReference =
         await FirebaseStorage.instance.ref().child(fileName).putFile(file);
     String url = await storageReference.ref.getDownloadURL();

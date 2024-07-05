@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:nexus/features/profile/presentation/controllers/profile_ctr.dart';
 import 'package:provider/provider.dart';
@@ -62,9 +63,10 @@ class _DesireEditState extends State<DesireEdit> {
         height: 50,
         child: CustomButton(
           onPressed: () async {
-            await ctr.updateQualities(selectedDesires);
-            await Provider.of<HomeNotifier>(context, listen: false)
-                .getProfile();
+            await ctr.updateQualities(selectedDesires, () async {
+              await Provider.of<HomeNotifier>(context, listen: false)
+                  .getProfile();
+            });
           },
           text: "Update Hobbies",
         ),

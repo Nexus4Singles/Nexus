@@ -1,8 +1,13 @@
+import 'dart:io';
+
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
@@ -11,6 +16,7 @@ import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
 import 'package:nexus/features/profile/presentation/controllers/profile_ctr.dart';
 import 'package:provider/provider.dart';
+import '../../../../core/utils/toast.dart';
 import '../../../auth/data/data-sources/local-datasource/list_items.dart';
 import '../../../auth/presentation/widgets/drop_down.dart';
 import '../../../auth/presentation/widgets/hobbie_card.dart';
@@ -26,6 +32,7 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   var ctr = Get.put(ProfileCtr());
+  List<File> imageFiles = [];
 
   @override
   void initState() {
@@ -34,10 +41,33 @@ class _EditProfileState extends State<EditProfile> {
     ctr.eduLevel.value = currentUser.educationLevel!;
     ctr.profession.value = currentUser.profession!;
     ctr.church.value = currentUser.churchName!;
-    ctr.city.value = currentUser.location!.city!;
+    ctr.searchText.text = currentUser.location!.place!;
     ctr.locationModel = currentUser.location;
     ctr.usernameCtr.text = currentUser.username;
     super.initState();
+  }
+
+  void _pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        imageFiles.add(File(image.path));
+      });
+      // await value.uploadProfilePicture(image: );
+    }
+  }
+
+  void _changeImage(int index, File image) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      imageFiles.removeAt(index);
+      setState(() {
+        imageFiles.insert(index, File(image.path));
+      });
+      // await value.uploadProfilePicture(image: );
+    }
   }
 
   @override
@@ -61,33 +91,151 @@ class _EditProfileState extends State<EditProfile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Wrap(
+                runSpacing: 8,
+                spacing: 12,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                runAlignment: WrapAlignment.start,
+                alignment: WrapAlignment.start,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: white),
-                        shape: BoxShape.circle),
-                    child: Stack(
-                      children: [
-                        const CircleAvatar(
-                          maxRadius: 50,
-                          backgroundImage: AssetImage('assets/images/user.png'),
+                  for (var item in homeModel.currentUser!.photos!)
+                    Container(
+                      height: 120,
+                      width: 120,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                          image: NetworkImage(item),
+                          fit: BoxFit.cover,
                         ),
-                        Positioned(
-                          bottom: 10,
-                          right: 0,
-                          child: CircleAvatar(
-                            maxRadius: 15,
-                            backgroundColor: primary,
-                            foregroundColor: white,
-                            child: SvgPicture.asset('assets/icons/pen.svg',
-                                fit: BoxFit.contain),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: InkWell(
+                              onTap: () {
+                                showConfirmationDialog(context, item);
+                              },
+                              child: const CircleAvatar(
+                                backgroundColor: red,
+                                radius: 12,
+                                child: Icon(
+                                  Icons.close,
+                                  color: white,
+                                  size: 15,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  if (homeModel.currentUser!.photos!.length.isLowerThan(4))
+                    for (var item in imageFiles)
+                      Container(
+                        height: 120,
+                        width: 120,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          image: DecorationImage(
+                            image: FileImage(item),
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      ],
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    imageFiles.remove(item);
+                                  });
+                                },
+                                child: const CircleAvatar(
+                                  backgroundColor: white,
+                                  radius: 12,
+                                  child: Icon(
+                                    Icons.close,
+                                    color: black,
+                                    size: 12,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                int index = imageFiles.indexOf(item);
+                                _changeImage(index, item);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: black.withOpacity(.4),
+                                  border: Border.all(
+                                    color: white,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.camera,
+                                      color: white,
+                                      size: 12,
+                                    ),
+                                    const SizedBoxW5(),
+                                    Text(
+                                      'Change Photo',
+                                      style: textStyle10.copyWith(
+                                        color: white,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                  if (imageFiles.length < 4)
+                    InkWell(
+                      onTap: () {
+                        if (imageFiles.length == 4) {
+                          AppToast()
+                              .showErrorToast('Maximum of 4 photos allowed');
+                        } else {
+                          _pickImage();
+                        }
+                      },
+                      child: DottedBorder(
+                        borderType: BorderType.RRect,
+                        strokeWidth: 1,
+                        stackFit: StackFit.passthrough,
+                        // customPath: (size) => customPath,
+                        dashPattern: const [6, 3, 0, 3],
+                        color: Colors.blue.withOpacity(.2),
+                        radius: const Radius.circular(20),
+                        child: Container(
+                          height: 120,
+                          width: 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color(0xffeeeeee),
+                          ),
+                          child: const Icon(
+                            Icons.add_circle,
+                            color: primary,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
                 ],
               ),
               const SizedBoxH20(),
@@ -96,7 +244,7 @@ class _EditProfileState extends State<EditProfile> {
                 children: [
                   Text(
                     'Hobbies / Interests',
-                    style: textStyle18.copyWith(
+                    style: textStyle14.copyWith(
                       fontWeight: FontWeight.w500,
                       color: black,
                     ),
@@ -108,7 +256,7 @@ class _EditProfileState extends State<EditProfile> {
                       child: SvgPicture.asset('assets/icons/edit.svg'))
                 ],
               ),
-              const SizedBoxH15(),
+              const SizedBoxH10(),
               Wrap(children: [
                 ...homeModel.currentUser!.hobbies!.map((val) => Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -123,7 +271,7 @@ class _EditProfileState extends State<EditProfile> {
                 children: [
                   Text(
                     'Most Desired Qualities',
-                    style: textStyle18.copyWith(
+                    style: textStyle14.copyWith(
                       fontWeight: FontWeight.w500,
                       color: black,
                     ),
@@ -135,7 +283,7 @@ class _EditProfileState extends State<EditProfile> {
                       child: SvgPicture.asset('assets/icons/edit.svg'))
                 ],
               ),
-              const SizedBoxH15(),
+              const SizedBoxH10(),
               Wrap(children: [
                 ...homeModel.currentUser!.desiredQualities!
                     .map((val) => Padding(
@@ -180,7 +328,9 @@ class _EditProfileState extends State<EditProfile> {
               const SizedBoxH15(),
               ProfileDropDown(
                 items: LocalData().church,
-                val: ctr.church.value,
+                val: !LocalData().church.contains(ctr.church.value)
+                    ? "Other"
+                    : ctr.church.value,
                 hintText: 'Church',
                 onChanged: (p0) {
                   setState(() {
@@ -189,9 +339,36 @@ class _EditProfileState extends State<EditProfile> {
                 },
               ),
               const SizedBoxH15(),
+              Obx(
+                () => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ctr.church.value == "Other" ||
+                            !LocalData().church.contains(ctr.church.value)
+                        ? CustomTextField(
+                            fillColor: white,
+                            radius: 12,
+                            controller: TextEditingController(
+                                text: homeModel.currentUser!.churchName),
+                            onChanged: (val) {
+                              ctr.church.value = val;
+                            },
+                            hintText: "Username",
+                            suffixIcon: SvgPicture.asset(
+                              "$svgPath/edit.svg",
+                              fit: BoxFit.scaleDown,
+                            ),
+                          )
+                        : const SizedBox(),
+                    ctr.church.value == "Other" ||
+                            !LocalData().church.contains(ctr.church.value)
+                        ? const SizedBoxH15()
+                        : SizedBox(),
+                  ],
+                ),
+              ),
               GooglePlaceAutoCompleteTextField(
-                textEditingController:
-                    TextEditingController(text: ctr.locationModel!.place),
+                textEditingController: ctr.searchText,
                 googleAPIKey: 'AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y',
                 // countries: const ['NG'],
                 inputDecoration: InputDecoration(
@@ -259,7 +436,7 @@ class _EditProfileState extends State<EditProfile> {
               const SizedBoxH40(),
               CustomButton(
                   onPressed: () async {
-                    await ctr.updateProfile();
+                    await ctr.updateProfile(imageFiles);
                     await Provider.of<HomeNotifier>(context, listen: false)
                         .getProfile();
                   },
@@ -270,5 +447,39 @@ class _EditProfileState extends State<EditProfile> {
         ),
       );
     });
+  }
+
+  void showConfirmationDialog(BuildContext context, String item) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoActionSheet(
+          title: const Text('Delete this Image ?'),
+          message:
+              const Text('Do you really want to proceed with this action?'),
+          actions: <Widget>[
+            CupertinoActionSheetAction(
+              isDestructiveAction: true,
+              onPressed: () {
+                ctr.deleteUserPhoto(item).then((val) async {
+                  await Provider.of<HomeNotifier>(context, listen: false)
+                      .getProfile();
+                });
+                Navigator.pop(context, 'Deleted');
+                // Handle the destructive action
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context, 'Cancelled');
+              // Handle the cancellation action
+            },
+            child: const Text('Cancel'),
+          ),
+        );
+      },
+    );
   }
 }

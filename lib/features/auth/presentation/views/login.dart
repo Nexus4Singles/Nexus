@@ -137,9 +137,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       showPassword = !showPassword;
                                     });
                                   },
-                                  child: Icon(showPassword
-                                      ? Iconsax.eye_slash
-                                      : Iconsax.eye),
+                                  child: Icon(
+                                      showPassword
+                                          ? Iconsax.eye_slash
+                                          : Iconsax.eye,
+                                      color: primary),
                                 ),
                               ),
                               const SizedBoxH10(),
@@ -148,8 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 children: [
                                   TextButton(
                                     onPressed: () {
-                                      Get.toNamed(
-                                          AppRoutes.forgottenPassword);
+                                      Get.toNamed(AppRoutes.forgottenPassword);
                                     },
                                     child: Text(
                                       'Forgotten password?',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
@@ -9,6 +10,8 @@ import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:nexus/router.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../core/assets.dart';
 
 class CongratulationScreen extends StatefulWidget {
   const CongratulationScreen({super.key});
@@ -53,10 +56,10 @@ class _CongratulationScreenState extends State<CongratulationScreen> {
                           const SizedBoxH20(),
                           Column(
                             children: [
-                              Image.asset('assets/images/congratulation.png'),
+                              SvgPicture.asset('$svgPath/congrats.svg'),
                               const SizedBoxH20(),
                               Text(
-                                'Congratulations',
+                                'Hello ${model.curUser!.displayName ?? ""}',
                                 style: headerStyle.copyWith(
                                   fontSize: 32.sp,
                                   fontWeight: FontWeight.w700,
