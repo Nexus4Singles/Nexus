@@ -8,9 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:nexus/core/di/injection_container.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
+import 'package:nexus/features/explore/controllers/explore_ctr.dart';
 import 'package:nexus/features/home/presentation/change_notifier/bottom_nav.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/router.dart';
@@ -34,7 +36,7 @@ void main() {
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
-    ]).then((_) => runApp(const MyApp()));
+    ]).then((_) => runApp(MyApp()));
   }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 
   Isolate.current.addErrorListener(RawReceivePort((pair) async {
@@ -48,7 +50,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final ctr = Get.put(ExploreCtr());
 
   @override
   Widget build(BuildContext context) {

@@ -11,6 +11,7 @@ import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
 
+import '../../../router.dart';
 import 'chat_rep.dart';
 
 class ChatsScreen extends StatefulWidget {
@@ -40,10 +41,12 @@ class _ChatsScreenState extends State<ChatsScreen> {
         foregroundColor: black,
         elevation: 0,
         actions: [
-          SvgPicture.asset(
-            'assets/icons/adjust.svg',
+          InkWell(
+            child: SvgPicture.asset('assets/icons/adjust.svg'),
+            onTap: () {
+              Get.toNamed(AppRoutes.settings);
+            },
           ),
-          const SizedBoxW15(),
         ],
       ),
       body: Column(
@@ -54,30 +57,26 @@ class _ChatsScreenState extends State<ChatsScreen> {
               () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomTextField(
-                    controller: TextEditingController(),
-                    hintText: 'Search',
-                    prefixIcon: const Icon(Icons.search_sharp),
-                    radius: 25,
-                    fillColor: white,
-                    borderColor: black,
-                  ),
-                  const SizedBoxH20(),
+                  // CustomTextField(
+                  //   controller: TextEditingController(),
+                  //   hintText: 'Search',
+                  //   prefixIcon: const Icon(Icons.search_sharp),
+                  //   radius: 25,
+                  //   fillColor: white,
+                  //   borderColor: black,
+                  // ),
+                  // const SizedBoxH20(),
                   Text(
                     'Recent Matches',
-                    style: textStyle16.copyWith(
-                      fontWeight: FontWeight.w500,
+                    style: textStyle18.copyWith(
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                   const SizedBoxH15(),
-                  ctr.allChatUsers
-                          .where((val) => val.lastMessage.isEmpty)
-                          .isNotEmpty
+                  ctr.allChatUsers.isNotEmpty
                       ? Row(
                           children: [
-                            ...ctr.allChatUsers
-                                .where((val) => val.lastMessage.isEmpty)
-                                .map((users) {
+                            ...ctr.allChatUsers.map((users) {
                               return InkWell(
                                 onTap: () {
                                   Get.to(
@@ -95,12 +94,15 @@ class _ChatsScreenState extends State<ChatsScreen> {
                             }).toList()
                           ],
                         )
-                      : const EmptyStateWidget(
-                          message: "You don’t have any matches yet"),
+                      : Center(
+                          child: Text(
+                          "You don’t have any matches yet",
+                          style: textStyle14.copyWith(color: dustyGrey),
+                        )),
                   const SizedBoxH20(),
                   Text('Chats',
-                      style: textStyle18.copyWith(fontWeight: FontWeight.w500)),
-                  const SizedBoxH20(),
+                      style: textStyle18.copyWith(fontWeight: FontWeight.w800)),
+                  const SizedBoxH10(),
                   ctr.allChatUsers
                           .where((val) => val.lastMessage.isNotEmpty)
                           .isNotEmpty

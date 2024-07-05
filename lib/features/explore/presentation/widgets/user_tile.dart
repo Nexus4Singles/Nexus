@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
@@ -42,10 +43,13 @@ class ExploreUserTile extends StatelessWidget {
           ),
           const SizedBoxW5(),
           Flexible(
-            child: Text(
-              location,
-              overflow: TextOverflow.ellipsis,
-              style: textStyle12.copyWith(color: otherGrey),
+            child: SizedBox(
+              width: Get.width / 3,
+              child: Text(
+                location,
+                overflow: TextOverflow.ellipsis,
+                style: textStyle12.copyWith(color: otherGrey),
+              ),
             ),
           ),
         ],

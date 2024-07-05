@@ -31,7 +31,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     },
     {
       'id': '2',
-      "title": "Search Profile",
+      "title": "Search Profiles",
       "subtitle":
           "Your profile and audio recordings will only be visible to opposite gender users. \n\nYou will also be able to search and view profiles of opposite gender users living in any country, with the option of filters to narrow down your search.\n\nNexus is currently available to Nigerians living anywhere in the world, but we plan to scale to other countries gradually. Kindly stay patient if you are not Nigerian. ",
       "image": iOnboard2,
@@ -47,7 +47,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'id': '4',
       "title": "Chat",
       "subtitle":
-          "You will only be able to chat with your MATCH list. This means random users will not be able to chat with you. \n\nThis is not just another match-making or dating app, but a platform to help devout Christian singles seeking Godly relationships leading to kingdom marriages, find and connect with each other. \n\nWe provide the visibility you need, while the rest is up to you, as you rely on the HolySpirit for discernment. \n\nWe wish you GODSPEED!!",
+          "You will only be able to chat with your MATCH list. This means random users will not be able to send messages to you. \n\nThis is not just another match-making or dating app, Nexus is a platform to help devout Christian singles seeking Godly relationships leading to marriages, find and connect with each other.  \n\nWe provide the visibility you need, while the rest is up to you, as you rely on the HolySpirit for discernment. \n\nWe wish you GODSPEED!!",
       "image": iOnboard4,
     },
   ];

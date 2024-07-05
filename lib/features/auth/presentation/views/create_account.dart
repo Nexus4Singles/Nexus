@@ -47,6 +47,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   Widget build(BuildContext context) {
     return Consumer<AuthNotifier>(builder: (context, model, _) {
       return Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          iconTheme: const IconThemeData(color: white),
+        ),
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -182,9 +187,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                         showPassword = !showPassword;
                                       });
                                     },
-                                    child: Icon(showPassword
-                                        ? Iconsax.eye_slash
-                                        : Iconsax.eye),
+                                    child: Icon(
+                                        showPassword
+                                            ? Iconsax.eye_slash
+                                            : Iconsax.eye,
+                                        color: primary),
                                   ),
                                 ),
                                 const SizedBoxH10(),

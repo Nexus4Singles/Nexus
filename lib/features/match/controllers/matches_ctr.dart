@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/models/user.dart';
@@ -16,6 +17,7 @@ class MatchesCtr extends GetxController {
   var userData = <UserModel>[].obs;
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
+  var unrecommendId = "".obs;
 
   setMyLikes() {
     emptyText.value = "You have not liked any profiles yet.";
@@ -135,10 +137,34 @@ class MatchesCtr extends GetxController {
     EasyLoading.dismiss();
   }
 
-  addToUnRecommend(String id) {
-    db.collection(kUSER).doc(auth.currentUser!.uid).update({
-      "unRecommendUsers": FieldValue.arrayUnion([id])
-    });
+  addToUnRecommend(String id) async {
+    unrecommendId.value = id;
+    try {
+      EasyLoading.show();
+      await db.collection(kUSER).doc(auth.currentUser!.uid).update({
+        "unRecommendUsers": FieldValue.arrayUnion([id])
+      });
+      EasyLoading.dismiss();
+    } catch (e) {
+      EasyLoading.dismiss();
+    }
+  }
+
+  undoUnRecommend(CardSwiperController ctr) async {
+    if (unrecommendId.value.isNotEmpty) {
+      try {
+        EasyLoading.show();
+        await db.collection(kUSER).doc(auth.currentUser!.uid).update({
+          "unRecommendUsers": FieldValue.arrayRemove([unrecommendId.value])
+        });
+        ctr.undo();
+        EasyLoading.dismiss();
+      } catch (e) {
+        EasyLoading.dismiss();
+      }
+    } else {
+      ctr.undo();
+    }
   }
 
   @override

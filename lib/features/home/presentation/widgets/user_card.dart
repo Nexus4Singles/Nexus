@@ -96,6 +96,7 @@ class _UserCardState extends State<UserCard> {
   }
 
   var ctr = Get.put(MatchesCtr());
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -167,19 +168,18 @@ class _UserCardState extends State<UserCard> {
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
+                                  color: white,
                                   border: Border.all(color: primary)),
                               child: SvgPicture.asset(
                                 '$svgPath/back.svg',
                                 width: 24,
-                                color: primary.withOpacity(0.6),
+                                color: primary,
                               ),
                             ),
                           ),
                           InkWell(
                             onTap: widget.onClosed,
-                            child: SvgPicture.asset(
-                              'assets/icons/close.svg',
-                            ),
+                            child: SvgPicture.asset('assets/icons/close.svg'),
                           ),
                           InkWell(
                             onTap: widget.onLike,

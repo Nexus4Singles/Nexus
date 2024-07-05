@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 // import 'package:logger/logger.dart';
 import 'package:nexus/core/models/user.dart';
@@ -26,9 +27,12 @@ class HomeNotifier with ChangeNotifier {
   Future<void> getUsers() async {
     getUsersUsecase.call(const NoParams()).then((value) {
       value.fold((l) => l, (r) {
+        var unrecommendedUsers = <String>[];
+        unrecommendedUsers.assignAll(currentUser!.unrecommendedUsers!);
         allUsers = users = r
             .where((e) => e.gender != currentUser!.gender)
             .where((el) => el.registrationProgress == 'completed')
+            .where((u) => !unrecommendedUsers.contains(u.id))
             .toList();
 
         notifyListeners();

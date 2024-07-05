@@ -15,11 +15,11 @@ class UserEntity extends Equatable {
     required this.gender,
     required this.age,
     this.city,
-    this.unrecommendedUser,
     this.matchedUsers,
     this.educationLevel,
     this.stateOfOrigin,
     this.profession,
+    this.unrecommendedUsers,
     this.hobbies,
     this.desiredQualities,
     this.photos,
@@ -58,6 +58,8 @@ class UserEntity extends Equatable {
   final List<String>? hobbies;
   @JsonKey(name: kMATCHESUSERSKEY)
   final List<String>? matchedUsers;
+  @JsonKey(name: kUNRECOMMENDUSER)
+  final List<String>? unrecommendedUsers;
   @JsonKey(name: kMATCHESKEY)
   final List<String>? likeMe;
   final List<String>? myLikes;
@@ -65,7 +67,6 @@ class UserEntity extends Equatable {
   @JsonKey(name: kDESIREDQUALITIES)
   final List<String>? desiredQualities;
   final List<String>? photos;
-  final List<String>? unrecommendedUser;
   @JsonKey(name: kRELATIONSHIPWITHGOD)
   final String? relationshipWithGod;
   @JsonKey(name: kROLEOFHUSBAND)
@@ -99,9 +100,9 @@ class UserEntity extends Equatable {
         gender,
         age,
         city,
+        unrecommendedUsers,
         stateOfOrigin,
         educationLevel,
-        unrecommendedUser,
         profession,
         hobbies,
         desiredQualities,

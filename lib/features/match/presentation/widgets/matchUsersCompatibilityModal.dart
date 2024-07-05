@@ -46,74 +46,64 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
                 const SizedBoxH10(),
                 const Divider(color: white),
                 const SizedBoxH10(),
-                Text(
+                optionsMenu(
                   userModel.compatibility!.maritalStatus!.toLowerCase() ==
                           "never married"
-                      ? "• ${userModel.username} has never been married"
-                      : "• ${userModel.username} has been married",
-                  style: textStyle14.copyWith(color: white),
-                  textAlign: TextAlign.start,
+                      ? "${userModel.username} has never been married"
+                      : "${userModel.username} has been married",
                 ),
-                const SizedBoxH10(),
-                Text(
+                optionsMenu(
                     userModel.compatibility!.haveKids!.toLowerCase() == "no"
-                        ? "• ${userModel.username} doesn't have kids"
-                        : "${userModel.username} have kids",
-                    style: textStyle14.copyWith(color: white)),
-                const SizedBoxH10(),
-                Text(
-                  "• ${userModel.username} has an ${userModel.compatibility!.genotype} Genotype",
-                  style: textStyle14.copyWith(color: white),
-                  textAlign: TextAlign.start,
+                        ? "${userModel.username} doesn't have kids"
+                        : "${userModel.username} have kids"),
+                optionsMenu(
+                    "${userModel.username} has an ${userModel.compatibility!.genotype} Genotype"),
+                optionsMenu(
+                    "${userModel.username} is an ${userModel.compatibility!.personalityType}"),
+                optionsMenu(userModel.compatibility!.regularSourceOfIncome!
+                            .toLowerCase() ==
+                        "yes"
+                    ? "${userModel.username} has a regular source of income"
+                    : "${userModel.username} doesn't  have a regular source of income"),
+                optionsMenu(
+                  "${userModel.username} ${userModel.compatibility!.marrySomeoneNotFS!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
+                ),
+                optionsMenu(
+                  "${userModel.username} ${userModel.compatibility!.believeInCohiabiting!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
+                ),
+                optionsMenu(
+                  "${userModel.username} ${userModel.compatibility!.believeInCohiabiting!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} in cohabiting before marriage",
                 ),
                 const SizedBoxH10(),
-                Text(
-                  "• ${userModel.username} is an ${userModel.compatibility!.personalityType}",
-                  style: textStyle14.copyWith(color: white),
-                  textAlign: TextAlign.start,
+                optionsMenu(
+                  "${userModel.username} ${userModel.compatibility!.shouldChristianSpeakInTongue!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} every Christian should desire to speak in tongues",
                 ),
-                const SizedBoxH10(),
-                Text(
-                  userModel.compatibility!.regularSourceOfIncome!
-                              .toLowerCase() ==
-                          "yes"
-                      ? "• ${userModel.username} has a regular source of income"
-                      : "• ${userModel.username} doesn't  have a regular source of income",
-                  style: textStyle14.copyWith(color: white),
-                  textAlign: TextAlign.start,
-                ),
-                const SizedBoxH10(),
-                Text(
-                  "• ${userModel.username} ${userModel.compatibility!.marrySomeoneNotFS!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
-                  style: textStyle14.copyWith(color: white),
-                  textAlign: TextAlign.start,
-                ),
-                const SizedBoxH10(),
-                Text(
-                  "• ${userModel.username} ${userModel.compatibility!.believeInCohiabiting!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
-                  style: textStyle14.copyWith(color: white),
-                  textAlign: TextAlign.start,
-                ),
-                const SizedBoxH10(),
-                Text(
-                  "• ${userModel.username} ${userModel.compatibility!.believeInCohiabiting!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} in cohabiting before marriage",
-                  style: textStyle14.copyWith(color: white),
-                  textAlign: TextAlign.start,
-                ),
-                const SizedBoxH10(),
-                Text(
-                  "• ${userModel.username} ${userModel.compatibility!.shouldChristianSpeakInTongue!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} every Christian should desire to speak in tongues",
-                  style: textStyle14.copyWith(color: white),
-                  textAlign: TextAlign.start,
-                ),
-                const SizedBoxH10(),
-                Text(
-                  "• ${userModel.username} ${userModel.compatibility!.believeInTithing!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} in tithing",
-                  style: textStyle14.copyWith(color: white),
-                  textAlign: TextAlign.start,
-                ),
+                optionsMenu(
+                  "${userModel.username} ${userModel.compatibility!.believeInTithing!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} in tithing",
+                )
               ],
             ),
     );
   }
+}
+
+optionsMenu(String text) {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 12.0),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const CircleAvatar(radius: 2, backgroundColor: white),
+        const SizedBoxW5(),
+        Flexible(
+          child: Text(
+            text,
+            style: textStyle14.copyWith(color: white),
+            textAlign: TextAlign.start,
+          ),
+        ),
+      ],
+    ),
+  );
 }

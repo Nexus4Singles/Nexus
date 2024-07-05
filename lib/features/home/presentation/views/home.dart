@@ -6,9 +6,7 @@ import 'package:get/get.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
-import 'package:nexus/features/home/presentation/widgets/coming_soon_modal.dart';
 import 'package:nexus/features/home/presentation/widgets/profile_tile.dart';
 import 'package:nexus/features/home/presentation/widgets/user_card.dart';
 import 'package:nexus/features/match/controllers/matches_ctr.dart';
@@ -25,7 +23,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final ctr = Get.put(ExploreCtr());
   final matchCtr = Get.put(MatchesCtr());
 
   CardSwiperController cardSwiperController = CardSwiperController();
@@ -89,18 +86,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: model.allUsers.length == 1
                           ? UserCard(
                               userModel: model.allUsers.first,
-                              onClosed: () {
-                                showModal();
-                              },
-                              onLike: () {
-                                showModal();
-                              },
-                              onRefresh: () {
-                                showModal();
-                              },
-                              onSaved: () {
-                                showModal();
-                              },
+                              onClosed: () {},
+                              onLike: () {},
+                              onRefresh: () {},
+                              onSaved: () {},
                               onClick: () {
                                 setState(() {
                                   model.selectedUser = model.allUsers.first;
@@ -130,22 +119,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return SingleChildScrollView(
                                   child: UserCard(
                                     userModel: user,
-                                    onClosed: () {
-                                      matchCtr.addToUnRecommend(user.id);
+                                    onClosed: () async {
+                                      await matchCtr.addToUnRecommend(user.id);
                                       cardSwiperController
                                           .swipe(CardSwiperDirection.left);
-                                      model.getUsers();
+                                      await model.getUsers();
                                     },
                                     onLike: () {
-                                      ctr.myProfile.value.matchedUsers ==
+                                      matchCtr.ctr.myProfile.value
+                                                      .matchedUsers ==
                                                   null ||
-                                              !ctr.myProfile.value.matchedUsers!
+                                              !matchCtr.ctr.myProfile.value
+                                                  .matchedUsers!
                                                   .contains(user.id)
                                           ? matchCtr.toggleLike(user)
                                           : print("This users are matched");
                                     },
                                     onRefresh: () {
-                                      cardSwiperController.undo();
+                                      matchCtr.undoUnRecommend(
+                                          cardSwiperController);
                                     },
                                     onSaved: () {
                                       matchCtr.toggleSave(user.id);
@@ -159,24 +151,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-          ),
-        );
-      },
-    );
-  }
-
-  void showModal() {
-    showAdaptiveDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return AlertDialog.adaptive(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          content: const ComingSoonModal(
-            text:
-                'You will be able to view profile recommendations here as soon as we launch fully.',
           ),
         );
       },

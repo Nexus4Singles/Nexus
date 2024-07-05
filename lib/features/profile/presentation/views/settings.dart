@@ -38,11 +38,11 @@ class _SettingScreenState extends State<SettingScreen> {
               text: 'Edit Profile',
               icon: true,
               onPress: () {
-                // Get.toNamed(AppRoutes.editProfile);
-                AppToast().showErrorToast(
-                  'This feature will be available soon',
-                  header: 'Coming soon',
-                );
+                Get.toNamed(AppRoutes.editProfile);
+                // AppToast().showErrorToast(
+                //   'This feature will be available soon',
+                //   header: 'Coming soon',
+                // );
               },
             ),
             const Divider(
@@ -127,16 +127,16 @@ class _SettingScreenState extends State<SettingScreen> {
             const Divider(
               color: Colors.transparent,
             ),
-            SettindContainer(
-              text: 'Report User',
-              icon: true,
-              onPress: () {
-                AppToast().showErrorToast(
-                  'This feature will be available soon',
-                  header: 'Coming soon',
-                );
-              },
-            ),
+            // SettindContainer(
+            //   text: 'Report User',
+            //   icon: true,
+            //   onPress: () {
+            //     AppToast().showErrorToast(
+            //       'This feature will be available soon',
+            //       header: 'Coming soon',
+            //     );
+            //   },
+            // ),
             const Divider(
               color: Colors.transparent,
             ),

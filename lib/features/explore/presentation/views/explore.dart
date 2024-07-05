@@ -72,10 +72,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         Positioned(
                           right: 5,
                           child: InkWell(
-                            onTap: () {
-                              showModal(
-                                  "You will be able to manually search profiles here as soon as we launch.");
-                            },
+                            onTap: () {},
                             child: Container(
                               padding: EdgeInsets.all(5.sp),
                               decoration: const BoxDecoration(

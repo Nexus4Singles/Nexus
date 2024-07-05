@@ -17,6 +17,7 @@ import 'package:nexus/features/auth/presentation/widgets/record_completed.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/home/presentation/views/photo_view.dart';
 import 'package:nexus/features/match/controllers/matches_ctr.dart';
+import 'package:nexus/features/profile/presentation/views/report_user.dart';
 import 'package:nexus/features/profile/presentation/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 
@@ -104,6 +105,15 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
             Get.back();
           },
         ),
+        actions: [
+          InkWell(
+            child: const Icon(Icons.info, color: white),
+            onTap: () {
+              Get.to(() => ReportUser(userModel: widget.userModel));
+            },
+          ),
+          const SizedBoxW20()
+        ],
       ),
       body: Stack(
         children: [
@@ -281,7 +291,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             ),
                             const SizedBoxH40(),
                             Text(
-                              'Audio Recording',
+                              'Audio Recordings',
                               style: textStyle14.copyWith(
                                 fontWeight: FontWeight.w500,
                                 color: black,
@@ -289,7 +299,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             ),
                             const SizedBoxH15(),
                             Text(
-                              '1. The summary of ${widget.userModel.username} relationship with God',
+                              "1. The summary of ${widget.userModel.username}'s relationship with God",
                               style: textStyle14.copyWith(
                                   color: black,
                                   fontSize: 14,
@@ -311,7 +321,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             ),
                             const SizedBoxH25(),
                             Text(
-                              '2. ${widget.userModel.username} view on Gender roles in marriage',
+                              "2. ${widget.userModel.username}'s view on Gender roles in marriage",
                               style: textStyle14.copyWith(
                                   color: black,
                                   fontSize: 14,
@@ -414,10 +424,16 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                         onPressed: () {
                           compatibilityModal(context, widget.userModel);
                         },
-                        child: Text(
-                          "View Compatibility Data",
-                          style:
-                              textStyle14.copyWith(fontWeight: FontWeight.bold),
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                              color: primary.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(100)),
+                          child: Text(
+                            "View Compatibility Data",
+                            style: textStyle14.copyWith(
+                                fontWeight: FontWeight.bold),
+                          ),
                         ))
                     : const SizedBoxH10(),
                 const SizedBoxH40(),
