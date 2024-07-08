@@ -56,7 +56,6 @@ class AppRoutes {
   static String welcome = '/welcome';
   static String login = '/login';
   static String signUp = '/sign_up';
-  // static String existingUser = '/existinguserscreen';
   static String createAccount = '/createaccountscreen';
   static String verifyAccount = '/verifyaccountscreen';
   static String congratulations = '/congratulationscreen';
@@ -142,7 +141,7 @@ final appRouter = [
   ),
   GetPage(
     name: AppRoutes.congratulations,
-    page: () => const CongratulationScreen(),
+    page: () => CongratulationScreen(username: Get.arguments ?? ""),
     binding: BindingsBuilder(() {}),
   ),
   GetPage(
@@ -217,12 +216,12 @@ final appRouter = [
   ),
   GetPage(
     name: AppRoutes.deleteAccount,
-    page: () => const DeleteAccountScreen(),
+    page: () => DeleteAccountScreen(),
     binding: BindingsBuilder(() {}),
   ),
   GetPage(
     name: AppRoutes.changePassword,
-    page: () => const ChangePasswordScreen(),
+    page: () => ChangePasswordScreen(),
     binding: BindingsBuilder(() {}),
   ),
   GetPage(

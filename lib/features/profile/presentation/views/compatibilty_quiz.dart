@@ -56,7 +56,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
               children: [
                 Text(
                   'Kindly answer the questions below. Your responses will not be visible on your profile. It will only be visible to your matched users to provide them with more information on their compatibility with you.',
-                  style: textStyle14,
+                  style: textStyle12,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBoxH25(),
@@ -295,8 +295,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                 const SizedBoxH20(),
                 const CampaTitle(
                   num: '9',
-                  title:
-                      'Do you believe every Christian should speak in tongues?',
+                  title: 'Should every Christian desire to speak in tongues?',
                 ),
 
                 CompatRadio(

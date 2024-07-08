@@ -42,9 +42,7 @@ class _RegSuccessfulState extends State<RegSuccessful> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                '$svgPath/congrats.svg',
-              ),
+              SvgPicture.asset('$svgPath/congrats.svg'),
               const SizedBoxH20(),
               Text(
                 'Congratulations ${model.user!.username}',
@@ -55,11 +53,28 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                 ),
               ),
               const SizedBoxH20(),
-              Text(
-                ' You have successfully created a profile on Nexus! \n\nWe are launching soon and you will be able to search and view profiles. \n\nKindly tell your Christian single friends about Nexus & follow us on social media to stay updated!',
-                style: textStyle18.copyWith(
-                    fontSize: 12, fontWeight: FontWeight.w300, color: black),
-                textAlign: TextAlign.center,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text.rich(
+                  TextSpan(children: [
+                    const TextSpan(
+                        text:
+                            "You have successfully created a profile on Nexus! We are launching soon and you will be able to search and view profiles. Kindly tell your Christian single friends about Nexus & follow us on social media "),
+                    TextSpan(
+                        text: " @nexus4singles",
+                        style: textStyle18.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: black)),
+                    const TextSpan(text: " to stay updated!"),
+                  ]),
+                  style: textStyle18.copyWith(
+                      fontSize: 12,
+                      height: 1.5,
+                      fontWeight: FontWeight.w300,
+                      color: black),
+                  textAlign: TextAlign.center,
+                ),
               ),
               const SizedBoxH20(),
               const SocialMediaWidget(),

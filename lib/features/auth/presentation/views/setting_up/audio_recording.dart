@@ -26,7 +26,7 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
         title: SizedBox(
           width: width(context) * .5,
           child: LinearProgressIndicator(
-            value: 0.7,
+            value: 0.65,
             backgroundColor: newGrey,
             color: primary,
             borderRadius: BorderRadius.circular(20),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
@@ -49,6 +50,7 @@ class AuthNotifier with ChangeNotifier {
   final AuthenticationRemoteDatasource remote;
   final MyFormatter formatter;
   late String _code;
+  var username = "";
 
   bool _showPassword = true;
   bool _editProfile = false;
@@ -181,14 +183,12 @@ class AuthNotifier with ChangeNotifier {
     }
   }
 
-  Future<void> login({
-    required BuildContext context,
-    required Map<String, dynamic> map,
-  }) async {
+  Future<void> login(
+      {required BuildContext context,
+      required Map<String, dynamic> map}) async {
     EasyLoading.show();
     var response = await loginUsecase.call(map);
     response.fold((l) {
-      Logger().d('Erroor');
       EasyLoading.dismiss();
     }, (r) {
       EasyLoading.dismiss();
@@ -230,7 +230,7 @@ class AuthNotifier with ChangeNotifier {
             break;
         }
       } else {
-        Get.offAndToNamed(AppRoutes.congratulations);
+        Get.offAndToNamed(AppRoutes.congratulations, arguments: "");
       }
     });
   }
@@ -243,20 +243,18 @@ class AuthNotifier with ChangeNotifier {
     }
   }
 
-  Future<void> register({
-    required BuildContext context,
-    required Map<String, dynamic> map,
-  }) async {
+  Future<void> register(
+      {required BuildContext context,
+      required String username,
+      required Map<String, dynamic> map}) async {
     EasyLoading.show();
     registerUsecase.call(_credential).then((value) {
       value.fold((l) {
         EasyLoading.dismiss();
       }, (r) {
-        // EasyLoading.showSuccess('Accoount created');
-        FirebaseAuth.instance.currentUser!.updateDisplayName(map[kUSERNAME]);
+        const FlutterSecureStorage().write(key: "username", value: username);
         FirebaseAuth.instance.currentUser!.sendEmailVerification();
-
-        Get.toNamed(AppRoutes.congratulations);
+        Get.toNamed(AppRoutes.congratulations, arguments: username);
         EasyLoading.dismiss();
       });
     });

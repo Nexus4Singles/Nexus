@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/utils/methods.dart';
+import 'package:nexus/core/utils/toast.dart';
+import 'package:nexus/router.dart';
 import '../../../../core/models/location.dart';
 
 class ProfileCtr extends GetxController {
@@ -15,6 +17,9 @@ class ProfileCtr extends GetxController {
   final auth = FirebaseAuth.instance;
   TextEditingController searchText = TextEditingController();
   TextEditingController usernameCtr = TextEditingController();
+  TextEditingController currentPassword = TextEditingController();
+  TextEditingController newPassword = TextEditingController();
+  TextEditingController coNewPassword = TextEditingController();
   var eduLevel = "".obs;
   var profession = "".obs;
   var church = "".obs;
@@ -65,7 +70,6 @@ class ProfileCtr extends GetxController {
   }
 
   sendImageToDb(List<File> imageFiles) async {
-    print("Called to send to db");
     for (var file in imageFiles) {
       await upload(file).then((value) {
         imageUrls.add(value);
@@ -102,5 +106,44 @@ class ProfileCtr extends GetxController {
       "photos": FieldValue.arrayRemove([image])
     });
     EasyLoading.dismiss();
+  }
+
+  Future deleteAccount() async {
+    try {
+      EasyLoading.show();
+      await auth.currentUser!.delete();
+      EasyLoading.dismiss();
+      Get.offAllNamed(AppRoutes.login);
+    } catch (e) {
+      AppToast().showErrorToast(e.toString());
+      EasyLoading.dismiss();
+    }
+  }
+
+  Future changePassword() async {
+    if (currentPassword.text.isNotEmpty || newPassword.text.isNotEmpty) {
+      if (newPassword.text == coNewPassword.text ||
+          currentPassword.text == newPassword.text) {
+        try {
+          EasyLoading.show();
+          AuthCredential credential = EmailAuthProvider.credential(
+            email: auth.currentUser!.email!,
+            password: currentPassword.text,
+          );
+          await auth.currentUser?.reauthenticateWithCredential(credential);
+          await auth.currentUser!.updatePassword(newPassword.text);
+          Get.back();
+          EasyLoading.dismiss();
+        } catch (e) {
+          AppToast().showErrorToast(e.toString());
+          EasyLoading.dismiss();
+          print(e.toString());
+        }
+      } else {
+        AppToast().showErrorToast('Password needs to match');
+      }
+    } else {
+      AppToast().showErrorToast('Please enter a valid password');
+    }
   }
 }

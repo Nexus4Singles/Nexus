@@ -118,10 +118,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 text: 'Change Password',
                 icon: true,
                 onPress: () {
-                  AppToast().showErrorToast(
-                    'This feature will be available soon',
-                    header: 'Coming soon',
-                  );
+                  Get.toNamed(AppRoutes.changePassword);
                   // Get.toNamed(AppRoutes.changePassword);
                 }),
             const Divider(
@@ -144,11 +141,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 text: 'Delete Account',
                 icon: true,
                 onPress: () {
-                  AppToast().showErrorToast(
-                    'This feature will be available soon',
-                    header: 'Coming soon',
-                  );
-                  // Get.toNamed(AppRoutes.deleteAccount);
+                  Get.toNamed(AppRoutes.deleteAccount);
                 }),
             const Divider(
               color: Colors.transparent,

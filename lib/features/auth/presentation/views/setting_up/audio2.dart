@@ -104,7 +104,7 @@ class _Audio2ScreenState extends State<Audio2Screen> {
           title: SizedBox(
             width: width(context) * .5,
             child: LinearProgressIndicator(
-              value: 0.7,
+              value: 0.8,
               backgroundColor: newGrey,
               color: primary,
               borderRadius: BorderRadius.circular(20),
@@ -144,7 +144,6 @@ class _Audio2ScreenState extends State<Audio2Screen> {
         body: Padding(
           padding: EdgeInsets.all(15.sp),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Center(
                 child: Text(
@@ -153,6 +152,7 @@ class _Audio2ScreenState extends State<Audio2Screen> {
                       fontSize: 30, fontWeight: FontWeight.w700, color: black),
                 ),
               ),
+              const Spacer(flex: 3),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -175,17 +175,19 @@ class _Audio2ScreenState extends State<Audio2Screen> {
                   const SizedBoxH15(),
                   Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      'What are your thoughts on the role of a husband and a wife in marriage?',
-                      style: textStyle12.copyWith(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                        height: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                      child: Text(
+                        'What are your thoughts on the role of a husband and a wife in marriage?',
+                        style: textStyle12.copyWith(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          height: 2,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                  const SizedBoxH30(),
                   const SizedBoxH30(),
                   if (!isRecording && !isRecordingCompleted)
                     Column(
@@ -195,7 +197,7 @@ class _Audio2ScreenState extends State<Audio2Screen> {
                           style: textStyle18.copyWith(
                               fontSize: 28,
                               fontWeight: FontWeight.w600,
-                              color: friendGrey),
+                              color: black),
                         ),
                         const SizedBoxH10(),
                         // SvgPicture.asset(
@@ -213,11 +215,11 @@ class _Audio2ScreenState extends State<Audio2Screen> {
                               return Container();
                             }
                             return Text(
-                              '${snapshot.data!.inMinutes.toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? "00" : ('${snapshot.data!.inSeconds}')}',
+                              '${snapshot.data!.inMinutes.toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? "00" : (BaseHelper.getTwoDigit(snapshot.data!.inSeconds))}',
                               style: textStyle18.copyWith(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
-                                  color: friendGrey),
+                                  color: black),
                             );
                           },
                         ),
@@ -268,11 +270,10 @@ class _Audio2ScreenState extends State<Audio2Screen> {
                               style: textStyle18.copyWith(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
-                                  color: friendGrey),
+                                  color: black),
                             );
                           },
                         ),
-                        const SizedBoxH30(),
                         if (!isRecordingCompleted)
                           // Lottie.asset('assets/images/wave.json'),
                           AudioWaveforms(
@@ -295,62 +296,68 @@ class _Audio2ScreenState extends State<Audio2Screen> {
                   // SvgPicture.asset('assets/icons/audio1.svg'),
                 ],
               ),
-              const SizedBoxH25(),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        resetPlayer();
-                      },
-                      child: CircleAvatar(
-                        backgroundColor: warGrey,
-                        child: SvgPicture.asset(
-                          'assets/icons/refresh.svg',
-                          color: primary,
+              const Spacer(flex: 4),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 80.0),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            resetPlayer();
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: warGrey,
+                            child: SvgPicture.asset(
+                              'assets/icons/refresh.svg',
+                              color: primary,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    const SizedBoxW40(),
-                    Center(
-                      child: InkWell(
-                        onTap: () {
-                          if (isRecordingCompleted) {
-                            if (player.playing) {
-                              player.pause();
-                              setState(() {
-                                isPlaying = false;
-                              });
+                        const SizedBoxW40(),
+                        InkWell(
+                          onTap: () {
+                            if (isRecordingCompleted) {
+                              if (player.playing) {
+                                player.pause();
+                                // Logger().d(player.p);
+                                // player.bufferedPositionStream.
+                                setState(() {
+                                  isPlaying = false;
+                                });
+                              } else {
+                                player.play();
+                                setState(() {
+                                  isPlaying = true;
+                                });
+                                audioStream();
+                              }
                             } else {
-                              player.play();
-                              audioStream();
-                              setState(() {
-                                isPlaying = true;
-                              });
+                              _startOrStopRecording(model);
                             }
-                          } else {
-                            _startOrStopRecording(model);
-                          }
-                        },
-                        child: CircleAvatar(
-                          radius: 40,
-                          backgroundColor: warGrey,
-                          child: isRecordingCompleted
-                              ? SvgPicture.asset(isPlaying
-                                  ? "$svgPath/playing.svg"
-                                  : "$svgPath/play.svg")
-                              : SvgPicture.asset(isRecording
-                                  ? "$svgPath/playing.svg"
-                                  : "$svgPath/mic2.svg"),
+                            debugPrint(
+                                "is recording complete => $isRecordingCompleted ${player.playing}");
+                          },
+                          child: CircleAvatar(
+                            radius: 40,
+                            backgroundColor: warGrey,
+                            child: isRecordingCompleted
+                                ? SvgPicture.asset(isPlaying
+                                    ? "$svgPath/playing.svg"
+                                    : "$svgPath/play.svg")
+                                : SvgPicture.asset(isRecording
+                                    ? "$svgPath/stop.svg"
+                                    : "$svgPath/mic2.svg"),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+              const Spacer(),
             ],
           ),
         ),
@@ -457,10 +464,6 @@ class _Audio2ScreenState extends State<Audio2Screen> {
       model.setAudio2(path);
       debugPrint("Recorded file size: ${model.audioPath2}");
     }
-  }
-
-  void _refreshWave() {
-    if (isRecording) recorderController.refresh();
   }
 
   void audioStream() {

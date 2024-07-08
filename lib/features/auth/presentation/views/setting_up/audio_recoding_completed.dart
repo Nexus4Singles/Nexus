@@ -147,7 +147,7 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                   player.pause();
                 },
               ),
-              const SizedBoxH25(),
+              const SizedBoxH40(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -185,8 +185,7 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                   player2.pause();
                 },
               ),
-
-              const SizedBoxH25(),
+              const SizedBoxH40(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -222,21 +221,6 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                   player3.pause();
                 },
               ),
-              // Container(
-              //   decoration: BoxDecoration(
-              //     color: grey,
-              //     borderRadius: BorderRadius.circular(15),
-              //   ),
-              //   padding:
-              //       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              //   child: Row(
-              //     children: [
-              //       SvgPicture.asset('assets/icons/play.svg'),
-              //       const SizedBoxW10(),
-              //       SvgPicture.asset('assets/icons/wave.svg'),
-              //     ],
-              //   ),
-              // ),
               const SizedBoxH30(),
             ],
           ),
@@ -252,7 +236,8 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                 },
                 child: Text(
                   'Complete Profile',
-                  style: textStyle16.copyWith(color: white),
+                  style: textStyle16.copyWith(
+                      color: white, fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBoxH30()

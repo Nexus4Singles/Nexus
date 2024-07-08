@@ -208,15 +208,20 @@ class _UserCardState extends State<UserCard> {
                           ),
                           InkWell(
                             onTap: widget.onSaved,
-                            child: CircleAvatar(
-                              backgroundColor:
-                                  ctr.ctr.myProfile.value.mySaves == null ||
-                                          !ctr.ctr.myProfile.value.mySaves!
-                                              .contains(widget.userModel.id)
-                                      ? white
-                                      : primary,
-                              radius: 25,
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: primary),
+                                color:
+                                    ctr.ctr.myProfile.value.mySaves == null ||
+                                            !ctr.ctr.myProfile.value.mySaves!
+                                                .contains(widget.userModel.id)
+                                        ? white
+                                        : primary,
+                              ),
                               child: SvgPicture.asset("$svgPath/bookmark.svg",
+                                  width: 24,
                                   color:
                                       ctr.ctr.myProfile.value.mySaves == null ||
                                               !ctr.ctr.myProfile.value.mySaves!

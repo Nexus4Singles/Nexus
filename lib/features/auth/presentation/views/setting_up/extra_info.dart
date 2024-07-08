@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -112,6 +111,7 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                     const SizedBoxH20(),
                     GooglePlaceAutoCompleteTextField(
                       textEditingController: model.search,
+                      textStyle: textStyle14,
                       googleAPIKey: 'AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y',
                       // countries: const ['NG'],
                       inputDecoration: InputDecoration(
@@ -150,7 +150,6 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                             double.parse(prediction.lat!),
                             double.parse(prediction.lat!),
                             prediction.placeId!);
-                        print(prediction.placeId);
                       },
                       itemClick: (prediction) {
                         // model.getFormattedLocation(
@@ -166,7 +165,10 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                               const Icon(Icons.location_on),
                               const SizedBox(width: 7),
                               Expanded(
-                                  child: Text(prediction.description ?? ""))
+                                  child: Text(
+                                prediction.description ?? "",
+                                style: textStyle14,
+                              ))
                             ],
                           ),
                         );
@@ -222,6 +224,9 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                     church == "Other"
                         ? CustomTextField(
                             controller: churchController,
+                            onChanged: (val) {
+                              // church = val;
+                            },
                             hintText: "Enter your Church's full name")
                         : const SizedBox(),
                     const SizedBoxH40(),
@@ -234,9 +239,7 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
           ),
         ),
         bottomSheet: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 15.sp,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 15.sp),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -244,7 +247,9 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                 onPressed: () {
                   if (model.location.place!.contains(" ")) {
                     bool validate = _formkey.currentState!.validate();
-                    if (validate) {
+                    if (validate &&
+                        church.isNotEmpty &&
+                        churchController.text.isNotEmpty) {
                       Map<String, dynamic> map = {
                         kCOUNTRY: 'Nigeria', //todo Nigeria as default
                         kCHURCHNAME: churchController.text.isEmpty
@@ -263,6 +268,9 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                           Get.toNamed(AppRoutes.hobbies);
                         },
                       );
+                    } else {
+                      AppToast().showErrorToast(
+                          "Please type the name of your Church");
                     }
                   } else {
                     AppToast().showErrorToast(

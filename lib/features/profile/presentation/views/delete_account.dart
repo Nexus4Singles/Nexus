@@ -1,47 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/button_outline.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/features/profile/presentation/controllers/profile_ctr.dart';
 
-class DeleteAccountScreen extends StatefulWidget {
-  const DeleteAccountScreen({super.key});
+class DeleteAccountScreen extends StatelessWidget {
+  DeleteAccountScreen({super.key});
 
-  @override
-  State<DeleteAccountScreen> createState() => _DeleteAccountScreenState();
-}
+  final ctr = Get.put(ProfileCtr());
 
-class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
+      appBar: AppBar(backgroundColor: white),
       body: Padding(
-        padding: const EdgeInsets.symmetric(),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/sadface.png'),
+            SvgPicture.asset('$svgPath/sad.svg'),
             const SizedBoxH20(),
             Text(
-              'We are sad to see you go. If you want to\npermanently delete your account, click Delete',
+              "We are sad to see you go but we would be more excited if you're leaving because you found your partner here. Please do write to through the contact us page, if this is the case",
+              textAlign: TextAlign.center,
               style:
                   textStyle16.copyWith(fontWeight: FontWeight.w600, color: ash),
             ),
             const SizedBoxH25(),
             CustomButton(
-              onPressed: () {},
-              text: 'Keep Account',
-              textColor: white,
-            ),
-            const SizedBoxH15(),
-            CustomButtonOut(
-              onPressed: () {},
+              onPressed: () {
+                ctr.deleteAccount();
+              },
               bgColor: primary,
               text: 'Delete',
-              textColor: primary,
+              textColor: white,
             ),
+            const SizedBoxH40(),
+            const SizedBoxH40(),
           ],
         ),
       ),

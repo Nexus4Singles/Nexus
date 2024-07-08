@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/button.dart';
@@ -14,13 +15,27 @@ import 'package:provider/provider.dart';
 import '../../../../core/assets.dart';
 
 class CongratulationScreen extends StatefulWidget {
-  const CongratulationScreen({super.key});
+  final String username;
+  const CongratulationScreen({super.key, required this.username});
 
   @override
   State<CongratulationScreen> createState() => _CongratulationScreenState();
 }
 
 class _CongratulationScreenState extends State<CongratulationScreen> {
+  var username = "";
+
+  init() async {
+    username = (await const FlutterSecureStorage().read(key: "username"))!;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthNotifier>(builder: (context, model, _) {
@@ -59,9 +74,10 @@ class _CongratulationScreenState extends State<CongratulationScreen> {
                               SvgPicture.asset('$svgPath/congrats.svg'),
                               const SizedBoxH20(),
                               Text(
-                                'Hello ${model.curUser!.displayName ?? ""}',
+                                'Hello ${username}',
+                                overflow: TextOverflow.ellipsis,
                                 style: headerStyle.copyWith(
-                                  fontSize: 32.sp,
+                                  fontSize: 28.sp,
                                   fontWeight: FontWeight.w700,
                                   color: black,
                                 ),
@@ -71,7 +87,8 @@ class _CongratulationScreenState extends State<CongratulationScreen> {
                                 "You have successfully created an account on Nexus! \nKindly click on the verification link sent to your email inbox/spam to activate your account. Please note that you won't be able to sign in until you have verified your account ",
                                 textAlign: TextAlign.center,
                                 style: textStyle14.copyWith(
-                                    fontWeight: FontWeight.w400, color: black),
+                                    fontWeight: FontWeight.w300,
+                                    color: black.withOpacity(0.7)),
                               ),
                               // const SizedBoxH20(),
                               // Text(
