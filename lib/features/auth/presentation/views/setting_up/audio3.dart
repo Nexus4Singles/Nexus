@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,8 +21,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart' as rx;
-// import 'package:wave/config.dart';
-// import 'package:wave/wave.dart';
 
 class Audio3Screen extends StatefulWidget {
   const Audio3Screen({super.key});
@@ -49,6 +46,8 @@ class _Audio3ScreenState extends State<Audio3Screen> {
   bool isLoading = true;
   bool recordingCompleted = false;
   late Directory appDirectory;
+  Duration? recPosition = Duration.zero;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -100,7 +99,7 @@ class _Audio3ScreenState extends State<Audio3Screen> {
           title: SizedBox(
             width: width(context) * .5,
             child: LinearProgressIndicator(
-              value: 0.7,
+              value: 0.9,
               backgroundColor: newGrey,
               color: primary,
               borderRadius: BorderRadius.circular(20),
@@ -113,9 +112,18 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                 onTap: () {
                   if (recordingCompleted) {
                     Get.toNamed(AppRoutes.audio4);
+                  } else if (recPosition!.inSeconds.isGreaterThan(45) &&
+                      isRecording == false) {
+                    Get.toNamed(AppRoutes.audio4);
+                  } else if (recPosition!.inSeconds.isGreaterThan(45)) {
+                    AppToast()
+                        .showErrorToast('Stop the audio below to continue');
                   } else {
-                    AppToast().showErrorToast('Audio must be upto 60 secs');
+                    AppToast().showErrorToast(
+                        'Audio must be not be less than 45 secs');
                   }
+                  debugPrint(
+                      "is completed = > $recordingCompleted ${recPosition!.inSeconds}");
                 },
                 child: Text(
                   'Next',
@@ -131,7 +139,6 @@ class _Audio3ScreenState extends State<Audio3Screen> {
         body: Padding(
           padding: EdgeInsets.all(13.sp),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Center(
                 child: Text(
@@ -140,6 +147,7 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                       fontSize: 30, fontWeight: FontWeight.w700, color: black),
                 ),
               ),
+              const Spacer(flex: 3),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -162,14 +170,27 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                   const SizedBoxH15(),
                   Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      'What are your favorite qualities or traits about yourself?',
-                      style: textStyle12.copyWith(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                        height: 2,
-                      ),
-                      textAlign: TextAlign.center,
+                    child: Column(
+                      children: [
+                        Text(
+                          'What are your favorite qualities or traits about yourself?',
+                          style: textStyle12.copyWith(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            height: 2,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          '(If you have a good sense of humor, this is also an opportunity to make a great impression on listeners by being creative with your response)',
+                          style: textStyle12.copyWith(
+                              color: dustyGrey,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              height: 2),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -191,7 +212,7 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                           style: textStyle18.copyWith(
                               fontSize: 28,
                               fontWeight: FontWeight.w600,
-                              color: friendGrey),
+                              color: black),
                         ),
                         const SizedBoxH10(),
                         // SvgPicture.asset(
@@ -209,15 +230,14 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                               return Container();
                             }
                             return Text(
-                              '${snapshot.data!.inMinutes.toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? "00" : ('${snapshot.data!.inSeconds}0')}',
+                              '${snapshot.data!.inMinutes.toString()}:${BaseHelper.getTwoDigit(snapshot.data!.inSeconds) == '60' ? "00" : (BaseHelper.getTwoDigit(snapshot.data!.inSeconds))}',
                               style: textStyle18.copyWith(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
-                                  color: friendGrey),
+                                  color: black),
                             );
                           },
                         ),
-
                         Row(children: [
                           Expanded(
                             child: StreamBuilder<PositionData>(
@@ -248,23 +268,6 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                             ),
                           ),
                         ]),
-                        // StreamBuilder<Duration?>(
-                        //   stream: player.durationStream,
-                        //   builder: (context, snapshot) {
-                        //     if (!snapshot.hasData) {
-                        //       return Container();
-                        //     }
-                        //     return Text(
-                        //       '${snapshot.data!.inMinutes.toString()}:${snapshot.data!.inSeconds.toString()}',
-                        //       style: textStyle18.copyWith(
-                        //           fontSize: 28,
-                        //           fontWeight: FontWeight.w200,
-                        //           color: friendGrey),
-                        //     );
-                        //   },
-                        // ),
-                        //   ],
-                        // ),
                       ],
                     ),
                   if (isRecording)
@@ -281,11 +284,10 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                               style: textStyle18.copyWith(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
-                                  color: friendGrey),
+                                  color: black),
                             );
                           },
                         ),
-                        const SizedBoxH30(),
                         if (!isRecordingCompleted)
                           // Lottie.asset('assets/images/wave.json'),
                           AudioWaveforms(
@@ -308,65 +310,70 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                   // SvgPicture.asset('assets/icons/audio1.svg'),
                 ],
               ),
-              const SizedBoxH25(),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          isRecording = false;
-                          isRecordingCompleted = false;
-                        });
-                      },
-                      child: CircleAvatar(
-                        backgroundColor: warGrey,
-                        child: SvgPicture.asset(
-                          'assets/icons/refresh.svg',
-                          color: primary,
+              const Spacer(flex: 4),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 80.0),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            resetPlayer();
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: warGrey,
+                            child: SvgPicture.asset(
+                              'assets/icons/refresh.svg',
+                              color: primary,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    const SizedBoxW40(),
-                    Center(
-                      child: InkWell(
-                        onTap: () {
-                          if (isRecordingCompleted) {
-                            if (player.playing) {
-                              player.pause();
-                              setState(() {
-                                isPlaying = false;
-                              });
+                        const SizedBoxW40(),
+                        InkWell(
+                          onTap: () {
+                            if (isRecordingCompleted) {
+                              if (player.playing) {
+                                player.pause();
+                                // Logger().d(player.p);
+                                // player.bufferedPositionStream.
+                                setState(() {
+                                  isPlaying = false;
+                                });
+                              } else {
+                                player.play();
+                                setState(() {
+                                  isPlaying = true;
+                                });
+                                audioStream();
+                              }
                             } else {
-                              player.play();
-                              audioStream();
-                              setState(() {
-                                isPlaying = true;
-                              });
+                              _startOrStopRecording(model);
                             }
-                          } else {
-                            _startOrStopRecording(model);
-                          }
-                        },
-                        child: CircleAvatar(
-                          radius: 40,
-                          backgroundColor: warGrey,
-                          child: isRecordingCompleted
-                              ? SvgPicture.asset(isPlaying
-                                  ? "$svgPath/playing.svg"
-                                  : "$svgPath/play.svg")
-                              : SvgPicture.asset(isRecording
-                                  ? "$svgPath/playing.svg"
-                                  : "$svgPath/mic2.svg"),
+                            debugPrint(
+                                "is recording complete => $isRecordingCompleted ${player.playing}");
+                          },
+                          child: CircleAvatar(
+                            radius: 40,
+                            backgroundColor: warGrey,
+                            child: isRecordingCompleted
+                                ? SvgPicture.asset(isPlaying
+                                    ? "$svgPath/playing.svg"
+                                    : "$svgPath/play.svg")
+                                : SvgPicture.asset(
+                                    isRecording
+                                        ? "$svgPath/stop.svg"
+                                        : "$svgPath/mic2.svg",
+                                  ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+              const Spacer(),
             ],
           ),
         ),
@@ -398,13 +405,28 @@ class _Audio3ScreenState extends State<Audio3Screen> {
           (position, bufferedPosition, duration) => PositionData(
               position, bufferedPosition, duration ?? Duration.zero));
 
+  void resetPlayer() async {
+    await recorderController.stop(true);
+    _positionDataStream.listen((event) {
+      event.position = Duration.zero;
+      event.bufferedPosition = Duration.zero;
+      event.duration = Duration.zero;
+    });
+    player.stop();
+    _timer!.cancel();
+    setState(() {
+      isRecording = false;
+      isRecordingCompleted = false;
+      recPosition = Duration.zero;
+    });
+  }
+
   void _startOrStopRecording(AuthNotifier model) async {
+    debugPrint("This has been called...");
     try {
       if (isRecording) {
         recorderController.reset();
-
         final path = await recorderController.stop(false);
-
         if (path != null) {
           debugPrint(path);
           setState(() {
@@ -416,10 +438,21 @@ class _Audio3ScreenState extends State<Audio3Screen> {
           debugPrint("Recorded file size: ${model.audioPath3}");
         }
       } else {
+        if (!recorderController.hasPermission) {
+          //  recorderController.
+        }
+        // Future.delayed(Duration(seconds: 4));
         await recorderController.record(path: path!);
-        Timer(Duration(seconds: model.recordingEndSecs), () {
-          _stopRecording(model);
+
+        _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+          setState(() {
+            recPosition = Duration(seconds: recPosition!.inSeconds + 1);
+          });
+          if (recPosition!.inSeconds.isEqual(model.recordingEndSecs)) {
+            _stopRecording(model);
+          }
         });
+        debugPrint("this is recording duration ${recPosition!.inSeconds}");
       }
     } catch (e) {
       debugPrint(e.toString());

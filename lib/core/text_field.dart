@@ -92,14 +92,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
         contentPadding: const EdgeInsets.all(15),
         border: outlineInputBorder.copyWith(
           borderRadius: BorderRadius.circular(widget.radius!),
-          borderSide: const BorderSide(
-            color: textBorderColor,
+          borderSide: BorderSide(
+            color: widget.borderColor ?? textBorderColor,
           ),
         ),
         enabledBorder: outlineInputBorder.copyWith(
           borderRadius: BorderRadius.circular(widget.radius!),
-          borderSide: const BorderSide(
-            color: textBorderColor,
+          borderSide: BorderSide(
+            color: widget.borderColor ?? textBorderColor,
           ),
         ),
         focusedBorder: outlineInputBorder.copyWith(

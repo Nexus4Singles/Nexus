@@ -19,6 +19,10 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       desiredQualities: (json['desired_qualities'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      unRecommendUsers: (json['unRecommendUsers'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
       hobbies:
           (json['hobbies'] as List<dynamic>?)?.map((e) => e as String).toList(),
       photos:

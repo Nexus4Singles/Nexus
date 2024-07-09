@@ -30,14 +30,9 @@ class ChatContainer extends StatelessWidget {
           radius: 24,
           backgroundImage: NetworkImage(image),
         ),
-        subtitle:
-            Text(text, style: textStyle12, overflow: TextOverflow.ellipsis),
-        contentPadding: EdgeInsets.zero,
-        trailing: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        subtitle: Row(
           children: [
-            Text(timeago.format(time).capitalizeFirst!, style: textStyle12),
+            Text(text, style: textStyle12, overflow: TextOverflow.ellipsis),
             count.isGreaterThan(0)
                 ? CircleAvatar(
                     radius: 12,
@@ -50,9 +45,16 @@ class ChatContainer extends StatelessWidget {
                 : const SizedBox()
           ],
         ),
-        title: Text(
-          name,
-          style: textStyle14.copyWith(fontWeight: FontWeight.w600),
+        contentPadding: EdgeInsets.zero,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              name,
+              style: textStyle14.copyWith(fontWeight: FontWeight.w600),
+            ),
+            Text(timeago.format(time).capitalizeFirst!, style: textStyle12),
+          ],
         ),
       ),
     );

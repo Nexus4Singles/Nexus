@@ -26,28 +26,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'id': '1',
       "title": "Create a Profile",
       "subtitle":
-          "Part of the profile creation process requires users to make audio recordings to answer three (3) questions which require subjective responses. \n\nThe aim is to provide you with insights into the beliefs & thought processes of users, beyond their pictures & bio-data. This would make it easier for you to decide who to connect with. \n\nHence, if you don´t feel confident enough to properly articulate your thoughts, this app may not be ideal for you.",
+          "Part of the profile creation process requires users to make audio recordings answering 3 questions centered around their christian faith, marriage beliefs & personality. \n\nListening to the responses of different users will give you  insights into their beliefs & thought processes, beyond profile pictures & texts and this can help you to make informed decisions on who to connect with. \n\nIf you struggle with articulating your thoughts, we highly recommend improving on this before joining Nexus because your recordings will strongly determine how your profile is perceived by other users.",
       "image": iOnboard1,
     },
     {
       'id': '2',
-      "title": "Search Profile",
+      "title": "Search Profiles",
       "subtitle":
-          "Your profile and audio recordings will only be visible to opposite gender users. \n\nYou will also be able to search and view profiles of opposite gender users living in any country, with the option of filters to narrow down your search.\n\nNexus is currently available to Nigerians living anywhere in the world, but we plan to scale to other countries gradually. Kindly stay patient if you are not Nigerian. ",
+          "Your profile will only be visible to opposite gender users and you will also be able to directly search & view profiles of opposite gender users living in any country, with the option of filters to narrow down your search. \n\nOur goal is to ensure that any unmarried, widowed, or divorced Christian who has invested in personal growth, has a high chance of meeting a suitable partner on this app \n\nNexus is currently available to Nigerians living anywhere in the world, but we are scaling to other nationalities rapidly. Kindly stay patient if you are not Nigerian. ",
       "image": iOnboard2,
     },
     {
       'id': '3',
       "title": "Find your Match",
       "subtitle":
-          "You will receive notifications of opposite gender users who have liked your profile. However, they would not be able to connect with you until you have equally viewed and liked their profiles, which automatically leads to a MATCH.\n\nThis is to preserve your privacy and security by ensuring  only users you approve of are able to connect with you. \n\nIt also becomes pointless for those looking for flings or hookups to create profiles, because they would find it difficult to use this app for such purposes. ",
+          "You will receive notifications of opposite gender users who have liked your profile. However, they would not be able to connect with you until you have equally viewed and liked their profiles, which automatically leads to a MATCH.\n\nThis is to preserve your privacy & security by ensuring  only users you approve of, are able to connect with you, which  makes it really difficult for people seeking flings or hookups to use this app for such purposes. \n\nYou will also be able to view a compatibility data that shows you more information about your compatibility with MATCHED users. ",
       "image": iOnboard3,
     },
     {
       'id': '4',
       "title": "Chat",
       "subtitle":
-          "You will only be able to chat with your MATCH list. This means random users will not be able to chat with you. \n\nThis is not just another match-making or dating app, but a platform to help devout Christian singles seeking Godly relationships leading to kingdom marriages, find and connect with each other. \n\nWe provide the visibility you need, while the rest is up to you, as you rely on the HolySpirit for discernment. \n\nWe wish you GODSPEED!!",
+          "You will only be able to chat with your MATCH list. This means random users will not be able to send messages to you. \n\nThis is not just another match-making or dating app, Nexus is a platform to help devout Christian singles seeking Godly relationships leading to marriages, find and connect with each other. \n\nWe provide the visibility you need, while the rest is up to you, as you rely on the HolySpirit for discernment. \n\nWe wish you GODSPEED!!",
       "image": iOnboard4,
     },
   ];
@@ -197,10 +197,7 @@ class OnBoardingPage extends StatelessWidget {
               const SizedBoxH20(),
               Text(
                 map['subtitle'],
-                style: textStyle14.copyWith(
-                  color: white,
-                  fontSize: 13.5,
-                ),
+                style: textStyle14.copyWith(color: white, fontSize: 13.5),
                 textAlign: TextAlign.center,
               ),
             ],

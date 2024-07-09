@@ -6,6 +6,7 @@ import 'package:nexus/core/button_outline.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/core/utils/modals.dart';
 import 'package:nexus/features/auth/data/data-sources/local-datasource/list_items.dart';
 import 'package:nexus/features/auth/presentation/widgets/drop_down.dart';
 
@@ -34,7 +35,7 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
         children: [
           Center(
             child: Text(
-              'Filter',
+              'Filters',
               style: textStyle16.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -70,21 +71,22 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
           const SizedBoxH20(),
           Text(
             'Age Range',
-            style: textStyle16.copyWith(color: otherGrey),
+            style: textStyle16.copyWith(color: black),
           ),
           const SizedBoxH10(),
           Row(
             children: [
               Text(
                 '21',
-                style: textStyle16.copyWith(color: otherGrey),
+                style: textStyle16.copyWith(color: black),
               ),
               Obx(
                 () => Expanded(
                   child: RangeSlider(
                     min: 20,
                     max: 70,
-                    divisions: 50,
+                    inactiveColor: primary.withOpacity(0.2),
+                    divisions: 10,
                     activeColor: primary,
                     values: ctr.rangeValues.value,
                     labels: RangeLabels(
@@ -98,7 +100,7 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
               ),
               Text(
                 '70',
-                style: textStyle16.copyWith(color: otherGrey),
+                style: textStyle16.copyWith(color: black),
               ),
             ],
           ),
@@ -117,7 +119,8 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
               Expanded(
                 child: CustomButton(
                   onPressed: () {
-                    ctr.filterUsers();
+                    subscribeModal(context);
+                    // ctr.filterUsers();
                   },
                   text: 'Apply',
                 ),

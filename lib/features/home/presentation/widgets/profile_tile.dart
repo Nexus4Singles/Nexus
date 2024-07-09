@@ -37,7 +37,7 @@ class ProfileTile extends StatelessWidget {
             Text(
               model.currentUser == null
                   ? 'Hi'
-                  : 'Hi ${model.currentUser!.username} 👋',
+                  : 'Hi ${model.currentUser!.username} 👋🏽',
               style: headerStyle.copyWith(
                 fontSize: 20.sp,
               ),

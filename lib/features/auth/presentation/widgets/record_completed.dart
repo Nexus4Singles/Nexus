@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:logger/logger.dart';
+import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/features/auth/presentation/widgets/seek_bar.dart';
@@ -64,29 +66,21 @@ class _AudioFilePlayerState extends State<AudioFilePlayer> {
                 });
               }
             },
-            child: CircleAvatar(
-              backgroundColor: primary,
-              radius: 30,
-              child: widget.player.processingState == ProcessingState.buffering
-                  ? const SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation(Colors.white),
-                        strokeWidth: 3,
+            child: widget.player.processingState == ProcessingState.buffering
+                ? const SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation(Colors.white),
+                      strokeWidth: 3,
+                    ),
+                  )
+                : isPlaying
+                    ? SvgPicture.asset("$svgPath/playing.svg", width: 56)
+                    : SvgPicture.asset(
+                        "$svgPath/play.svg",
+                        width: 56,
                       ),
-                    )
-                  : isPlaying
-                      ? const Icon(
-                          Iconsax.pause,
-                          color: white,
-                        )
-                      : const Icon(
-                          Icons.play_arrow,
-                          color: white,
-                          size: 40,
-                        ),
-            ),
           ),
           const SizedBoxW10(),
           Expanded(

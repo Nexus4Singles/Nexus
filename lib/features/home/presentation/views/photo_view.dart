@@ -44,6 +44,9 @@ class _PhotoViewScreenState extends State<PhotoViewScreen> {
           children: [
             StoryPageView(
               initialPage: widget.selectedIndex,
+              initialStoryIndex: (int pageIndex) {
+                return widget.selectedIndex;
+              },
               itemBuilder: (context, pageIndex, storyIndex) {
                 final story = widget.photos[storyIndex];
                 return Container(
@@ -70,15 +73,9 @@ class _PhotoViewScreenState extends State<PhotoViewScreen> {
                 );
               },
               indicatorAnimationController: indicatorAnimationController,
-              // initialStoryIndex: (pageIndex) {
-              //   if (pageIndex == 0) {
-              //     return 1;
-              //   }
-              //   return 0;
-              // },
-              pageLength: 1,
+              pageLength: widget.photos.length,
               storyLength: (int pageIndex) {
-                return model.selectedUser?.photos?.length ?? 0;
+                return widget.photos.length;
               },
               onPageLimitReached: () {
                 Navigator.pop(context);

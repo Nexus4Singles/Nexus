@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
+import 'package:nexus/features/profile/presentation/controllers/profile_ctr.dart';
 
-class ChangePasswordScreen extends StatefulWidget {
-  const ChangePasswordScreen({super.key});
+class ChangePasswordScreen extends StatelessWidget {
+  ChangePasswordScreen({super.key});
 
-  @override
-  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
-}
+  final ctr = Get.put(ProfileCtr());
 
-class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,39 +27,34 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         foregroundColor: black,
         elevation: 0,
       ),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SizedBox(
+          height: 54,
+          child: CustomButton(
+            onPressed: () {
+              ctr.changePassword();
+            },
+            text: 'Update Password',
+            textColor: white,
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
+            const SizedBoxH40(),
             CustomTextField(
-                controller: TextEditingController(),
-                hintText: 'Current Password'),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  'Forgot password',
-                  style: textStyle10.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: primary,
-                  ),
-                )
-              ],
-            ),
+                controller: ctr.currentPassword, hintText: 'Current Password'),
             const SizedBoxH20(),
             CustomTextField(
-                controller: TextEditingController(), hintText: 'New Password'),
+                controller: ctr.newPassword, hintText: 'New Password'),
             const SizedBoxH20(),
             CustomTextField(
-                controller: TextEditingController(),
-                hintText: 'Confirm Password'),
+                controller: ctr.coNewPassword, hintText: 'Confirm Password'),
             const SizedBoxH25(),
             const SizedBoxH40(),
-            CustomButton(
-              onPressed: () {},
-              text: 'save',
-              textColor: white,
-            )
           ],
         ),
       ),

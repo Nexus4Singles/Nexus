@@ -62,6 +62,7 @@ class _DesiredQualityScreenState extends State<DesiredQualityScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text.rich(
+                        textAlign: TextAlign.center,
                         TextSpan(children: [
                           const TextSpan(
                               text:

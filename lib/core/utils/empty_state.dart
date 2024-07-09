@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nexus/core/assets.dart';
+import 'package:nexus/core/button.dart';
+import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 
 class EmptyStateWidget extends StatelessWidget {
   final String svgAssetPath;
   final String message;
+  final String buttonText;
+  final Function? buttonFunc;
 
   const EmptyStateWidget({
     Key? key,
     this.svgAssetPath = "",
+    this.buttonText = '',
+    this.buttonFunc,
     required this.message,
   }) : super(key: key);
 
@@ -26,13 +32,23 @@ class EmptyStateWidget extends StatelessWidget {
           ),
           Text(
             message,
-            style: textStyle18,
+            textAlign: TextAlign.center,
+            style: textStyle14,
           ),
+          const SizedBoxH20(),
+          buttonText.isNotEmpty
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: CustomButton(
+                      onPressed: () {
+                        buttonFunc!();
+                      },
+                      text: buttonText,
+                      borderRadius: 100),
+                )
+              : const SizedBox()
         ],
       ),
     );
   }
 }
-
-const defaultImage =
-    "https://cdn.dribbble.com/users/28726/screenshots/1192614/img-placeholder.gif";

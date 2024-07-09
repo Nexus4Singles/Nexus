@@ -98,7 +98,7 @@ class BaseHelper {
   }
 
   static String getTwoDigit(int number) {
-    String val = number < 10 ? '0$number' : '$number';
+    String val = number.isLowerThan(10) ? '0$number' : '$number';
     return val;
   }
 }

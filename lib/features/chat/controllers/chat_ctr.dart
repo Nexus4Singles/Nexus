@@ -29,17 +29,19 @@ class ChatCtr extends GetxController {
         .get();
     var chats =
         data.docs.map((data) => ChatModel.fromJson(data.data())).toList();
-    for (var chats in chats) {
+    for (var chat in chats) {
+      print("I got here second for explore chat ==> $chat");
       for (var val in exploreCtr.allUsers) {
-        if (chats.participant.contains(val.id)) {
+        if (chat.participant.contains(val.id)) {
           allChatUsers.add(ChatModel(
-              lastMessage: chats.lastMessage,
-              messageID: chats.messageID,
-              participant: chats.participant,
-              timestamp: chats.timestamp,
-              unreadCount: chats.unreadCount,
+              lastMessage: chat.lastMessage,
+              messageID: chat.messageID,
+              participant: chat.participant,
+              timestamp: chat.timestamp,
+              unreadCount: chat.unreadCount,
               userModel: val,
-              userSentLastMessage: chats.userSentLastMessage));
+              userSentLastMessage: chat.userSentLastMessage));
+          print("I got here second ${allChatUsers.length}");
         }
       }
     }
@@ -47,6 +49,7 @@ class ChatCtr extends GetxController {
         .where((val) => val.userModel!.id != auth.currentUser!.uid)
         .toList();
     allChatUsers.assignAll(filteredUsers);
+    print("I got here third ${allChatUsers.length}");
   }
 
   saveToChat(String id, messageID) {
