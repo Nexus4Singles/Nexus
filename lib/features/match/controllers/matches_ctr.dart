@@ -4,13 +4,15 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/models/user.dart';
+import 'package:nexus/core/utils/app_logger.dart';
 import 'package:nexus/features/explore/controllers/explore_ctr.dart';
+import 'package:nexus/features/home/controllers/notification_controller.dart';
 import 'package:nexus/features/match/presentation/views/matched.dart';
 import '../../../core/constant.dart';
 import '../../chat/controllers/chat_ctr.dart';
 
 class MatchesCtr extends GetxController {
-  static MatchesCtr instance = Get.find<MatchesCtr>();
+  static MatchesCtr get instance => Get.find<MatchesCtr>();
 
   var isLoading = false.obs;
   var ctr = ExploreCtr.instance;
@@ -53,8 +55,10 @@ class MatchesCtr extends GetxController {
   }
 
   checkSavedAlready(String id) {
-    return ctr.myProfile.value.mySaves!.contains(id);
+    return ctr.myProfile.value.mySaves?.contains(id);
   }
+
+  var notificationController = NotificationController.instance;
 
   Future<void> toggleLike(UserModel userModel) async {
     EasyLoading.show();
@@ -65,6 +69,7 @@ class MatchesCtr extends GetxController {
       await removeFromLikeMe(userModel.id, false);
       await removeUserMyLike(userModel.id, false);
       await saveBothToMatched(userModel);
+      notificationController.sendMatchNotification(userModel.id);
       // go to matched user screen & remove the myLike  from the other users & remove like Me from the and create a chat view instead
     } else {
       if (ctr.myProfile.value.myLikes != null &&
@@ -76,6 +81,10 @@ class MatchesCtr extends GetxController {
         print("I was called here third");
         addUserToMyLike(userModel.id);
         addUserToLikeMe(userModel.id);
+
+        // IMPLEMENT HERE
+        notificationController.sendLikeNotification(userModel.id);
+        appLog(userModel.toJson());
       }
       await ctr.getMyProfile();
       setMyLikes();
@@ -125,7 +134,7 @@ class MatchesCtr extends GetxController {
   Future<void> toggleSave(String id) async {
     EasyLoading.show();
 
-    final updateOperation = checkSavedAlready(id)
+    final updateOperation = checkSavedAlready(id) ?? false
         ? FieldValue.arrayRemove([id])
         : FieldValue.arrayUnion([id]);
 

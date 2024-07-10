@@ -32,7 +32,7 @@ class HomeNotifier with ChangeNotifier {
     getUsersUsecase.call(const NoParams()).then((value) {
       value.fold((l) => l, (r) {
         var unrecommendedUsers = <String>[];
-        unrecommendedUsers.assignAll(currentUser!.unrecommendedUsers!);
+        unrecommendedUsers.assignAll(currentUser!.unrecommendedUsers ?? []);
         allUsers = users = r
             .where((e) => e.gender != currentUser!.gender)
             .where((el) => el.registrationProgress == 'completed')
@@ -53,10 +53,24 @@ class HomeNotifier with ChangeNotifier {
       (l) => l,
       (r) {
         currentUser = r;
+        appLog("user", currentUser);
         getUsers();
         notifyListeners();
       },
     );
+  }
+
+  Future<UserModel?> getUser() async {
+    var data = await readProfileUsecase.call(const NoParams());
+    data.fold(
+      (l) => l,
+      (r) {
+        currentUser = r;
+        notifyListeners();
+      },
+    );
+
+    return currentUser;
   }
 
   UserModel? selectedUser;

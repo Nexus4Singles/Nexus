@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/models/message_model.dart';
+import 'package:nexus/core/models/user.dart';
 import 'package:nexus/features/explore/controllers/explore_ctr.dart';
+import 'package:nexus/features/home/controllers/notification_controller.dart';
 import '../../../core/models/chats_model.dart';
 import '../../../core/utils/methods.dart';
 
@@ -72,7 +74,8 @@ class ChatCtr extends GetxController {
         .snapshots();
   }
 
-  sendMessage(String messageID, String messages) async {
+  var notificationController = NotificationController.instance;
+  sendMessage(String messageID, String messages, UserModel recipient) async {
     var message = MessageModel(
         media: imageFile.value.path.isNotEmpty ? imageFile.value.path : "",
         id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -87,7 +90,12 @@ class ChatCtr extends GetxController {
           .collection(kMESSAGES)
           .doc(message.id)
           .set(message.toJson());
+
       updateLastMessage(messageID, messages);
+      // auth.currentUser!.uid
+
+      notificationController.sendMessageNotification(recipient.id, messages,
+          mediaType.value.isEmpty ? 'text' : mediaType.value);
     }
     if (imageFile.value.path.isNotEmpty) {
       mediaFile.value = await uploadFile(file: imageFile.value);
@@ -102,6 +110,9 @@ class ChatCtr extends GetxController {
         imageFile.value = File('');
         mediaFile.value = "";
         mediaType.value = "";
+
+        notificationController.sendMessageNotification(
+            recipient.id, mediaFile.value, mediaType.value);
       });
     } else {}
   }

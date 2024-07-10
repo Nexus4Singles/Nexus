@@ -9,7 +9,7 @@ import 'package:nexus/core/models/user.dart';
 import '../../../core/constant.dart';
 
 class ExploreCtr extends GetxController {
-  static ExploreCtr instance = Get.find<ExploreCtr>();
+  static ExploreCtr get instance => Get.find<ExploreCtr>();
 
   final allUsers = <UserModel>[].obs;
   final searchedUsers = <UserModel>[].obs;

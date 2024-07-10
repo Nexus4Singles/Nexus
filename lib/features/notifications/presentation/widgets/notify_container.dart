@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
@@ -21,7 +22,15 @@ class NotifyContainer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(),
       child: Row(
         children: [
-          Image.asset(image),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: Image.network(
+              image,
+              width: 40,
+              height: 40,
+              fit: BoxFit.cover,
+            ),
+          ),
           const SizedBoxW10(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -39,6 +39,7 @@ class UserModel extends UserEntity {
     CompatibilityModel? compatibility,
     bool? compatibilitySetted,
     LocationModel? location,
+    String? fcmToken,
   }) : super(
           id: id,
           name: name,
@@ -71,6 +72,7 @@ class UserModel extends UserEntity {
           compatibility: compatibility,
           compatibilitySetted: compatibilitySetted,
           location: location,
+          fcmToken: fcmToken,
         );
 
   factory UserModel.fromJson(Map<String, dynamic> map) =>

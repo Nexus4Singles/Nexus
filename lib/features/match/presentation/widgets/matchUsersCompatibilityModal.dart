@@ -45,41 +45,50 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
                 ),
                 const SizedBoxH10(),
                 const Divider(color: white),
-                const SizedBoxH10(),
-                optionsMenu(
-                  userModel.compatibility!.maritalStatus!.toLowerCase() ==
-                          "never married"
-                      ? "${userModel.username} has never been married"
-                      : "${userModel.username} has been married",
-                ),
-                optionsMenu(
-                    userModel.compatibility!.haveKids!.toLowerCase() == "no"
-                        ? "${userModel.username} doesn't have kids"
-                        : "${userModel.username} have kids"),
-                optionsMenu(
-                    "${userModel.username} has an ${userModel.compatibility!.genotype} Genotype"),
-                optionsMenu(
-                    "${userModel.username} is an ${userModel.compatibility!.personalityType}"),
-                optionsMenu(userModel.compatibility!.regularSourceOfIncome!
-                            .toLowerCase() ==
-                        "yes"
-                    ? "${userModel.username} has a regular source of income"
-                    : "${userModel.username} doesn't  have a regular source of income"),
-                optionsMenu(
-                  "${userModel.username} ${userModel.compatibility!.marrySomeoneNotFS!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
-                ),
-                optionsMenu(
-                  "${userModel.username} ${userModel.compatibility!.believeInCohiabiting!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
-                ),
-                optionsMenu(
-                  "${userModel.username} ${userModel.compatibility!.believeInCohiabiting!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} in cohabiting before marriage",
-                ),
-                const SizedBoxH10(),
-                optionsMenu(
-                  "${userModel.username} ${userModel.compatibility!.shouldChristianSpeakInTongue!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} every Christian should desire to speak in tongues",
-                ),
-                optionsMenu(
-                  "${userModel.username} ${userModel.compatibility!.believeInTithing!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} in tithing",
+                Expanded(
+                  child: ListView(
+                    physics: const ClampingScrollPhysics(),
+                    padding: const EdgeInsets.only(top: 10),
+                    children: [
+                      optionsMenu(
+                        userModel.compatibility!.maritalStatus!.toLowerCase() ==
+                                "never married"
+                            ? "${userModel.username} has never been married"
+                            : "${userModel.username} has been married",
+                      ),
+                      optionsMenu(
+                          userModel.compatibility!.haveKids!.toLowerCase() ==
+                                  "no"
+                              ? "${userModel.username} doesn't have kids"
+                              : "${userModel.username} have kids"),
+                      optionsMenu(
+                          "${userModel.username} has an ${userModel.compatibility!.genotype} Genotype"),
+                      optionsMenu(
+                          "${userModel.username} is an ${userModel.compatibility!.personalityType}"),
+                      optionsMenu(userModel
+                                  .compatibility!.regularSourceOfIncome!
+                                  .toLowerCase() ==
+                              "yes"
+                          ? "${userModel.username} has a regular source of income"
+                          : "${userModel.username} doesn't  have a regular source of income"),
+                      optionsMenu(
+                        "${userModel.username} ${userModel.compatibility!.marrySomeoneNotFS!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
+                      ),
+                      optionsMenu(
+                        "${userModel.username} ${userModel.compatibility!.believeInCohiabiting!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
+                      ),
+                      optionsMenu(
+                        "${userModel.username} ${userModel.compatibility!.believeInCohiabiting!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} in cohabiting before marriage",
+                      ),
+                      const SizedBoxH10(),
+                      optionsMenu(
+                        "${userModel.username} ${userModel.compatibility!.shouldChristianSpeakInTongue!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} every Christian should desire to speak in tongues",
+                      ),
+                      optionsMenu(
+                        "${userModel.username} ${userModel.compatibility!.believeInTithing!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} in tithing",
+                      )
+                    ],
+                  ),
                 )
               ],
             ),

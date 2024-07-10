@@ -82,8 +82,8 @@ class Matched extends StatelessWidget {
                       fillColor: grey,
                       suffixIcon: InkWell(
                         onTap: () {
-                          ctr.sendMessage(
-                              messageID.toString(), ctr.chatController.text);
+                          ctr.sendMessage(messageID.toString(),
+                              ctr.chatController.text, userModel);
                           ctr.chatController.clear();
                         },
                         child: Padding(

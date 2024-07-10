@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/features/home/controllers/notification_controller.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/home/presentation/widgets/profile_tile.dart';
 import 'package:nexus/features/home/presentation/widgets/user_card.dart';
@@ -38,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var currentUser =
         Provider.of<HomeNotifier>(context, listen: false).currentUser!;
     SharedPref.setString("email", currentUser.email);
+    NotificationController.instance.getAllNotifications();
     if (currentUser.compatibilitySetted == null ||
         currentUser.compatibilitySetted == false) {
       await Future.delayed(const Duration(seconds: 5), () {

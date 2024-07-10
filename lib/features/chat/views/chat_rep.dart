@@ -194,7 +194,8 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                       containerColor: babyPink,
                       currentUserContainerColor: whiteblue),
                   onSend: (ChatMessage message) {
-                    ctr.sendMessage(widget.chatModel.messageID, message.text);
+                    ctr.sendMessage(widget.chatModel.messageID, message.text,
+                        widget.chatModel.userModel!);
                   },
                   messages: messages,
                 );
