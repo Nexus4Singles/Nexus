@@ -83,7 +83,7 @@ class ChatCtr extends GetxController {
         messageType: mediaType.value.isEmpty ? 'text' : mediaType.value,
         sentBy: auth.currentUser!.uid,
         timestamp: Timestamp.now());
-    if (messages.isNotEmpty) {
+    if (messages.isNotEmpty || imageFile.value.path.isNotEmpty) {
       db
           .collection(kCONVERSATION)
           .doc(messageID)

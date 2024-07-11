@@ -133,6 +133,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               cardsCount: model.allUsers.length,
                               controller: cardSwiperController,
                               isLoop: true,
+                              onSwipe: (
+                                int previousIndex,
+                                int? currentIndex,
+                                CardSwiperDirection direction,
+                              ) {
+                                UserModel user = model.allUsers[currentIndex!];
+                                if (direction == CardSwiperDirection.right) {
+                                  print("THis is  $direction");
+                                  matchCtr.addToUnRecommend(user.id);
+                                } else if (direction ==
+                                    CardSwiperDirection.left) {
+                                  matchCtr.toggleLike(user);
+                                }
+                                return true;
+                              },
                               onSwipeDirectionChange: (direction, directions) {
                                 print("THis is first $direction $directions");
                               },
@@ -169,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     },
                                     onRefresh: () {
                                       matchCtr.undoUnRecommend(
-                                          cardSwiperController);
+                                          true, cardSwiperController);
                                     },
                                     onSaved: () {
                                       matchCtr.toggleSave(user.id);

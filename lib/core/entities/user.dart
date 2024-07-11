@@ -37,6 +37,7 @@ class UserEntity extends Equatable {
     this.likeMe,
     this.compatibilitySetted,
     this.location,
+    this.countLike,
     this.fcmToken,
   });
 
@@ -51,6 +52,7 @@ class UserEntity extends Equatable {
   final String gender;
   final int age;
   final String? city;
+  final int? countLike;
   @JsonKey(name: kSTATEOFORIGIN)
   final String? stateOfOrigin;
   @JsonKey(name: kEDULEVEL)
@@ -122,6 +124,7 @@ class UserEntity extends Equatable {
         compatibility,
         compatibilitySetted,
         location,
+        countLike,
         myLikes,
         mySaves,
         likeMe,

@@ -36,7 +36,7 @@ class ExploreCtr extends GetxController {
     for (var data in allUsers) {
       if (data.id == auth.currentUser!.uid) {
         myProfile.value = data;
-        print(myProfile.value);
+        allUsers.where((users) => users.gender != myProfile.value.gender);
       }
     }
     print("this is all users == >${allUsers.length}");

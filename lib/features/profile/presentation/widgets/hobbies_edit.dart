@@ -68,7 +68,7 @@ class _HobbiesEditState extends State<HobbiesEdit> {
                   .getProfile();
             });
           },
-          text: "Update Hobbies",
+          text: "Update",
         ),
       ),
       body: Padding(

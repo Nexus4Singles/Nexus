@@ -153,7 +153,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                       userBio(),
                       Container(
                         width: width(context),
-                        height: Get.height / 0.65,
+                        height: Get.height / 0.57,
                         decoration: BoxDecoration(
                           color: white,
                           borderRadius: BorderRadius.vertical(
@@ -478,62 +478,67 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
           ),
           const SizedBoxH10(),
           Obx(
-            () => Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () {
-                    ctr.ctr.myProfile.value.matchedUsers == null ||
-                            !ctr.ctr.myProfile.value.matchedUsers!
-                                .contains(widget.userModel.id)
-                        ? ctr.toggleLike(widget.userModel)
-                        : print("This users are matched");
-                  },
-                  child: CircleAvatar(
-                      backgroundColor:
-                          ctr.ctr.myProfile.value.myLikes == null ||
-                                  !ctr.ctr.myProfile.value.myLikes!
+            () => ctr.ctr.myProfile.value.matchedUsers == null ||
+                    !ctr.ctr.myProfile.value.matchedUsers!
+                        .contains(widget.userModel.id)
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          ctr.ctr.myProfile.value.matchedUsers == null ||
+                                  !ctr.ctr.myProfile.value.matchedUsers!
                                       .contains(widget.userModel.id)
-                              ? white
-                              : primary,
-                      radius: 25,
-                      child: SvgPicture.asset(
-                        ctr.ctr.myProfile.value.matchedUsers == null ||
-                                !ctr.ctr.myProfile.value.matchedUsers!
-                                    .contains(widget.userModel.id)
-                            ? "$svgPath/like.svg"
-                            : '$svgPath/sms.svg',
-                        color: ctr.ctr.myProfile.value.myLikes == null ||
-                                !ctr.ctr.myProfile.value.myLikes!
-                                    .contains(widget.userModel.id)
-                            ? primary
-                            : white,
-                      )),
-                ),
-                const SizedBoxW20(),
-                InkWell(
-                  onTap: () {
-                    ctr.toggleSave(widget.userModel.id);
-                    print(ctr.ctr.myProfile.value.mySaves!
-                        .contains(widget.userModel.id));
-                  },
-                  child: CircleAvatar(
-                    backgroundColor: ctr.ctr.myProfile.value.mySaves == null ||
-                            !ctr.ctr.myProfile.value.mySaves!
-                                .contains(widget.userModel.id)
-                        ? white
-                        : primary,
-                    radius: 25,
-                    child: SvgPicture.asset("$svgPath/bookmark.svg",
-                        color: ctr.ctr.myProfile.value.mySaves == null ||
-                                !ctr.ctr.myProfile.value.mySaves!
-                                    .contains(widget.userModel.id)
-                            ? primary
-                            : white),
-                  ),
-                ),
-              ],
-            ),
+                              ? ctr.toggleLike(widget.userModel)
+                              : print("This users are matched");
+                        },
+                        child: CircleAvatar(
+                            backgroundColor:
+                                ctr.ctr.myProfile.value.myLikes == null ||
+                                        !ctr.ctr.myProfile.value.myLikes!
+                                            .contains(widget.userModel.id)
+                                    ? white
+                                    : primary,
+                            radius: 25,
+                            child: SvgPicture.asset(
+                              ctr.ctr.myProfile.value.matchedUsers == null ||
+                                      !ctr.ctr.myProfile.value.matchedUsers!
+                                          .contains(widget.userModel.id)
+                                  ? "$svgPath/like.svg"
+                                  : '$svgPath/sms.svg',
+                              color: ctr.ctr.myProfile.value.myLikes == null ||
+                                      !ctr.ctr.myProfile.value.myLikes!
+                                          .contains(widget.userModel.id)
+                                  ? primary
+                                  : white,
+                            )),
+                      ),
+                      const SizedBoxW20(),
+                      InkWell(
+                        onTap: () {
+                          ctr.toggleSave(widget.userModel.id);
+                          print(ctr.ctr.myProfile.value.mySaves!
+                              .contains(widget.userModel.id));
+                        },
+                        child: CircleAvatar(
+                          backgroundColor:
+                              ctr.ctr.myProfile.value.mySaves == null ||
+                                      !ctr.ctr.myProfile.value.mySaves!
+                                          .contains(widget.userModel.id)
+                                  ? white
+                                  : primary,
+                          radius: 25,
+                          child: SvgPicture.asset("$svgPath/bookmark.svg",
+                              color: ctr.ctr.myProfile.value.mySaves == null ||
+                                      !ctr.ctr.myProfile.value.mySaves!
+                                          .contains(widget.userModel.id)
+                                  ? primary
+                                  : white),
+                        ),
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
           )
         ],
       ),

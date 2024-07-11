@@ -71,10 +71,6 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Text(
-                    'online',
-                    style: textStyle12,
-                  )
                 ],
               ),
             ],
@@ -112,6 +108,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                 return DashChat(
                   currentUser: ChatUser(id: ctr.auth.currentUser!.uid),
                   inputOptions: InputOptions(
+                      textController: ctr.chatController,
                       textInputAction: TextInputAction.newline,
                       alwaysShowSend: true,
                       sendButtonBuilder: (val) {

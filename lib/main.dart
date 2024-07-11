@@ -18,11 +18,16 @@ import 'package:nexus/features/profile/presentation/change_notifier/settings_not
 import 'package:nexus/router.dart';
 import 'package:nexus/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
   runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
     Animate.restartOnHotReload = true;
+    await initializeDateFormatting(
+        'en_US', null); // Initialize with your desired locale
+
     await configureDependencies();
     await Firebase.initializeApp();
 

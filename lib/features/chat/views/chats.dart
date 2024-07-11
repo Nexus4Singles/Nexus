@@ -50,15 +50,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
               () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // CustomTextField(
-                  //   controller: TextEditingController(),
-                  //   hintText: 'Search',
-                  //   prefixIcon: const Icon(Icons.search_sharp),
-                  //   radius: 25,
-                  //   fillColor: white,
-                  //   borderColor: black,
-                  // ),
-                  // const SizedBoxH20(),
                   Text(
                     'Recent Matches',
                     style: textStyle18.copyWith(
@@ -91,19 +82,23 @@ class _ChatsScreenState extends State<ChatsScreen> {
                             ],
                           ),
                         )
-                      : Center(
-                          child: Text(
-                          "You don’t have any matches yet",
-                          style: textStyle14.copyWith(color: dustyGrey),
-                        )),
-                  const SizedBoxH20(),
+                      : Padding(
+                          padding: const EdgeInsets.only(top: 24.0),
+                          child: Center(
+                              child: Text(
+                            "You don’t have any matches yet",
+                            style: textStyle14.copyWith(color: dustyGrey),
+                          )),
+                        ),
+                  const SizedBoxH40(),
                   Text('Chats',
                       style: textStyle18.copyWith(fontWeight: FontWeight.w800)),
                   const SizedBoxH10(),
                   ctr.allChatUsers
                           .where((val) => val.lastMessage.isNotEmpty)
                           .isNotEmpty
-                      ? Column(
+                      ? ListView(
+                          shrinkWrap: true,
                           children: [
                             ...ctr.allChatUsers
                                 .where((val) => val.lastMessage.isNotEmpty)
@@ -124,8 +119,14 @@ class _ChatsScreenState extends State<ChatsScreen> {
                             }).toList(),
                           ],
                         )
-                      : const EmptyStateWidget(
-                          message: 'You don’t have any chat yet')
+                      : SizedBox(
+                          height: Get.height / 2,
+                          child: const Center(
+                            child: EmptyStateWidget(
+                                shouldShowImage: false,
+                                message: 'You will see your chats here'),
+                          ),
+                        )
                 ],
               ),
             ),
