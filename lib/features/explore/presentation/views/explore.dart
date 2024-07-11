@@ -137,9 +137,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             height: Get.height / 1.5,
                             child: Center(
                               child: Text(
-                                'Stay in control of profiles you see! Use the explore feature to search for profiles and get more desired results using filters',
+                                'Stay in control of profiles you see! Search for profiles within any country and get more desired results using filters',
                                 style: textStyle14.copyWith(
-                                  color: black.withOpacity(.8),
+                                  color: dustyGrey,
                                 ),
                                 textAlign: TextAlign.center,
                               ),

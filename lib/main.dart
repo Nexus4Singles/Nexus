@@ -16,10 +16,14 @@ import 'package:nexus/features/home/presentation/change_notifier/home_notifier.d
 import 'package:nexus/router.dart';
 import 'package:nexus/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
   runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
+    await initializeDateFormatting(
+        'en_US', null); // Initialize with your desired locale
 
     await configureDependencies();
     await Firebase.initializeApp();

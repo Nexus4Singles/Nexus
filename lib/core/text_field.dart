@@ -27,6 +27,7 @@ class CustomTextField extends StatefulWidget {
   final Color? fillColor;
   final bool? isFilled;
   final bool? autoCorrect;
+  final bool? isTextArea;
   final TextCapitalization textCapitalization;
   const CustomTextField({
     Key? key,
@@ -54,6 +55,7 @@ class CustomTextField extends StatefulWidget {
     this.borderColor,
     this.fillColor = white,
     this.isFilled = true,
+    this.isTextArea = false,
     this.textCapitalization = TextCapitalization.none,
   }) : super(key: key);
 
@@ -64,50 +66,51 @@ class CustomTextField extends StatefulWidget {
 class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      enabled: widget.enabled,
-      maxLength: widget.maxLength,
-      onChanged: widget.onChanged,
-      onEditingComplete: widget.onEditingCompleted,
-      controller: widget.controller,
-      maxLines: null,
-      minLines: widget.minLine,
-      validator: widget.validator,
-      textInputAction: widget.action,
-      style: textStyle14,
-      autocorrect: widget.autoCorrect!,
-      textCapitalization: widget.textCapitalization,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      // obscureText: widget.obsecure! ? true : false,
-      decoration: InputDecoration(
-        prefixIcon: widget.prefixIcon,
-        suffixIcon: widget.suffixIcon,
-        hintText: widget.hintText,
-        hintStyle: textStyle14.copyWith(
-          color: otherGrey,
-          fontSize: 14,
-        ),
-        fillColor: widget.fillColor,
-        filled: widget.isFilled,
-        contentPadding: const EdgeInsets.all(15),
-        border: outlineInputBorder.copyWith(
-          borderRadius: BorderRadius.circular(widget.radius!),
-          borderSide: BorderSide(
+    return Container(
+      height: widget.isTextArea! ? 200 : 54,
+      decoration: BoxDecoration(
+          color: widget.fillColor,
+          border: Border.all(
             color: widget.borderColor ?? textBorderColor,
           ),
-        ),
-        enabledBorder: outlineInputBorder.copyWith(
-          borderRadius: BorderRadius.circular(widget.radius!),
-          borderSide: BorderSide(
-            color: widget.borderColor ?? textBorderColor,
-          ),
-        ),
-        focusedBorder: outlineInputBorder.copyWith(
-          borderRadius: BorderRadius.circular(widget.radius!),
-          borderSide: const BorderSide(
-            color: textBorderColor,
-          ),
-        ),
+          borderRadius: BorderRadius.circular(widget.radius!)),
+      child: TextFormField(
+        enabled: widget.enabled,
+        maxLength: widget.isTextArea! ? null : widget.maxLength,
+        onChanged: widget.onChanged,
+        onEditingComplete: widget.onEditingCompleted,
+        controller: widget.controller,
+        maxLines: null,
+        minLines: widget.minLine,
+        validator: widget.validator,
+        textInputAction: widget.action,
+        style: textStyle14,
+        autocorrect: widget.autoCorrect!,
+        textCapitalization: widget.textCapitalization,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        // obscureText: widget.obsecure! ? true : false,
+        decoration: InputDecoration(
+            prefixIcon: widget.prefixIcon,
+            suffixIcon: widget.suffixIcon,
+            hintText: widget.hintText,
+            isDense: true,
+            isCollapsed: true,
+            counter: const SizedBox(),
+            hintStyle: textStyle14.copyWith(
+              color: otherGrey,
+              fontSize: 14,
+            ),
+            fillColor: widget.fillColor,
+            filled: widget.isFilled,
+            contentPadding: const EdgeInsets.all(15),
+            border: outlineInputBorder.copyWith(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(widget.radius!),
+            ),
+            enabledBorder: outlineInputBorder.copyWith(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(widget.radius!),
+            )),
       ),
     );
   }

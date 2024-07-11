@@ -72,7 +72,7 @@ class ChatCtr extends GetxController {
         .snapshots();
   }
 
-  sendMessage(String messageID, String messages) async {
+  Future sendMessage(String messageID, String messages) async {
     var message = MessageModel(
         media: imageFile.value.path.isNotEmpty ? imageFile.value.path : "",
         id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -80,7 +80,7 @@ class ChatCtr extends GetxController {
         messageType: mediaType.value.isEmpty ? 'text' : mediaType.value,
         sentBy: auth.currentUser!.uid,
         timestamp: Timestamp.now());
-    if (messages.isNotEmpty) {
+    if (messages.isNotEmpty || imageFile.value.path.isNotEmpty) {
       db
           .collection(kCONVERSATION)
           .doc(messageID)

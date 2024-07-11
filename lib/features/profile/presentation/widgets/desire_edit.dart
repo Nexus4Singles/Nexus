@@ -46,7 +46,7 @@ class _DesireEditState extends State<DesireEdit> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Edit Desires",
+                Text("Edit Desired Qualities",
                     style: textStyle18.copyWith(fontWeight: FontWeight.bold)),
                 InkWell(
                   child: const Icon(Icons.close),
@@ -68,7 +68,7 @@ class _DesireEditState extends State<DesireEdit> {
                   .getProfile();
             });
           },
-          text: "Update Hobbies",
+          text: "Update",
         ),
       ),
       body: Padding(

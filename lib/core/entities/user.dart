@@ -5,39 +5,39 @@ import 'package:nexus/core/models/compatibility.dart';
 import 'package:nexus/core/models/location.dart';
 
 class UserEntity extends Equatable {
-  const UserEntity({
-    required this.id,
-    required this.email,
-    required this.name,
-    required this.username,
-    this.profileUrl,
-    this.isVerified,
-    required this.gender,
-    required this.age,
-    this.city,
-    this.matchedUsers,
-    this.educationLevel,
-    this.stateOfOrigin,
-    this.profession,
-    this.unrecommendedUsers,
-    this.hobbies,
-    this.desiredQualities,
-    this.photos,
-    this.bestQualotiesOrTraits,
-    this.relationshipWithGod,
-    this.roleOfHusband,
-    this.notificationToken,
-    this.phoneNumber,
-    this.registrationProgress,
-    this.country,
-    this.churchName,
-    this.compatibility,
-    this.mySaves,
-    this.myLikes,
-    this.likeMe,
-    this.compatibilitySetted,
-    this.location,
-  });
+  const UserEntity(
+      {required this.id,
+      required this.email,
+      required this.name,
+      required this.username,
+      this.profileUrl,
+      this.isVerified,
+      required this.gender,
+      required this.age,
+      this.city,
+      this.matchedUsers,
+      this.educationLevel,
+      this.stateOfOrigin,
+      this.profession,
+      this.unrecommendedUsers,
+      this.hobbies,
+      this.desiredQualities,
+      this.photos,
+      this.bestQualotiesOrTraits,
+      this.relationshipWithGod,
+      this.roleOfHusband,
+      this.notificationToken,
+      this.phoneNumber,
+      this.registrationProgress,
+      this.country,
+      this.churchName,
+      this.compatibility,
+      this.mySaves,
+      this.myLikes,
+      this.likeMe,
+      this.compatibilitySetted,
+      this.location,
+      this.countLike});
 
   final String id;
   final String name;
@@ -50,6 +50,7 @@ class UserEntity extends Equatable {
   final String gender;
   final int age;
   final String? city;
+  final int? countLike;
   @JsonKey(name: kSTATEOFORIGIN)
   final String? stateOfOrigin;
   @JsonKey(name: kEDULEVEL)
@@ -119,6 +120,7 @@ class UserEntity extends Equatable {
         compatibility,
         compatibilitySetted,
         location,
+        countLike,
         myLikes,
         mySaves,
         likeMe

@@ -54,6 +54,18 @@ class MatchesCtr extends GetxController {
     return ctr.myProfile.value.mySaves!.contains(id);
   }
 
+  saveCountOfLikeMe(String userID) async {
+    var likeDoc = db.collection(kUSER).doc(userID);
+    await db.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(likeDoc);
+      if (snapshot.exists) {
+        var data = UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
+        transaction.update(likeDoc,
+            {'countLike': data.countLike != null ? data.countLike! + 1 : 1});
+      }
+    });
+  }
+
   Future<void> toggleLike(UserModel userModel) async {
     EasyLoading.show();
     // this is for users that was liked by someone already
@@ -73,6 +85,7 @@ class MatchesCtr extends GetxController {
       } else {
         print("I was called here third");
         addUserToMyLike(userModel.id);
+        saveCountOfLikeMe(userModel.id);
         addUserToLikeMe(userModel.id);
       }
       await ctr.getMyProfile();
@@ -150,14 +163,15 @@ class MatchesCtr extends GetxController {
     }
   }
 
-  undoUnRecommend(CardSwiperController ctr) async {
+  undoUnRecommend(bool shouldSwipe, CardSwiperController ctr) async {
+    print("Called");
     if (unrecommendId.value.isNotEmpty) {
       try {
         EasyLoading.show();
         await db.collection(kUSER).doc(auth.currentUser!.uid).update({
           "unRecommendUsers": FieldValue.arrayRemove([unrecommendId.value])
         });
-        ctr.undo();
+        shouldSwipe ? ctr.undo() : () {};
         EasyLoading.dismiss();
       } catch (e) {
         EasyLoading.dismiss();

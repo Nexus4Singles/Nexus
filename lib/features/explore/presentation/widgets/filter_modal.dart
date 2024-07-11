@@ -44,9 +44,9 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
           const SizedBoxH15(),
           AbsorbPointer(
             child: ProfileDropDown(
-              items: ["Nigeria"],
-              val: "Nigeria",
-              hintText: 'Nationality',
+              items: [],
+              val: "",
+              hintText: 'Nationality (Coming Soon)',
               onChanged: (p0) {},
             ),
           ),
@@ -71,7 +71,7 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
           const SizedBoxH20(),
           Text(
             'Age Range',
-            style: textStyle16.copyWith(color: black),
+            style: textStyle16.copyWith(color: dustyGrey),
           ),
           const SizedBoxH10(),
           Row(

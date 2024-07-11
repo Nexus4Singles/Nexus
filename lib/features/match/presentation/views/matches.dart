@@ -45,13 +45,16 @@ class _MatcheScreenState extends State<MatcheScreen> {
         alignment: Alignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.all(15.sp),
+            padding: EdgeInsets.symmetric(horizontal: 15.sp),
             child: Column(
               children: [
-                Text(
-                  'This is a list of of users you have liked,  users who liked  your profile, as well as profiles you have saved.',
-                  style: textStyle12.copyWith(),
-                  textAlign: TextAlign.center,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    'This is a list of of users you have liked,  users who liked  your profile, as well as profiles you have saved.',
+                    style: textStyle12.copyWith(),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 const SizedBoxH20(),
                 MatchStats(),

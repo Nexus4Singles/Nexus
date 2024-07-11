@@ -44,6 +44,7 @@ class ReportUser extends StatelessWidget {
             const SizedBoxH15(),
             CustomTextField(
               isMulti: true,
+              isTextArea: true,
               fillColor: white,
               maxLength: 100,
               controller: ctr.reportController,

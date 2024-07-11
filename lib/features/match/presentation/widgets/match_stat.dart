@@ -53,13 +53,19 @@ class MatchStats extends StatelessWidget {
                     'My Likes ',
                     style: textStyle16,
                   ),
-                  Text(
-                    ctr.ctr.myProfile.value.myLikes == null
-                        ? "0"
-                        : '${ctr.ctr.myProfile.value.myLikes!.length}',
-                    style: textStyle16.copyWith(
-                      color: primary,
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                        color: primary, borderRadius: BorderRadius.circular(4)),
+                    child: Text(
+                      ctr.ctr.myProfile.value.myLikes == null
+                          ? "0"
+                          : '${ctr.ctr.myProfile.value.myLikes!.length}',
+                      style: textStyle16.copyWith(
+                        color: white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
@@ -102,13 +108,19 @@ class MatchStats extends StatelessWidget {
                     'Liked Me ',
                     style: textStyle16,
                   ),
-                  Text(
-                    ctr.ctr.myProfile.value.likeMe == null
-                        ? "0"
-                        : '${ctr.ctr.myProfile.value.likeMe!.length}',
-                    style: textStyle16.copyWith(
-                      color: primary,
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                        color: primary, borderRadius: BorderRadius.circular(4)),
+                    child: Text(
+                      ctr.ctr.myProfile.value.likeMe == null
+                          ? "0"
+                          : '${ctr.ctr.myProfile.value.likeMe!.length}',
+                      style: textStyle16.copyWith(
+                        color: white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
@@ -151,13 +163,19 @@ class MatchStats extends StatelessWidget {
                     'Saved ',
                     style: textStyle16,
                   ),
-                  Text(
-                    ctr.ctr.myProfile.value.mySaves == null
-                        ? "0"
-                        : '${ctr.ctr.myProfile.value.mySaves!.length}',
-                    style: textStyle16.copyWith(
-                      color: primary,
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                        color: primary, borderRadius: BorderRadius.circular(4)),
+                    child: Text(
+                      ctr.ctr.myProfile.value.mySaves == null
+                          ? "0"
+                          : '${ctr.ctr.myProfile.value.mySaves!.length}',
+                      style: textStyle16.copyWith(
+                        color: white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],

@@ -203,38 +203,39 @@ class _EditProfileState extends State<EditProfile> {
                           ],
                         ),
                       ),
-                  if (imageFiles.length < 4)
-                    InkWell(
-                      onTap: () {
-                        if (imageFiles.length == 4) {
-                          AppToast()
-                              .showErrorToast('Maximum of 4 photos allowed');
-                        } else {
-                          _pickImage();
-                        }
-                      },
-                      child: DottedBorder(
-                        borderType: BorderType.RRect,
-                        strokeWidth: 1,
-                        stackFit: StackFit.passthrough,
-                        // customPath: (size) => customPath,
-                        dashPattern: const [6, 3, 0, 3],
-                        color: Colors.blue.withOpacity(.2),
-                        radius: const Radius.circular(20),
-                        child: Container(
-                          height: 120,
-                          width: 120,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xffeeeeee),
-                          ),
-                          child: const Icon(
-                            Icons.add_circle,
-                            color: primary,
-                          ),
+                  // if(imageFiles.length)
+                  // logic for the other variant here...
+                  InkWell(
+                    onTap: () {
+                      if (imageFiles.length == 4) {
+                        AppToast()
+                            .showErrorToast('Maximum of 4 photos allowed');
+                      } else {
+                        _pickImage();
+                      }
+                    },
+                    child: DottedBorder(
+                      borderType: BorderType.RRect,
+                      strokeWidth: 1,
+                      stackFit: StackFit.passthrough,
+                      // customPath: (size) => customPath,
+                      dashPattern: const [6, 3, 0, 3],
+                      color: Colors.blue.withOpacity(.2),
+                      radius: const Radius.circular(20),
+                      child: Container(
+                        height: 120,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color(0xffeeeeee),
+                        ),
+                        child: const Icon(
+                          Icons.add_circle,
+                          color: primary,
                         ),
                       ),
                     ),
+                  ),
                 ],
               ),
               const SizedBoxH20(),
@@ -292,80 +293,6 @@ class _EditProfileState extends State<EditProfile> {
                         ))
               ]),
               const SizedBoxH15(),
-              CustomTextField(
-                fillColor: white,
-                radius: 12,
-                controller: ctr.usernameCtr,
-                hintText: "Username",
-                suffixIcon: SvgPicture.asset(
-                  "$svgPath/edit.svg",
-                  fit: BoxFit.scaleDown,
-                ),
-              ),
-              const SizedBoxH15(),
-              ProfileDropDown(
-                items: LocalData().educationalLevels,
-                val: ctr.eduLevel.value,
-                hintText: 'Education Level',
-                onChanged: (p0) {
-                  setState(() {
-                    ctr.eduLevel.value = p0!;
-                  });
-                },
-              ),
-              const SizedBoxH15(),
-              ProfileDropDown(
-                items: LocalData().professions,
-                val: ctr.profession.value,
-                hintText: 'Profession Level',
-                onChanged: (p0) {
-                  setState(() {
-                    ctr.profession.value = p0!;
-                  });
-                },
-              ),
-              const SizedBoxH15(),
-              ProfileDropDown(
-                items: LocalData().church,
-                val: !LocalData().church.contains(ctr.church.value)
-                    ? "Other"
-                    : ctr.church.value,
-                hintText: 'Church',
-                onChanged: (p0) {
-                  setState(() {
-                    ctr.church.value = p0!;
-                  });
-                },
-              ),
-              const SizedBoxH15(),
-              Obx(
-                () => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ctr.church.value == "Other" ||
-                            !LocalData().church.contains(ctr.church.value)
-                        ? CustomTextField(
-                            fillColor: white,
-                            radius: 12,
-                            controller: TextEditingController(
-                                text: homeModel.currentUser!.churchName),
-                            onChanged: (val) {
-                              ctr.church.value = val;
-                            },
-                            hintText: "Username",
-                            suffixIcon: SvgPicture.asset(
-                              "$svgPath/edit.svg",
-                              fit: BoxFit.scaleDown,
-                            ),
-                          )
-                        : const SizedBox(),
-                    ctr.church.value == "Other" ||
-                            !LocalData().church.contains(ctr.church.value)
-                        ? const SizedBoxH15()
-                        : SizedBox(),
-                  ],
-                ),
-              ),
               GooglePlaceAutoCompleteTextField(
                 textEditingController: ctr.searchText,
                 googleAPIKey: 'AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y',
@@ -431,6 +358,77 @@ class _EditProfileState extends State<EditProfile> {
                 },
                 seperatedBuilder: const Divider(),
                 isCrossBtnShown: true,
+              ),
+              const SizedBoxH15(),
+              CustomTextField(
+                fillColor: white,
+                radius: 12,
+                controller: ctr.usernameCtr,
+                hintText: "Username",
+              ),
+              const SizedBoxH15(),
+              ProfileDropDown(
+                items: LocalData().educationalLevels,
+                val: ctr.eduLevel.value,
+                hintText: 'Education Level',
+                onChanged: (p0) {
+                  setState(() {
+                    ctr.eduLevel.value = p0!;
+                  });
+                },
+              ),
+              const SizedBoxH15(),
+              ProfileDropDown(
+                items: LocalData().professions,
+                val: ctr.profession.value,
+                hintText: 'Profession Level',
+                onChanged: (p0) {
+                  setState(() {
+                    ctr.profession.value = p0!;
+                  });
+                },
+              ),
+              const SizedBoxH15(),
+              ProfileDropDown(
+                items: LocalData().church,
+                val: !LocalData().church.contains(ctr.church.value)
+                    ? "Other"
+                    : ctr.church.value,
+                hintText: 'Church',
+                onChanged: (p0) {
+                  setState(() {
+                    ctr.church.value = p0!;
+                  });
+                },
+              ),
+              const SizedBoxH15(),
+              Obx(
+                () => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ctr.church.value == "Other" ||
+                            !LocalData().church.contains(ctr.church.value)
+                        ? CustomTextField(
+                            fillColor: white,
+                            radius: 12,
+                            controller: TextEditingController(
+                                text: homeModel.currentUser!.churchName),
+                            onChanged: (val) {
+                              ctr.church.value = val;
+                            },
+                            hintText: "Username",
+                            suffixIcon: SvgPicture.asset(
+                              "$svgPath/edit.svg",
+                              fit: BoxFit.scaleDown,
+                            ),
+                          )
+                        : const SizedBox(),
+                    ctr.church.value == "Other" ||
+                            !LocalData().church.contains(ctr.church.value)
+                        ? const SizedBoxH15()
+                        : SizedBox(),
+                  ],
+                ),
               ),
               const SizedBoxH40(),
               CustomButton(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,7 @@ class Matched extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(30.0),
         child: TextButton(
             onPressed: () {
               compatibilityModal(context, userModel);
@@ -33,17 +34,21 @@ class Matched extends StatelessWidget {
             child: Text("View Compatibility Data", style: textStyle16)),
       ),
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Get.offAllNamed(AppRoutes.mainNav);
-            },
-            icon: const Icon(Icons.clear)),
+        leading: const SizedBox(),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Get.offAllNamed(AppRoutes.mainNav);
+              },
+              icon: const Icon(Icons.clear)),
+          const SizedBoxW10()
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const SizedBoxH40(),
+          const SizedBoxH10(),
           Center(
             child: Text("You and ${userModel.username} liked each other!",
                 style: textStyle14.copyWith(fontWeight: FontWeight.w700)),
@@ -74,7 +79,7 @@ class Matched extends StatelessWidget {
                   "We are rooting for you both!",
                   style: textStyle14.copyWith(color: ash),
                 ),
-                const SizedBoxH20(),
+                const SizedBoxH40(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: CustomTextField(
@@ -82,14 +87,18 @@ class Matched extends StatelessWidget {
                       fillColor: grey,
                       suffixIcon: InkWell(
                         onTap: () {
-                          ctr.sendMessage(
-                              messageID.toString(), ctr.chatController.text);
+                          ctr
+                              .sendMessage(
+                                  messageID.toString(), ctr.chatController.text)
+                              .then((value) {
+                            EasyLoading.showToast("Message Sent");
+                          });
                           ctr.chatController.clear();
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CircleAvatar(
-                            backgroundColor: black,
+                            backgroundColor: primary,
                             child: SvgPicture.asset("$svgPath/send.svg"),
                           ),
                         ),
