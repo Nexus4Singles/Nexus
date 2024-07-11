@@ -44,7 +44,6 @@ class NotificationController extends GetxController {
       recipientId,
       onSuccess: (response) {
         appLog("Like notification sent successfully!", response);
-        Get.snackbar("Success", "Like notification sent successfully!");
       },
       onError: (error) {
         appLog("Failed to send like notification", error);

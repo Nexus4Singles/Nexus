@@ -10,7 +10,7 @@ class HomeBindings extends Bindings {
   void dependencies() {
     Get.put(HomeController());
     Get.put(NotificationController());
-    Get.lazyPut<ExploreCtr>(() => ExploreCtr());
-    Get.lazyPut<MatchesCtr>(() => MatchesCtr());
+    Get.put(ExploreCtr());
+    Get.put(MatchesCtr());
   }
 }
