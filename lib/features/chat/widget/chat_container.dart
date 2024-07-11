@@ -31,18 +31,22 @@ class ChatContainer extends StatelessWidget {
           backgroundImage: NetworkImage(image),
         ),
         subtitle: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(text, style: textStyle12, overflow: TextOverflow.ellipsis),
-            count.isGreaterThan(0)
-                ? CircleAvatar(
-                    radius: 12,
-                    backgroundColor: red,
-                    child: Text(
-                      '$count',
-                      style: textStyle12.copyWith(color: Colors.white),
-                    ),
-                  )
-                : const SizedBox()
+            Container(
+              padding: const EdgeInsets.only(right: 20),
+              child: count.isGreaterThan(0)
+                  ? CircleAvatar(
+                      radius: 12,
+                      backgroundColor: red,
+                      child: Text(
+                        '$count',
+                        style: textStyle12.copyWith(color: Colors.white),
+                      ),
+                    )
+                  : const SizedBox(),
+            ),
           ],
         ),
         contentPadding: EdgeInsets.zero,

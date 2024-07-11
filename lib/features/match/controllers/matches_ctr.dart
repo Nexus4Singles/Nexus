@@ -62,6 +62,7 @@ class MatchesCtr extends GetxController {
 
   Future<void> toggleLike(UserModel userModel) async {
     EasyLoading.show();
+    await ctr.getMyProfile();
     // this is for users that was liked by someone already
     if (ctr.myProfile.value.likeMe != null &&
         ctr.myProfile.value.likeMe!.contains(userModel.id)) {
@@ -69,6 +70,8 @@ class MatchesCtr extends GetxController {
       await removeFromLikeMe(userModel.id, false);
       await removeUserMyLike(userModel.id, false);
       await saveBothToMatched(userModel);
+      EasyLoading.dismiss();
+
       notificationController.sendMatchNotification(userModel.id);
       // go to matched user screen & remove the myLike  from the other users & remove like Me from the and create a chat view instead
     } else {
@@ -77,19 +80,20 @@ class MatchesCtr extends GetxController {
         print("I was called here second");
         await removeUserMyLike(userModel.id, true);
         await removeFromLikeMe(userModel.id, true);
+
+        EasyLoading.dismiss();
       } else {
         print("I was called here third");
         addUserToMyLike(userModel.id);
         addUserToLikeMe(userModel.id);
 
-        // IMPLEMENT HERE
+        EasyLoading.dismiss(); // this is to remove slow downs...
         notificationController.sendLikeNotification(userModel.id);
         appLog(userModel.toJson());
       }
       await ctr.getMyProfile();
       setMyLikes();
     }
-    EasyLoading.dismiss();
   }
 
   removeUserMyLike(id, bool isUser) async {

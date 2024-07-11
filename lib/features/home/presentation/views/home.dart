@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
@@ -15,6 +17,8 @@ import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.
 import 'package:provider/provider.dart';
 import '../../../../core/utils/shared_pref.dart';
 import '../../../explore/controllers/explore_ctr.dart';
+
+// Dont show accounts that have been liked.
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -35,6 +39,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   FutureOr _init() async {
+    // final docRef = FirebaseFirestore.instance
+    //     .collection(kUSER_KEY)
+    //     // .where('id', isNotEqualTo: curUser!.uid);
+    //     .where('registration_progress', isEqualTo: 'completed');
+    // // .where('age', isGreaterThanOrEqualTo: minAge)
+    // // .where('age', isLessThanOrEqualTo: maxAge);
+    // docRef.snapshots().listen(
+    //   (event) {
+    //     final source = (event.metadata.hasPendingWrites) ? "Local" : "Server";
+    //     print(
+    //         "$source data: ${event.docs.map((doc) => UserModel.fromJson(doc.data())).toList()}");
+    //   },
+    //   onError: (error) => print("Listen failed: $error"),
+    // );
+
     await Provider.of<HomeNotifier>(context, listen: false).getProfile();
     var currentUser =
         Provider.of<HomeNotifier>(context, listen: false).currentUser!;
@@ -124,6 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 right: true,
                                 left: true,
                               ),
+                              // duration: const Duration(milliseconds: 10),
                               padding: const EdgeInsets.all(0),
                               cardBuilder: (context, index, percentThresholdX,
                                   percentThresholdY) {

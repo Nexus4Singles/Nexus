@@ -67,25 +67,29 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   ),
                   const SizedBoxH15(),
                   ctr.allChatUsers.isNotEmpty
-                      ? Row(
-                          children: [
-                            ...ctr.allChatUsers.map((users) {
-                              return InkWell(
-                                onTap: () {
-                                  Get.to(
-                                      () => ChatWithScreen(chatModel: users));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: CircleAvatar(
-                                    radius: 32,
-                                    backgroundImage: NetworkImage(
-                                        users.userModel!.photos![0]),
+                      ? SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          child: Row(
+                            children: [
+                              ...ctr.allChatUsers.map((users) {
+                                return InkWell(
+                                  onTap: () {
+                                    Get.to(
+                                        () => ChatWithScreen(chatModel: users));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: CircleAvatar(
+                                      radius: 32,
+                                      backgroundImage: NetworkImage(
+                                          users.userModel!.photos![0]),
+                                    ),
                                   ),
-                                ),
-                              );
-                            }).toList()
-                          ],
+                                );
+                              }).toList()
+                            ],
+                          ),
                         )
                       : Center(
                           child: Text(

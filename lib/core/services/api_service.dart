@@ -13,7 +13,7 @@ class ApiService {
   late CancelToken _cancelToken;
 
   ApiService() : _dio = Dio() {
-    _dio.options.baseUrl = "http://192.168.167.1:5001/v1/";
+    _dio.options.baseUrl = "http://192.168.201.1:5001/v1/";
     _dio.options.connectTimeout = const Duration(seconds: 30);
     _dio.options.receiveTimeout = const Duration(seconds: 30);
 
