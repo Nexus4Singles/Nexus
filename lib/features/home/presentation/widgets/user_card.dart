@@ -96,6 +96,7 @@ class _UserCardState extends State<UserCard> {
   }
 
   var ctr = Get.put(MatchesCtr());
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -147,10 +148,13 @@ class _UserCardState extends State<UserCard> {
                         color: white,
                       ),
                       const SizedBoxW10(),
-                      Text(
-                        '${widget.userModel.city}, ${widget.userModel.country}',
-                        style: textStyle16.copyWith(
-                          color: white,
+                      Flexible(
+                        child: Text(
+                          '${widget.userModel.location!.place}',
+                          textAlign: TextAlign.center,
+                          style: textStyle16.copyWith(
+                            color: white,
+                          ),
                         ),
                       )
                     ],
@@ -167,19 +171,18 @@ class _UserCardState extends State<UserCard> {
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
+                                  color: white,
                                   border: Border.all(color: primary)),
                               child: SvgPicture.asset(
                                 '$svgPath/back.svg',
                                 width: 24,
-                                color: primary.withOpacity(0.6),
+                                color: primary,
                               ),
                             ),
                           ),
                           InkWell(
                             onTap: widget.onClosed,
-                            child: SvgPicture.asset(
-                              'assets/icons/close.svg',
-                            ),
+                            child: SvgPicture.asset('assets/icons/close.svg'),
                           ),
                           InkWell(
                             onTap: widget.onLike,
@@ -208,15 +211,20 @@ class _UserCardState extends State<UserCard> {
                           ),
                           InkWell(
                             onTap: widget.onSaved,
-                            child: CircleAvatar(
-                              backgroundColor:
-                                  ctr.ctr.myProfile.value.mySaves == null ||
-                                          !ctr.ctr.myProfile.value.mySaves!
-                                              .contains(widget.userModel.id)
-                                      ? white
-                                      : primary,
-                              radius: 25,
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: primary),
+                                color:
+                                    ctr.ctr.myProfile.value.mySaves == null ||
+                                            !ctr.ctr.myProfile.value.mySaves!
+                                                .contains(widget.userModel.id)
+                                        ? white
+                                        : primary,
+                              ),
                               child: SvgPicture.asset("$svgPath/bookmark.svg",
+                                  width: 24,
                                   color:
                                       ctr.ctr.myProfile.value.mySaves == null ||
                                               !ctr.ctr.myProfile.value.mySaves!
@@ -356,7 +364,7 @@ class _UserCardState extends State<UserCard> {
                 ),
                 const SizedBoxH40(),
                 Text(
-                  'Audio Recording',
+                  'Audio Recordings',
                   style: textStyle14.copyWith(
                     fontWeight: FontWeight.w500,
                     color: black,
@@ -364,7 +372,7 @@ class _UserCardState extends State<UserCard> {
                 ),
                 const SizedBoxH15(),
                 Text(
-                  '1. The summary of ${widget.userModel.username} relationship with God',
+                  "1. The summary of ${widget.userModel.username}'s relationship with God",
                   style: textStyle14.copyWith(
                       color: black, fontSize: 14, fontWeight: FontWeight.w700),
                 ),
@@ -384,7 +392,7 @@ class _UserCardState extends State<UserCard> {
                 ),
                 const SizedBoxH25(),
                 Text(
-                  '2. ${widget.userModel.username} view on Gender roles in marriage',
+                  "2. ${widget.userModel.username}'s view on Gender roles in marriage",
                   style: textStyle14.copyWith(
                       color: black, fontSize: 14, fontWeight: FontWeight.w700),
                 ),
@@ -404,7 +412,7 @@ class _UserCardState extends State<UserCard> {
                 ),
                 const SizedBoxH25(),
                 Text(
-                  '3. Favourite qualities or traits about ${widget.userModel.username}',
+                  "3.${widget.userModel.username}'s favourite qualities about ${widget.userModel.gender.toLowerCase().contains("f") ? "herself" : "himself"}",
                   style: textStyle14.copyWith(
                       color: black, fontSize: 14, fontWeight: FontWeight.w700),
                 ),
@@ -451,12 +459,15 @@ class _UserCardState extends State<UserCard> {
                             fit: BoxFit.cover,
                             imageUrl: item,
                             progressIndicatorBuilder:
-                                (context, url, downloadProgress) => SizedBox(
-                              width: 30,
-                              height: 30,
-                              child: CircularProgressIndicator(
-                                value: downloadProgress.progress,
-                                color: primary,
+                                (context, url, downloadProgress) => Center(
+                              child: SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                  value: downloadProgress.progress,
+                                  strokeWidth: 1,
+                                  color: primary,
+                                ),
                               ),
                             ),
                             errorWidget: (context, url, error) => Container(),

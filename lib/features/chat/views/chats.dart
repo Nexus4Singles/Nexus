@@ -4,13 +4,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/utils/empty_state.dart';
 import 'package:nexus/features/chat/controllers/chat_ctr.dart';
-import 'package:nexus/features/chat/views/chat_with.dart';
 import 'package:nexus/features/chat/widget/chat_container.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/core/text_field.dart';
-
+import '../../../router.dart';
 import 'chat_rep.dart';
 
 class ChatsScreen extends StatefulWidget {
@@ -30,20 +28,18 @@ class _ChatsScreenState extends State<ChatsScreen> {
         backgroundColor: white,
         title: Text(
           'Chats',
-          style: textStyle18.copyWith(
-            fontSize: 24,
-            fontWeight: FontWeight.w700,
-            color: black,
-          ),
+          style: textStyle18.copyWith(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         foregroundColor: black,
         elevation: 0,
         actions: [
-          SvgPicture.asset(
-            'assets/icons/adjust.svg',
+          InkWell(
+            child: SvgPicture.asset('assets/icons/adjust.svg'),
+            onTap: () {
+              Get.toNamed(AppRoutes.settings);
+            },
           ),
-          const SizedBoxW15(),
         ],
       ),
       body: Column(
@@ -54,57 +50,55 @@ class _ChatsScreenState extends State<ChatsScreen> {
               () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomTextField(
-                    controller: TextEditingController(),
-                    hintText: 'Search',
-                    prefixIcon: const Icon(Icons.search_sharp),
-                    radius: 25,
-                    fillColor: white,
-                    borderColor: black,
-                  ),
-                  const SizedBoxH20(),
                   Text(
                     'Recent Matches',
-                    style: textStyle16.copyWith(
-                      fontWeight: FontWeight.w500,
+                    style: textStyle18.copyWith(
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                   const SizedBoxH15(),
-                  ctr.allChatUsers
-                          .where((val) => val.lastMessage.isEmpty)
-                          .isNotEmpty
-                      ? Row(
-                          children: [
-                            ...ctr.allChatUsers
-                                .where((val) => val.lastMessage.isEmpty)
-                                .map((users) {
-                              return InkWell(
-                                onTap: () {
-                                  Get.to(
-                                      () => ChatWithScreen(chatModel: users));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: CircleAvatar(
-                                    radius: 32,
-                                    backgroundImage: NetworkImage(
-                                        users.userModel!.photos![0]),
+                  ctr.allChatUsers.isNotEmpty
+                      ? SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          child: Row(
+                            children: [
+                              ...ctr.allChatUsers.map((users) {
+                                return InkWell(
+                                  onTap: () {
+                                    Get.to(
+                                        () => ChatWithScreen(chatModel: users));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: CircleAvatar(
+                                      radius: 32,
+                                      backgroundImage: NetworkImage(
+                                          users.userModel!.photos![0]),
+                                    ),
                                   ),
-                                ),
-                              );
-                            }).toList()
-                          ],
+                                );
+                              }).toList()
+                            ],
+                          ),
                         )
-                      : const EmptyStateWidget(
-                          message: "You don’t have any matches yet"),
-                  const SizedBoxH20(),
+                      : Padding(
+                          padding: const EdgeInsets.only(top: 24.0),
+                          child: Center(
+                              child: Text(
+                            "You don’t have any matches yet",
+                            style: textStyle14.copyWith(color: dustyGrey),
+                          )),
+                        ),
+                  const SizedBoxH40(),
                   Text('Chats',
-                      style: textStyle18.copyWith(fontWeight: FontWeight.w500)),
-                  const SizedBoxH20(),
+                      style: textStyle18.copyWith(fontWeight: FontWeight.w800)),
+                  const SizedBoxH10(),
                   ctr.allChatUsers
                           .where((val) => val.lastMessage.isNotEmpty)
                           .isNotEmpty
-                      ? Column(
+                      ? ListView(
+                          shrinkWrap: true,
                           children: [
                             ...ctr.allChatUsers
                                 .where((val) => val.lastMessage.isNotEmpty)
@@ -125,8 +119,14 @@ class _ChatsScreenState extends State<ChatsScreen> {
                             }).toList(),
                           ],
                         )
-                      : const EmptyStateWidget(
-                          message: 'You don’t have any chat yet')
+                      : SizedBox(
+                          height: Get.height / 2,
+                          child: const Center(
+                            child: EmptyStateWidget(
+                                shouldShowImage: false,
+                                message: 'You will see your chats here'),
+                          ),
+                        )
                 ],
               ),
             ),

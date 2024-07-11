@@ -17,6 +17,7 @@ import 'package:nexus/features/auth/presentation/widgets/record_completed.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/home/presentation/views/photo_view.dart';
 import 'package:nexus/features/match/controllers/matches_ctr.dart';
+import 'package:nexus/features/profile/presentation/views/report_user.dart';
 import 'package:nexus/features/profile/presentation/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 
@@ -104,6 +105,15 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
             Get.back();
           },
         ),
+        actions: [
+          InkWell(
+            child: const Icon(Icons.info, color: white),
+            onTap: () {
+              Get.to(() => ReportUser(userModel: widget.userModel));
+            },
+          ),
+          const SizedBoxW20()
+        ],
       ),
       body: Stack(
         children: [
@@ -143,7 +153,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                       userBio(),
                       Container(
                         width: width(context),
-                        height: Get.height / 0.65,
+                        height: Get.height / 0.57,
                         decoration: BoxDecoration(
                           color: white,
                           borderRadius: BorderRadius.vertical(
@@ -281,7 +291,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             ),
                             const SizedBoxH40(),
                             Text(
-                              'Audio Recording',
+                              'Audio Recordings',
                               style: textStyle14.copyWith(
                                 fontWeight: FontWeight.w500,
                                 color: black,
@@ -289,7 +299,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             ),
                             const SizedBoxH15(),
                             Text(
-                              '1. The summary of ${widget.userModel.username} relationship with God',
+                              "1. The summary of ${widget.userModel.username}'s relationship with God",
                               style: textStyle14.copyWith(
                                   color: black,
                                   fontSize: 14,
@@ -311,7 +321,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             ),
                             const SizedBoxH25(),
                             Text(
-                              '2. ${widget.userModel.username} view on Gender roles in marriage',
+                              "2. ${widget.userModel.username}'s view on Gender roles in marriage",
                               style: textStyle14.copyWith(
                                   color: black,
                                   fontSize: 14,
@@ -414,10 +424,16 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                         onPressed: () {
                           compatibilityModal(context, widget.userModel);
                         },
-                        child: Text(
-                          "View Compatibility Data",
-                          style:
-                              textStyle14.copyWith(fontWeight: FontWeight.bold),
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                              color: primary.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(100)),
+                          child: Text(
+                            "View Compatibility Data",
+                            style: textStyle14.copyWith(
+                                fontWeight: FontWeight.bold),
+                          ),
                         ))
                     : const SizedBoxH10(),
                 const SizedBoxH40(),
@@ -462,62 +478,67 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
           ),
           const SizedBoxH10(),
           Obx(
-            () => Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () {
-                    ctr.ctr.myProfile.value.matchedUsers == null ||
-                            !ctr.ctr.myProfile.value.matchedUsers!
-                                .contains(widget.userModel.id)
-                        ? ctr.toggleLike(widget.userModel)
-                        : print("This users are matched");
-                  },
-                  child: CircleAvatar(
-                      backgroundColor:
-                          ctr.ctr.myProfile.value.myLikes == null ||
-                                  !ctr.ctr.myProfile.value.myLikes!
+            () => ctr.ctr.myProfile.value.matchedUsers == null ||
+                    !ctr.ctr.myProfile.value.matchedUsers!
+                        .contains(widget.userModel.id)
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          ctr.ctr.myProfile.value.matchedUsers == null ||
+                                  !ctr.ctr.myProfile.value.matchedUsers!
                                       .contains(widget.userModel.id)
-                              ? white
-                              : primary,
-                      radius: 25,
-                      child: SvgPicture.asset(
-                        ctr.ctr.myProfile.value.matchedUsers == null ||
-                                !ctr.ctr.myProfile.value.matchedUsers!
-                                    .contains(widget.userModel.id)
-                            ? "$svgPath/like.svg"
-                            : '$svgPath/sms.svg',
-                        color: ctr.ctr.myProfile.value.myLikes == null ||
-                                !ctr.ctr.myProfile.value.myLikes!
-                                    .contains(widget.userModel.id)
-                            ? primary
-                            : white,
-                      )),
-                ),
-                const SizedBoxW20(),
-                InkWell(
-                  onTap: () {
-                    ctr.toggleSave(widget.userModel.id);
-                    print(ctr.ctr.myProfile.value.mySaves!
-                        .contains(widget.userModel.id));
-                  },
-                  child: CircleAvatar(
-                    backgroundColor: ctr.ctr.myProfile.value.mySaves == null ||
-                            !ctr.ctr.myProfile.value.mySaves!
-                                .contains(widget.userModel.id)
-                        ? white
-                        : primary,
-                    radius: 25,
-                    child: SvgPicture.asset("$svgPath/bookmark.svg",
-                        color: ctr.ctr.myProfile.value.mySaves == null ||
-                                !ctr.ctr.myProfile.value.mySaves!
-                                    .contains(widget.userModel.id)
-                            ? primary
-                            : white),
-                  ),
-                ),
-              ],
-            ),
+                              ? ctr.toggleLike(widget.userModel)
+                              : print("This users are matched");
+                        },
+                        child: CircleAvatar(
+                            backgroundColor:
+                                ctr.ctr.myProfile.value.myLikes == null ||
+                                        !ctr.ctr.myProfile.value.myLikes!
+                                            .contains(widget.userModel.id)
+                                    ? white
+                                    : primary,
+                            radius: 25,
+                            child: SvgPicture.asset(
+                              ctr.ctr.myProfile.value.matchedUsers == null ||
+                                      !ctr.ctr.myProfile.value.matchedUsers!
+                                          .contains(widget.userModel.id)
+                                  ? "$svgPath/like.svg"
+                                  : '$svgPath/sms.svg',
+                              color: ctr.ctr.myProfile.value.myLikes == null ||
+                                      !ctr.ctr.myProfile.value.myLikes!
+                                          .contains(widget.userModel.id)
+                                  ? primary
+                                  : white,
+                            )),
+                      ),
+                      const SizedBoxW20(),
+                      InkWell(
+                        onTap: () {
+                          ctr.toggleSave(widget.userModel.id);
+                          print(ctr.ctr.myProfile.value.mySaves!
+                              .contains(widget.userModel.id));
+                        },
+                        child: CircleAvatar(
+                          backgroundColor:
+                              ctr.ctr.myProfile.value.mySaves == null ||
+                                      !ctr.ctr.myProfile.value.mySaves!
+                                          .contains(widget.userModel.id)
+                                  ? white
+                                  : primary,
+                          radius: 25,
+                          child: SvgPicture.asset("$svgPath/bookmark.svg",
+                              color: ctr.ctr.myProfile.value.mySaves == null ||
+                                      !ctr.ctr.myProfile.value.mySaves!
+                                          .contains(widget.userModel.id)
+                                  ? primary
+                                  : white),
+                        ),
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
           )
         ],
       ),

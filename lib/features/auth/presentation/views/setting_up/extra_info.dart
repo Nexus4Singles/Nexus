@@ -18,6 +18,8 @@ import 'package:nexus/features/auth/presentation/widgets/drop_down.dart';
 import 'package:nexus/router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../core/utils/toast.dart';
+
 class ExtraInformationScreen extends StatefulWidget {
   const ExtraInformationScreen({super.key});
 
@@ -109,6 +111,7 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                     const SizedBoxH20(),
                     GooglePlaceAutoCompleteTextField(
                       textEditingController: model.search,
+                      textStyle: textStyle14,
                       googleAPIKey: 'AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y',
                       // countries: const ['NG'],
                       inputDecoration: InputDecoration(
@@ -117,9 +120,7 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                         hintText: 'Select your City, Country of Residence',
                         hintStyle: textStyle14.copyWith(color: otherGrey),
                         contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 5,
-                        ),
+                            horizontal: 15, vertical: 5),
                         border: outlineInputBorder.copyWith(
                           borderRadius: BorderRadius.circular(16),
                           borderSide: const BorderSide(
@@ -146,10 +147,9 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                       getPlaceDetailWithLatLng: (Prediction prediction) {
                         Logger().d(prediction.toJson());
                         model.getFormattedLocation(
-                          double.parse(prediction.lat!),
-                          double.parse(prediction.lat!),
-                          prediction.placeId!,
-                        );
+                            double.parse(prediction.lat!),
+                            double.parse(prediction.lat!),
+                            prediction.placeId!);
                       },
                       itemClick: (prediction) {
                         // model.getFormattedLocation(
@@ -163,11 +163,12 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                           child: Row(
                             children: [
                               const Icon(Icons.location_on),
-                              const SizedBox(
-                                width: 7,
-                              ),
+                              const SizedBox(width: 7),
                               Expanded(
-                                  child: Text(prediction.description ?? ""))
+                                  child: Text(
+                                prediction.description ?? "",
+                                style: textStyle14,
+                              ))
                             ],
                           ),
                         );
@@ -223,6 +224,9 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                     church == "Other"
                         ? CustomTextField(
                             controller: churchController,
+                            onChanged: (val) {
+                              // church = val;
+                            },
                             hintText: "Enter your Church's full name")
                         : const SizedBox(),
                     const SizedBoxH40(),
@@ -235,34 +239,42 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
           ),
         ),
         bottomSheet: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 15.sp,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 15.sp),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               CustomButton(
                 onPressed: () {
-                  bool validate = _formkey.currentState!.validate();
-                  if (validate) {
-                    Map<String, dynamic> map = {
-                      kCOUNTRY: 'Nigeria', //todo Nigeria as default
-                      kCHURCHNAME: churchController.text.isEmpty
-                          ? church
-                          : churchController.text,
-                      kEDULEVEL: eduLevel,
-                      kSTATEOFORIGIN: state,
-                      kPROFESSION: profession,
-                      kREGPROGRESS: 'extra',
-                      kCITY: model.city, //todo set city
-                      kLOCATION: model.location.toJson(),
-                    };
-                    model.updateProfile(
-                      map: map,
-                      onCompleted: () {
-                        Get.toNamed(AppRoutes.hobbies);
-                      },
-                    );
+                  if (model.location.place!.contains(" ")) {
+                    bool validate = _formkey.currentState!.validate();
+                    if (validate &&
+                        church.isNotEmpty &&
+                        churchController.text.isNotEmpty) {
+                      Map<String, dynamic> map = {
+                        kCOUNTRY: 'Nigeria', //todo Nigeria as default
+                        kCHURCHNAME: churchController.text.isEmpty
+                            ? church
+                            : churchController.text,
+                        kEDULEVEL: eduLevel,
+                        kSTATEOFORIGIN: state,
+                        kPROFESSION: profession,
+                        kREGPROGRESS: 'extra',
+                        kCITY: model.city, //todo set city
+                        kLOCATION: model.location.toJson(),
+                      };
+                      model.updateProfile(
+                        map: map,
+                        onCompleted: () {
+                          Get.toNamed(AppRoutes.hobbies);
+                        },
+                      );
+                    } else {
+                      AppToast().showErrorToast(
+                          "Please type the name of your Church");
+                    }
+                  } else {
+                    AppToast().showErrorToast(
+                        "Please select a city with the country");
                   }
                 },
                 child: Text(

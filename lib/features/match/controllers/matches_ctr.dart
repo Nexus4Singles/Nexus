@@ -1,15 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/models/user.dart';
+import 'package:nexus/core/utils/app_logger.dart';
 import 'package:nexus/features/explore/controllers/explore_ctr.dart';
+import 'package:nexus/features/home/controllers/notification_controller.dart';
 import 'package:nexus/features/match/presentation/views/matched.dart';
 import '../../../core/constant.dart';
 import '../../chat/controllers/chat_ctr.dart';
 
 class MatchesCtr extends GetxController {
-  static MatchesCtr instance = Get.find<MatchesCtr>();
+  static MatchesCtr get instance => Get.find<MatchesCtr>();
 
   var isLoading = false.obs;
   var ctr = ExploreCtr.instance;
@@ -18,6 +21,7 @@ class MatchesCtr extends GetxController {
   var userData = <UserModel>[].obs;
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
+  var unrecommendId = "".obs;
 
   setMyLikes() {
     emptyText.value = "You have not liked any profiles yet.";
@@ -51,11 +55,25 @@ class MatchesCtr extends GetxController {
   }
 
   checkSavedAlready(String id) {
-    return ctr.myProfile.value.mySaves!.contains(id);
+    return ctr.myProfile.value.mySaves?.contains(id);
+  }
+
+  var notificationController = NotificationController.instance;
+  saveCountOfLikeMe(String userID) async {
+    var likeDoc = db.collection(kUSER).doc(userID);
+    await db.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(likeDoc);
+      if (snapshot.exists) {
+        var data = UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
+        transaction.update(likeDoc,
+            {'countLike': data.countLike != null ? data.countLike! + 1 : 1});
+      }
+    });
   }
 
   Future<void> toggleLike(UserModel userModel) async {
     EasyLoading.show();
+    await ctr.getMyProfile();
     // this is for users that was liked by someone already
     if (ctr.myProfile.value.likeMe != null &&
         ctr.myProfile.value.likeMe!.contains(userModel.id)) {
@@ -63,6 +81,9 @@ class MatchesCtr extends GetxController {
       await removeFromLikeMe(userModel.id, false);
       await removeUserMyLike(userModel.id, false);
       await saveBothToMatched(userModel);
+      EasyLoading.dismiss();
+
+      notificationController.sendMatchNotification(userModel.id);
       // go to matched user screen & remove the myLike  from the other users & remove like Me from the and create a chat view instead
     } else {
       if (ctr.myProfile.value.myLikes != null &&
@@ -70,15 +91,21 @@ class MatchesCtr extends GetxController {
         print("I was called here second");
         await removeUserMyLike(userModel.id, true);
         await removeFromLikeMe(userModel.id, true);
+
+        EasyLoading.dismiss();
       } else {
         print("I was called here third");
         addUserToMyLike(userModel.id);
+        saveCountOfLikeMe(userModel.id);
         addUserToLikeMe(userModel.id);
+
+        EasyLoading.dismiss(); // this is to remove slow downs...
+        notificationController.sendLikeNotification(userModel.id);
+        appLog(userModel.toJson());
       }
       await ctr.getMyProfile();
       setMyLikes();
     }
-    EasyLoading.dismiss();
   }
 
   removeUserMyLike(id, bool isUser) async {
@@ -123,7 +150,7 @@ class MatchesCtr extends GetxController {
   Future<void> toggleSave(String id) async {
     EasyLoading.show();
 
-    final updateOperation = checkSavedAlready(id)
+    final updateOperation = checkSavedAlready(id) ?? false
         ? FieldValue.arrayRemove([id])
         : FieldValue.arrayUnion([id]);
 
@@ -137,10 +164,35 @@ class MatchesCtr extends GetxController {
     EasyLoading.dismiss();
   }
 
-  addToUnRecommend(String id) {
-    db.collection(kUSER).doc(auth.currentUser!.uid).update({
-      "unRecommendUsers": FieldValue.arrayUnion([id])
-    });
+  addToUnRecommend(String id) async {
+    unrecommendId.value = id;
+    try {
+      EasyLoading.show();
+      await db.collection(kUSER).doc(auth.currentUser!.uid).update({
+        "unRecommendUsers": FieldValue.arrayUnion([id])
+      });
+      EasyLoading.dismiss();
+    } catch (e) {
+      EasyLoading.dismiss();
+    }
+  }
+
+  undoUnRecommend(bool shouldSwipe, CardSwiperController ctr) async {
+    print("Called");
+    if (unrecommendId.value.isNotEmpty) {
+      try {
+        EasyLoading.show();
+        await db.collection(kUSER).doc(auth.currentUser!.uid).update({
+          "unRecommendUsers": FieldValue.arrayRemove([unrecommendId.value])
+        });
+        shouldSwipe ? ctr.undo() : () {};
+        EasyLoading.dismiss();
+      } catch (e) {
+        EasyLoading.dismiss();
+      }
+    } else {
+      ctr.undo();
+    }
   }
 
   @override

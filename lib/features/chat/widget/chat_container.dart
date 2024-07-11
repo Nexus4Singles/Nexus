@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:nexus/core/style.dart';
 import '../../../core/colors.dart';
@@ -30,29 +31,36 @@ class ChatContainer extends StatelessWidget {
           radius: 24,
           backgroundImage: NetworkImage(image),
         ),
-        subtitle:
-            Text(text, style: textStyle12, overflow: TextOverflow.ellipsis),
-        contentPadding: EdgeInsets.zero,
-        trailing: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+        subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(timeago.format(time).capitalizeFirst!, style: textStyle12),
-            count.isGreaterThan(0)
-                ? CircleAvatar(
-                    radius: 12,
-                    backgroundColor: red,
-                    child: Text(
-                      '$count',
-                      style: textStyle12.copyWith(color: Colors.white),
-                    ),
-                  )
-                : const SizedBox()
+            Text(text, style: textStyle12, overflow: TextOverflow.ellipsis),
+            Container(
+              padding: const EdgeInsets.only(right: 20),
+              child: count.isGreaterThan(0)
+                  ? CircleAvatar(
+                      radius: 12,
+                      backgroundColor: red,
+                      child: Text(
+                        '$count',
+                        style: textStyle12.copyWith(color: Colors.white),
+                      ),
+                    )
+                  : const SizedBox(),
+            ),
           ],
         ),
-        title: Text(
-          name,
-          style: textStyle14.copyWith(fontWeight: FontWeight.w600),
+        contentPadding: EdgeInsets.zero,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              name,
+              style: textStyle14.copyWith(fontWeight: FontWeight.w600),
+            ),
+            Text(DateFormat.jm().format(time).capitalizeFirst!,
+                style: textStyle12),
+          ],
         ),
       ),
     );

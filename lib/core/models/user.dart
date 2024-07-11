@@ -17,6 +17,7 @@ class UserModel extends UserEntity {
     required String gender,
     String? bestQualotiesOrTraits,
     String? city,
+    int? countLike,
     List<String>? desiredQualities,
     List<String>? hobbies,
     List<String>? photos,
@@ -24,6 +25,7 @@ class UserModel extends UserEntity {
     List<String>? myLikes,
     List<String>? mySaves,
     List<String>? matchedUsers,
+    List<String>? unRecommendUsers,
     String? educationLevel,
     String? profession,
     String? relationshipWithGod,
@@ -38,6 +40,7 @@ class UserModel extends UserEntity {
     CompatibilityModel? compatibility,
     bool? compatibilitySetted,
     LocationModel? location,
+    String? fcmToken,
   }) : super(
           id: id,
           name: name,
@@ -46,6 +49,7 @@ class UserModel extends UserEntity {
           profileUrl: profileUrl,
           age: age,
           gender: gender,
+          unrecommendedUsers: unRecommendUsers,
           bestQualotiesOrTraits: bestQualotiesOrTraits,
           city: city,
           matchedUsers: matchedUsers,
@@ -65,10 +69,12 @@ class UserModel extends UserEntity {
           phoneNumber: phoneNumber,
           registrationProgress: registrationProgress,
           country: country,
+          countLike: countLike,
           churchName: churchName,
           compatibility: compatibility,
           compatibilitySetted: compatibilitySetted,
           location: location,
+          fcmToken: fcmToken,
         );
 
   factory UserModel.fromJson(Map<String, dynamic> map) =>

@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/features/home/controllers/notification_controller.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/router.dart';
 
@@ -14,6 +15,9 @@ class ProfileTile extends StatelessWidget {
     super.key,
     required this.model,
   });
+
+  int get notificationsLength =>
+      NotificationController.instance.notifications.length;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +41,7 @@ class ProfileTile extends StatelessWidget {
             Text(
               model.currentUser == null
                   ? 'Hi'
-                  : 'Hi ${model.currentUser!.username} 👋',
+                  : 'Hi ${model.currentUser!.username} 👋🏽',
               style: headerStyle.copyWith(
                 fontSize: 20.sp,
               ),
@@ -63,7 +67,7 @@ class ProfileTile extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Text(
-                    '21',
+                    "$notificationsLength",
                     textAlign: TextAlign.center,
                     style: textStyle10.copyWith(
                       color: white,

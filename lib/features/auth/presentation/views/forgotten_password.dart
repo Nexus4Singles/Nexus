@@ -12,6 +12,8 @@ import 'package:nexus/core/utils/toast.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/assets.dart';
+
 class ForgottenPasswordScreen extends StatefulWidget {
   const ForgottenPasswordScreen({super.key});
 
@@ -29,85 +31,74 @@ class _ForgottenPasswordScreenState extends State<ForgottenPasswordScreen> {
   Widget build(BuildContext context) {
     return Consumer<AuthNotifier>(builder: (context, model, _) {
       return Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                height: height(context),
-                width: width(context),
-                color: white,
-                child: Stack(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          iconTheme: const IconThemeData(color: white),
+        ),
+        extendBodyBehindAppBar: true,
+        body: Stack(
+          children: [
+            Container(
+              height: Get.height / 1.3,
+              width: Get.width,
+              alignment: Alignment.topCenter,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage('$imgPath/firelove.png'))),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: Get.height / 1.6,
+                decoration: BoxDecoration(
+                  color: white,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      'assets/images/firelove.png',
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                    const SafeArea(
-                      child: BackButton(
-                        color: white,
+                    const SizedBoxH25(),
+                    Text(
+                      'Forgotten Password',
+                      style: GoogleFonts.outfit(
+                        fontSize: 28.sp,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: -0.3,
+                        color: black,
                       ),
                     ),
-                    Positioned(
-                      bottom: 200,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 15),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBoxH25(),
-                            Text(
-                              'Forgotten Password',
-                              style: GoogleFonts.nunito(
-                                fontSize: 28.sp,
-                                fontWeight: FontWeight.w700,
-                                color: black,
-                              ),
-                            ),
-                            Text(
-                              'Please provide your email below. Kindly check your spam \nif you don’t find password reset link in your inbox',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.sora(
-                                  color: black,
-                                  textStyle: textStyle12,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                            const SizedBoxH30(),
-                            CustomTextField(
-                              controller: email,
-                              hintText: 'Email address',
-                            ),
-                            const SizedBoxH20(),
-                            const SizedBoxH25(),
-                            CustomButton(
-                              onPressed: () {
-                                if (email.text.isEmail) {
-                                  model.resendResetLink(email: email.text);
-                                } else {
-                                  AppToast()
-                                      .showErrorToast('Enter email address');
-                                }
-                              },
-                              text: 'Send Reset Link',
-                            ),
-                            const SizedBoxH20(),
-                          ],
-                        ),
-                      ),
+                    Text(
+                        'Please provide your email below. Kindly check your spam \nif you don’t find password reset link in your inbox',
+                        textAlign: TextAlign.center,
+                        style:
+                            textStyle12.copyWith(color: black.withOpacity(.5))),
+                    const SizedBoxH30(),
+                    CustomTextField(
+                      controller: email,
+                      hintText: 'Email address',
                     ),
+                    const SizedBoxH20(),
+                    const SizedBoxH25(),
+                    CustomButton(
+                      onPressed: () {
+                        if (email.text.isEmail) {
+                          model.resendResetLink(email: email.text);
+                        } else {
+                          AppToast().showErrorToast('Enter email address');
+                        }
+                      },
+                      text: 'Send Reset Link',
+                    ),
+                    const SizedBoxH20(),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     });

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/empty_state.dart';
 import 'package:nexus/core/utils/progress_indicator.dart';
-import 'package:nexus/features/home/presentation/widgets/coming_soon.dart';
 import 'package:nexus/features/match/controllers/matches_ctr.dart';
 import 'package:nexus/features/match/presentation/widgets/match_stat.dart';
 import 'package:nexus/features/match/presentation/widgets/matched_user.dart';
 
+import '../../../../router.dart';
 import '../../../home/presentation/views/user_details.dart';
 
 class MatcheScreen extends StatefulWidget {
@@ -30,31 +30,31 @@ class _MatcheScreenState extends State<MatcheScreen> {
         leading: const SizedBox.shrink(),
         title: Text(
           'Potential Matches',
-          style: textStyle18.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: textStyle18.copyWith(fontWeight: FontWeight.bold),
         ),
         actions: [
           InkWell(
-            onTap: () {},
-            child: const Icon(
-              Iconsax.setting_4,
-            ),
+            child: SvgPicture.asset('assets/icons/adjust.svg'),
+            onTap: () {
+              Get.toNamed(AppRoutes.settings);
+            },
           ),
-          const SizedBoxW15(),
         ],
       ),
       body: Stack(
         alignment: Alignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.all(15.sp),
+            padding: EdgeInsets.symmetric(horizontal: 15.sp),
             child: Column(
               children: [
-                Text(
-                  'This is a list of of users you have liked,  users who liked  your profile, as well as profiles you have saved.',
-                  style: textStyle12.copyWith(),
-                  textAlign: TextAlign.center,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    'This is a list of of users you have liked,  users who liked  your profile, as well as profiles you have saved.',
+                    style: textStyle12.copyWith(),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 const SizedBoxH20(),
                 MatchStats(),

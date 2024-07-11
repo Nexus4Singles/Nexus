@@ -43,7 +43,12 @@ class _PhotoViewScreenState extends State<PhotoViewScreen> {
         body: Stack(
           children: [
             StoryPageView(
+              indicatorPadding:
+                  const EdgeInsets.only(top: 50, left: 16, right: 16),
               initialPage: widget.selectedIndex,
+              initialStoryIndex: (int pageIndex) {
+                return widget.selectedIndex;
+              },
               itemBuilder: (context, pageIndex, storyIndex) {
                 final story = widget.photos[storyIndex];
                 return Container(
@@ -70,15 +75,9 @@ class _PhotoViewScreenState extends State<PhotoViewScreen> {
                 );
               },
               indicatorAnimationController: indicatorAnimationController,
-              // initialStoryIndex: (pageIndex) {
-              //   if (pageIndex == 0) {
-              //     return 1;
-              //   }
-              //   return 0;
-              // },
               pageLength: 1,
               storyLength: (int pageIndex) {
-                return model.selectedUser?.photos?.length ?? 0;
+                return widget.photos.length;
               },
               onPageLimitReached: () {
                 Navigator.pop(context);
@@ -86,7 +85,7 @@ class _PhotoViewScreenState extends State<PhotoViewScreen> {
             ),
             const SafeArea(
               child: Padding(
-                padding: EdgeInsets.all(15.0),
+                padding: EdgeInsets.all(15),
                 child: CircleAvatar(
                   backgroundColor: white,
                   child: BackButton(

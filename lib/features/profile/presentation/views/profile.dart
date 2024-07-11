@@ -132,8 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
           title: Text(
             'Your Profile',
-            style: textStyle18.copyWith(
-                fontSize: 24, fontWeight: FontWeight.w700, color: black),
+            style: textStyle18.copyWith(fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
           foregroundColor: black,
@@ -177,7 +176,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Text(
                           '${homeModel.currentUser!.location!.place}',
                           overflow: TextOverflow.ellipsis,
-                          style: textStyle16.copyWith(
+                          style: textStyle14.copyWith(
                               fontWeight: FontWeight.w300, color: black),
                         ),
                       ),
@@ -188,7 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBoxH25(),
               Text(
                 'About',
-                style: textStyle18.copyWith(
+                style: textStyle16.copyWith(
                   fontWeight: FontWeight.w700,
                   color: black,
                 ),
@@ -198,12 +197,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Text(
                     'State of Origin: ',
-                    style: textStyle18.copyWith(
+                    style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
                     homeModel.currentUser!.stateOfOrigin ?? '',
-                    style: textStyle18.copyWith(
+                    style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: black),
                   ),
                 ],
@@ -213,12 +212,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Text(
                     'Education Level: ',
-                    style: textStyle18.copyWith(
+                    style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
                     homeModel.currentUser!.educationLevel ?? '',
-                    style: textStyle18.copyWith(
+                    style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: black),
                   ),
                 ],
@@ -228,12 +227,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Text(
                     'Profession/Industry: ',
-                    style: textStyle18.copyWith(
+                    style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
                     homeModel.currentUser!.profession ?? '',
-                    style: textStyle18.copyWith(
+                    style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: black),
                   ),
                 ],
@@ -243,12 +242,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Text(
                     'Church: ',
-                    style: textStyle18.copyWith(
+                    style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
                     homeModel.currentUser!.churchName ?? '',
-                    style: textStyle18.copyWith(
+                    style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: black),
                   ),
                 ],
@@ -256,7 +255,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBoxH25(),
               Text(
                 'Hobbies / Interests',
-                style: textStyle18.copyWith(
+                style: textStyle16.copyWith(
                   fontWeight: FontWeight.w700,
                   color: black,
                 ),
@@ -279,7 +278,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Text(
                     'Most Desired Qualities',
-                    style: textStyle18.copyWith(
+                    style: textStyle16.copyWith(
                       fontWeight: FontWeight.w700,
                       color: black,
                     ),
@@ -368,10 +367,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBoxH25(),
               Text(
                 'Gallery',
-                style: textStyle18.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: black,
-                ),
+                style: textStyle16.copyWith(
+                    fontWeight: FontWeight.w700, color: black),
               ),
               const SizedBoxH10(),
               Wrap(
@@ -385,7 +382,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onTap: () {
                         Get.to(
                           () => PhotoViewScreen(
-                            selectedIndex: 0,
+                            selectedIndex:
+                                homeModel.currentUser!.photos!.indexOf(item),
                             photos: homeModel.currentUser!.photos!,
                           ),
                         );

@@ -25,29 +25,20 @@ class NotifyPermission extends StatelessWidget {
         foregroundColor: black,
         elevation: 0,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset("$svgPath/notify.svg"),
-          const SizedBoxH15(),
-          Text("Enable Notifications",
-              style: textStyle18.copyWith(
-                  fontSize: 24, fontWeight: FontWeight.w600)),
-          const SizedBoxH5(),
-          Text(
-              "Get push-notifications when you get a match or receive a message",
-              textAlign: TextAlign.center,
-              style: textStyle14),
-          const SizedBoxH15(),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: CustomButton(
-              onPressed: () {},
-              text: "I want to be notified",
-            ),
-          )
-        ],
+      body: Center(
+        child: Column(
+          children: [
+            const Spacer(),
+            const Spacer(),
+            SvgPicture.asset("$svgPath/bell.svg"),
+            const SizedBoxH15(),
+            Text("You haven’t received any notifications yet.",
+                textAlign: TextAlign.center, style: textStyle14),
+            const Spacer(),
+            const Spacer(),
+            const Spacer(),
+          ],
+        ),
       ),
     );
   }

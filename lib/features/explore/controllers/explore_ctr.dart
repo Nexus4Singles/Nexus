@@ -9,7 +9,7 @@ import 'package:nexus/core/models/user.dart';
 import '../../../core/constant.dart';
 
 class ExploreCtr extends GetxController {
-  static ExploreCtr instance = Get.find<ExploreCtr>();
+  static ExploreCtr get instance => Get.find<ExploreCtr>();
 
   final allUsers = <UserModel>[].obs;
   final searchedUsers = <UserModel>[].obs;
@@ -36,7 +36,7 @@ class ExploreCtr extends GetxController {
     for (var data in allUsers) {
       if (data.id == auth.currentUser!.uid) {
         myProfile.value = data;
-        print(myProfile.value);
+        allUsers.where((users) => users.gender != myProfile.value.gender);
       }
     }
     print("this is all users == >${allUsers.length}");

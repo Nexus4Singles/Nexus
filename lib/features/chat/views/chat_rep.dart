@@ -15,6 +15,7 @@ import 'package:nexus/core/style.dart';
 import 'package:nexus/features/chat/controllers/chat_ctr.dart';
 import 'package:nexus/features/home/presentation/views/user_details.dart';
 import '../../../core/models/message_model.dart';
+import '../../../core/utils/modals.dart';
 import '../../match/presentation/widgets/matchUsersCompatibilityModal.dart';
 
 class ChatWithScreen extends StatefulWidget {
@@ -35,8 +36,21 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
     return Scaffold(
         appBar: AppBar(
           leadingWidth: 32,
+          actions: [
+            InkWell(
+              onTap: () {
+                EasyLoading.showToast("Coming Soon",
+                    maskType: EasyLoadingMaskType.black);
+              },
+              child: const Icon(
+                Iconsax.call,
+                color: primary,
+              ),
+            ),
+            const SizedBoxW15()
+          ],
           title: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
                 onTap: () {
@@ -57,10 +71,6 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Text(
-                    'online',
-                    style: textStyle12,
-                  )
                 ],
               ),
             ],
@@ -98,6 +108,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                 return DashChat(
                   currentUser: ChatUser(id: ctr.auth.currentUser!.uid),
                   inputOptions: InputOptions(
+                      textController: ctr.chatController,
                       textInputAction: TextInputAction.newline,
                       alwaysShowSend: true,
                       sendButtonBuilder: (val) {
@@ -180,7 +191,8 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                       containerColor: babyPink,
                       currentUserContainerColor: whiteblue),
                   onSend: (ChatMessage message) {
-                    ctr.sendMessage(widget.chatModel.messageID, message.text);
+                    ctr.sendMessage(widget.chatModel.messageID, message.text,
+                        widget.chatModel.userModel!);
                   },
                   messages: messages,
                 );

@@ -12,7 +12,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       username: json['username'] as String,
       email: json['email'] as String,
       profileUrl: json['profile_url'] as String?,
-      age: (json['age'] as num).toInt(),
+      age: json['age'] as int,
+      countLike: json['countLike'] ?? 0,
       gender: json['gender'] as String,
       bestQualotiesOrTraits: json['best_qualities_or_traits'] as String?,
       city: json['city'] as String?,
@@ -51,6 +52,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       location: json['location'] == null
           ? null
           : LocationModel.fromJson(json['location'] as Map<String, dynamic>),
+      fcmToken: json['fcm_token'] as String?,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -84,4 +86,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'compatibility': instance.compatibility,
       'compatibility_setted': instance.compatibilitySetted,
       'location': instance.location,
+      'fcm_token': instance.fcmToken,
     };

@@ -28,6 +28,11 @@ class _AuthHandlerState extends State<AuthHandler> {
     return Consumer<AuthNotifier>(builder: (context, model, _) {
       return Scaffold(
         backgroundColor: primary,
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          iconTheme: const IconThemeData(color: white),
+        ),
         body: Container(
           padding: const EdgeInsets.all(20),
           decoration: const BoxDecoration(color: primary),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/assets.dart';
+import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
@@ -14,11 +15,13 @@ class ChatImageSelector extends StatelessWidget {
   final File imagePath;
   final String message;
   final String messageID;
+  final UserModel userModel;
   ChatImageSelector(
       {super.key,
       required this.imagePath,
       required this.message,
-      required this.messageID});
+      required this.messageID,
+      required this.userModel});
 
   var ctr = Get.put(ChatCtr());
 
@@ -71,7 +74,7 @@ class ChatImageSelector extends StatelessWidget {
                       fillColor: grey,
                       suffixIcon: InkWell(
                         onTap: () {
-                          ctr.sendMessage(messageID, message);
+                          ctr.sendMessage(messageID, message, userModel);
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),

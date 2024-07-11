@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/models/message_model.dart';
+import 'package:nexus/core/models/user.dart';
 import 'package:nexus/features/explore/controllers/explore_ctr.dart';
+import 'package:nexus/features/home/controllers/notification_controller.dart';
 import '../../../core/models/chats_model.dart';
 import '../../../core/utils/methods.dart';
 
@@ -29,17 +31,19 @@ class ChatCtr extends GetxController {
         .get();
     var chats =
         data.docs.map((data) => ChatModel.fromJson(data.data())).toList();
-    for (var chats in chats) {
+    for (var chat in chats) {
+      print("I got here second for explore chat ==> $chat");
       for (var val in exploreCtr.allUsers) {
-        if (chats.participant.contains(val.id)) {
+        if (chat.participant.contains(val.id)) {
           allChatUsers.add(ChatModel(
-              lastMessage: chats.lastMessage,
-              messageID: chats.messageID,
-              participant: chats.participant,
-              timestamp: chats.timestamp,
-              unreadCount: chats.unreadCount,
+              lastMessage: chat.lastMessage,
+              messageID: chat.messageID,
+              participant: chat.participant,
+              timestamp: chat.timestamp,
+              unreadCount: chat.unreadCount,
               userModel: val,
-              userSentLastMessage: chats.userSentLastMessage));
+              userSentLastMessage: chat.userSentLastMessage));
+          print("I got here second ${allChatUsers.length}");
         }
       }
     }
@@ -47,6 +51,7 @@ class ChatCtr extends GetxController {
         .where((val) => val.userModel!.id != auth.currentUser!.uid)
         .toList();
     allChatUsers.assignAll(filteredUsers);
+    print("I got here third ${allChatUsers.length}");
   }
 
   saveToChat(String id, messageID) {
@@ -69,7 +74,8 @@ class ChatCtr extends GetxController {
         .snapshots();
   }
 
-  sendMessage(String messageID, String messages) async {
+  var notificationController = NotificationController.instance;
+  sendMessage(String messageID, String messages, UserModel recipient) async {
     var message = MessageModel(
         media: imageFile.value.path.isNotEmpty ? imageFile.value.path : "",
         id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -77,14 +83,19 @@ class ChatCtr extends GetxController {
         messageType: mediaType.value.isEmpty ? 'text' : mediaType.value,
         sentBy: auth.currentUser!.uid,
         timestamp: Timestamp.now());
-    if (messages.isNotEmpty) {
+    if (messages.isNotEmpty || imageFile.value.path.isNotEmpty) {
       db
           .collection(kCONVERSATION)
           .doc(messageID)
           .collection(kMESSAGES)
           .doc(message.id)
           .set(message.toJson());
+
       updateLastMessage(messageID, messages);
+      // auth.currentUser!.uid
+
+      notificationController.sendMessageNotification(recipient.id, messages,
+          mediaType.value.isEmpty ? 'text' : mediaType.value);
     }
     if (imageFile.value.path.isNotEmpty) {
       mediaFile.value = await uploadFile(file: imageFile.value);
@@ -99,6 +110,9 @@ class ChatCtr extends GetxController {
         imageFile.value = File('');
         mediaFile.value = "";
         mediaType.value = "";
+
+        notificationController.sendMessageNotification(
+            recipient.id, mediaFile.value, mediaType.value);
       });
     } else {}
   }

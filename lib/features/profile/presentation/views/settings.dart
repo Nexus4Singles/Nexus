@@ -38,11 +38,11 @@ class _SettingScreenState extends State<SettingScreen> {
               text: 'Edit Profile',
               icon: true,
               onPress: () {
-                // Get.toNamed(AppRoutes.editProfile);
-                AppToast().showErrorToast(
-                  'This feature will be available soon',
-                  header: 'Coming soon',
-                );
+                Get.toNamed(AppRoutes.editProfile);
+                // AppToast().showErrorToast(
+                //   'This feature will be available soon',
+                //   header: 'Coming soon',
+                // );
               },
             ),
             const Divider(
@@ -120,25 +120,22 @@ class _SettingScreenState extends State<SettingScreen> {
                 text: 'Change Password',
                 icon: true,
                 onPress: () {
-                  AppToast().showErrorToast(
-                    'This feature will be available soon',
-                    header: 'Coming soon',
-                  );
+                  Get.toNamed(AppRoutes.changePassword);
                   // Get.toNamed(AppRoutes.changePassword);
                 }),
             const Divider(
               color: Colors.transparent,
             ),
-            SettindContainer(
-              text: 'Report User',
-              icon: true,
-              onPress: () {
-                AppToast().showErrorToast(
-                  'This feature will be available soon',
-                  header: 'Coming soon',
-                );
-              },
-            ),
+            // SettindContainer(
+            //   text: 'Report User',
+            //   icon: true,
+            //   onPress: () {
+            //     AppToast().showErrorToast(
+            //       'This feature will be available soon',
+            //       header: 'Coming soon',
+            //     );
+            //   },
+            // ),
             const Divider(
               color: Colors.transparent,
             ),
@@ -146,11 +143,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 text: 'Delete Account',
                 icon: true,
                 onPress: () {
-                  AppToast().showErrorToast(
-                    'This feature will be available soon',
-                    header: 'Coming soon',
-                  );
-                  // Get.toNamed(AppRoutes.deleteAccount);
+                  Get.toNamed(AppRoutes.deleteAccount);
                 }),
             const Divider(
               color: Colors.transparent,

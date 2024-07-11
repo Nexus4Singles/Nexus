@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 // import 'package:logger/logger.dart';
 import 'package:nexus/core/models/user.dart';
@@ -28,50 +29,48 @@ class HomeNotifier with ChangeNotifier {
   List<UserModel> filteredUsers = [];
 
   Future<void> getUsers() async {
-    // getUsersUsecase.call(const NoParams()).then((value) {
-    //   value.fold((l) => l, (r) {
-    //     allUsers = users = r
-    //         .where((e) => e.gender != currentUser!.gender)
-    //         .where((el) => el.registrationProgress == 'completed')
-    //         .toList();
-
-    //     notifyListeners();
-    //     // Logger().d(allUsers);
-    //   });
-    // });
-
-    final filterParams = UserFilterParams(
-      user: currentUser!,
-    );
-
-    final result = await getUsersFilterableUsecase.call(filterParams);
-
-    result.fold(
-      (error) {
-        // Handle the error case
-        print('Error occurred');
-      },
-      (userList) {
-        allUsers = users = userList.toList();
-
-        appLog(allUsers);
+    getUsersUsecase.call(const NoParams()).then((value) {
+      value.fold((l) => l, (r) {
+        var unrecommendedUsers = <String>[];
+        unrecommendedUsers.assignAll(currentUser!.unrecommendedUsers ?? []);
+        allUsers = users = r
+            .where((e) => e.gender != currentUser!.gender)
+            .where((el) => el.registrationProgress == 'completed')
+            .where((u) => !unrecommendedUsers.contains(u.id))
+            .toList();
+        allUsers.shuffle();
         notifyListeners();
-      },
-    );
+      });
+    });
   }
 
   UserModel? currentUser;
 
   Future<void> getProfile() async {
+    print("called again");
     var data = await readProfileUsecase.call(const NoParams());
     data.fold(
       (l) => l,
       (r) {
         currentUser = r;
+        appLog("user", currentUser);
         getUsers();
         notifyListeners();
       },
     );
+  }
+
+  Future<UserModel?> getUser() async {
+    var data = await readProfileUsecase.call(const NoParams());
+    data.fold(
+      (l) => l,
+      (r) {
+        currentUser = r;
+        notifyListeners();
+      },
+    );
+
+    return currentUser;
   }
 
   UserModel? selectedUser;
