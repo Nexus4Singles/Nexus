@@ -17,6 +17,7 @@ import 'package:nexus/features/home/presentation/views/user_details.dart';
 import '../../../core/models/message_model.dart';
 import '../../../core/utils/modals.dart';
 import '../../match/presentation/widgets/matchUsersCompatibilityModal.dart';
+import '../../profile/presentation/views/report_user.dart';
 
 class ChatWithScreen extends StatefulWidget {
   final ChatModel chatModel;
@@ -46,6 +47,14 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                 Iconsax.call,
                 color: primary,
               ),
+            ),
+            const SizedBoxW20(),
+            InkWell(
+              child: const Icon(Icons.report),
+              onTap: () {
+                Get.to(
+                    () => ReportUser(userModel: widget.chatModel.userModel!));
+              },
             ),
             const SizedBoxW15()
           ],
@@ -237,21 +246,3 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
     );
   }
 }
-
-var listOfOptions = [
-  CupertinoActionSheetAction(
-    child: const Text('Action 1'),
-    onPressed: () {
-      // Navigator.pop(context);
-      print('Action 1 selected');
-    },
-  ),
-  CupertinoActionSheetAction(
-    child: const Text('Action 2'),
-    onPressed: () {
-      // Navigator.pop(context);
-      print('Action 2 selected');
-    },
-  ),
-  const Text("")
-];

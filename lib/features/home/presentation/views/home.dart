@@ -91,23 +91,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Provider.of<HomeNotifier>(context, listen: false).getUsers();
-
     return Consumer<HomeNotifier>(
       builder: (context, model, _) {
         return Scaffold(
           body: SafeArea(
             child: Padding(
               padding: EdgeInsets.all(15.sp),
-              child: Column(
+              child: ListView(
                 children: [
                   if (model.currentUser != null) ProfileTile(model: model),
                   const SizedBoxH20(),
-                  Text(
-                    "Recommendations For You",
-                    style: textStyle18.copyWith(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
+                  Center(
+                    child: Text(
+                      "Recommendations For You",
+                      style: textStyle18.copyWith(
+                          color: Colors.black, fontWeight: FontWeight.w600),
                     ),
                   ),
                   const SizedBoxH10(),

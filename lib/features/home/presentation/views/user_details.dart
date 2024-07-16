@@ -107,7 +107,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
         ),
         actions: [
           InkWell(
-            child: const Icon(Icons.info, color: white),
+            child: const Icon(Icons.report, color: white),
             onTap: () {
               Get.to(() => ReportUser(userModel: widget.userModel));
             },
