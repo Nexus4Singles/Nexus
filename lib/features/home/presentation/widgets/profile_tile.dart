@@ -48,36 +48,39 @@ class ProfileTile extends StatelessWidget {
             )
           ],
         ),
-        InkWell(
-          onTap: () {
-            Get.toNamed(AppRoutes.notification);
-          },
-          child: Stack(
-            alignment: Alignment.center,
-            clipBehavior: Clip.none,
-            children: [
-              const Icon(Iconsax.notification5),
-              Positioned(
-                top: -10,
-                right: -5,
-                child: Container(
-                  padding: EdgeInsets.all(5.sp),
-                  decoration: const BoxDecoration(
-                    color: primary,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Text(
-                    "$notificationsLength",
-                    textAlign: TextAlign.center,
-                    style: textStyle10.copyWith(
-                      color: white,
-                      fontSize: 6.sp,
-                      fontWeight: FontWeight.w600,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+            onTap: () {
+              Get.toNamed(AppRoutes.notification);
+            },
+            child: Stack(
+              alignment: Alignment.center,
+              clipBehavior: Clip.none,
+              children: [
+                const Icon(Iconsax.notification5),
+                Positioned(
+                  top: -10,
+                  right: -5,
+                  child: Container(
+                    padding: EdgeInsets.all(5.sp),
+                    decoration: const BoxDecoration(
+                      color: primary,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(
+                      "$notificationsLength",
+                      textAlign: TextAlign.center,
+                      style: textStyle10.copyWith(
+                        color: white,
+                        fontSize: 6.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],

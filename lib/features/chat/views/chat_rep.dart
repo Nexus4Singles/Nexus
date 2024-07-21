@@ -12,11 +12,10 @@ import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/models/chats_model.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/core/utils/modals.dart';
 import 'package:nexus/features/chat/controllers/chat_ctr.dart';
 import 'package:nexus/features/home/presentation/views/user_details.dart';
 import '../../../core/models/message_model.dart';
-import '../../../core/utils/modals.dart';
-import '../../match/presentation/widgets/matchUsersCompatibilityModal.dart';
 import '../../profile/presentation/views/report_user.dart';
 
 class ChatWithScreen extends StatefulWidget {
@@ -32,6 +31,15 @@ class ChatWithScreen extends StatefulWidget {
 
 class _ChatWithScreenState extends State<ChatWithScreen> {
   var ctr = Get.put(ChatCtr());
+
+  @override
+  void initState() {
+    Future.delayed(
+        const Duration(milliseconds: 100), () => chatWarningModal(context));
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,6 +122,10 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                       user: ChatUser(id: element.sentBy, profileImage: ""),
                       createdAt: element.timestamp.toDate()));
                 }
+                messages.length.isLowerThan(10)
+                    ? Future.delayed(const Duration(milliseconds: 100),
+                        () => chatWarningModal(context))
+                    : () {};
                 return DashChat(
                   currentUser: ChatUser(id: ctr.auth.currentUser!.uid),
                   inputOptions: InputOptions(
@@ -140,20 +152,14 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12)),
                             onSelected: (item) {},
-                            child: Obx(
-                              () => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CircleAvatar(
-                                    backgroundColor: primary,
-                                    backgroundImage:
-                                        FileImage(ctr.imageFile.value),
-                                    child: ctr.imageFile.value.path.isEmpty
-                                        ? const Icon(
-                                            Icons.add_box_rounded,
-                                            color: Colors.white,
-                                          )
-                                        : const SizedBox()),
-                              ),
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: CircleAvatar(
+                                  backgroundColor: primary,
+                                  child: Icon(
+                                    Icons.add_box_rounded,
+                                    color: Colors.white,
+                                  )),
                             ),
                             itemBuilder: (BuildContext context) {
                               return {
@@ -169,10 +175,10 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                                   child: InkWell(
                                     onTap: () {
                                       entry.key == "Image"
-                                          ? ctr.pickImage()
+                                          ? ctr.pickImage(widget.chatModel)
                                           : entry.key == "Video"
-                                              ? ctr.pickVideo()
-                                              : ctr.pickVideo();
+                                              ? ctr.pickVideo(widget.chatModel)
+                                              : () {};
                                     },
                                     child: Row(
                                       children: [
@@ -194,7 +200,10 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                               borderSide: const BorderSide(color: grey)))),
                   messageOptions: MessageOptions(
                       onLongPressMessage: (message) {
-                        openModal(context, message);
+                        if (widget.chatModel.userModel!.id == message.user.id) {
+                        } else {
+                          openModal(context, message);
+                        }
                       },
                       showOtherUsersAvatar: false,
                       containerColor: babyPink,
@@ -220,8 +229,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
               CupertinoActionSheetAction(
                 child: const Text('Reply'),
                 onPressed: () {
-                  Get.back();
-                  print('');
+                  EasyLoading.showToast("Coming soon");
                 },
               ),
               CupertinoActionSheetAction(

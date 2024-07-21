@@ -14,12 +14,10 @@ import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/core/utils/modals.dart';
 import 'package:nexus/features/auth/presentation/widgets/record_completed.dart';
-import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/home/presentation/views/photo_view.dart';
 import 'package:nexus/features/match/controllers/matches_ctr.dart';
 import 'package:nexus/features/profile/presentation/views/report_user.dart';
 import 'package:nexus/features/profile/presentation/widgets/text_container.dart';
-import 'package:provider/provider.dart';
 
 class UserDetailScreen extends StatefulWidget {
   final UserModel userModel;
@@ -47,10 +45,6 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
   late Duration playerPosition;
 
   Future _setAudioPlayer() async {
-    var currentUser =
-        Provider.of<HomeNotifier>(context, listen: false).currentUser!;
-
-    // if (playerId == '1') {
     await player.setUrl(widget.userModel.relationshipWithGod!);
 
     player.durationStream.listen((d) {
@@ -60,7 +54,6 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
     player.positionStream.listen((p) {
       playerPosition = p;
     });
-    // } else if (playerId == '2') {
     await player2.setUrl(widget.userModel.roleOfHusband!);
 
     player2.durationStream.listen((d) {
@@ -490,7 +483,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                   !ctr.ctr.myProfile.value.matchedUsers!
                                       .contains(widget.userModel.id)
                               ? ctr.toggleLike(widget.userModel)
-                              : print("This users are matched");
+                              : debugPrint("This users are matched");
                         },
                         child: CircleAvatar(
                             backgroundColor:
@@ -517,8 +510,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                       InkWell(
                         onTap: () {
                           ctr.toggleSave(widget.userModel.id);
-                          print(ctr.ctr.myProfile.value.mySaves!
-                              .contains(widget.userModel.id));
+                          debugPrint(ctr.ctr.myProfile.value.mySaves!
+                              .contains(widget.userModel.id)
+                              .toString());
                         },
                         child: CircleAvatar(
                           backgroundColor:

@@ -26,10 +26,8 @@ class _ChatsScreenState extends State<ChatsScreen> {
       backgroundColor: white,
       appBar: AppBar(
         backgroundColor: white,
-        title: Text(
-          'Chats',
-          style: textStyle18.copyWith(fontWeight: FontWeight.bold),
-        ),
+        title: Text('Chats',
+            style: textStyle18.copyWith(fontWeight: FontWeight.bold)),
         centerTitle: true,
         foregroundColor: black,
         elevation: 0,

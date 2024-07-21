@@ -36,16 +36,13 @@ class FCMService {
 
     await FirebaseMessaging.instance
         .requestPermission(
-      sound: true,
-      badge: true,
-      alert: true,
-      announcement: true,
-    )
-        .then((NotificationSettings settings) {
-      print('User granted permission: ${settings.authorizationStatus}');
-    }).catchError((error) {
-      print('Error requesting permission: $error');
-    });
+          sound: true,
+          badge: true,
+          alert: true,
+          announcement: true,
+        )
+        .then((NotificationSettings settings) {})
+        .catchError((error) {});
 
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(

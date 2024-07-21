@@ -60,10 +60,10 @@ class CustomTextField extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CustomTextFieldState createState() => _CustomTextFieldState();
+  CustomTextFieldState createState() => CustomTextFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
+class CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -76,7 +76,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       minLines: widget.minLine,
       validator: widget.validator,
       textInputAction: widget.action,
-      style: textStyle14,
+      style: textStyle14.copyWith(color: black),
       autocorrect: widget.autoCorrect!,
       textCapitalization: widget.textCapitalization,
       autovalidateMode: AutovalidateMode.onUserInteraction,

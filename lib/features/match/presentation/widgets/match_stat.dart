@@ -9,7 +9,7 @@ import '../../controllers/matches_ctr.dart';
 class MatchStats extends StatelessWidget {
   MatchStats({super.key});
 
-  var ctr = Get.put(MatchesCtr());
+  final ctr = Get.put(MatchesCtr());
 
   @override
   Widget build(BuildContext context) {

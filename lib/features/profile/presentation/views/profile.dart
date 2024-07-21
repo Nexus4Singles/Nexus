@@ -1,9 +1,6 @@
 import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -18,7 +15,6 @@ import 'package:nexus/features/home/presentation/views/photo_view.dart';
 import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
 import 'package:nexus/features/profile/presentation/widgets/text_container.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../router.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -31,7 +27,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _init();
   }

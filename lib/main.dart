@@ -18,7 +18,6 @@ import 'package:nexus/features/profile/presentation/change_notifier/settings_not
 import 'package:nexus/router.dart';
 import 'package:nexus/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() {

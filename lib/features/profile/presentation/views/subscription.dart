@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nexus/features/profile/presentation/change_notifier/settings_notifier.dart';
@@ -11,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:pay/pay.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 
 class SubsciptionScreen extends StatefulWidget {

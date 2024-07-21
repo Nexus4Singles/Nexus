@@ -34,7 +34,7 @@ class _SettingScreenState extends State<SettingScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           children: [
-            SettindContainer(
+            SettingsContainer(
               text: 'Edit Profile',
               icon: true,
               onPress: () {
@@ -45,10 +45,8 @@ class _SettingScreenState extends State<SettingScreen> {
                 // );
               },
             ),
-            const Divider(
-              color: Colors.transparent,
-            ),
-            SettindContainer(
+            const Divider(color: Colors.transparent),
+            SettingsContainer(
                 text: 'Subscription Plans',
                 icon: true,
                 onPress: () {
@@ -61,8 +59,8 @@ class _SettingScreenState extends State<SettingScreen> {
             const Divider(
               color: Colors.transparent,
             ),
-            SettindContainer(
-              text: 'Your Subsription',
+            SettingsContainer(
+              text: 'Your Subscription',
               icon: true,
               onPress: () {
                 // AppToast().showErrorToast(
@@ -76,38 +74,32 @@ class _SettingScreenState extends State<SettingScreen> {
             const Divider(
               color: Colors.transparent,
             ),
-            SettindContainer(
-              text: 'Contact Us',
-              icon: true,
-              onPress: () {
-                AppToast().showErrorToast(
-                  'This feature will be available soon',
-                  header: 'Coming soon',
-                );
-              },
-            ),
-            const Divider(
-              color: Colors.transparent,
-            ),
-            SettindContainer(
+            SettingsContainer(
+                text: 'Contact Us',
+                icon: true,
+                onPress: () {
+                  //Todo add a contact us view.
+                  AppToast().showErrorToast(
+                    'This feature will be available soon',
+                    header: 'Coming soon',
+                  );
+                }),
+            const Divider(color: Colors.transparent),
+            SettingsContainer(
                 text: 'About Nexus',
                 icon: true,
                 onPress: () {
                   Get.toNamed(AppRoutes.about);
                 }),
-            const Divider(
-              color: Colors.transparent,
-            ),
-            SettindContainer(
+            const Divider(color: Colors.transparent),
+            SettingsContainer(
                 text: 'Terms of Use',
                 icon: true,
                 onPress: () {
                   Get.toNamed(AppRoutes.terms);
                 }),
-            const Divider(
-              color: Colors.transparent,
-            ),
-            SettindContainer(
+            const Divider(color: Colors.transparent),
+            SettingsContainer(
                 text: 'Privacy Policy',
                 icon: true,
                 onPress: () {
@@ -116,39 +108,22 @@ class _SettingScreenState extends State<SettingScreen> {
             const Divider(
               color: Colors.transparent,
             ),
-            SettindContainer(
+            SettingsContainer(
                 text: 'Change Password',
                 icon: true,
                 onPress: () {
                   Get.toNamed(AppRoutes.changePassword);
                   // Get.toNamed(AppRoutes.changePassword);
                 }),
-            const Divider(
-              color: Colors.transparent,
-            ),
-            // SettindContainer(
-            //   text: 'Report User',
-            //   icon: true,
-            //   onPress: () {
-            //     AppToast().showErrorToast(
-            //       'This feature will be available soon',
-            //       header: 'Coming soon',
-            //     );
-            //   },
-            // ),
-            const Divider(
-              color: Colors.transparent,
-            ),
-            SettindContainer(
+            const Divider(color: Colors.transparent),
+            SettingsContainer(
                 text: 'Delete Account',
                 icon: true,
                 onPress: () {
                   Get.toNamed(AppRoutes.deleteAccount);
                 }),
-            const Divider(
-              color: Colors.transparent,
-            ),
-            SettindContainer(
+            const Divider(color: Colors.transparent),
+            SettingsContainer(
               text: 'Log Out',
               icon: true,
               onPress: () {

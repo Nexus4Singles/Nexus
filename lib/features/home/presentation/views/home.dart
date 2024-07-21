@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
@@ -16,7 +14,6 @@ import 'package:nexus/features/match/controllers/matches_ctr.dart';
 import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/utils/shared_pref.dart';
-import '../../../explore/controllers/explore_ctr.dart';
 
 // Dont show accounts that have been liked.
 
@@ -138,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ) {
                                 UserModel user = model.allUsers[currentIndex!];
                                 if (direction == CardSwiperDirection.right) {
-                                  print("THis is  $direction");
+                                  print("This is  $direction");
                                   matchCtr.addToUnRecommend(user.id);
                                 } else if (direction ==
                                     CardSwiperDirection.left) {

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/get_utils.dart';
 import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
@@ -11,16 +9,14 @@ import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
 import 'package:nexus/core/utils/modals.dart';
 import 'package:nexus/features/chat/controllers/chat_ctr.dart';
-import 'package:nexus/features/match/presentation/widgets/matchUsersCompatibilityModal.dart';
 import 'package:nexus/router.dart';
-
 import '../../../../core/colors.dart';
 
 class Matched extends StatelessWidget {
   final UserModel userModel;
   final int messageID;
   Matched({super.key, required this.userModel, required this.messageID});
-  var ctr = Get.put(ChatCtr());
+  final ctr = Get.put(ChatCtr());
 
   @override
   Widget build(BuildContext context) {

@@ -31,7 +31,6 @@ class ReportCtr extends GetxController {
       EasyLoading.dismiss();
     } catch (e) {
       EasyLoading.dismiss();
-      print(e.toString());
     }
   }
 }
