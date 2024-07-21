@@ -30,7 +30,7 @@ class _CountryModalState extends State<CountryModal> {
             // const SizedBoxH20(),
             InkWell(
               onTap: () {
-                model.setCountry('Nigeria');
+                model.setCountry('Nigerian');
                 Navigator.of(context).pop();
               },
               child: Container(
@@ -38,10 +38,11 @@ class _CountryModalState extends State<CountryModal> {
                 padding: const EdgeInsets.all(15),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color:
-                      model.country == 'Nigeria' ? primary : Colors.transparent,
+                  color: model.country == 'Nigerian'
+                      ? primary
+                      : Colors.transparent,
                   border: Border.all(
-                    color: model.country == 'Nigeria' ? white : iconGrey,
+                    color: model.country == 'Nigerian' ? white : iconGrey,
                     width: 0.1,
                   ),
                   borderRadius: const BorderRadius.vertical(
@@ -49,9 +50,9 @@ class _CountryModalState extends State<CountryModal> {
                   ),
                 ),
                 child: Text(
-                  'Nigeria',
+                  'Nigerian',
                   style: textStyle16.copyWith(
-                    color: model.country == 'Nigeria' ? white : black,
+                    color: model.country == 'Nigerian' ? white : black,
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
@@ -72,7 +73,7 @@ class _CountryModalState extends State<CountryModal> {
                 ),
               ),
               child: Text(
-                'Ghana (Coming Soon)',
+                'American (Coming Soon)',
                 style: textStyle16.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -94,7 +95,73 @@ class _CountryModalState extends State<CountryModal> {
                 ),
               ),
               child: Text(
-                'Kenya (Coming Soon)',
+                'British (Coming Soon)',
+                style: textStyle16.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: iconGrey,
+                ),
+              ),
+            ),
+            Container(
+              width: width(context),
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(15),
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(width: 0),
+                  bottom: BorderSide(
+                    color: iconGrey,
+                    width: 0.1,
+                  ),
+                ),
+              ),
+              child: Text(
+                'Canadian (Coming Soon)',
+                style: textStyle16.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: iconGrey,
+                ),
+              ),
+            ),
+            Container(
+              width: width(context),
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(15),
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(width: 0),
+                  bottom: BorderSide(
+                    color: iconGrey,
+                    width: 0.1,
+                  ),
+                ),
+              ),
+              child: Text(
+                'Ghanaian (Coming Soon)',
+                style: textStyle16.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: iconGrey,
+                ),
+              ),
+            ),
+            Container(
+              width: width(context),
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(15),
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(width: 0),
+                  bottom: BorderSide(
+                    color: iconGrey,
+                    width: 0.1,
+                  ),
+                ),
+              ),
+              child: Text(
+                'Kenyan (Coming Soon)',
                 style: textStyle16.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -115,7 +182,7 @@ class _CountryModalState extends State<CountryModal> {
                 ),
               ),
               child: Text(
-                'South Africa (Coming Soon)',
+                'South African (Coming Soon)',
                 style: textStyle16.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,

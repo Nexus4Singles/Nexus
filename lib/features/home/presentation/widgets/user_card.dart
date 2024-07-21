@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,9 +48,6 @@ class _UserCardState extends State<UserCard> {
   late Duration playerPosition;
 
   Future _setAudioPlayer() async {
-    var currentUser =
-        Provider.of<HomeNotifier>(context, listen: false).currentUser!;
-
     // if (playerId == '1') {
     await player.setUrl(widget.userModel.relationshipWithGod!);
 

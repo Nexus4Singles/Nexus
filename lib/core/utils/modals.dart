@@ -58,13 +58,13 @@ chatWarningModal(context) {
         child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-              height: Get.height / 3.5,
+              height: Get.height / 3.0,
               child: EmptyStateWidget(
                   buttonText: "",
                   buttonFunc: () {},
                   svgAssetPath: "$svgPath/chatWarning.svg",
                   message:
-                      'We highly recommend spending enough time getting to know each other here before exchanging personal contacts'),
+                      'We highly recommend spending enough time getting to know each other here before exchanging personal contacts \n\nHappy Texting!'),
             )),
       );
     },
