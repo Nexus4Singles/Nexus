@@ -9,6 +9,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+import 'package:nexus/api/payment.dart';
 import 'package:nexus/core/di/injection_container.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:nexus/features/explore/controllers/explore_ctr.dart';
@@ -18,12 +20,16 @@ import 'package:nexus/features/profile/presentation/change_notifier/settings_not
 import 'package:nexus/router.dart';
 import 'package:nexus/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
   runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
+    try {
+      await PurchaseApi.init();
+    } catch (e) {
+      Logger().e(e);
+    }
     Animate.restartOnHotReload = true;
     await initializeDateFormatting(
         'en_US', null); // Initialize with your desired locale
@@ -68,20 +74,22 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => sl<AuthNotifier>()),
         ChangeNotifierProvider(create: (_) => sl<HomeNotifier>()),
       ],
-      child: Consumer<ThemeProvider>(builder: (context, theme, _) {
-        return ScreenUtilInit(
-          splitScreenMode: false,
-          builder: (context, child) => GetMaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Nexus',
-            theme: lightTheme,
-            // theme: darkTheme,
-            initialRoute: AppRoutes.splash,
-            getPages: appRouter,
-            builder: EasyLoading.init(),
-          ),
-        );
-      }),
+      child: Consumer<ThemeProvider>(
+        builder: (context, theme, _) {
+          return ScreenUtilInit(
+            splitScreenMode: false,
+            builder: (context, child) => GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Nexus',
+              theme: lightTheme,
+              // theme: darkTheme,
+              initialRoute: AppRoutes.splash,
+              getPages: appRouter,
+              builder: EasyLoading.init(),
+            ),
+          );
+        },
+      ),
     );
   }
 }

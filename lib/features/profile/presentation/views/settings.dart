@@ -61,21 +61,21 @@ class _SettingScreenState extends State<SettingScreen> {
             const Divider(
               color: Colors.transparent,
             ),
-            SettindContainer(
-              text: 'Your Subsription',
-              icon: true,
-              onPress: () {
-                // AppToast().showErrorToast(
-                //   'This feature will be available soon',
-                //   header: 'Coming soon',
-                // );
+            // SettindContainer(
+            //   text: 'Your Subsription',
+            //   icon: true,
+            //   onPress: () {
+            //     // AppToast().showErrorToast(
+            //     //   'This feature will be available soon',
+            //     //   header: 'Coming soon',
+            //     // );
 
-                Get.toNamed(AppRoutes.cancelPlan);
-              },
-            ),
-            const Divider(
-              color: Colors.transparent,
-            ),
+            //     Get.toNamed(AppRoutes.cancelPlan);
+            //   },
+            // ),
+            // const Divider(
+            //   color: Colors.transparent,
+            // ),
             SettindContainer(
               text: 'Contact Us',
               icon: true,

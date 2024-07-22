@@ -92,7 +92,7 @@ class ChatCtr extends GetxController {
           .set(message.toJson());
 
       updateLastMessage(messageID, messages);
-      // auth.currentUser!.uid
+      auth.currentUser!.uid;
 
       notificationController.sendMessageNotification(recipient.id, messages,
           mediaType.value.isEmpty ? 'text' : mediaType.value);

@@ -10,7 +10,6 @@ import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/progress_indicator.dart';
 import 'package:nexus/features/home/controllers/home_controller.dart';
 import 'package:nexus/features/home/controllers/notification_controller.dart';
-import 'package:nexus/features/notifications/presentation/views/notify_permission.dart';
 import 'package:nexus/features/notifications/presentation/widgets/notify_container.dart';
 import 'package:intl/intl.dart';
 

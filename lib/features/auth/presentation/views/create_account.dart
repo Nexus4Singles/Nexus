@@ -265,8 +265,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 return AppToast().showErrorToast(
                                     'Please accepts term of use and privacy policy');
                               }
-                              bool validate = _formkey.currentState!.validate();
-                              if (validate) {
+                              // bool validate = _formkey.currentState!.validate();
+                              // if (validate) {
                                 await SharedPref.setBool(kFirstTime, false);
                                 Map<String, dynamic> map = {
                                   kEMAIL: email.text,
@@ -278,7 +278,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                   username: username.text,
                                   map: map,
                                 );
-                              }
+                              // }
                             },
                             text: 'Sign Up',
                           ),

@@ -2,16 +2,18 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:nexus/api/payment.dart';
+import 'package:nexus/features/home/presentation/views/nav.dart';
 import 'package:nexus/features/profile/presentation/change_notifier/settings_notifier.dart';
 import 'package:nexus/features/profile/presentation/constants/payment.dart';
+import 'package:nexus/features/profile/presentation/widgets/pay.dart';
+import 'package:nexus/features/profile/presentation/widgets/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:pay/pay.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 
 class SubsciptionScreen extends StatefulWidget {
@@ -153,19 +155,62 @@ class _SubsciptionScreenState extends State<SubsciptionScreen> {
                 'Backtrack if you mistakenly swiped left',
                 'Access to Advanced Filters on Explore Page',
               ],
-              onSelectPlan: () => _showPaymentBottomSheet(context, 5),
+              onSelectPlan: () async {
+                final offerings = await PurchaseApi.fetchOffers();
+                final offer = offerings.singleWhere(
+                    (offerings) => offerings.offeringId == 'Subscription');
+                if (!mounted) return;
+
+                Utils.showSheet(
+                  context,
+                  (context) => PayWallWidget(
+                    title: 'Upgrade Your Plan',
+                    description: 'Upgrade to a new plan to enjoy more benefits',
+                    offer: offer,
+                    onClickedSku: (sku) async {
+                      final transaction = await PurchaseApi.purchaseSku(sku);
+                      if (!mounted) return;
+                      if (transaction != null) {
+                        final permissions = transaction.permissions!.all!;
+                        final permission = permissions.firstWhere(
+                            (permission) =>
+                                permission.permissionId == 'premium');
+                        if (permission.isValid!) {
+                          // final provider = context.read<GlassfyProvider>();
+                          // provider.isPremium = true;
+                          // Navigator.of(context).push(
+                          //   MaterialPageRoute(
+                          //     builder: (_) => const MainNav(),
+                          //   )
+                          // );
+                          Navigator.of(context).pop();
+                        }
+                      }
+                      // Navigator.of(context).pop();
+                    },
+                  ),
+                ).then(
+                  (value) => 
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (_) => const MainNav(),
+                  //   ),
+                  // ),
+                  Navigator.of(context).pop()
+                );
+              },
             ),
-            SizedBox(height: 10.h),
-            _buildPlanContainer(
-              title: '\$12/3 months',
-              features: [
-                'Unlimited Messaging',
-                'Save Profiles to View Later',
-                'Backtrack if you mistakenly swiped left',
-                'Access to Advanced Filters on Explore Page',
-              ],
-              onSelectPlan: () => _showPaymentBottomSheet(context, 12),
-            ),
+            // SizedBox(height: 10.h),
+            // _buildPlanContainer(
+            //   title: '\$12/3 months',
+            //   features: [
+            //     'Unlimited Messaging',
+            //     'Save Profiles to View Later',
+            //     'Backtrack if you mistakenly swiped left',
+            //     'Access to Advanced Filters on Explore Page',
+            //   ],
+            //   onSelectPlan: () => _showPaymentBottomSheet(context, 12),
+            // ),
           ],
         ),
       ),
