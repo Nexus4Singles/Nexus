@@ -68,6 +68,9 @@ dependencies:
   flutter_local_notifications: ^17.2.1
   dio: ^5.5.0+1
   intl: ^0.19.0
+  glassfy_flutter: ^1.6.2
+  rename: ^3.0.2
+  cached_video_player_plus: ^3.0.2
 
 dev_dependencies:
   build_runner: ^2.4.8
