@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:pay/pay.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SettingsNotifier with ChangeNotifier {
   List<PaymentItem> getPaymentItems(double price) => <PaymentItem>[

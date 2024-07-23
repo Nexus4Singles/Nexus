@@ -32,6 +32,8 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   var ctr = Get.put(ProfileCtr());
   List<File> imageFiles = [];
+  List<String> allImage = [];
+  int maxPhotos = 4;
 
   @override
   void initState() {
@@ -43,6 +45,7 @@ class _EditProfileState extends State<EditProfile> {
     ctr.searchText.text = currentUser.location!.place!;
     ctr.locationModel = currentUser.location;
     ctr.usernameCtr.text = currentUser.username;
+    allImage.assignAll(currentUser.photos!.toList());
     super.initState();
   }
 
@@ -51,6 +54,7 @@ class _EditProfileState extends State<EditProfile> {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       setState(() {
+        allImage.add(image.path);
         imageFiles.add(File(image.path));
       });
       // await value.uploadProfilePicture(image: );
@@ -116,7 +120,13 @@ class _EditProfileState extends State<EditProfile> {
                             alignment: Alignment.centerRight,
                             child: InkWell(
                               onTap: () {
-                                showConfirmationDialog(context, item);
+                                if (allImage.length.isGreaterThan(2)) {
+                                  showConfirmationDialog(
+                                      context, item, allImage);
+                                } else {
+                                  AppToast().showErrorToast(
+                                      "You need to have at least two images on your profile before you can delete any image");
+                                }
                               },
                               child: const CircleAvatar(
                                 backgroundColor: red,
@@ -132,110 +142,120 @@ class _EditProfileState extends State<EditProfile> {
                         ],
                       ),
                     ),
-                  if (homeModel.currentUser!.photos!.length.isLowerThan(4))
-                    for (var item in imageFiles)
-                      Container(
-                        height: 120,
-                        width: 120,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          image: DecorationImage(
-                            image: FileImage(item),
-                            fit: BoxFit.cover,
-                          ),
+                  for (var item in imageFiles)
+                    Container(
+                      height: 120,
+                      width: 120,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                          image: FileImage(item),
+                          fit: BoxFit.cover,
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (allImage.length.isGreaterThan(2)) {
+                                    allImage.remove(item.path);
                                     imageFiles.remove(item);
-                                  });
-                                },
-                                child: const CircleAvatar(
-                                  backgroundColor: white,
-                                  radius: 12,
-                                  child: Icon(
-                                    Icons.close,
-                                    color: black,
-                                    size: 12,
-                                  ),
+                                  } else {
+                                    AppToast().showErrorToast(
+                                        "You need to have at least two images on this list before you can delete any image");
+                                  }
+                                });
+                              },
+                              child: const CircleAvatar(
+                                backgroundColor: white,
+                                radius: 12,
+                                child: Icon(
+                                  Icons.close,
+                                  color: black,
+                                  size: 12,
                                 ),
                               ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                int index = imageFiles.indexOf(item);
-                                _changeImage(index, item);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color: black.withOpacity(.4),
-                                  border: Border.all(
-                                    color: white,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              int index = imageFiles.indexOf(item);
+                              _changeImage(index, item);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: black.withOpacity(.4),
+                                border: Border.all(
+                                  color: white,
                                 ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.camera,
-                                      color: white,
-                                      size: 12,
-                                    ),
-                                    const SizedBoxW5(),
-                                    Text(
-                                      'Change Photo',
-                                      style: textStyle10.copyWith(
-                                        color: white,
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                            )
-                          ],
-                        ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.camera,
+                                    color: white,
+                                    size: 12,
+                                  ),
+                                  const SizedBoxW5(),
+                                  Text(
+                                    'Change Photo',
+                                    style: textStyle10.copyWith(
+                                      color: white,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
                       ),
+                    ),
                   // if(imageFiles.length)
                   // logic for the other variant here...
-                  InkWell(
-                    onTap: () {
-                      if (imageFiles.length == 4) {
-                        AppToast()
-                            .showErrorToast('Maximum of 4 photos allowed');
-                      } else {
-                        _pickImage();
-                      }
-                    },
-                    child: DottedBorder(
-                      borderType: BorderType.RRect,
-                      strokeWidth: 1,
-                      stackFit: StackFit.passthrough,
-                      // customPath: (size) => customPath,
-                      dashPattern: const [6, 3, 0, 3],
-                      color: Colors.blue.withOpacity(.2),
-                      radius: const Radius.circular(20),
-                      child: Container(
-                        height: 120,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: const Color(0xffeeeeee),
-                        ),
-                        child: const Icon(
-                          Icons.add_circle,
-                          color: primary,
+                  if (allImage.length.isLowerThan(maxPhotos))
+                    InkWell(
+                      onTap: () {
+                        if (homeModel.currentUser!.photos!.length < maxPhotos) {
+                          for (int i = homeModel.currentUser!.photos!.length;
+                              i < maxPhotos;
+                              i++) {
+                            _pickImage();
+                          }
+                        } else {
+                          AppToast()
+                              .showErrorToast('Maximum of 4 photos allowed');
+                        }
+                      },
+                      child: DottedBorder(
+                        borderType: BorderType.RRect,
+                        strokeWidth: 1,
+                        stackFit: StackFit.passthrough,
+                        // customPath: (size) => customPath,
+                        dashPattern: const [6, 3, 0, 3],
+                        color: Colors.blue.withOpacity(.2),
+                        radius: const Radius.circular(20),
+                        child: Container(
+                          height: 120,
+                          width: 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color(0xffeeeeee),
+                          ),
+                          child: const Icon(
+                            Icons.add_circle,
+                            color: primary,
+                          ),
                         ),
                       ),
                     ),
-                  ),
                 ],
               ),
               const SizedBoxH20(),
@@ -297,9 +317,12 @@ class _EditProfileState extends State<EditProfile> {
                 textEditingController: ctr.searchText,
                 googleAPIKey: 'AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y',
                 // countries: const ['NG'],
+                textStyle: textStyle14.copyWith(color: black),
                 inputDecoration: InputDecoration(
                   fillColor: white,
                   filled: true,
+                  labelStyle: textStyle14,
+                  helperStyle: textStyle14,
                   hintText: 'Select your City, Country of Residence',
                   hintStyle: textStyle14.copyWith(color: otherGrey),
                   contentPadding: const EdgeInsets.symmetric(
@@ -351,7 +374,9 @@ class _EditProfileState extends State<EditProfile> {
                         const SizedBox(
                           width: 7,
                         ),
-                        Expanded(child: Text(prediction.description ?? ""))
+                        Expanded(
+                            child: Text(prediction.description ?? "",
+                                style: textStyle14.copyWith(color: black)))
                       ],
                     ),
                   );
@@ -426,7 +451,7 @@ class _EditProfileState extends State<EditProfile> {
                     ctr.church.value == "Other" ||
                             !LocalData().church.contains(ctr.church.value)
                         ? const SizedBoxH15()
-                        : SizedBox(),
+                        : const SizedBox(),
                   ],
                 ),
               ),
@@ -446,23 +471,25 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
-  void showConfirmationDialog(BuildContext context, String item) {
+  void showConfirmationDialog(
+      BuildContext context, String item, List allImage) {
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) {
         return CupertinoActionSheet(
           title: const Text('Delete this Image ?'),
-          message:
-              const Text('Do you really want to proceed with this action?'),
+          message: const Text('Are you sure you want to delete this image?'),
           actions: <Widget>[
             CupertinoActionSheetAction(
               isDestructiveAction: true,
               onPressed: () {
                 ctr.deleteUserPhoto(item).then((val) async {
+                  allImage.remove(item);
+                  // check why this didn't fetch data
                   await Provider.of<HomeNotifier>(context, listen: false)
                       .getProfile();
                 });
-                Navigator.pop(context, 'Deleted');
+                // Navigator.pop(context, 'Deleted');
                 // Handle the destructive action
               },
               child: const Text('Delete'),

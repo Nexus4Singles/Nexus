@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:nexus/features/profile/presentation/controllers/profile_ctr.dart';
 import 'package:provider/provider.dart';

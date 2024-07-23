@@ -100,7 +100,8 @@ class AuthenticationRemoteDatasourceImpl
     // var res = await cloudinary.uploadFile(CloudinaryFile.fromFile(file.path));
 
     // return res.secureUrl;
-    String fileName = path.basename("audio/${file.path}");
+    String fileName = path
+        .basename("audio/${file.path}${DateTime.now().millisecondsSinceEpoch}");
     TaskSnapshot storageReference =
         await FirebaseStorage.instance.ref().child(fileName).putFile(file);
     String url = await storageReference.ref.getDownloadURL();

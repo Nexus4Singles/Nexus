@@ -50,26 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Center(
-            //   child: Text(
-            //     'nexus'.toUpperCase(),
-            //     style: GoogleFonts.novaSquare(
-            //       fontSize: 35.sp,
-            //       color: white,
-            //     ),
-            //   ),
-            // ),
-            // const SizedBoxH15(),
-            // SvgPicture.asset("$svgPath/logo.svg"),
             Image.asset('$svgPath/nexus-logo1.gif'),
-            // const SizedBoxH15(),
-            // Text(
-            //   'The Visibility App for Christian Singles',
-            //   style: GoogleFonts.novaSquare(
-            //     fontSize: 16.sp,
-            //     color: white,
-            //   ),
-            // ),
           ],
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
+import 'package:nexus/core/utils/text_area.dart';
 import 'package:nexus/features/profile/presentation/controllers/report_ctr.dart';
 
 import '../../../../core/colors.dart';
@@ -13,11 +14,12 @@ class ReportUser extends StatelessWidget {
   final UserModel userModel;
   ReportUser({super.key, required this.userModel});
 
-  var ctr = Get.put(ReportCtr());
+  final ctr = Get.put(ReportCtr());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: white,
       appBar: AppBar(
         backgroundColor: white,
         title: Text(
@@ -33,7 +35,8 @@ class ReportUser extends StatelessWidget {
           children: [
             Text(
                 "We want to ensure the quality of users on this platform is constantly refined. Please assist us to achieve this goal by reporting any user who was toxic or manipulative to you or any user who recorded gibberish on their audio recordings just to create a profile. Thank you!",
-                style: textStyle12),
+                textAlign: TextAlign.center,
+                style: textStyle10),
             const SizedBoxH25(),
             CustomTextField(
               enabled: false,
@@ -42,14 +45,13 @@ class ReportUser extends StatelessWidget {
               hintText: 'Username of the user to be reported',
             ),
             const SizedBoxH15(),
-            CustomTextField(
-              isMulti: true,
-              isTextArea: true,
-              fillColor: white,
-              maxLength: 100,
-              controller: ctr.reportController,
-              hintText:
-                  'Please state briefly why you are reporting this user (100 words max)',
+            Expanded(
+              child: CustomTextArea(
+                maxLines: 5,
+                controller: ctr.reportController,
+                hintText:
+                    'Please state briefly why you are reporting this user (100 words max)',
+              ),
             ),
             const Spacer(),
             CustomButton(

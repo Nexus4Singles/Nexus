@@ -22,7 +22,6 @@ class NotificationsService {
           .reversed
           .toList();
     } catch (e) {
-      print('Error fetching notifications: $e');
       return [];
     }
   }

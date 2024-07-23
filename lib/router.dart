@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:nexus/features/chat/views/chat_with.dart';
 import 'package:nexus/features/chat/views/chats.dart';
 import 'package:nexus/features/auth/presentation/views/auth_handler.dart';
 import 'package:nexus/features/auth/presentation/views/login.dart';

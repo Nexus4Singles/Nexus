@@ -89,7 +89,6 @@ class ProfileCtr extends GetxController {
   }
 
   updateHobbies(List<String> hobbies, Function onCall) async {
-    print("this are the hobbies ==> $hobbies");
     EasyLoading.show();
     await db
         .collection(kUSER)
@@ -106,6 +105,7 @@ class ProfileCtr extends GetxController {
       "photos": FieldValue.arrayRemove([image])
     });
     EasyLoading.dismiss();
+    Get.back();
   }
 
   Future deleteAccount() async {
@@ -137,7 +137,7 @@ class ProfileCtr extends GetxController {
         } catch (e) {
           AppToast().showErrorToast(e.toString());
           EasyLoading.dismiss();
-          print(e.toString());
+          debugPrint(e.toString());
         }
       } else {
         AppToast().showErrorToast('Password needs to match');
