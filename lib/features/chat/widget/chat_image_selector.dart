@@ -8,7 +8,6 @@ import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
 import 'package:nexus/features/chat/controllers/chat_ctr.dart';
-import 'package:nexus/router.dart';
 import '../../../../core/colors.dart';
 
 class ChatImageSelector extends StatelessWidget {
@@ -23,7 +22,7 @@ class ChatImageSelector extends StatelessWidget {
       required this.messageID,
       required this.userModel});
 
-  var ctr = Get.put(ChatCtr());
+  final ctr = Get.put(ChatCtr());
 
   @override
   Widget build(BuildContext context) {

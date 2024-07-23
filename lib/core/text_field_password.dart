@@ -54,11 +54,10 @@ class CustomTextFieldPassword extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CustomTextFieldPasswordState createState() =>
-      _CustomTextFieldPasswordState();
+  CustomTextFieldPasswordState createState() => CustomTextFieldPasswordState();
 }
 
-class _CustomTextFieldPasswordState extends State<CustomTextFieldPassword> {
+class CustomTextFieldPasswordState extends State<CustomTextFieldPassword> {
   @override
   Widget build(BuildContext context) {
     // bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;

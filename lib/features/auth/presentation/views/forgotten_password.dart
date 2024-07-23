@@ -7,11 +7,9 @@ import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
-import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/core/utils/toast.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../core/assets.dart';
 
 class ForgottenPasswordScreen extends StatefulWidget {

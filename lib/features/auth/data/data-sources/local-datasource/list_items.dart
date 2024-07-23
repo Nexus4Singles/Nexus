@@ -182,7 +182,7 @@ class LocalData {
     'Service Provider',
     'Technology',
     'Telecommunications',
-    'Transportation',
+    'Transportation / Travel',
   ];
 
   List<String> educationalLevels = [
@@ -294,11 +294,13 @@ class LocalData {
     "God's Kingdom Society",
     "God’s Love Tabernacle",
     "Good News Mission Church",
+    "Gospel Apostolic Church",
     "Gospel Faith Mission International",
     "Gospel Light Redemption Church",
     "Gospel Outreach Church",
     "Grace Community Church",
     "Grace Family International Church",
+    "Grace Revolution Church",
     "Harvest Bible Chapel",
     "Harvest Christian Fellowship",
     "Harvest Mission Outreach",
@@ -315,6 +317,7 @@ class LocalData {
     "House of Faith Ministries",
     "House of Grace Church",
     "Holy Aruosa Cathedral",
+    "House of Praise Church",
     "Household of David",
     "Household of God Church",
     "Impact Family Gospel Ministries",
@@ -443,6 +446,7 @@ class LocalData {
     "The Commonwealth of Zion Assembly",
     "The Destiny Church",
     "The Elevation Church (TEC)",
+    "The Envoy Church",
     "The Father’s House",
     "The Journey Church",
     "The Kingdom Hall of Jehovah’s Witnesses",

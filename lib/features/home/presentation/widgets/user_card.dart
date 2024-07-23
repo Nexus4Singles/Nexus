@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,9 +48,6 @@ class _UserCardState extends State<UserCard> {
   late Duration playerPosition;
 
   Future _setAudioPlayer() async {
-    var currentUser =
-        Provider.of<HomeNotifier>(context, listen: false).currentUser!;
-
     // if (playerId == '1') {
     await player.setUrl(widget.userModel.relationshipWithGod!);
 
@@ -135,7 +131,7 @@ class _UserCardState extends State<UserCard> {
                   Text(
                     '${widget.userModel.username}, ${widget.userModel.age}',
                     style: headerStyle.copyWith(
-                      fontSize: 30.sp,
+                      fontSize: 24.sp,
                       color: white,
                     ),
                   ),
@@ -146,13 +142,14 @@ class _UserCardState extends State<UserCard> {
                       const Icon(
                         Iconsax.location5,
                         color: white,
+                        size: 20,
                       ),
                       const SizedBoxW10(),
                       Flexible(
                         child: Text(
                           '${widget.userModel.location!.place}',
                           textAlign: TextAlign.center,
-                          style: textStyle16.copyWith(
+                          style: textStyle14.copyWith(
                             color: white,
                           ),
                         ),

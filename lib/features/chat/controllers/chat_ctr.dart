@@ -7,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/models/message_model.dart';
 import 'package:nexus/core/models/user.dart';
+import 'package:nexus/features/chat/widget/image_selected_container.dart';
+import 'package:nexus/features/chat/widget/video_selected_container.dart';
 import 'package:nexus/features/explore/controllers/explore_ctr.dart';
 import 'package:nexus/features/home/controllers/notification_controller.dart';
 import '../../../core/models/chats_model.dart';
@@ -32,7 +34,6 @@ class ChatCtr extends GetxController {
     var chats =
         data.docs.map((data) => ChatModel.fromJson(data.data())).toList();
     for (var chat in chats) {
-      print("I got here second for explore chat ==> $chat");
       for (var val in exploreCtr.allUsers) {
         if (chat.participant.contains(val.id)) {
           allChatUsers.add(ChatModel(
@@ -43,7 +44,6 @@ class ChatCtr extends GetxController {
               unreadCount: chat.unreadCount,
               userModel: val,
               userSentLastMessage: chat.userSentLastMessage));
-          print("I got here second ${allChatUsers.length}");
         }
       }
     }
@@ -51,7 +51,6 @@ class ChatCtr extends GetxController {
         .where((val) => val.userModel!.id != auth.currentUser!.uid)
         .toList();
     allChatUsers.assignAll(filteredUsers);
-    print("I got here third ${allChatUsers.length}");
   }
 
   saveToChat(String id, messageID) {
@@ -75,7 +74,8 @@ class ChatCtr extends GetxController {
   }
 
   var notificationController = NotificationController.instance;
-  sendMessage(String messageID, String messages, UserModel recipient) async {
+  Future sendMessage(
+      String messageID, String messages, UserModel recipient) async {
     var message = MessageModel(
         media: imageFile.value.path.isNotEmpty ? imageFile.value.path : "",
         id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -110,11 +110,13 @@ class ChatCtr extends GetxController {
         imageFile.value = File('');
         mediaFile.value = "";
         mediaType.value = "";
+        // @John This part is not needed the code here just updates the db from local image to server image thats all
 
-        notificationController.sendMessageNotification(
-            recipient.id, mediaFile.value, mediaType.value);
+        // notificationController.sendMessageNotification(
+        //     recipient.id, mediaFile.value, mediaType.value);
       });
     } else {}
+    chatController.clear();
   }
 
   deleteAMessage(conversationID, messageID) {
@@ -133,7 +135,7 @@ class ChatCtr extends GetxController {
       if (snapshot.exists) {
         var data = ChatModel.fromJson(snapshot.data() as Map<String, dynamic>);
         transaction.update(chatDoc, {
-          "lastMessage": message,
+          "lastMessage": mediaType.value.isNotEmpty ? mediaType.value : message,
           "userSentLastMessage": auth.currentUser!.uid,
           'timestamp': Timestamp.now(),
           'unreadCount': data.userSentLastMessage == auth.currentUser!.uid
@@ -145,22 +147,43 @@ class ChatCtr extends GetxController {
     getAllMyChats();
   }
 
-  void pickImage() async {
+  void pickImage(ChatModel model) async {
     final XFile? image =
         await picker.value.pickImage(source: ImageSource.gallery);
     if (image != null) {
       imageFile.value = File(image.path);
       mediaType.value = "image";
       Get.back();
+      Get.bottomSheet(
+          SizedBox(
+              height: Get.height / 1.5,
+              child: ImageSelectedContainer(
+                imageFile: imageFile.value,
+                chatModel: model,
+              )),
+          isDismissible: false,
+          enableDrag: false,
+          isScrollControlled: true);
     }
   }
 
-  void pickVideo() async {
+  void pickVideo(ChatModel model) async {
     final XFile? image = await picker.value.pickVideo(
         source: ImageSource.gallery, maxDuration: const Duration(seconds: 30));
     if (image != null) {
       imageFile.value = File(image.path);
       mediaType.value = "Video";
+      Get.back();
+      Get.bottomSheet(
+          SizedBox(
+              height: Get.height / 1.5,
+              child: VideoWidget(
+                chatModel: model,
+                videoUrl: imageFile.value,
+              )),
+          isDismissible: false,
+          enableDrag: false,
+          isScrollControlled: true);
     }
   }
 

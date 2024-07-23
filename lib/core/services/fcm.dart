@@ -4,11 +4,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:provider/provider.dart';
-// import 'package:godaesil/app/services/storage_service.dart';
 
 import '../../firebase_options.dart';
 import '../utils/app_logger.dart';
-// import '../utils/fcm_message_handler.dart';
 
 class FCMService {
   static String? fcmToken;
@@ -38,16 +36,13 @@ class FCMService {
 
     await FirebaseMessaging.instance
         .requestPermission(
-      sound: true,
-      badge: true,
-      alert: true,
-      announcement: true,
-    )
-        .then((NotificationSettings settings) {
-      print('User granted permission: ${settings.authorizationStatus}');
-    }).catchError((error) {
-      print('Error requesting permission: $error');
-    });
+          sound: true,
+          badge: true,
+          alert: true,
+          announcement: true,
+        )
+        .then((NotificationSettings settings) {})
+        .catchError((error) {});
 
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(

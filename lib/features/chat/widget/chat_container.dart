@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:timeago/timeago.dart' as timeago;
 import 'package:nexus/core/style.dart';
 import '../../../core/colors.dart';
 

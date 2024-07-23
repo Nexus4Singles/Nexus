@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/utils/empty_state.dart';
-
 import '../../features/home/presentation/widgets/coming_soon_modal.dart';
 import '../../features/match/presentation/widgets/matchUsersCompatibilityModal.dart';
 import '../colors.dart';
@@ -35,15 +34,37 @@ subscribeModal(context) {
       return Dialog(
         backgroundColor: white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        child: SizedBox(
+          height: Get.height / 2.7,
+          child: EmptyStateWidget(
+              buttonText: "Subscribe",
+              buttonFunc: () {},
+              message:
+                  'This is a premium feature. The free version of Nexus allows you to search by City & Country of Residence. Subscribing gives you access to use advanced filters to narrow down your search.'),
+        ),
+      );
+    },
+  );
+}
+
+chatWarningModal(context) {
+  showAdaptiveDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (context) {
+      return Dialog(
+        backgroundColor: white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-              height: Get.height / 3,
+              height: Get.height / 3.0,
               child: EmptyStateWidget(
-                  buttonText: "Subscribe",
+                  buttonText: "",
                   buttonFunc: () {},
+                  svgAssetPath: "$svgPath/chatWarning.svg",
                   message:
-                      'This is a premium feature. The free version of Nexus allows you to search by City & Country of Residence. Subscribing gives you access to use advanced filters to narrow down your search.'),
+                      'We highly recommend spending enough time getting to know each other here before exchanging personal contacts \n\nHappy Texting!'),
             )),
       );
     },

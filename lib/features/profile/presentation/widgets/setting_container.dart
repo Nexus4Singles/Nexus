@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/style.dart';
 
-class SettindContainer extends StatelessWidget {
+class SettingsContainer extends StatelessWidget {
   final String text;
   final bool icon;
   final Function() onPress;
-  const SettindContainer({
+  const SettingsContainer({
     super.key,
     required this.text,
     required this.icon,

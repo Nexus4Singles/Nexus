@@ -1,9 +1,7 @@
 import 'package:intl/intl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/models/notification_model.dart';
 import 'package:nexus/core/services/notifications_service.dart';
-
 import 'package:nexus/core/utils/app_logger.dart';
 import 'package:nexus/features/home/controllers/home_controller.dart';
 
