@@ -7,6 +7,10 @@ class PurchaseApi {
 
   static Future<void> init() async {
     await Glassfy.initialize(_apiKey, watcherMode: false);
+;
+    var permission = await Glassfy?.purchaseHistory();
+    // Logger().i(permission.all);
+    // Logger().i(permission.toJson());
   }
 
   static Future<List<GlassfyOffering>> fetchOffers() async {

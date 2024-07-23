@@ -31,12 +31,6 @@ class _MainNav extends State<MainNav> {
     });
   }
 
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   super.dispose();
-  //   int currentPage = 0;
-  // }
 
   @override
   Widget build(BuildContext context) {

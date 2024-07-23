@@ -34,7 +34,7 @@ class _PayWallWidgetState extends State<PayWallWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.star, color: Colors.deepOrange),
+                const Icon(Icons.star, color: primary),
                 const SizedBox(width: 8),
                 Text(
                   widget.title,
