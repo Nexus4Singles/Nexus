@@ -1,19 +1,12 @@
-import 'dart:io';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:nexus/api/payment.dart';
-import 'package:nexus/features/home/presentation/views/nav.dart';
-import 'package:nexus/features/profile/presentation/change_notifier/settings_notifier.dart';
-import 'package:nexus/features/profile/presentation/constants/payment.dart';
-import 'package:nexus/features/profile/presentation/widgets/pay.dart';
-import 'package:nexus/features/profile/presentation/widgets/utils.dart';
-import 'package:provider/provider.dart';
-import 'package:pay/pay.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/features/profile/presentation/views/payment_success.dart';
+import 'package:nexus/features/profile/presentation/widgets/pay.dart';
+import 'package:nexus/features/profile/presentation/widgets/utils.dart';
 
 class SubsciptionScreen extends StatefulWidget {
   const SubsciptionScreen({super.key});
@@ -23,85 +16,6 @@ class SubsciptionScreen extends StatefulWidget {
 }
 
 class _SubsciptionScreenState extends State<SubsciptionScreen> {
-  void _showPaymentBottomSheet(BuildContext context, double price) {
-    final paymentProvider =
-        Provider.of<SettingsNotifier>(context, listen: false);
-
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
-        return BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(5)),
-            child: Container(
-              color: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              height: 200,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'Select a Payment Method',
-                    style: TextStyle(
-                      fontSize: 24,
-                    ),
-                  ),
-                  const Divider(),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(children: [
-                      if (Platform.isAndroid)
-                        GooglePayButton(
-                          width: double.infinity,
-                          // height: 40,
-                          paymentItems: paymentProvider.getPaymentItems(price),
-                          theme: GooglePayButtonTheme.dark,
-                          type: GooglePayButtonType.subscribe,
-                          onPaymentResult: paymentProvider.onGooglePayResult,
-                          onPressed: () {
-                            Get.back();
-                          },
-                          loadingIndicator: const Center(
-                            child: AppCircularProgressIndicator(),
-                          ),
-                          paymentConfiguration:
-                              PaymentConfiguration.fromJsonString(
-                            defaultGooglePay,
-                          ),
-                        )
-                      else
-                        ApplePayButton(
-                          width: double.infinity,
-                          height: 40,
-                          paymentItems: paymentProvider.getPaymentItems(price),
-                          style: ApplePayButtonStyle.black,
-                          type: ApplePayButtonType.subscribe,
-                          onPaymentResult: paymentProvider.onApplePayResult,
-                          onPressed: () {
-                            Get.back();
-                          },
-                          loadingIndicator: const Center(
-                            child: AppCircularProgressIndicator(),
-                          ),
-                          paymentConfiguration:
-                              PaymentConfiguration.fromJsonString(
-                            defaultApplePay,
-                          ),
-                        ),
-                    ]),
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,7 +61,7 @@ class _SubsciptionScreenState extends State<SubsciptionScreen> {
             ),
             SizedBox(height: 10.h),
             _buildPlanContainer(
-              title: '\$5/month',
+              title: 'Premium',
               features: [
                 'Unlimited Messaging',
                 'Save Profiles to View Later',
@@ -177,25 +91,16 @@ class _SubsciptionScreenState extends State<SubsciptionScreen> {
                         if (permission.isValid!) {
                           // final provider = context.read<GlassfyProvider>();
                           // provider.isPremium = true;
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (_) => const MainNav(),
-                          //   )
-                          // );
-                          Navigator.of(context).pop();
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => const PaymentSuccessScreen(),
+                            ),
+                          );
                         }
                       }
                       // Navigator.of(context).pop();
                     },
                   ),
-                ).then(
-                  (value) => 
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (_) => const MainNav(),
-                  //   ),
-                  // ),
-                  Navigator.of(context).pop()
                 );
               },
             ),

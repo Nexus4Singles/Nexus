@@ -6,12 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:nexus/features/home/presentation/change_notifier/bottom_nav.dart';
 
 class MainNav extends StatefulWidget {
-  final int? initialPage;
-
-  const MainNav({
-    super.key,
-    this.initialPage = 0,
-  });
+  const MainNav({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -25,16 +20,23 @@ class _MainNav extends State<MainNav> {
   bool internet = false;
 
   // final _navController = BottomNavModel();
+    int currentPage = 0;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    int currentPage = 0;
     controller = PageController(initialPage: currentPage);
     setState(() {
       controller = controller;
     });
   }
+
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //   int currentPage = 0;
+  // }
 
   @override
   Widget build(BuildContext context) {

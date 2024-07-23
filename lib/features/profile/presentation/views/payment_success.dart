@@ -4,7 +4,6 @@ import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/router.dart';
 
 class PaymentSuccessScreen extends StatefulWidget {
   const PaymentSuccessScreen({super.key});
@@ -49,16 +48,16 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
                       height: 1.6,
                     ),
                     children: const [
-                      TextSpan(
-                        text: 'To check your subscription status, click on',
-                      ),
-                      TextSpan(
-                        text: ' Your Subscription ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextSpan(text: 'under settings')
+                      // TextSpan(
+                      //   text: 'To check your subscription status, click on',
+                      // ),
+                      // TextSpan(
+                      //   text: ' Your Subscription ',
+                      //   style: TextStyle(
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // TextSpan(text: 'under settings')
                     ],
                   ),
                   textAlign: TextAlign.center,
@@ -73,9 +72,16 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
               alignment: Alignment.bottomCenter,
               child: CustomButton(
                 onPressed: () {
-                  Get.toNamed(AppRoutes.cancelPlan);
+                  // Navigator.of(context).pushReplacement(
+                  //   MaterialPageRoute(
+                  //     builder: (_) => const MainNav(),
+                  //   ),
+                  // );
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 },
-                text: 'Go to Home',
+                text: '',
               ),
             ),
           ),
