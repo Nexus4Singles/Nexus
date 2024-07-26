@@ -7,13 +7,16 @@ import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/features/home/controllers/notification_controller.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
+import 'package:nexus/features/notifications/presentation/views/notification.dart';
 import 'package:nexus/router.dart';
 
 class ProfileTile extends StatelessWidget {
   final HomeNotifier model;
+  final NotificationController notification;
   const ProfileTile({
     super.key,
     required this.model,
+    required this.notification,
   });
 
   int get notificationsLength =>
@@ -52,7 +55,13 @@ class ProfileTile extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
             onTap: () {
-              Get.toNamed(AppRoutes.notification);
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => NotificationScreen(
+                    notificationController: notification,
+                  ),
+                ),
+              );
             },
             child: Stack(
               alignment: Alignment.center,
@@ -68,15 +77,15 @@ class ProfileTile extends StatelessWidget {
                       color: primary,
                       shape: BoxShape.circle,
                     ),
-                    child: Text(
-                      "$notificationsLength",
-                      textAlign: TextAlign.center,
-                      style: textStyle10.copyWith(
-                        color: white,
-                        fontSize: 6.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+                    // child: Text(
+                    //   "$notificationsLength",
+                    //   textAlign: TextAlign.center,
+                    //   style: textStyle10.copyWith(
+                    //     color: white,
+                    //     fontSize: 6.sp,
+                    //     fontWeight: FontWeight.w600,
+                    //   ),
+                    // ),
                   ),
                 ),
               ],

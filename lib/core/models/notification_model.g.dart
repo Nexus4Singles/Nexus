@@ -9,6 +9,7 @@ part of 'notification_model.dart';
 NotificationModel _$NotificationModelFromJson(Map<String, dynamic> json) =>
     NotificationModel(
       userId: json['user_id'] as String,
+      id: json['id'] as String,
       recipientId: json['recipient_id'] as String,
       type: $enumDecode(_$NotificationTypeEnumMap, json['type']),
       message: json['message'] as String?,
@@ -32,6 +33,7 @@ Map<String, dynamic> _$NotificationModelToJson(NotificationModel instance) =>
       'createdAt': instance.createdAt?.toIso8601String(),
       'read': instance.read,
       'avater': instance.avater,
+      'id': instance.id,
       'title': instance.title,
     };
 

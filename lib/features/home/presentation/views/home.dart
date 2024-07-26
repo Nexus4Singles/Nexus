@@ -4,14 +4,17 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:nexus/api/payment.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/features/home/controllers/notification_controller.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/home/presentation/widgets/profile_tile.dart';
 import 'package:nexus/features/home/presentation/widgets/user_card.dart';
 import 'package:nexus/features/match/controllers/matches_ctr.dart';
+import 'package:nexus/features/notifications/presentation/views/notification.dart';
 import 'package:nexus/features/profile/presentation/views/subscription.dart';
 import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +31,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final matchCtr = Get.put(MatchesCtr());
+  final NotificationController notificationController =
+      Get.find<NotificationController>();
 
   CardSwiperController cardSwiperController = CardSwiperController();
 
@@ -35,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _init();
+    notificationController.getAllNotifications();
   }
 
   FutureOr _init() async {
@@ -81,13 +87,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     cardSwiperController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Consumer<HomeNotifier>(
       builder: (context, model, _) {
         return Scaffold(
@@ -110,7 +116,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ListView(
                       children: [
                         if (model.currentUser != null)
-                          ProfileTile(model: model),
+                          ProfileTile(
+                            model: model,
+                            notification:
+                                notificationController,
+                          ),
                         const SizedBoxH20(),
                         Center(
                           child: Text(
@@ -200,7 +210,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                             await model.getUsers();
                                           },
                                           onLike: () {
-                                          
                                             matchCtr.ctr.myProfile.value
                                                             .matchedUsers ==
                                                         null ||
@@ -225,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 true, cardSwiperController);
                                           },
                                           onSaved: () {
-                                              if (!snapshot.data!) {
+                                            if (!snapshot.data!) {
                                               Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                   builder: (_) =>

@@ -1,20 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/models/notification_model.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/core/utils/progress_indicator.dart';
 import 'package:nexus/features/home/controllers/home_controller.dart';
 import 'package:nexus/features/home/controllers/notification_controller.dart';
 import 'package:nexus/features/notifications/presentation/widgets/notify_container.dart';
 import 'package:intl/intl.dart';
 
 class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({super.key});
+  const NotificationScreen({super.key, required this.notificationController});
+  final NotificationController notificationController;
 
   @override
   State<NotificationScreen> createState() => _NotificationScreenState();
@@ -23,15 +26,24 @@ class NotificationScreen extends StatefulWidget {
 class _NotificationScreenState extends State<NotificationScreen> {
   final NotificationController notificationController =
       Get.find<NotificationController>();
+  var homeController = HomeController.instance;
 
   @override
   void initState() {
     super.initState();
-
-    notificationController.getAllNotifications();
+    // notificationController.getAllNotifications();
   }
 
   String get username => HomeController.instance.user.value.username;
+
+  Future<QuerySnapshot<Map<String, dynamic>>> loadData() {
+    Logger().e(homeController.user.value.id);
+    return FirebaseFirestore.instance
+        .collection('notifications')
+        .where('recipient_id', isEqualTo: 'rhrcJcwNAmX77Hdrs55yptqaWPk1')
+        // .orderBy('createdAt', descending: true)
+        .get();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,38 +60,56 @@ class _NotificationScreenState extends State<NotificationScreen> {
         foregroundColor: black,
         elevation: 0,
       ),
-      body: Obx(() {
-        if (notificationController.isLoading.value) {
-          return const Center(child: CustomCircularProgressIndicator());
-        }
-        if (notificationController.groupedNotifications.isEmpty) {
-          return Center(
-            child: Column(
-              children: [
-                const Spacer(),
-                const Spacer(),
-                SvgPicture.asset("$svgPath/bell.svg"),
-                const SizedBoxH15(),
-                Text("You haven’t received any notifications yet.",
-                    textAlign: TextAlign.center, style: textStyle14),
-                const Spacer(),
-                const Spacer(),
-                const Spacer(),
-              ],
-            ),
-          );
-        } else {
-          Map<String, List<NotificationModel>> groupedNotifications =
-              notificationController.groupedNotifications;
+      body: FutureBuilder(
+        future: loadData(),
+        builder: (context, snapshot) {
+          // if (notificationController.groupedNotifications.isEmpty) {
+          //   return Center(
+          //     child: Column(
+          //       children: [
+          //         const Spacer(),
+          //         const Spacer(),
+          //         SvgPicture.asset("$svgPath/bell.svg"),
+          //         const SizedBoxH15(),
+          //         Text("You haven’t received any notifications yet.",
+          //             textAlign: TextAlign.center, style: textStyle14),
+          //         const Spacer(),
+          //         const Spacer(),
+          //         const Spacer(),
+          //       ],
+          //     ),
+          //   );
+          // }
+          // else {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            EasyLoading.show();
+          }
+          EasyLoading.dismiss();
+
+          if ( snapshot.data!.docs.isEmpty) {
+            return Center(
+              child: Column(
+                children: [
+                  const Spacer(),
+                  const Spacer(),
+                  SvgPicture.asset("$svgPath/bell.svg"),
+                  const SizedBoxH15(),
+                  Text("You haven’t received any notifications yet.",
+                      textAlign: TextAlign.center, style: textStyle14),
+                  const Spacer(),
+                  const Spacer(),
+                  const Spacer(),
+                ],
+              ),
+            );
+          }
 
           return ListView.builder(
-            itemCount: groupedNotifications.keys.length,
+            itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
-              String date = groupedNotifications.keys.elementAt(index);
-              List<NotificationModel> dailyNotifications =
-                  groupedNotifications[date]!;
-              String displayDate = notificationController.getDisplayDate(date);
-
+              NotificationModel n =
+                  NotificationModel.fromJson(snapshot.data!.docs[0].data());
+              Logger().i(n);
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.sp),
                 child: Column(
@@ -87,12 +117,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   children: [
                     const SizedBoxH20(),
                     Text(
-                      displayDate,
+                      'Notification',
                       style: textStyle10.copyWith(
                           color: black, fontWeight: FontWeight.w600),
                     ),
                     const SizedBoxH10(),
-                    ...dailyNotifications.map((notification) {
+                    ...snapshot.data!.docs.map((_) {
+                      NotificationModel notification =
+                          NotificationModel.fromJson(
+                              snapshot.data!.docs[index].data());
+                      Logger().d(notification.toJson());
                       return Column(
                         children: [
                           InkWell(
@@ -117,8 +151,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
               );
             },
           );
-        }
-      }),
+        },
+      ),
     );
   }
 }

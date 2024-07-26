@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:nexus/core/models/notification_model.dart';
 import 'package:nexus/core/services/notifications_service.dart';
 import 'package:nexus/core/utils/app_logger.dart';
@@ -27,6 +28,7 @@ class NotificationController extends GetxController {
     try {
       List<NotificationModel> result =
           await apiService.getAllNotifications(homeController.user.value.id);
+      Logger().d(homeController.user.value.id);
       notifications.value = result;
       appLog("Notifications fetched successfully!", result);
     } catch (error) {

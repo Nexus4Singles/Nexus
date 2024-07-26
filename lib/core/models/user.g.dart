@@ -13,10 +13,10 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       email: json['email'] as String,
       profileUrl: json['profile_url'] as String?,
       age: json['age'] as int,
-      countLike: json['countLike'] ?? 0,
       gender: json['gender'] as String,
       bestQualotiesOrTraits: json['best_qualities_or_traits'] as String?,
       city: json['city'] as String?,
+      countLike: json['countLike'] as int?,
       desiredQualities: (json['desired_qualities'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -65,6 +65,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'gender': instance.gender,
       'age': instance.age,
       'city': instance.city,
+      'countLike': instance.countLike,
       'state_of_origin': instance.stateOfOrigin,
       'education_level': instance.educationLevel,
       'profession': instance.profession,

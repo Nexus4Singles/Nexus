@@ -8,6 +8,7 @@ part 'notification_model.g.dart';
 class NotificationModel extends Equatable {
   const NotificationModel({
     required this.userId,
+    required this.id,
     required this.recipientId,
     required this.type,
     this.message,
@@ -17,7 +18,6 @@ class NotificationModel extends Equatable {
     this.avater,
     this.title,
   });
-
   @JsonKey(name: 'user_id')
   final String userId;
   @JsonKey(name: 'recipient_id')
@@ -30,6 +30,7 @@ class NotificationModel extends Equatable {
   final DateTime? createdAt;
   final bool? read;
   final String? avater;
+  final String id;
   final String? title;
 
   @override
@@ -43,6 +44,7 @@ class NotificationModel extends Equatable {
         read,
         avater,
         title,
+        id,
       ];
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) =>
