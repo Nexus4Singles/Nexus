@@ -40,7 +40,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     Logger().e(homeController.user.value.id);
     return FirebaseFirestore.instance
         .collection('notifications')
-        .where('recipient_id', isEqualTo: 'rhrcJcwNAmX77Hdrs55yptqaWPk1')
+        .where('recipient_id', isEqualTo: homeController.user.value.id)
         // .orderBy('createdAt', descending: true)
         .get();
   }
@@ -114,10 +114,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
               NotificationModel n =
                   NotificationModel.fromJson(snapshot.data!.docs[0].data());
               Logger().i(n);
-               NotificationModel notification =
-                          NotificationModel.fromJson(
-                              snapshot.data!.docs[index].data());
-                      Logger().d(notification.toJson());
+              NotificationModel notification =
+                  NotificationModel.fromJson(snapshot.data!.docs[index].data());
+              Logger().d(notification.toJson());
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.sp),
                 child: Column(
@@ -130,24 +129,24 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     //       color: black, fontWeight: FontWeight.w600),
                     // ),
                     const SizedBoxH10(),
-                          Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              // Get.to(() => const NotifyPermission());
-                            },
-                            child: NotifyContainer(
-                              image: notification.avater ??
-                                  'https://ui-avatars.com/api/?name=$username&rounded=true&size=128',
-                              text1: notification.title ?? 'Notification',
-                              text2: DateFormat('hh:mm a').format(
-                                notification.createdAt ?? DateTime.now(),
-                              ),
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            // Get.to(() => const NotifyPermission());
+                          },
+                          child: NotifyContainer(
+                            image: notification.avater ??
+                                'https://ui-avatars.com/api/?name=$username&rounded=true&size=128',
+                            text1: notification.title ?? 'Notification',
+                            text2: DateFormat('hh:mm a').format(
+                              notification.createdAt ?? DateTime.now(),
                             ),
                           ),
-                          const Divider(color: white),
-                        ],
-                      ),
+                        ),
+                        const Divider(color: white),
+                      ],
+                    ),
                   ],
                 ),
               );

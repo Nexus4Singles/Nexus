@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/utils/empty_state.dart';
+import 'package:nexus/features/profile/presentation/views/subscription.dart';
 import '../../features/home/presentation/widgets/coming_soon_modal.dart';
 import '../../features/match/presentation/widgets/matchUsersCompatibilityModal.dart';
 import '../colors.dart';
@@ -26,6 +27,58 @@ compatibilityModal(context, UserModel userModel) {
   );
 }
 
+profileModeleModal(context) {
+  showAdaptiveDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (context) {
+      return Dialog(
+        backgroundColor: white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        child: SizedBox(
+          height: Get.height / 2,
+          child: EmptyStateWidget(
+              buttonText: "Subscribe",
+              buttonFunc: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const SubsciptionScreen(),
+                  ),
+                );
+              },
+              message: 'You need to be subscribed to save profiles to view later'),
+        ),
+      );
+    },
+  );
+}
+
+backtrackModeleModal(context) {
+  showAdaptiveDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (context) {
+      return Dialog(
+        backgroundColor: white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        child: SizedBox(
+          height: Get.height / 2,
+          child: EmptyStateWidget(
+              buttonText: "Subscribe",
+              buttonFunc: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const SubsciptionScreen(),
+                  ),
+                );
+              },
+              message: 'You need to subscribed to backtrack and view profiles you disliked accidentally'),
+        ),
+      );
+    },
+  );
+}
+
 subscribeModal(context) {
   showAdaptiveDialog(
     context: context,
@@ -35,10 +88,16 @@ subscribeModal(context) {
         backgroundColor: white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         child: SizedBox(
-          height: Get.height / 2.7,
+          height: Get.height / 2,
           child: EmptyStateWidget(
               buttonText: "Subscribe",
-              buttonFunc: () {},
+              buttonFunc: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const SubsciptionScreen(),
+                  ),
+                );
+              },
               message:
                   'This is a premium feature. The free version of Nexus allows you to search by City & Country of Residence. Subscribing gives you access to use advanced filters to narrow down your search.'),
         ),

@@ -9,6 +9,7 @@ import 'package:nexus/api/payment.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/core/utils/modals.dart';
 import 'package:nexus/features/home/controllers/notification_controller.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/home/presentation/widgets/profile_tile.dart';
@@ -93,7 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Consumer<HomeNotifier>(
       builder: (context, model, _) {
         return Scaffold(
@@ -118,8 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (model.currentUser != null)
                           ProfileTile(
                             model: model,
-                            notification:
-                                notificationController,
+                            notification: notificationController,
                           ),
                         const SizedBoxH20(),
                         Center(
@@ -160,15 +159,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                       int? currentIndex,
                                       CardSwiperDirection direction,
                                     ) {
-                                      if (!snapshot.data!) {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (_) =>
-                                                const SubsciptionScreen(),
-                                          ),
-                                        );
-                                        return false;
-                                      }
+                                      // if (!snapshot.data!) {
+                                      //   Navigator.of(context).push(
+                                      //     MaterialPageRoute(
+                                      //       builder: (_) =>
+                                      //           const SubsciptionScreen(),
+                                      //     ),
+                                      //   );
+                                      //   return false;
+                                      // }
                                       UserModel user =
                                           model.allUsers[currentIndex!];
                                       if (direction ==
@@ -222,12 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           },
                                           onRefresh: () {
                                             if (!snapshot.data!) {
-                                              Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      const SubsciptionScreen(),
-                                                ),
-                                              );
+                                              backtrackModeleModal(context);
                                               return;
                                             }
                                             matchCtr.undoUnRecommend(
@@ -235,12 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           },
                                           onSaved: () {
                                             if (!snapshot.data!) {
-                                              Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      const SubsciptionScreen(),
-                                                ),
-                                              );
+                                              profileModeleModal(context);
                                               return;
                                             }
                                             matchCtr.toggleSave(user.id);

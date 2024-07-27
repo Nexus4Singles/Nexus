@@ -98,7 +98,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                       ? ListView(
                           shrinkWrap: true,
                           children: [
-                            ...ctr.allChatUsers
+                            ctr.allChatUsers
                                 .where((val) => val.lastMessage.isNotEmpty)
                                 .map((val) {
                               return ChatContainer(
@@ -114,7 +114,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                   Get.to(() => ChatWithScreen(chatModel: val));
                                 },
                               );
-                            }).toList(),
+                            }).toList()[chatno],
                           ],
                         )
                       : SizedBox(
@@ -134,3 +134,5 @@ class _ChatsScreenState extends State<ChatsScreen> {
     );
   }
 }
+
+int chatno = 1;

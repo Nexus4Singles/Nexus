@@ -30,7 +30,9 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(15.sp),
-      child: Column(
+      child: 
+      SingleChildScrollView(child:
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
@@ -128,7 +130,7 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
             ],
           ),
         ],
-      ),
+      ),),
     );
   }
 }
