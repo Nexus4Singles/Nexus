@@ -86,7 +86,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
           }
           EasyLoading.dismiss();
 
-          if ( snapshot.data!.docs.isEmpty) {
+          if (snapshot.data == null) {
+            return Container();
+          }
+
+          if (snapshot.data!.docs.isEmpty) {
             return Center(
               child: Column(
                 children: [
@@ -110,24 +114,23 @@ class _NotificationScreenState extends State<NotificationScreen> {
               NotificationModel n =
                   NotificationModel.fromJson(snapshot.data!.docs[0].data());
               Logger().i(n);
+               NotificationModel notification =
+                          NotificationModel.fromJson(
+                              snapshot.data!.docs[index].data());
+                      Logger().d(notification.toJson());
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.sp),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBoxH20(),
-                    Text(
-                      'Notification',
-                      style: textStyle10.copyWith(
-                          color: black, fontWeight: FontWeight.w600),
-                    ),
+                    // const SizedBoxH20(),
+                    // Text(
+                    //   'Notification',
+                    //   style: textStyle10.copyWith(
+                    //       color: black, fontWeight: FontWeight.w600),
+                    // ),
                     const SizedBoxH10(),
-                    ...snapshot.data!.docs.map((_) {
-                      NotificationModel notification =
-                          NotificationModel.fromJson(
-                              snapshot.data!.docs[index].data());
-                      Logger().d(notification.toJson());
-                      return Column(
+                          Column(
                         children: [
                           InkWell(
                             onTap: () {
@@ -144,8 +147,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           ),
                           const Divider(color: white),
                         ],
-                      );
-                    }).toList(),
+                      ),
                   ],
                 ),
               );
