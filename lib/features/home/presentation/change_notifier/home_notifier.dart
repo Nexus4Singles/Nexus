@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 // import 'package:logger/logger.dart';
 import 'package:nexus/core/models/user.dart';
+import 'package:nexus/core/storage/cache_service.dart';
 import 'package:nexus/core/usecases/usecases.dart';
 import 'package:nexus/core/utils/app_logger.dart';
 import 'package:nexus/features/auth/data/data-sources/remote-datasource/auth_remote.dart';
@@ -46,8 +49,16 @@ class HomeNotifier with ChangeNotifier {
 
   UserModel? currentUser;
 
+  CustomCacheManager cacheManager = CustomCacheManager();
+
   Future<void> getProfile() async {
-    print("called again");
+    const cacheKey = 'userProfile';
+    final fileInfo =
+        await CustomCacheManager.instance.getFileFromCache(cacheKey);
+    if (fileInfo != null) {
+      final fileContent = await fileInfo.file.readAsString();
+      return jsonDecode(fileContent);
+    }
     var data = await readProfileUsecase.call(const NoParams());
     data.fold(
       (l) => l,
@@ -58,19 +69,6 @@ class HomeNotifier with ChangeNotifier {
         notifyListeners();
       },
     );
-  }
-
-  Future<UserModel?> getUser() async {
-    var data = await readProfileUsecase.call(const NoParams());
-    data.fold(
-      (l) => l,
-      (r) {
-        currentUser = r;
-        notifyListeners();
-      },
-    );
-
-    return currentUser;
   }
 
   UserModel? selectedUser;

@@ -217,6 +217,7 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                       onChanged: (p0) {
                         setState(() {
                           church = p0!;
+                          churchController.text = p0;
                         });
                       },
                     ),
@@ -248,8 +249,8 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                   if (model.location.place!.contains(" ")) {
                     bool validate = _formkey.currentState!.validate();
                     if (validate &&
-                        church.isNotEmpty &&
-                        churchController.text.isNotEmpty) {
+                        churchController.text.isNotEmpty &&
+                        churchController.text.toLowerCase() != "other") {
                       Map<String, dynamic> map = {
                         kCOUNTRY: 'Nigeria', //todo Nigeria as default
                         kCHURCHNAME: churchController.text.isEmpty

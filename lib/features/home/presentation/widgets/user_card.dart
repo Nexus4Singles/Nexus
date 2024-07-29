@@ -110,131 +110,135 @@ class _UserCardState extends State<UserCard> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              height: height(context) * .55,
-              width: width(context),
-              padding: EdgeInsets.all(15.sp),
-              decoration: BoxDecoration(
-                color: black,
-                borderRadius: BorderRadius.circular(20.r),
-                image: DecorationImage(
-                  image: NetworkImage(widget.userModel.photos![0]),
-                  fit: BoxFit.cover,
-                  opacity: .4,
+            CachedNetworkImage(
+              imageUrl: widget.userModel.photos![0],
+              imageBuilder: (context, imageProvider) => Container(
+                height: height(context) * .55,
+                width: width(context),
+                padding: EdgeInsets.all(15.sp),
+                decoration: BoxDecoration(
+                  color: black,
+                  borderRadius: BorderRadius.circular(20.r),
+                  image: DecorationImage(
+                    image: NetworkImage(widget.userModel.photos![0]),
+                    fit: BoxFit.cover,
+                    opacity: .4,
+                  ),
                 ),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    '${widget.userModel.username}, ${widget.userModel.age}',
-                    style: headerStyle.copyWith(
-                      fontSize: 24.sp,
-                      color: white,
-                    ),
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Iconsax.location5,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${widget.userModel.username}, ${widget.userModel.age}',
+                      style: headerStyle.copyWith(
+                        fontSize: 24.sp,
                         color: white,
-                        size: 20,
                       ),
-                      const SizedBoxW10(),
-                      Flexible(
-                        child: Text(
-                          '${widget.userModel.location!.place}',
-                          textAlign: TextAlign.center,
-                          style: textStyle14.copyWith(
-                            color: white,
-                          ),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Iconsax.location5,
+                          color: white,
+                          size: 20,
                         ),
-                      )
-                    ],
-                  ),
-                  Obx(
-                    () => Padding(
-                      padding: EdgeInsets.all(15.sp),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          InkWell(
-                            onTap: widget.onRefresh,
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: white,
-                                  border: Border.all(color: primary)),
-                              child: SvgPicture.asset(
-                                '$svgPath/back.svg',
-                                width: 24,
-                                color: primary,
-                              ),
+                        const SizedBoxW10(),
+                        Flexible(
+                          child: Text(
+                            '${widget.userModel.location!.place}',
+                            textAlign: TextAlign.center,
+                            style: textStyle14.copyWith(
+                              color: white,
                             ),
                           ),
-                          InkWell(
-                            onTap: widget.onClosed,
-                            child: SvgPicture.asset('assets/icons/close.svg'),
-                          ),
-                          InkWell(
-                            onTap: widget.onLike,
-                            child: CircleAvatar(
-                                backgroundColor:
-                                    ctr.ctr.myProfile.value.myLikes == null ||
-                                            !ctr.ctr.myProfile.value.myLikes!
-                                                .contains(widget.userModel.id)
-                                        ? white
-                                        : primary,
-                                radius: 25,
+                        )
+                      ],
+                    ),
+                    Obx(
+                      () => Padding(
+                        padding: EdgeInsets.all(15.sp),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            InkWell(
+                              onTap: widget.onRefresh,
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: white,
+                                    border: Border.all(color: primary)),
                                 child: SvgPicture.asset(
-                                  ctr.ctr.myProfile.value.matchedUsers ==
-                                              null ||
-                                          !ctr.ctr.myProfile.value.matchedUsers!
-                                              .contains(widget.userModel.id)
-                                      ? "$svgPath/like.svg"
-                                      : '$svgPath/sms.svg',
-                                  color:
+                                  '$svgPath/back.svg',
+                                  width: 24,
+                                  color: primary,
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: widget.onClosed,
+                              child: SvgPicture.asset('assets/icons/close.svg'),
+                            ),
+                            InkWell(
+                              onTap: widget.onLike,
+                              child: CircleAvatar(
+                                  backgroundColor:
                                       ctr.ctr.myProfile.value.myLikes == null ||
                                               !ctr.ctr.myProfile.value.myLikes!
                                                   .contains(widget.userModel.id)
-                                          ? primary
-                                          : white,
-                                )),
-                          ),
-                          InkWell(
-                            onTap: widget.onSaved,
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(color: primary),
-                                color:
-                                    ctr.ctr.myProfile.value.mySaves == null ||
-                                            !ctr.ctr.myProfile.value.mySaves!
+                                          ? white
+                                          : primary,
+                                  radius: 25,
+                                  child: SvgPicture.asset(
+                                    ctr.ctr.myProfile.value.matchedUsers ==
+                                                null ||
+                                            !ctr.ctr.myProfile.value
+                                                .matchedUsers!
                                                 .contains(widget.userModel.id)
-                                        ? white
-                                        : primary,
-                              ),
-                              child: SvgPicture.asset("$svgPath/bookmark.svg",
-                                  width: 24,
+                                        ? "$svgPath/like.svg"
+                                        : '$svgPath/sms.svg',
+                                    color: ctr.ctr.myProfile.value.myLikes ==
+                                                null ||
+                                            !ctr.ctr.myProfile.value.myLikes!
+                                                .contains(widget.userModel.id)
+                                        ? primary
+                                        : white,
+                                  )),
+                            ),
+                            InkWell(
+                              onTap: widget.onSaved,
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: primary),
                                   color:
                                       ctr.ctr.myProfile.value.mySaves == null ||
                                               !ctr.ctr.myProfile.value.mySaves!
                                                   .contains(widget.userModel.id)
-                                          ? primary
-                                          : white),
+                                          ? white
+                                          : primary,
+                                ),
+                                child: SvgPicture.asset("$svgPath/bookmark.svg",
+                                    width: 24,
+                                    color: ctr.ctr.myProfile.value.mySaves ==
+                                                null ||
+                                            !ctr.ctr.myProfile.value.mySaves!
+                                                .contains(widget.userModel.id)
+                                        ? primary
+                                        : white),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
             Column(

@@ -193,16 +193,6 @@ class _Audio3ScreenState extends State<Audio3Screen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '(If you have a good sense of humor, this is also an opportunity to make a great impression on listeners by being creative with your response)',
-                    style: textStyle12.copyWith(
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBoxH30(),
                   const SizedBoxH30(),
                   if (!isRecording && !isRecordingCompleted)
                     Column(

@@ -102,6 +102,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             controller: username,
                             textCapitalization: TextCapitalization.words,
                             autoCorrect: false,
+                            keyboardType: TextInputType.name,
                             hintText: 'Username (Firstname highly recommended)',
                             prefixIcon: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -116,6 +117,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Username is required';
+                              }
+                              if (!value.isAlphabetOnly) {
+                                return 'Username cannot contain numbers';
                               }
                               if (value.length < 5) {
                                 return 'Username must be at least 5 characters';

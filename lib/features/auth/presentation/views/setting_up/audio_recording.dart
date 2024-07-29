@@ -73,11 +73,8 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
                       ),
                       TextSpan(
                         text:
-                            '''respectively, and each response has a limit       of 60 seconds. 
-Kindly note that you will not be able to change your responses after your  profile is completed. Your responses don´t need to be perfect, they just need    to be audible & authentic. 
-Remember that people can easily tell when a response is not genuine, so we urge you to refrain from seeking external help to answer these questions. 
-It is also clear that any user who records gibberish or submits empty recordings will not be taken seriously by other users,  and such profiles will be deleted.
-
+                            '''\nEach response has a limit of 60 seconds and you will not be able to change your responses after your profile is completed. \nYour responses don´t need to be perfect, they just need to be audible & authentic. \nRemember that people value authenticity and most people can tell when a response feels rehearsed or scripted, so we recommend reflecting deeply on each question & responding from your heart, to avoid wondering why you’re not getting matches, despite saying impressive things in your responses. 
+It is also obvious that any user who records gibberish or submits empty recordings will not be taken seriously by other users, and such profiles will be deleted. \n
 Happy Recording!''',
                       ),
                     ],

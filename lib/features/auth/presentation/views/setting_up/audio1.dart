@@ -184,14 +184,6 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '(Please answer both parts of this question)',
-                    style: textStyle14.copyWith(
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
                   const SizedBoxH30(),
                   if (!isRecording && !isRecordingCompleted)
                     Column(

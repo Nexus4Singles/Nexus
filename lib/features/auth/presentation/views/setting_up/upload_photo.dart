@@ -10,6 +10,7 @@ import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:nexus/core/utils/device.dart';
+import 'package:nexus/core/utils/image_compressor.dart';
 import 'package:nexus/core/utils/toast.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:nexus/router.dart';
@@ -228,14 +229,15 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
   }
 
   List<File> imageFiles = [];
+
   void _pickImage(AuthNotifier model) async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
+      var coFile = await ImageCompressorNexus().compressAndGetFile(image);
       setState(() {
-        imageFiles.add(File(image.path));
+        imageFiles.add(File(coFile!.path));
       });
-      // await value.uploadProfilePicture(image: );
     }
   }
 
@@ -243,11 +245,11 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
+      var coFile = await ImageCompressorNexus().compressAndGetFile(image);
       imageFiles.removeAt(index);
       setState(() {
-        imageFiles.insert(index, File(image.path));
+        imageFiles.insert(index, File(coFile!.path));
       });
-      // await value.uploadProfilePicture(image: );
     }
   }
 

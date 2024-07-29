@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/toast.dart';
+import 'package:nexus/features/profile/presentation/views/contact_us.dart';
 import 'package:nexus/router.dart';
 import 'package:nexus/features/profile/presentation/widgets/login_modal_sheet.dart';
 import 'package:nexus/features/profile/presentation/widgets/setting_container.dart';
@@ -78,11 +79,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 text: 'Contact Us',
                 icon: true,
                 onPress: () {
-                  //Todo add a contact us view.
-                  AppToast().showErrorToast(
-                    'This feature will be available soon',
-                    header: 'Coming soon',
-                  );
+                  Get.to(() => const ContactUs());
                 }),
             const Divider(color: Colors.transparent),
             SettingsContainer(
