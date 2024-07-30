@@ -51,6 +51,7 @@ class ChatCtr extends GetxController {
         .where((val) => val.userModel!.id != auth.currentUser!.uid)
         .toList();
     allChatUsers.assignAll(filteredUsers);
+    print("all my chats ==> ${allChatUsers.length}");
   }
 
   saveToChat(String id, messageID) {

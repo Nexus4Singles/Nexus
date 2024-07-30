@@ -30,104 +30,106 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(15.sp),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Text(
-              'Filters',
-              style: textStyle16.copyWith(
-                fontWeight: FontWeight.bold,
+      child: Obx(
+        () => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Text(
+                'Filters',
+                style: textStyle16.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-          const SizedBoxH15(),
-          AbsorbPointer(
-            child: ProfileDropDown(
-              items: [],
-              val: "",
-              hintText: 'Nationality (Coming Soon)',
-              onChanged: (p0) {},
-            ),
-          ),
-          const SizedBoxH15(),
-          ProfileDropDown(
-            items: LocalData().educationalLevels,
-            val: ctr.education.value,
-            hintText: 'Education Level',
-            onChanged: (p0) {
-              ctr.education.value = p0!;
-            },
-          ),
-          const SizedBoxH15(),
-          ProfileDropDown(
-            items: LocalData().church,
-            val: ctr.church.value,
-            hintText: 'Church',
-            onChanged: (p0) {
-              ctr.church.value = p0!;
-            },
-          ),
-          const SizedBoxH20(),
-          Text(
-            'Age Range',
-            style: textStyle16.copyWith(color: dustyGrey),
-          ),
-          const SizedBoxH10(),
-          Row(
-            children: [
-              Text(
-                '21',
-                style: textStyle16.copyWith(color: black),
+            const SizedBoxH15(),
+            AbsorbPointer(
+              child: ProfileDropDown(
+                items: [],
+                val: "",
+                hintText: 'Nationality (Coming Soon)',
+                onChanged: (p0) {},
               ),
-              Obx(
-                () => Expanded(
-                  child: RangeSlider(
-                    min: 20,
-                    max: 70,
-                    inactiveColor: primary.withOpacity(0.2),
-                    divisions: 10,
-                    activeColor: primary,
-                    values: ctr.rangeValues.value,
-                    labels: RangeLabels(
-                        ctr.rangeValues.value.start.round().toString(),
-                        ctr.rangeValues.value.end.round().toString()),
-                    onChanged: (value) {
-                      ctr.rangeValues.value = value;
-                    },
+            ),
+            const SizedBoxH15(),
+            ProfileDropDown(
+              items: LocalData().educationalLevels,
+              val: ctr.education.value,
+              hintText: 'Education Level',
+              onChanged: (p0) {
+                ctr.education.value = p0!;
+              },
+            ),
+            const SizedBoxH15(),
+            ProfileDropDown(
+              items: LocalData().church,
+              val: ctr.church.value,
+              hintText: 'Church',
+              onChanged: (p0) {
+                ctr.church.value = p0!;
+              },
+            ),
+            const SizedBoxH20(),
+            Text(
+              'Age Range',
+              style: textStyle16.copyWith(color: dustyGrey),
+            ),
+            const SizedBoxH10(),
+            Row(
+              children: [
+                Text(
+                  '21',
+                  style: textStyle16.copyWith(color: black),
+                ),
+                Obx(
+                  () => Expanded(
+                    child: RangeSlider(
+                      min: 20,
+                      max: 70,
+                      inactiveColor: primary.withOpacity(0.2),
+                      divisions: 10,
+                      activeColor: primary,
+                      values: ctr.rangeValues.value,
+                      labels: RangeLabels(
+                          ctr.rangeValues.value.start.round().toString(),
+                          ctr.rangeValues.value.end.round().toString()),
+                      onChanged: (value) {
+                        ctr.rangeValues.value = value;
+                      },
+                    ),
                   ),
                 ),
-              ),
-              Text(
-                '70',
-                style: textStyle16.copyWith(color: black),
-              ),
-            ],
-          ),
-          const SizedBoxH20(),
-          Row(
-            children: [
-              Expanded(
-                child: CustomButtonOut(
-                  onPressed: () {
-                    ctr.resetFilter();
-                  },
-                  text: 'Reset Filter',
+                Text(
+                  '70',
+                  style: textStyle16.copyWith(color: black),
                 ),
-              ),
-              const SizedBoxW10(),
-              Expanded(
-                child: CustomButton(
-                  onPressed: () {
-                    subscribeModal(context);
-                    // ctr.filterUsers();
-                  },
-                  text: 'Apply',
+              ],
+            ),
+            const SizedBoxH20(),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomButtonOut(
+                    onPressed: () {
+                      ctr.resetFilter();
+                    },
+                    text: 'Reset Filter',
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+                const SizedBoxW10(),
+                Expanded(
+                  child: CustomButton(
+                    onPressed: () {
+                      // subscribeModal(context);
+                      ctr.filterUsers();
+                    },
+                    text: 'Apply',
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

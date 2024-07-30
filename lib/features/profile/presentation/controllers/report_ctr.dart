@@ -11,6 +11,7 @@ class ReportCtr extends GetxController {
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
   TextEditingController reportController = TextEditingController();
+  var warningMessage = "".obs;
 
   submitReport(UserModel userModel) async {
     try {
@@ -32,5 +33,31 @@ class ReportCtr extends GetxController {
     } catch (e) {
       EasyLoading.dismiss();
     }
+  }
+
+  void _checkWordLimit() {
+    final text = reportController.text;
+    final words = text
+        .trim()
+        .split(RegExp(r'\s+'))
+        .where((String word) => word.isNotEmpty)
+        .toList();
+
+    if (words.length > 100) {
+      warningMessage.value = 'You have exceeded the 100-word limit';
+      final truncatedText = words.take(100).join(' ');
+      reportController.text = truncatedText;
+      reportController.selection = TextSelection.fromPosition(
+        TextPosition(offset: reportController.text.length),
+      );
+    } else {
+      warningMessage.value = '';
+    }
+  }
+
+  @override
+  void onInit() {
+    reportController.addListener(_checkWordLimit);
+    super.onInit();
   }
 }

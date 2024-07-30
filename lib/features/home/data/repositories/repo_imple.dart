@@ -48,9 +48,8 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<Either<void, List<UserModel>>> getUsersFilterable({
-    required UserModel user,
-  }) async {
+  Future<Either<void, List<UserModel>>> getUsersFilterable(
+      {required UserModel user}) async {
     var curUser = FirebaseAuth.instance.currentUser;
 
     var gender = user.gender;

@@ -6,6 +6,7 @@ import '../style.dart';
 class CustomTextArea extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
+  final String? errorText;
   final int maxLines;
   final int minLines;
   final double height;
@@ -14,6 +15,7 @@ class CustomTextArea extends StatelessWidget {
   final Color? fillColor;
   final bool? isFilled;
   final Color? borderColor;
+  final Function(String)? onChanged;
   final EdgeInsetsGeometry? padding;
 
   const CustomTextArea({
@@ -24,10 +26,12 @@ class CustomTextArea extends StatelessWidget {
     this.minLines = 5,
     this.height = 150.0,
     this.hintStyle,
+    this.errorText,
     this.borderRadius = 8.0,
     this.fillColor = white,
     this.borderColor,
     this.isFilled = true,
+    this.onChanged,
     this.padding,
   }) : super(key: key);
 
@@ -41,8 +45,10 @@ class CustomTextArea extends StatelessWidget {
           controller: controller,
           minLines: minLines,
           maxLines: maxLines,
+          onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hintText,
+            errorText: errorText,
             hintStyle: textStyle14.copyWith(
               color: otherGrey,
               fontSize: 14,

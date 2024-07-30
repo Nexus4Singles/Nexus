@@ -59,6 +59,7 @@ class MatchesCtr extends GetxController {
   }
 
   var notificationController = NotificationController.instance;
+
   saveCountOfLikeMe(String userID) async {
     var likeDoc = db.collection(kUSER).doc(userID);
     await db.runTransaction((transaction) async {

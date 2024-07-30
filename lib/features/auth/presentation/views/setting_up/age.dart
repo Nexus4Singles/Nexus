@@ -69,8 +69,9 @@ class _AgeScreenState extends State<AgeScreen> {
                         color: black),
                   ),
                   Text(
-                    'Nexus is for users between the ages of 21 to 70 years',
+                    "Nexus is for users between the ages of 21 to 70 years \n Kindly note that you won't be able to change this later",
                     style: textStyle14,
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBoxH20(),
                   SizedBox(

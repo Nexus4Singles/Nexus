@@ -35,21 +35,29 @@ class HomeNotifier with ChangeNotifier {
     getUsersUsecase.call(const NoParams()).then((value) {
       value.fold((l) => l, (r) {
         var unrecommendedUsers = <String>[];
+        var matchedUsers = <String>[];
+        var savedUsers = <String>[];
+        var likedUsers = <String>[];
         unrecommendedUsers.assignAll(currentUser!.unrecommendedUsers ?? []);
+        matchedUsers.assignAll(currentUser!.matchedUsers ?? []);
+        savedUsers.assignAll(currentUser!.mySaves ?? []);
+        likedUsers.assignAll(currentUser!.myLikes ?? []);
         allUsers = users = r
             .where((e) => e.gender != currentUser!.gender)
             .where((el) => el.registrationProgress == 'completed')
+            .where((data) => !matchedUsers.contains(data.id))
+            .where((data) => !savedUsers.contains(data.id))
+            .where((data) => !likedUsers.contains(data.id))
             .where((u) => !unrecommendedUsers.contains(u.id))
             .toList();
         allUsers.shuffle();
+        print("THis is the lenght of all users ${allUsers.length}");
         notifyListeners();
       });
     });
   }
 
   UserModel? currentUser;
-
-  CustomCacheManager cacheManager = CustomCacheManager();
 
   Future<void> getProfile() async {
     const cacheKey = 'userProfile';

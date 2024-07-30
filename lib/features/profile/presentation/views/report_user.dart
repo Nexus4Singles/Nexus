@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/button.dart';
@@ -45,18 +47,41 @@ class ReportUser extends StatelessWidget {
               hintText: 'Username of the user to be reported',
             ),
             const SizedBoxH15(),
-            Expanded(
-              child: CustomTextArea(
-                maxLines: 5,
-                controller: ctr.reportController,
-                hintText:
-                    'Please state briefly why you are reporting this user (100 words max)',
+            Obx(
+              () => Expanded(
+                child: CustomTextArea(
+                  onChanged: (val) {
+                    final words = val
+                        .trim()
+                        .split(RegExp(r'\s+'))
+                        .where((word) => word.isNotEmpty)
+                        .toList();
+                    if (words.length > 100) {
+                      final truncatedText = words.take(100).join(' ');
+                      ctr.reportController.value = TextEditingValue(
+                        text: truncatedText,
+                        selection: TextSelection.collapsed(
+                            offset: truncatedText.length),
+                      );
+                    }
+                  },
+                  maxLines: 5,
+                  errorText: ctr.warningMessage.value == ''
+                      ? null
+                      : ctr.warningMessage.value,
+                  controller: ctr.reportController,
+                  hintText:
+                      'Please state briefly why you are reporting this user (100 words max)',
+                ),
               ),
             ),
             const Spacer(),
             CustomButton(
               onPressed: () {
-                ctr.submitReport(userModel);
+                if (ctr.reportController.text.isNotEmpty &&
+                    ctr.warningMessage.value.isEmpty) {
+                  ctr.submitReport(userModel);
+                }
               },
               text: "Submit",
             ),

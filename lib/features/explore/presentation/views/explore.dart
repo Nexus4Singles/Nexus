@@ -7,6 +7,7 @@ import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
+import 'package:nexus/core/utils/empty_state.dart';
 import 'package:nexus/features/explore/controllers/explore_ctr.dart';
 import 'package:nexus/features/explore/presentation/widgets/filter_modal.dart';
 import 'package:nexus/features/home/presentation/widgets/coming_soon_modal.dart';
@@ -56,6 +57,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                               showPhoneCode: false,
                               onSelect: (Country country) {
                                 ctr.searchCountry(country.name);
+                                search.text = country.name;
                               },
                             );
                           },
@@ -131,57 +133,58 @@ class _ExploreScreenState extends State<ExploreScreen> {
               children: [
                 ctr.isLoading.value
                     ? const Center(child: CustomCircularProgressIndicator())
-                    : ctr.searchedUsers.isEmpty
+                    : ctr.exploreError.value.isNotEmpty
                         ? SizedBox(
-                            width: Get.width,
-                            height: Get.height / 1.5,
-                            child: Center(
-                              child: Text(
-                                'Stay in control of profiles you see! Search for profiles within any country and get more desired results using filters',
-                                style: textStyle14.copyWith(
-                                  color: dustyGrey,
+                            height: Get.height / 2,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Center(
+                                  child: EmptyStateWidget(
+                                    message: ctr.exploreError.value,
+                                    showClose: false,
+                                  ),
                                 ),
-                                textAlign: TextAlign.center,
-                              ),
+                              ],
                             ),
                           )
-                        : Column(
-                            children: [
-                              ...ctr.searchedUsers.map(
-                                (val) => ExploreUserTile(
-                                  image: val.photos![0],
-                                  name: val.username,
-                                  age: val.age.toString(),
-                                  location: val.location!.place ?? "",
-                                  onPress: () {
-                                    Get.to(
-                                        () => UserDetailScreen(userModel: val));
-                                  },
+                        : ctr.searchedUsers.isEmpty
+                            ? SizedBox(
+                                width: Get.width,
+                                height: Get.height / 1.5,
+                                child: Center(
+                                  child: Text(
+                                    'Stay in control of profiles you see! Search for profiles within any country and get more desired results using filters',
+                                    style: textStyle14.copyWith(
+                                      color: dustyGrey,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
                               )
-                            ],
-                          ),
+                            : Column(
+                                children: [
+                                  ...ctr.searchedUsers.map(
+                                    (val) => ExploreUserTile(
+                                      image: val.photos![0],
+                                      name: val.username,
+                                      age: val.age.toString(),
+                                      location: val.location!.place ?? "",
+                                      onPress: () {
+                                        Get.to(() =>
+                                            UserDetailScreen(userModel: val));
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
                 const SizedBoxH40()
               ],
             ),
           ),
         ),
       ),
-    );
-  }
-
-  void showModal(String text) {
-    showAdaptiveDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return AlertDialog.adaptive(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          content: ComingSoonModal(text: text),
-        );
-      },
     );
   }
 }

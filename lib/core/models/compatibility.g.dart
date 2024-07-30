@@ -29,7 +29,7 @@ Map<String, dynamic> _$CompatibilityModelToJson(CompatibilityModel instance) =>
       'personality_type': instance.personalityType,
       'regular_source_of_income': instance.regularSourceOfIncome,
       'marry_someone_fs': instance.marrySomeoneNotFS,
-      'long_distance': instance.mentallyReady,
+      'long_distance': instance.longDistance,
       'believe_cohabiting': instance.believeInCohiabiting,
       'should_christian_speak_in_tongue': instance.shouldChristianSpeakInTongue,
       'believe_in_tithing': instance.believeInTithing,

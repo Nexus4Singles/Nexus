@@ -26,7 +26,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'id': '1',
       "title": "Create a Profile",
       "subtitle":
-          "Nexus is designed for Christian singles who genuinely have a relationship with God & the profile creation requires users to answer 3 questions through audio recordings. \n\nBeyond just viewing the profile pictures & bio-data of different users, listening to their recordings will give you insights into their beliefs & thought processes, which can help you make informed decisions on who to connect with. \n\nIf you struggle with articulating your thoughts, we strongly recommend developing this skill before joining Nexus.Lovely profile pictures are great, but your recordings will truly determine if users would want to connect with you!",
+          "Nexus is designed for Christian singles who genuinely have a relationship with God & creating a profile requires users to answer 3 questions through audio recordings. \n\nBeyond just viewing the profile pictures & bio-data of different users, listening to their recordings will give you insights into their beliefs & thought processes, which can help you make informed decisions on who to connect with. \n\nIf you struggle with articulating your thoughts, we strongly recommend developing this skill before joining Nexus.Lovely profile pictures are great, but your recordings will truly determine if users would want to connect with you!",
       "image": iOnboard1,
     },
     {
@@ -47,7 +47,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     {
       'id': '4',
       "title": "Chat",
-      "subtitle": "You will only be able to chat with your MATCH list. This means random users will not be able to send messages to you. "
+      "subtitle": "You will only be able to chat with your MATCH list. This means random users won't send messages to you. "
           "\n\nNexus is not just another dating app, it is an intentional movement to see more kingdom marriages exist by helping Godly singles become more visible to each other. \n\n"
           "We provide the visibility you need, while the rest is up to you, as you rely on the HolySpirit for discernment. \n\nWe wish you GODSPEED!!",
       "image": iOnboard4,

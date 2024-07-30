@@ -10,9 +10,10 @@ import '../colors.dart';
 
 class EmptyStateWidget extends StatelessWidget {
   final String svgAssetPath;
-  final String message;
+  final String message, headerText;
   final String buttonText;
   final bool shouldShowImage;
+  final bool showClose;
   final Function? buttonFunc;
 
   const EmptyStateWidget({
@@ -21,7 +22,9 @@ class EmptyStateWidget extends StatelessWidget {
     this.buttonText = '',
     this.shouldShowImage = true,
     this.buttonFunc,
+    this.headerText = '',
     required this.message,
+    this.showClose = false,
   }) : super(key: key);
 
   @override
@@ -32,14 +35,16 @@ class EmptyStateWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: InkWell(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: const Icon(Icons.clear)),
-            ),
+            showClose
+                ? Align(
+                    alignment: Alignment.topRight,
+                    child: InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const Icon(Icons.clear)),
+                  )
+                : const SizedBox(),
             shouldShowImage
                 ? SvgPicture.asset(
                     svgAssetPath.isEmpty ? "$svgPath/Empty.svg" : svgAssetPath,
@@ -47,6 +52,12 @@ class EmptyStateWidget extends StatelessWidget {
                     width: 100)
                 : const SizedBox(),
             const SizedBoxH15(),
+            headerText.isEmpty
+                ? const SizedBox()
+                : Text(
+                    headerText,
+                    style: textStyle18.copyWith(fontWeight: FontWeight.bold),
+                  ),
             Text(
               message,
               textAlign: TextAlign.center,

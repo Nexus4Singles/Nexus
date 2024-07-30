@@ -21,6 +21,7 @@ class ExploreCtr extends GetxController {
   var church = ''.obs;
   var ageRange = <int>[].obs;
   var rangeValues = const RangeValues(25, 50).obs;
+  var exploreError = "".obs;
 
   getAllUsers() async {
     var users = await db
@@ -46,22 +47,29 @@ class ExploreCtr extends GetxController {
   }
 
   searchCountry(String country) async {
+    exploreError.value = "";
     isLoading.value = true;
     searchedUsers.clear();
     filteredUsers.clear();
+
     await Future.delayed(
         const Duration(seconds: 2), () => isLoading.value = false);
     allUsers
         .where((val) =>
             val.gender.toLowerCase() != myProfile.value.gender.toLowerCase())
         .toList()
-        .forEach((val) {
-      if (country.toLowerCase().contains(val.country!.toLowerCase())) {
-        searchedUsers.add(val);
-        filteredUsers.add(val);
+        .forEach((vals) {
+      if (country.toLowerCase().contains(vals.country!.toLowerCase())) {
+        searchedUsers.add(vals);
+        filteredUsers.add(vals);
+      }
+      if (searchedUsers.isEmpty || filteredUsers.isEmpty) {
+        exploreError.value =
+            "Sorry, No Users in this Country Yet. Check Back Later!!";
       }
     });
-
+    print(
+        "THis is for searched users ${searchedUsers.length} this is filtered ${filteredUsers.length}  and this is ${exploreError.value}");
     isLoading.value = false;
   }
 
@@ -80,6 +88,10 @@ class ExploreCtr extends GetxController {
           'Age: ${user.age}, Education: ${user.educationLevel}, Church: ${user.churchName}');
     }
     searchedUsers.assignAll(filtered);
+    if (searchedUsers.isEmpty) {
+      exploreError.value =
+          "There are currently no profiles matching your request!";
+    }
   }
 
   filterUser(List<UserModel> users, List<int> ageRange, String? education,
@@ -104,9 +116,9 @@ class ExploreCtr extends GetxController {
   resetFilter() {
     searchedUsers.assignAll(filteredUsers);
     ageRange.clear();
+    rangeValues = const RangeValues(25, 50).obs;
     education.value = "";
     church.value = "";
-    Get.back();
   }
 
   setOnlineStatus(bool isOnline) {

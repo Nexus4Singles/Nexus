@@ -10,7 +10,7 @@ class CompatibilityEntity extends Equatable {
     this.personalityType,
     this.regularSourceOfIncome,
     this.marrySomeoneNotFS,
-    this.mentallyReady,
+    this.longDistance,
     this.believeInCohiabiting,
     this.shouldChristianSpeakInTongue,
     this.believeInTithing,
@@ -29,7 +29,7 @@ class CompatibilityEntity extends Equatable {
   @JsonKey(name: kMARRYWHOISNOTFINANCIALLYSTABLE)
   final String? marrySomeoneNotFS;
   @JsonKey(name: kLONGDISTANCERELATIONSHIP)
-  final String? mentallyReady;
+  final String? longDistance;
   @JsonKey(name: kBELIEVEINCOHIABITING)
   final String? believeInCohiabiting;
   @JsonKey(name: kSHOULDCHRISTIANSPEAKINTONGUE)
@@ -45,7 +45,7 @@ class CompatibilityEntity extends Equatable {
         personalityType,
         regularSourceOfIncome,
         marrySomeoneNotFS,
-        mentallyReady,
+        longDistance,
         believeInCohiabiting,
         shouldChristianSpeakInTongue,
         believeInTithing,

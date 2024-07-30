@@ -15,6 +15,7 @@ import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
 import 'package:nexus/features/profile/presentation/controllers/profile_ctr.dart';
 import 'package:provider/provider.dart';
+import '../../../../core/utils/image_compressor.dart';
 import '../../../../core/utils/toast.dart';
 import '../../../auth/data/data-sources/local-datasource/list_items.dart';
 import '../../../auth/presentation/widgets/drop_down.dart';
@@ -53,9 +54,10 @@ class _EditProfileState extends State<EditProfile> {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
+      var coFile = await ImageCompressorNexus().compressAndGetFile(image);
       setState(() {
-        allImage.add(image.path);
-        imageFiles.add(File(image.path));
+        allImage.add(coFile!.path);
+        imageFiles.add(File(coFile.path));
       });
       // await value.uploadProfilePicture(image: );
     }
@@ -65,9 +67,10 @@ class _EditProfileState extends State<EditProfile> {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
+      var coFile = await ImageCompressorNexus().compressAndGetFile(image);
       imageFiles.removeAt(index);
       setState(() {
-        imageFiles.insert(index, File(image.path));
+        imageFiles.insert(index, File(coFile!.path));
       });
       // await value.uploadProfilePicture(image: );
     }

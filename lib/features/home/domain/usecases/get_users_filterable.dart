@@ -49,7 +49,5 @@ class GetUsersFilterableUseCase extends Usecase<void, UserFilterParams> {
 
   @override
   Future<Either<void, List<UserModel>>> call(params) async =>
-      await repository.getUsersFilterable(
-        user: params.user,
-      );
+      await repository.getUsersFilterable(user: params.user);
 }

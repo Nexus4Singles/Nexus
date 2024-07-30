@@ -22,7 +22,7 @@ class CompatibilityModel extends CompatibilityEntity {
           personalityType: personalityType,
           regularSourceOfIncome: regularSourceOfIncome,
           marrySomeoneNotFS: marrySomeoneNotFS,
-          mentallyReady: mentallyReady,
+          longDistance: mentallyReady,
           believeInCohiabiting: believeInCohiabiting,
           shouldChristianSpeakInTongue: shouldChristianSpeakInTongue,
           believeInTithing: believeInCohiabiting,

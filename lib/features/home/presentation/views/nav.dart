@@ -30,6 +30,7 @@ class _MainNav extends State<MainNav> {
     // TODO: implement initState
     super.initState();
     int currentPage = 0;
+    currentPage = widget.initialPage!;
     controller = PageController(initialPage: currentPage);
     setState(() {
       controller = controller;

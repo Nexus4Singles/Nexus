@@ -6,14 +6,19 @@ import 'package:get/get.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/core/utils/empty_state.dart';
+import 'package:nexus/features/explore/presentation/views/explore.dart';
 import 'package:nexus/features/home/controllers/notification_controller.dart';
+import 'package:nexus/features/home/presentation/change_notifier/bottom_nav.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/home/presentation/widgets/profile_tile.dart';
 import 'package:nexus/features/home/presentation/widgets/user_card.dart';
 import 'package:nexus/features/match/controllers/matches_ctr.dart';
 import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
+import 'package:nexus/router.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/utils/shared_pref.dart';
+import 'nav.dart';
 
 // Dont show accounts that have been liked.
 
@@ -109,20 +114,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (model.currentUser != null && model.allUsers.isNotEmpty)
                     SizedBox(
                       height: Get.height / 1.3,
-                      child: model.allUsers.length == 1
-                          ? UserCard(
-                              userModel: model.allUsers.first,
-                              onClosed: () {},
-                              onLike: () {},
-                              onRefresh: () {},
-                              onSaved: () {},
-                              onClick: () {
-                                setState(() {
-                                  model.selectedUser = model.allUsers.first;
-                                });
-                                // Get.toNamed(AppRoutes.userDetails);
-                              },
-                            )
+                      child: model.allUsers.isEmpty
+                          ? const EmptyStateWidget(
+                              message: "No profile to interact with")
                           : CardSwiper(
                               numberOfCardsDisplayed: 1,
                               cardsCount: model.allUsers.length,
@@ -189,6 +183,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               },
                             ),
+                    )
+                  else
+                    SizedBox(
+                      height: Get.height / 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          EmptyStateWidget(
+                              showClose: false,
+                              headerText: "That’s it for today!!",
+                              buttonText: "Go to Explore",
+                              buttonFunc: () async {
+                                await Provider.of<BottomNavModel>(context,
+                                        listen: false)
+                                    .updateIndex(1);
+                              },
+                              message:
+                                  "Check back tomorrow or Use the explore page to search and filter more profiles globally"),
+                        ],
+                      ),
                     ),
                 ],
               ),

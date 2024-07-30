@@ -26,10 +26,16 @@ class DeleteAccountScreen extends StatelessWidget {
             SvgPicture.asset('$svgPath/sad.svg'),
             const SizedBoxH20(),
             Text(
-              "We are sad to see you go but we would be more excited if you're leaving because you found your partner here. Please do write to through the contact us page, if this is the case",
+              "We are sad to see you go but we would be more excited if you're leaving because you found your partner here. If this is the case, kindly inform us by sending your story to",
               textAlign: TextAlign.center,
               style:
-                  textStyle16.copyWith(fontWeight: FontWeight.w600, color: ash),
+                  textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
+            ),
+            Text(
+              "contact@nexus4singles",
+              textAlign: TextAlign.center,
+              style: textStyle16.copyWith(
+                  fontWeight: FontWeight.w800, color: black),
             ),
             const SizedBoxH25(),
             CustomButton(

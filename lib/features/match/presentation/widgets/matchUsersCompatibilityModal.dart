@@ -69,7 +69,7 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
                     "${userModel.username} ${userModel.compatibility!.marrySomeoneNotFS!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
                   ),
                   optionsMenu(
-                    "${userModel.username} ${userModel.compatibility!.believeInCohiabiting!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
+                    "${userModel.username} ${userModel.compatibility!.longDistance!.contains("Yes") ? "is" : "is not"} open to a long distance relationship",
                   ),
                   optionsMenu(
                     "${userModel.username} ${userModel.compatibility!.believeInCohiabiting!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} in cohabiting before marriage",
