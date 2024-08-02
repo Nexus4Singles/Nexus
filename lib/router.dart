@@ -31,7 +31,6 @@ import 'package:nexus/features/profile/presentation/views/privacy.dart';
 import 'package:nexus/features/profile/presentation/views/profile.dart';
 import 'package:nexus/features/profile/presentation/views/review.dart';
 import 'package:nexus/features/profile/presentation/views/settings.dart';
-import 'package:nexus/features/profile/presentation/views/subscription.dart';
 import 'package:nexus/features/settings/presentation/views/subscription3.dart';
 import 'package:nexus/features/settings/presentation/views/subscription4.dart';
 import 'package:nexus/features/profile/presentation/views/terms.dart';
@@ -47,6 +46,8 @@ import 'package:nexus/features/auth/presentation/views/setting_up/profile_comple
 import 'package:nexus/features/auth/presentation/views/setting_up/upload_photo.dart';
 
 import 'features/chat/views/chat_rep.dart';
+import 'features/profile/presentation/views/cancel_plan.dart';
+import 'features/subscription/views/subscription.dart';
 
 class AppRoutes {
   static String splash = '/';
@@ -156,7 +157,7 @@ final appRouter = [
   ),
   GetPage(
     name: AppRoutes.subscription,
-    page: () => const SubsciptionScreen(),
+    page: () => const SubscriptionScreen(),
     binding: BindingsBuilder(() {}),
   ),
   GetPage(
@@ -180,12 +181,12 @@ final appRouter = [
     binding: BindingsBuilder(() {}),
   ),
   GetPage(
-    name: AppRoutes.cancelPlan,
+    name: AppRoutes.subscription3,
     page: () => const ChangePlanScreen(),
     binding: BindingsBuilder(() {}),
   ),
   GetPage(
-    name: AppRoutes.subscription3,
+    name: AppRoutes.cancelPlan,
     page: () => const CancelSubScreen(),
     binding: BindingsBuilder(() {}),
   ),

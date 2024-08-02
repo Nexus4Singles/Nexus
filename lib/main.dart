@@ -20,6 +20,9 @@ import 'package:nexus/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
+import 'features/subscription/provider/subscription_provider.dart';
+import 'features/subscription/services/subscription_service.dart';
+
 void main() {
   runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +31,7 @@ void main() {
         'en_US', null); // Initialize with your desired locale
 
     await configureDependencies();
+    await SubscriptionService.init();
     await Firebase.initializeApp();
 
     if (kDebugMode) {
@@ -66,6 +70,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SettingsNotifier()),
         ChangeNotifierProvider(create: (_) => sl<AuthNotifier>()),
         ChangeNotifierProvider(create: (_) => sl<HomeNotifier>()),
+        ChangeNotifierProvider(create: (_) => SubscriptionProvider())
       ],
       child: Consumer<ThemeProvider>(builder: (context, theme, _) {
         return ScreenUtilInit(

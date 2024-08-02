@@ -7,6 +7,7 @@ import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/empty_state.dart';
+import 'package:nexus/core/utils/modals.dart';
 import 'package:nexus/features/explore/presentation/views/explore.dart';
 import 'package:nexus/features/home/controllers/notification_controller.dart';
 import 'package:nexus/features/home/presentation/change_notifier/bottom_nav.dart';
@@ -15,9 +16,12 @@ import 'package:nexus/features/home/presentation/widgets/profile_tile.dart';
 import 'package:nexus/features/home/presentation/widgets/user_card.dart';
 import 'package:nexus/features/match/controllers/matches_ctr.dart';
 import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
+import 'package:nexus/features/subscription/helpers/subscription_helper.dart';
 import 'package:nexus/router.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/utils/shared_pref.dart';
+import '../../../subscription/provider/subscription_provider.dart';
+import '../../../subscription/widgets/restriction_modal.dart';
 import 'nav.dart';
 
 // Dont show accounts that have been liked.
@@ -59,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await Provider.of<HomeNotifier>(context, listen: false).getProfile();
     var currentUser =
         Provider.of<HomeNotifier>(context, listen: false).currentUser!;
+    var subProvider =  Provider.of<SubscriptionProvider>(context, listen: false);
     SharedPref.setString("email", currentUser.email);
     NotificationController.instance.getAllNotifications();
     if (currentUser.compatibilitySetted == null ||
@@ -82,6 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       });
     }
+    if(SubscriptionHelper.isSubscriptionValid(context, currentUser.subExpDate) == false){
+      subProvider.onPremium = false;
+      await SubscriptionHelper.updateBackendPremiumStatus(currentUser, false, context);
+    }
   }
 
   @override
@@ -93,8 +102,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.read<SubscriptionProvider>();
     return Consumer<HomeNotifier>(
       builder: (context, model, _) {
+        provider.initSubDet(model.currentUser);
         return Scaffold(
           body: SafeArea(
             child: Padding(
@@ -171,14 +182,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ? matchCtr.toggleLike(user)
                                           : print("This users are matched");
                                     },
-                                    onRefresh: () {
+                                    onRefresh: provider.onPremium ?
+                                        () {
                                       matchCtr.undoUnRecommend(
                                           true, cardSwiperController);
+                                    }
+                                    : (){
+                                      restrictionModal(context: context, dismisable: true,);
                                     },
-                                    onSaved: () {
+                                    onSaved: provider.onPremium ? () {
                                       matchCtr.toggleSave(user.id);
+                                    }: (){
+                                      restrictionModal(context: context, dismisable: true,);
                                     },
-                                    onClick: () {},
+                                    onClick: () {
+
+                                    },
                                   ),
                                 );
                               },

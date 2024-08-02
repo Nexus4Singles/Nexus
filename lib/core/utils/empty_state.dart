@@ -42,7 +42,7 @@ class EmptyStateWidget extends StatelessWidget {
                         onTap: () {
                           Get.back();
                         },
-                        child: const Icon(Icons.clear)),
+                        child: const Icon(Icons.clear, color: primary,)),
                   )
                 : const SizedBox(),
             shouldShowImage

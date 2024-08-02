@@ -69,7 +69,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 //   header: 'Coming soon',
                 // );
 
-                Get.toNamed(AppRoutes.cancelPlan);
+                Get.toNamed(AppRoutes.subscription3);
               },
             ),
             const Divider(

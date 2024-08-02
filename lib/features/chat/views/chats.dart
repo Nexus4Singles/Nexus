@@ -8,7 +8,11 @@ import 'package:nexus/features/chat/widget/chat_container.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/features/subscription/helpers/subscription_helper.dart';
+import 'package:nexus/features/subscription/widgets/restriction_modal.dart';
+import 'package:provider/provider.dart';
 import '../../../router.dart';
+import '../../subscription/provider/subscription_provider.dart';
 import 'chat_rep.dart';
 
 class ChatsScreen extends StatefulWidget {
@@ -22,6 +26,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
   var ctr = Get.put(ChatCtr());
   @override
   Widget build(BuildContext context) {
+    final subProvider = context.read<SubscriptionProvider>();
     return Scaffold(
       backgroundColor: white,
       appBar: AppBar(
@@ -40,97 +45,144 @@ class _ChatsScreenState extends State<ChatsScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 15.sp),
-            child: Obx(
-              () => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Recent Matches',
-                    style: textStyle18.copyWith(
-                      fontWeight: FontWeight.w800,
+      body:  Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 15.sp),
+              child: Obx(
+                () => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Recent Matches',
+                      style: textStyle18.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
-                  ),
-                  const SizedBoxH15(),
-                  ctr.allChatUsers.isNotEmpty
-                      ? SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          physics: const BouncingScrollPhysics(),
-                          child: Row(
-                            children: [
-                              ...ctr.allChatUsers.map((users) {
-                                return InkWell(
-                                  onTap: () {
-                                    Get.to(
-                                        () => ChatWithScreen(chatModel: users));
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: CircleAvatar(
-                                      radius: 32,
-                                      backgroundImage: NetworkImage(
-                                          users.userModel!.photos![0]),
+                    const SizedBoxH15(),
+                    ctr.allChatUsers.isNotEmpty
+                        ? SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            child: Row(
+                              children: [
+                                ...ctr.allChatUsers.map((users) {
+                                  return InkWell(
+                                      onTap: () async {
+                                        final subProvider = Provider.of<SubscriptionProvider>(context, listen: false);
+                                        if(ctr.allChatUsers
+                                            .where((val) => val.lastMessage.isNotEmpty).contains(users)){
+                                          Get.to(() => ChatWithScreen(chatModel: users));
+                                        }
+                                        if (subProvider.onPremium == true || subProvider.usedOneFreeText == false) {
+                                          // User is on premium or has not used their one free text
+                                          Get.to(() => ChatWithScreen(chatModel: users));
+
+                                          // Check if a message has been sent
+                                          if (ctr.allChatUsers
+                                              .where((val) => val.lastMessage.isNotEmpty)
+                                              .isNotEmpty) {
+                                            subProvider.usedOneFreeText = true;
+                                            await SubscriptionHelper.updateFreeTextStatus(
+                                              subProvider.currentUser,
+                                              true,
+                                              context,
+                                            );
+                                          }
+                                        } else if (subProvider.onPremium == false && subProvider.usedOneFreeText == true) {
+                                          if (!ctr.allChatUsers
+                                              .where((val) =>
+                                          val.lastMessage.isNotEmpty).contains(
+                                              users)) {
+
+
+                                            // User is not on premium and has used their one free text
+                                            if (subProvider.prevSubscribed ==
+                                                true) {
+                                              // User was previously on premium but their premium has expired
+                                              restrictionModal(context: context,
+                                                  dismisable: true,
+                                                  text:
+                                                  'Your subscription has expired!\nKindly subscribe to be able to send messages\nand user other features.');
+                                            } else {
+                                              // User is not on premium and has used their one free text
+                                              restrictionModal(context: context,
+                                                  dismisable: true,
+                                                  text: 'You have used up your limit of one (1) chat per matched \nuser on our free version.\nKindly subscribe to chat with other matched users');
+                                            }
+                                          }
+                                        }
+                                        else{
+                                          Get.to(() => ChatWithScreen(
+                                              chatModel: users));
+                                        }
+                                      },
+
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: CircleAvatar(
+                                        radius: 32,
+                                        backgroundImage: NetworkImage(
+                                            users.userModel!.photos![0]),
+                                      ),
                                     ),
-                                  ),
+                                  );
+                                }).toList()
+                              ],
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.only(top: 24.0),
+                            child: Center(
+                                child: Text(
+                              "You don’t have any matches yet",
+                              style: textStyle14.copyWith(color: dustyGrey),
+                            )),
+                          ),
+                    const SizedBoxH40(),
+                    Text('Chats',
+                        style: textStyle18.copyWith(fontWeight: FontWeight.w800)),
+                    const SizedBoxH10(),
+                    ctr.allChatUsers
+                            .where((val) => val.lastMessage.isNotEmpty)
+                            .isNotEmpty
+                        ? ListView(
+                            shrinkWrap: true,
+                            children: [
+                              ...ctr.allChatUsers
+                                  .where((val) => val.lastMessage.isNotEmpty)
+                                  .map((val) {
+                                return ChatContainer(
+                                  image: val.userModel!.photos![0],
+                                  name: val.userModel!.username,
+                                  time: val.timestamp.toDate(),
+                                  text: val.lastMessage,
+                                  count: ctr.auth.currentUser!.uid ==
+                                          val.userSentLastMessage
+                                      ? 0
+                                      : val.unreadCount,
+                                  onPress: () {
+                                    Get.to(() => ChatWithScreen(chatModel: val));
+                                  },
                                 );
-                              }).toList()
+                              }).toList(),
                             ],
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.only(top: 24.0),
-                          child: Center(
-                              child: Text(
-                            "You don’t have any matches yet",
-                            style: textStyle14.copyWith(color: dustyGrey),
-                          )),
-                        ),
-                  const SizedBoxH40(),
-                  Text('Chats',
-                      style: textStyle18.copyWith(fontWeight: FontWeight.w800)),
-                  const SizedBoxH10(),
-                  ctr.allChatUsers
-                          .where((val) => val.lastMessage.isNotEmpty)
-                          .isNotEmpty
-                      ? ListView(
-                          shrinkWrap: true,
-                          children: [
-                            ...ctr.allChatUsers
-                                .where((val) => val.lastMessage.isNotEmpty)
-                                .map((val) {
-                              return ChatContainer(
-                                image: val.userModel!.photos![0],
-                                name: val.userModel!.username,
-                                time: val.timestamp.toDate(),
-                                text: val.lastMessage,
-                                count: ctr.auth.currentUser!.uid ==
-                                        val.userSentLastMessage
-                                    ? 0
-                                    : val.unreadCount,
-                                onPress: () {
-                                  Get.to(() => ChatWithScreen(chatModel: val));
-                                },
-                              );
-                            }).toList(),
-                          ],
-                        )
-                      : SizedBox(
-                          height: Get.height / 2,
-                          child: const Center(
-                            child: EmptyStateWidget(
-                                shouldShowImage: false,
-                                message: 'You will see your chats here'),
-                          ),
-                        )
-                ],
+                          )
+                        : SizedBox(
+                            height: Get.height / 2,
+                            child: const Center(
+                              child: EmptyStateWidget(
+                                  shouldShowImage: false,
+                                  message: 'You will see your chats here'),
+                            ),
+                          )
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+
     );
   }
 }

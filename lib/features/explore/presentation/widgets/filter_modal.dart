@@ -9,7 +9,10 @@ import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/modals.dart';
 import 'package:nexus/features/auth/data/data-sources/local-datasource/list_items.dart';
 import 'package:nexus/features/auth/presentation/widgets/drop_down.dart';
+import 'package:nexus/features/subscription/widgets/restriction_modal.dart';
+import 'package:provider/provider.dart';
 
+import '../../../subscription/provider/subscription_provider.dart';
 import '../../controllers/explore_ctr.dart';
 
 class ExploreFilterModal extends StatefulWidget {
@@ -119,9 +122,17 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
                 const SizedBoxW10(),
                 Expanded(
                   child: CustomButton(
-                    onPressed: () {
-                      // subscribeModal(context);
-                      ctr.filterUsers();
+                    onPressed:
+                        () {
+                          final provider = context.read<SubscriptionProvider>();
+                          if(provider.onPremium == true){
+                            ctr.filterUsers();
+                          }
+                          else{
+                             subscribeModal(context);
+                          }
+
+
                     },
                     text: 'Apply',
                   ),

@@ -14,7 +14,6 @@ CompatibilityModel _$CompatibilityModelFromJson(Map<String, dynamic> json) =>
       personalityType: json['personality_type'] as String?,
       regularSourceOfIncome: json['regular_source_of_income'] as String?,
       marrySomeoneNotFS: json['marry_someone_fs'] as String?,
-      mentallyReady: json['long_distance'] as String?,
       believeInCohiabiting: json['believe_cohabiting'] as String?,
       shouldChristianSpeakInTongue:
           json['should_christian_speak_in_tongue'] as String?,
@@ -29,7 +28,6 @@ Map<String, dynamic> _$CompatibilityModelToJson(CompatibilityModel instance) =>
       'personality_type': instance.personalityType,
       'regular_source_of_income': instance.regularSourceOfIncome,
       'marry_someone_fs': instance.marrySomeoneNotFS,
-      'long_distance': instance.longDistance,
       'believe_cohabiting': instance.believeInCohiabiting,
       'should_christian_speak_in_tongue': instance.shouldChristianSpeakInTongue,
       'believe_in_tithing': instance.believeInTithing,

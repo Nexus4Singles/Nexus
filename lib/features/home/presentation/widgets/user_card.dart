@@ -21,10 +21,10 @@ import '../views/photo_view.dart';
 
 class UserCard extends StatefulWidget {
   final UserModel userModel;
-  final VoidCallback onRefresh;
+  final VoidCallback? onRefresh;
   final VoidCallback onClosed;
   final VoidCallback onLike;
-  final VoidCallback onSaved;
+  final VoidCallback? onSaved;
   final VoidCallback onClick;
   const UserCard({
     super.key,

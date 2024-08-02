@@ -67,6 +67,10 @@ class AuthNotifier with ChangeNotifier {
   }
 
   Map<String, dynamic> _credential = {
+    'onPremium': false,
+    'prevSubscribed': false,
+    'subExpDate': null,
+    'usedOneFreeText':false,
     kEMAIL: '',
     kPASSWORD: '',
     kPHONENUMBER: '',
@@ -121,6 +125,10 @@ class AuthNotifier with ChangeNotifier {
 
   void clearCredential() {
     _credential = {
+      'onPremium': false,
+      'prevSubscribed': false,
+      'subExpDate': null,
+      'usedOneFreeText':false,
       kEMAIL: '',
       kPASSWORD: '',
       kPHONENUMBER: '',

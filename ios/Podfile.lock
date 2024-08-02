@@ -1118,6 +1118,12 @@ PODS:
     - Flutter
   - flutter_secure_storage (6.0.0):
     - Flutter
+  - Glassfy (1.4.0)
+  - glassfy_flutter (1.6.2):
+    - Flutter
+    - GlassfyGlue (= 1.4.5)
+  - GlassfyGlue (1.4.5):
+    - Glassfy (= 1.4.0)
   - GoogleDataTransport (9.4.1):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30911.0, >= 2.30908.0)
@@ -1299,6 +1305,7 @@ DEPENDENCIES:
   - flutter_image_compress_common (from `.symlinks/plugins/flutter_image_compress_common/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - glassfy_flutter (from `.symlinks/plugins/glassfy_flutter/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - local_auth_darwin (from `.symlinks/plugins/local_auth_darwin/darwin`)
@@ -1333,6 +1340,8 @@ SPEC REPOS:
     - FirebaseSessions
     - FirebaseSharedSwift
     - FirebaseStorage
+    - Glassfy
+    - GlassfyGlue
     - GoogleDataTransport
     - GoogleUtilities
     - "gRPC-C++"
@@ -1376,6 +1385,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  glassfy_flutter:
+    :path: ".symlinks/plugins/glassfy_flutter/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   just_audio:
@@ -1433,6 +1444,9 @@ SPEC CHECKSUMS:
   flutter_image_compress_common: ec1d45c362c9d30a3f6a0426c297f47c52007e3e
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
+  Glassfy: 6c13edc242715212cfd01a0a12c8553f2f06cfcb
+  glassfy_flutter: 361ef9fc83acb4e3accb400798cd624015d3d02a
+  GlassfyGlue: 828c39792238a84c07d27a71c9eb4819b0b1dfa9
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
   "gRPC-C++": e725ef63c4475d7cdb7e2cf16eb0fde84bd9ee51

@@ -34,8 +34,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
 
   @override
   void initState() {
-    Future.delayed(
-        const Duration(milliseconds: 100), () => chatWarningModal(context));
+   // Future.delayed(const Duration(milliseconds: 100), () => chatWarningModal(context));
 
     super.initState();
   }

@@ -8,14 +8,14 @@ import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/router.dart';
 
-class ChangePlanScreen extends StatefulWidget {
-  const ChangePlanScreen({super.key});
+class CancelPlanScreen extends StatefulWidget {
+  const CancelPlanScreen({super.key});
 
   @override
-  State<ChangePlanScreen> createState() => _ChangePlanScreenState();
+  State<CancelPlanScreen> createState() => _CancelPlanScreenState();
 }
 
-class _ChangePlanScreenState extends State<ChangePlanScreen> {
+class _CancelPlanScreenState extends State<CancelPlanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

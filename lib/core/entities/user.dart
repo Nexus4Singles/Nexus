@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/models/compatibility.dart';
 import 'package:nexus/core/models/location.dart';
+import 'package:nexus/core/models/user.dart';
 
 class UserEntity extends Equatable {
+
   const UserEntity({
     required this.id,
     required this.email,
@@ -39,6 +42,10 @@ class UserEntity extends Equatable {
     this.location,
     this.countLike,
     this.fcmToken,
+    this.onPremium = false,
+    this.prevSubscribed = false,
+    this.subExpDate = '',
+    this.usedOneFreeText = false
   });
 
   final String id;
@@ -93,6 +100,10 @@ class UserEntity extends Equatable {
   final LocationModel? location;
   @JsonKey(name: kFCMTOKEN)
   final String? fcmToken;
+  final bool onPremium;
+  final bool prevSubscribed;
+  final String? subExpDate;
+  final bool usedOneFreeText;
 
   @override
   List<Object?> get props => [
@@ -129,5 +140,12 @@ class UserEntity extends Equatable {
         mySaves,
         likeMe,
         fcmToken,
+        onPremium,
+        prevSubscribed,
+        subExpDate,
+        usedOneFreeText,
       ];
+
+
+
 }
