@@ -143,6 +143,10 @@ class MatchesCtr extends GetxController {
         "matchedUsers": FieldValue.arrayUnion([currentUserId])
       }),
     ]);
+    await db.collection('matches').add({
+      'timestamp': FieldValue.serverTimestamp(),
+      'matchedUsers': [currentUserId, userModel.id]
+    });
     var messageID = DateTime.now().millisecondsSinceEpoch;
     await chatCtr.saveToChat(userModel.id, messageID);
     Get.to(() => Matched(userModel: userModel, messageID: messageID));

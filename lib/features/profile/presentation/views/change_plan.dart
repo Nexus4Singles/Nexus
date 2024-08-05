@@ -86,7 +86,7 @@ class _ChangePlanScreenState extends State<ChangePlanScreen> {
                     Text(
                       subProvider.subExpDate != null && DateTime.now().isBefore(DateFormat('dd/MM/yyyy').parse(subProvider.subExpDate!))
                           ? 'Your subscription will expire on'
-                          : 'Your subscription expired on ',
+                          : 'Your subscription expires on ',
                       style: textStyle18.copyWith(
                         color: white,
                         fontSize: 12.sp,

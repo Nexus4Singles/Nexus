@@ -64,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var currentUser =
         Provider.of<HomeNotifier>(context, listen: false).currentUser!;
     var subProvider =  Provider.of<SubscriptionProvider>(context, listen: false);
+    subProvider.initSubDet(currentUser);
     SharedPref.setString("email", currentUser.email);
     NotificationController.instance.getAllNotifications();
     if (currentUser.compatibilitySetted == null ||
@@ -87,10 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       });
     }
-    if(SubscriptionHelper.isSubscriptionValid(context, currentUser.subExpDate) == false){
-      subProvider.onPremium = false;
-      await SubscriptionHelper.updateBackendPremiumStatus(currentUser, false, context);
-    }
+    await SubscriptionHelper.isSubscriptionValid(context, currentUser.subExpDate);
+
   }
 
   @override

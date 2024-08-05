@@ -4,6 +4,7 @@ import 'package:nexus/core/models/notification_model.dart';
 import 'package:nexus/core/services/notifications_service.dart';
 import 'package:nexus/core/utils/app_logger.dart';
 import 'package:nexus/features/home/controllers/home_controller.dart';
+import 'package:rename/platform_file_editors/abs_platform_file_editor.dart';
 
 class NotificationController extends GetxController {
   static NotificationController get instance =>
@@ -59,6 +60,7 @@ class NotificationController extends GetxController {
         appLog("Message notification sent successfully!", response);
       },
       onError: (error) {
+
         appLog("Failed to send message notification", error);
       },
     );

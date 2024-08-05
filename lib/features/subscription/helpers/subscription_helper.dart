@@ -72,8 +72,7 @@ class SubscriptionHelper {
     final subProvider = context.read<SubscriptionProvider>();
     if (permission.isValid!) {
       Navigator.push(context, MaterialPageRoute(builder: (context)=> const AcknowledgmentScreen()));
-      DateTime now = DateTime.now();
-      String formattedDate = DateFormat('dd/MM/yyyy').format(addOneMonth(now));
+      String formattedDate = DateFormat('dd/MM/yyyy').format(permission.expireDate!);
       voidUpdateProvider(subProvider, true, true, formattedDate);
       await updateSubBackend(subProvider.currentUser, true, true, formattedDate, context);
     } else{
@@ -88,26 +87,74 @@ class SubscriptionHelper {
   }
 
   ///Expiry-Date-Helper
-  static bool isSubscriptionValid(BuildContext context, String? subExpDate) {
-    if(subExpDate == null){
-      return false;
-    } else {
+  static Future<bool> isSubscriptionValid(BuildContext context, String? subExpDate) async {
+    final subProvider = context.read<SubscriptionProvider>();
 
-      var x = DateTime.now().isBefore(
-          DateFormat('dd/MM/yyyy').parse(subExpDate));
-      return x;
+    final user = subProvider.currentUser;
+
+    bool subValid = false;
+    String? newExpDateToUpload;
+
+    if (subExpDate == null) {
+     updateBackendPremiumStatus(subProvider.currentUser, false, context);
+     subProvider.onPremium = false;
     }
+
+    // Check if the current date is after the subscription expiry date
+    bool isAfterExpiry = DateTime.now().isAfter(DateFormat('dd/MM/yyyy').parse(subExpDate ?? ''));
+
+    if (isAfterExpiry) {
+
+      if (user != null) {
+        try {
+
+          var permissions = await Glassfy.permissions();
+
+          permissions.all?.forEach((p) async {
+            if (p.permissionId == "premium" && p.isValid == true) {
+              String newExpDate = DateFormat('dd/MM/yyyy').format(p.expireDate!);
+              newExpDateToUpload = newExpDate;
+              subValid = true;
+              subProvider.onPremium = true;
+              subProvider.subExpDate = newExpDate;
+              logger.i('subscription still valid autoRenewal or Re-subscription');
+
+            }
+            else{
+              logger.e('subscription no longer valid');
+              await SubscriptionHelper.updateBackendPremiumStatus(user, false, context);
+              subProvider.onPremium = false;
+              subValid = false;
+            }
+          });
+        } catch (e) {
+          logger.e(e.toString());
+        }
+
+        try {
+          // Update Firestore with the subscription status
+          await FirebaseFirestore.instance.collection('users').doc(user.id).update({
+            'onPremium': subValid,
+            'subExpDate': newExpDateToUpload,
+          });
+        } catch (error) {
+          logger.e('Error updating premium status: $error');
+        }
+      }
+      else {
+        logger.e('user is null');
+
+      }
+    }
+    else {
+      // Subscription is still valid because the current date is before the expiry date
+      subValid = true;
+
+    }
+
+    return subValid;
   }
 
-
-  static DateTime addOneMonth(DateTime date) {
-    DateTime newDate = DateTime(date.year, date.month + 1, date.day);
-    if (newDate.month != (date.month % 12) + 1) {
-      newDate = DateTime(date.year, date.month + 2, 0);
-      newDate = DateTime(newDate.year, newDate.month, date.day);
-    }
-    return newDate;
-  }
 
 
   static Future<void> updateSubBackend(UserModel? user, bool onP, bool prevSub, String? subExp,BuildContext context) async {

@@ -83,6 +83,7 @@ class ChatCtr extends GetxController {
         message: messages,
         messageType: mediaType.value.isEmpty ? 'text' : mediaType.value,
         sentBy: auth.currentUser!.uid,
+        recipientId: recipient.id,
         timestamp: Timestamp.now());
     if (messages.isNotEmpty || imageFile.value.path.isNotEmpty) {
       db
