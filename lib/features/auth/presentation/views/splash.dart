@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
     bool firstTime = await SharedPref.getBool(kFirstTime) ?? true;
     var email = await SharedPref.getString("email");
     if (firstTime) {
-      Get.offAndToNamed(AppRoutes.login);
+      Get.offAndToNamed(AppRoutes.onboardingHandler);
     } else if (email.isNotEmpty) {
       ctr.allUsers.isNotEmpty ? Get.offAndToNamed(AppRoutes.mainNav) : () {};
     } else {
