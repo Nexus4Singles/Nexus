@@ -17,6 +17,7 @@ import '../../../core/utils/methods.dart';
 class ChatCtr extends GetxController {
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
+  var notificationController = NotificationController.instance;
   var exploreCtr = ExploreCtr.instance;
   var allChatUsers = <ChatModel>[].obs;
   var chatController = TextEditingController();
@@ -54,6 +55,14 @@ class ChatCtr extends GetxController {
     print("all my chats ==> ${allChatUsers.length}");
   }
 
+  setUserTohaveShowWarning(id) async {
+    db.collection(kUSER).doc(auth.currentUser!.uid).update({
+      "usersChatWarning": FieldValue.arrayUnion([id])
+    }).then((val) async {
+      await exploreCtr.getMyProfile();
+    });
+  }
+
   saveToChat(String id, messageID) {
     db.collection(kCHAT).doc("$messageID").set({
       "lastMessage": "",
@@ -74,7 +83,6 @@ class ChatCtr extends GetxController {
         .snapshots();
   }
 
-  var notificationController = NotificationController.instance;
   Future sendMessage(
       String messageID, String messages, UserModel recipient) async {
     var message = MessageModel(

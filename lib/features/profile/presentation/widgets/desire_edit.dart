@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nexus/features/home/controllers/home_controller.dart';
 import 'package:nexus/features/profile/presentation/controllers/profile_ctr.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/button.dart';
@@ -23,8 +24,7 @@ class _DesireEditState extends State<DesireEdit> {
 
   @override
   void initState() {
-    var currentUser =
-        Provider.of<HomeNotifier>(context, listen: false).currentUser!;
+    var currentUser = HomeController.instance.user.value;
     selectedDesires.assignAll(currentUser.desiredQualities!);
     super.initState();
   }

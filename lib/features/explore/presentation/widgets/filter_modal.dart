@@ -120,8 +120,8 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
                 Expanded(
                   child: CustomButton(
                     onPressed: () {
-                      // subscribeModal(context);
-                      ctr.filterUsers();
+                      subscribeModal(context);
+                      // ctr.filterUsers();
                     },
                     text: 'Apply',
                   ),

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/utils/app_logger.dart';
 import 'package:nexus/features/explore/controllers/explore_ctr.dart';
+import 'package:nexus/features/home/controllers/home_controller.dart';
 import 'package:nexus/features/home/controllers/notification_controller.dart';
 import 'package:nexus/features/match/presentation/views/matched.dart';
 import '../../../core/constant.dart';
@@ -16,6 +17,8 @@ class MatchesCtr extends GetxController {
 
   var isLoading = false.obs;
   var ctr = ExploreCtr.instance;
+  var homeCtr = HomeController.instance;
+  var notificationController = NotificationController.instance;
   var chatCtr = Get.put(ChatCtr());
   var emptyText = "".obs;
   var userData = <UserModel>[].obs;
@@ -58,8 +61,6 @@ class MatchesCtr extends GetxController {
     return ctr.myProfile.value.mySaves?.contains(id);
   }
 
-  var notificationController = NotificationController.instance;
-
   saveCountOfLikeMe(String userID) async {
     var likeDoc = db.collection(kUSER).doc(userID);
     await db.runTransaction((transaction) async {
@@ -74,11 +75,11 @@ class MatchesCtr extends GetxController {
 
   Future<void> toggleLike(UserModel userModel) async {
     EasyLoading.show();
+    await homeCtr.getMyProfile();
     await ctr.getMyProfile();
     // this is for users that was liked by someone already
     if (ctr.myProfile.value.likeMe != null &&
         ctr.myProfile.value.likeMe!.contains(userModel.id)) {
-      print("I was called here first");
       await removeFromLikeMe(userModel.id, false);
       await removeUserMyLike(userModel.id, false);
       await saveBothToMatched(userModel);
@@ -89,21 +90,19 @@ class MatchesCtr extends GetxController {
     } else {
       if (ctr.myProfile.value.myLikes != null &&
           ctr.myProfile.value.myLikes!.contains(userModel.id)) {
-        print("I was called here second");
         await removeUserMyLike(userModel.id, true);
         await removeFromLikeMe(userModel.id, true);
 
         EasyLoading.dismiss();
       } else {
-        print("I was called here third");
         addUserToMyLike(userModel.id);
         saveCountOfLikeMe(userModel.id);
         addUserToLikeMe(userModel.id);
-
         EasyLoading.dismiss(); // this is to remove slow downs...
         notificationController.sendLikeNotification(userModel.id);
         appLog(userModel.toJson());
       }
+      await homeCtr.getMyProfile();
       await ctr.getMyProfile();
       setMyLikes();
     }
@@ -160,18 +159,20 @@ class MatchesCtr extends GetxController {
         .doc(auth.currentUser!.uid)
         .update({"mySaves": updateOperation});
 
+    await homeCtr.getMyProfile();
     await ctr.getMyProfile();
     setSaved();
     EasyLoading.dismiss();
   }
 
-  addToUnRecommend(String id) async {
+  Future addToUnRecommend(String id) async {
     unrecommendId.value = id;
     try {
       EasyLoading.show();
       await db.collection(kUSER).doc(auth.currentUser!.uid).update({
         "unRecommendUsers": FieldValue.arrayUnion([id])
       });
+      await homeCtr.getFilteredUsers(true);
       EasyLoading.dismiss();
     } catch (e) {
       EasyLoading.dismiss();

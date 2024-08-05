@@ -3,21 +3,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nexus/core/colors.dart';
+import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/features/home/controllers/home_controller.dart';
 import 'package:nexus/features/home/controllers/notification_controller.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/router.dart';
 
 class ProfileTile extends StatelessWidget {
-  final HomeNotifier model;
-  const ProfileTile({
-    super.key,
-    required this.model,
-  });
+  ProfileTile({super.key});
 
   int get notificationsLength =>
       NotificationController.instance.notifications.length;
+
+  final model = HomeController.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -28,59 +28,30 @@ class ProfileTile extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                Get.toNamed(AppRoutes.settings);
+                Get.toNamed(AppRoutes.editProfile);
               },
               child: CircleAvatar(
                 radius: 25.r,
                 backgroundImage: NetworkImage(
-                  model.currentUser!.profileUrl!,
+                  model.user.value.profileUrl ?? "",
                 ),
               ),
             ),
             const SizedBoxW10(),
             Text(
-              model.currentUser == null
-                  ? 'Hi'
-                  : 'Hi ${model.currentUser!.username} 👋🏽',
+              'Hi ${model.user.value.username} 👋🏽',
               style: headerStyle.copyWith(
                 fontSize: 20.sp,
               ),
             )
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: InkWell(
-            onTap: () {
-              Get.toNamed(AppRoutes.notification);
-            },
-            child: Stack(
-              alignment: Alignment.center,
-              clipBehavior: Clip.none,
-              children: [
-                const Icon(Iconsax.notification5),
-                Positioned(
-                  top: -10,
-                  right: -5,
-                  child: Container(
-                    padding: EdgeInsets.all(5.sp),
-                    decoration: const BoxDecoration(
-                      color: primary,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                      "$notificationsLength",
-                      textAlign: TextAlign.center,
-                      style: textStyle10.copyWith(
-                        color: white,
-                        fontSize: 6.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+        InkWell(
+          onTap: () {
+            Get.toNamed(AppRoutes.settings);
+          },
+          child: const Icon(
+            Iconsax.setting_4,
           ),
         ),
       ],

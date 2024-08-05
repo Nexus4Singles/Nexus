@@ -39,6 +39,7 @@ class UserEntity extends Equatable {
     this.location,
     this.countLike,
     this.fcmToken,
+    this.usersChatWarning,
   });
 
   final String id;
@@ -59,6 +60,8 @@ class UserEntity extends Equatable {
   final String? educationLevel;
   final String? profession;
   final List<String>? hobbies;
+  @JsonKey(name: kUSERCHATWARNING)
+  final List<String>? usersChatWarning;
   @JsonKey(name: kMATCHESUSERSKEY)
   final List<String>? matchedUsers;
   @JsonKey(name: kUNRECOMMENDUSER)
@@ -118,6 +121,7 @@ class UserEntity extends Equatable {
         notificationToken,
         phoneNumber,
         matchedUsers,
+        usersChatWarning,
         registrationProgress,
         country,
         churchName,

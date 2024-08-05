@@ -72,6 +72,7 @@ const kCOMPATIBILITYSETTED = 'compatibility_setted';
 const kLOCATION = 'location';
 const kMATCHESKEY = 'likeMe';
 const kMATCHESUSERSKEY = 'matchedUsers';
+const kUSERCHATWARNING = 'usersChatWarning';
 const kUNRECOMMENDUSER = 'unRecommendUsers';
 const kPARTICIPANT = 'participant';
 const kFCMTOKEN = 'fcm_token';

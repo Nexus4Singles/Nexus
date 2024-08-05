@@ -13,7 +13,6 @@ class NotificationController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    print("ON INIT RANGER");
     getAllNotifications();
   }
 
@@ -28,9 +27,8 @@ class NotificationController extends GetxController {
       List<NotificationModel> result =
           await apiService.getAllNotifications(homeController.user.value.id);
       notifications.value = result;
-      appLog("Notifications fetched successfully!", result);
     } catch (error) {
-      appLog("Failed to fetch notifications", error);
+      // appLog("Failed to fetch notifications", error);
       // Get.snackbar("Error", "Failed to fetch notifications: $error");
     } finally {
       isLoading.value = false;
@@ -56,10 +54,10 @@ class NotificationController extends GetxController {
       messageContent,
       messageType,
       onSuccess: (response) {
-        appLog("Message notification sent successfully!", response);
+        // appLog("Message notification sent successfully!", response);
       },
       onError: (error) {
-        appLog("Failed to send message notification", error);
+        // appLog("Failed to send message notification", error);
       },
     );
   }
@@ -68,10 +66,10 @@ class NotificationController extends GetxController {
     await apiService.matchNotification(
       recipientId,
       onSuccess: (response) {
-        appLog("Match notification sent successfully!", response);
+        // appLog("Match notification sent successfully!", response);
       },
       onError: (error) {
-        appLog("Failed to send match notification", error);
+        // appLog("Failed to send match notification", error);
       },
     );
   }

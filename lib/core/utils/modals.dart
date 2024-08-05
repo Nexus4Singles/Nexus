@@ -5,7 +5,9 @@ import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/utils/empty_state.dart';
 import '../../features/home/presentation/widgets/coming_soon_modal.dart';
 import '../../features/match/presentation/widgets/matchUsersCompatibilityModal.dart';
+import '../../features/profile/presentation/widgets/compatibility_modal.dart';
 import '../colors.dart';
+import '../style.dart';
 
 compatibilityModal(context, UserModel userModel) {
   showAdaptiveDialog(
@@ -26,6 +28,26 @@ compatibilityModal(context, UserModel userModel) {
   );
 }
 
+compatibilityQuestions(context) {
+  return showAdaptiveDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) {
+      return AlertDialog.adaptive(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: Text(
+          'Compatibility Quiz',
+          style: textStyle16,
+        ),
+        content:
+            SizedBox(height: Get.height / 2, child: const CompatabiltyModal()),
+      );
+    },
+  );
+}
+
 subscribeModal(context) {
   showAdaptiveDialog(
     context: context,
@@ -35,8 +57,9 @@ subscribeModal(context) {
         backgroundColor: white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         child: SizedBox(
-          height: Get.height / 2.7,
+          height: Get.height / 2.5,
           child: EmptyStateWidget(
+              showClose: true,
               buttonText: "Subscribe",
               buttonFunc: () {},
               message:
@@ -61,6 +84,7 @@ chatWarningModal(context) {
               height: Get.height / 3.0,
               child: EmptyStateWidget(
                   buttonText: "",
+                  showClose: true,
                   buttonFunc: () {},
                   svgAssetPath: "$svgPath/chatWarning.svg",
                   message:

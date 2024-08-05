@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/features/home/controllers/home_controller.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/colors.dart';
@@ -24,8 +25,7 @@ class _HobbiesEditState extends State<HobbiesEdit> {
 
   @override
   void initState() {
-    var currentUser =
-        Provider.of<HomeNotifier>(context, listen: false).currentUser!;
+    var currentUser = HomeController.instance.user.value;
     selectedHobbies.assignAll(currentUser.hobbies!);
     super.initState();
   }

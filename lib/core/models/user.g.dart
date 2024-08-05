@@ -22,6 +22,9 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
           .toList(),
       hobbies:
           (json['hobbies'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      usersChatWarning: (json['usersChatWarning'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       photos:
           (json['photos'] as List<dynamic>?)?.map((e) => e as String).toList(),
       likeMe:
@@ -31,6 +34,9 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       mySaves:
           (json['mySaves'] as List<dynamic>?)?.map((e) => e as String).toList(),
       matchedUsers: (json['matchedUsers'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      unRecommendUsers: (json['unRecommendUsers'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
       educationLevel: json['education_level'] as String?,

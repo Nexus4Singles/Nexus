@@ -46,7 +46,7 @@ class ExploreCtr extends GetxController {
     myProfile.value = data;
   }
 
-  searchCountry(String country) async {
+  searchCountry(String place) async {
     exploreError.value = "";
     isLoading.value = true;
     searchedUsers.clear();
@@ -59,7 +59,8 @@ class ExploreCtr extends GetxController {
             val.gender.toLowerCase() != myProfile.value.gender.toLowerCase())
         .toList()
         .forEach((vals) {
-      if (country.toLowerCase().contains(vals.country!.toLowerCase())) {
+      if (vals.location!.place!.toLowerCase().contains(place.toLowerCase())) {
+        print(vals.location!.place);
         searchedUsers.add(vals);
         filteredUsers.add(vals);
       }

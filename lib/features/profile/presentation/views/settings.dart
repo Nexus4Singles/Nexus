@@ -7,6 +7,8 @@ import 'package:nexus/features/profile/presentation/views/contact_us.dart';
 import 'package:nexus/router.dart';
 import 'package:nexus/features/profile/presentation/widgets/login_modal_sheet.dart';
 import 'package:nexus/features/profile/presentation/widgets/setting_container.dart';
+import 'package:ruut/models/user.model.dart';
+import 'package:ruut/ruut.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -72,9 +74,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 Get.toNamed(AppRoutes.cancelPlan);
               },
             ),
-            const Divider(
-              color: Colors.transparent,
-            ),
+            const Divider(color: Colors.transparent),
             SettingsContainer(
                 text: 'Contact Us',
                 icon: true,

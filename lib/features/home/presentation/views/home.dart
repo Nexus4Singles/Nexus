@@ -7,20 +7,14 @@ import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/empty_state.dart';
-import 'package:nexus/features/explore/presentation/views/explore.dart';
+import 'package:nexus/features/home/controllers/home_controller.dart';
 import 'package:nexus/features/home/controllers/notification_controller.dart';
 import 'package:nexus/features/home/presentation/change_notifier/bottom_nav.dart';
-import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/home/presentation/widgets/profile_tile.dart';
 import 'package:nexus/features/home/presentation/widgets/user_card.dart';
 import 'package:nexus/features/match/controllers/matches_ctr.dart';
-import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
-import 'package:nexus/router.dart';
 import 'package:provider/provider.dart';
-import '../../../../core/utils/shared_pref.dart';
-import 'nav.dart';
-
-// Dont show accounts that have been liked.
+import '../../../../core/utils/modals.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,8 +24,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final matchCtr = Get.put(MatchesCtr());
-
+  final matchCtr = MatchesCtr.instance;
+  final homeCtr = HomeController.instance;
   CardSwiperController cardSwiperController = CardSwiperController();
 
   @override
@@ -41,176 +35,136 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   FutureOr _init() async {
-    // final docRef = FirebaseFirestore.instance
-    //     .collection(kUSER_KEY)
-    //     // .where('id', isNotEqualTo: curUser!.uid);
-    //     .where('registration_progress', isEqualTo: 'completed');
-    // // .where('age', isGreaterThanOrEqualTo: minAge)
-    // // .where('age', isLessThanOrEqualTo: maxAge);
-    // docRef.snapshots().listen(
-    //   (event) {
-    //     final source = (event.metadata.hasPendingWrites) ? "Local" : "Server";
-    //     print(
-    //         "$source data: ${event.docs.map((doc) => UserModel.fromJson(doc.data())).toList()}");
-    //   },
-    //   onError: (error) => print("Listen failed: $error"),
-    // );
-
-    await Provider.of<HomeNotifier>(context, listen: false).getProfile();
-    var currentUser =
-        Provider.of<HomeNotifier>(context, listen: false).currentUser!;
-    SharedPref.setString("email", currentUser.email);
     NotificationController.instance.getAllNotifications();
-    if (currentUser.compatibilitySetted == null ||
-        currentUser.compatibilitySetted == false) {
-      await Future.delayed(const Duration(seconds: 5), () {
-        showAdaptiveDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) {
-            return AlertDialog.adaptive(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              title: Text(
-                'Compatibility Quiz',
-                style: textStyle16,
-              ),
-              content: const CompatabiltyModal(),
-            );
-          },
-        );
-      });
-    }
+    await homeCtr.getFilteredUsers(true);
+    await Future.delayed(const Duration(seconds: 5), () {
+      if (homeCtr.user.value.compatibilitySetted == null ||
+          homeCtr.user.value.compatibilitySetted == false) {
+        compatibilityQuestions(context);
+        debugPrint(
+            "Check for compatibiliity status with this ${homeCtr.user.value.compatibilitySetted}");
+      }
+    });
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     cardSwiperController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeNotifier>(
-      builder: (context, model, _) {
-        return Scaffold(
-          body: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.all(15.sp),
-              child: ListView(
-                children: [
-                  if (model.currentUser != null) ProfileTile(model: model),
-                  const SizedBoxH20(),
-                  Center(
-                    child: Text(
-                      "Recommendations For You",
-                      style: textStyle18.copyWith(
-                          color: Colors.black, fontWeight: FontWeight.w600),
-                    ),
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(15.sp),
+          child: Obx(
+            () => ListView(
+              children: [
+                ProfileTile(),
+                const SizedBoxH20(),
+                Center(
+                  child: Text(
+                    "Recommendations For You",
+                    style: textStyle18.copyWith(
+                        color: Colors.black, fontWeight: FontWeight.w600),
                   ),
-                  const SizedBoxH10(),
-                  if (model.currentUser != null && model.allUsers.isNotEmpty)
-                    SizedBox(
-                      height: Get.height / 1.3,
-                      child: model.allUsers.isEmpty
-                          ? const EmptyStateWidget(
-                              message: "No profile to interact with")
-                          : CardSwiper(
-                              numberOfCardsDisplayed: 1,
-                              cardsCount: model.allUsers.length,
-                              controller: cardSwiperController,
-                              isLoop: true,
-                              onSwipe: (
-                                int previousIndex,
-                                int? currentIndex,
-                                CardSwiperDirection direction,
-                              ) {
-                                UserModel user = model.allUsers[currentIndex!];
-                                if (direction == CardSwiperDirection.right) {
-                                  print("This is  $direction");
-                                  matchCtr.addToUnRecommend(user.id);
-                                } else if (direction ==
-                                    CardSwiperDirection.left) {
-                                  matchCtr.toggleLike(user);
-                                }
-                                return true;
-                              },
-                              onSwipeDirectionChange: (direction, directions) {
-                                print("THis is first $direction $directions");
-                              },
-                              allowedSwipeDirection:
-                                  const AllowedSwipeDirection.only(
-                                up: false,
-                                down: false,
-                                right: true,
-                                left: true,
-                              ),
-                              // duration: const Duration(milliseconds: 10),
-                              padding: const EdgeInsets.all(0),
-                              cardBuilder: (context, index, percentThresholdX,
-                                  percentThresholdY) {
-                                UserModel user = model.allUsers[index];
-                                return SingleChildScrollView(
-                                  child: UserCard(
-                                    userModel: user,
-                                    onClosed: () async {
-                                      await matchCtr.addToUnRecommend(user.id);
-                                      cardSwiperController
-                                          .swipe(CardSwiperDirection.left);
-                                      await model.getUsers();
-                                    },
-                                    onLike: () {
-                                      matchCtr.ctr.myProfile.value
-                                                      .matchedUsers ==
-                                                  null ||
-                                              !matchCtr.ctr.myProfile.value
-                                                  .matchedUsers!
-                                                  .contains(user.id)
-                                          ? matchCtr.toggleLike(user)
-                                          : print("This users are matched");
-                                    },
-                                    onRefresh: () {
-                                      matchCtr.undoUnRecommend(
-                                          true, cardSwiperController);
-                                    },
-                                    onSaved: () {
-                                      matchCtr.toggleSave(user.id);
-                                    },
-                                    onClick: () {},
-                                  ),
-                                );
-                              },
-                            ),
-                    )
-                  else
-                    SizedBox(
-                      height: Get.height / 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          EmptyStateWidget(
-                              showClose: false,
-                              headerText: "That’s it for today!!",
-                              buttonText: "Go to Explore",
-                              buttonFunc: () async {
-                                await Provider.of<BottomNavModel>(context,
-                                        listen: false)
-                                    .updateIndex(1);
-                              },
-                              message:
-                                  "Check back tomorrow or Use the explore page to search and filter more profiles globally"),
-                        ],
-                      ),
+                ),
+                const SizedBoxH10(),
+                if (homeCtr.allUsers.isEmpty)
+                  SizedBox(
+                    height: Get.height / 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        EmptyStateWidget(
+                            showClose: false,
+                            headerText: "That’s it for today!!",
+                            buttonText: "Go to Explore",
+                            buttonFunc: () async {
+                              await Provider.of<BottomNavModel>(context,
+                                      listen: false)
+                                  .updateIndex(1);
+                            },
+                            message:
+                                "Check back tomorrow or Use the explore page to search and filter more profiles globally"),
+                      ],
                     ),
-                ],
-              ),
+                  )
+                else
+                  SizedBox(
+                    height: Get.height / 1.3,
+                    child: CardSwiper(
+                      numberOfCardsDisplayed: 1,
+                      cardsCount: homeCtr.allUsers.length,
+                      controller: cardSwiperController,
+                      isLoop: false,
+                      onEnd: () {
+                        homeCtr.allUsers.assignAll([]);
+                      },
+                      onSwipe: (int previousIndex, int? currentIndex,
+                          CardSwiperDirection direction) {
+                        UserModel user = homeCtr.allUsers[currentIndex!];
+                        if (direction == CardSwiperDirection.right) {
+                          matchCtr.addToUnRecommend(user.id);
+                        } else if (direction == CardSwiperDirection.left) {
+                          matchCtr.toggleLike(user);
+                        }
+                        return true;
+                      },
+                      allowedSwipeDirection: const AllowedSwipeDirection.only(
+                        up: false,
+                        down: false,
+                        right: true,
+                        left: true,
+                      ),
+                      // duration: const Duration(milliseconds: 10),
+                      padding: const EdgeInsets.all(0),
+                      cardBuilder: (context, index, percentThresholdX,
+                          percentThresholdY) {
+                        UserModel user = homeCtr.allUsers[index];
+                        // homeCtr.getFilteredUsers(true);
+                        return SingleChildScrollView(
+                          child: UserCard(
+                            userModel: user,
+                            onClosed: () async {
+                              await matchCtr
+                                  .addToUnRecommend(user.id)
+                                  .then((val) {
+                                cardSwiperController.moveTo(index + 1);
+                              });
+                            },
+                            onLike: () {
+                              matchCtr.ctr.myProfile.value.matchedUsers ==
+                                          null ||
+                                      !matchCtr
+                                          .ctr.myProfile.value.matchedUsers!
+                                          .contains(user.id)
+                                  ? matchCtr.toggleLike(user).then((val) {
+                                      cardSwiperController.moveTo(index + 1);
+                                    })
+                                  : debugPrint("This users are matched");
+                            },
+                            onRefresh: () {
+                              matchCtr.undoUnRecommend(
+                                  true, cardSwiperController);
+                            },
+                            onSaved: () {
+                              matchCtr.toggleSave(user.id).then((val) {});
+                            },
+                            onClick: () {},
+                          ),
+                        );
+                      },
+                    ),
+                  )
+              ],
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

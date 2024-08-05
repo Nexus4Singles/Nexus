@@ -34,8 +34,19 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
 
   @override
   void initState() {
-    Future.delayed(
-        const Duration(milliseconds: 100), () => chatWarningModal(context));
+    print(ctr.exploreCtr.myProfile.value.usersChatWarning);
+    if (ctr.exploreCtr.myProfile.value.usersChatWarning == null) {
+      Future.delayed(
+          const Duration(milliseconds: 100), () => chatWarningModal(context));
+      ctr.setUserTohaveShowWarning(widget.chatModel.userModel!.id);
+    } else {
+      if (!ctr.exploreCtr.myProfile.value.usersChatWarning!
+          .contains(widget.chatModel.userModel!.id)) {
+        Future.delayed(
+            const Duration(milliseconds: 100), () => chatWarningModal(context));
+        ctr.setUserTohaveShowWarning(widget.chatModel.userModel!.id);
+      } else {}
+    }
 
     super.initState();
   }
@@ -122,10 +133,6 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                       user: ChatUser(id: element.sentBy, profileImage: ""),
                       createdAt: element.timestamp.toDate()));
                 }
-                messages.length.isLowerThan(10)
-                    ? Future.delayed(const Duration(milliseconds: 100),
-                        () => chatWarningModal(context))
-                    : () {};
                 return DashChat(
                   currentUser: ChatUser(id: ctr.auth.currentUser!.uid),
                   inputOptions: InputOptions(
@@ -163,7 +170,6 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                             ),
                             itemBuilder: (BuildContext context) {
                               return {
-                                'Audio': Iconsax.microphone5,
                                 'Video': Iconsax.video_add5,
                                 'Image': Iconsax.image1,
                               }.entries.map((entry) {
