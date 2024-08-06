@@ -44,6 +44,7 @@ class _AgeScreenState extends State<AgeScreen> {
       return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
+          centerTitle: true,
           title: SizedBox(
             width: width(context) * .5,
             child: LinearProgressIndicator(

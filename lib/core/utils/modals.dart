@@ -41,8 +41,7 @@ compatibilityQuestions(context) {
           'Compatibility Quiz',
           style: textStyle16,
         ),
-        content:
-            SizedBox(height: Get.height / 2, child: const CompatabiltyModal()),
+        content: const CompatabiltyModal(),
       );
     },
   );

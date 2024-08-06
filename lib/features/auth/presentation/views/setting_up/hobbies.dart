@@ -39,6 +39,7 @@ class _HobbiesScreenState extends State<HobbiesScreen> {
               borderRadius: BorderRadius.circular(20),
             ),
           ),
+          centerTitle: true,
           elevation: 0,
         ),
         backgroundColor: white,

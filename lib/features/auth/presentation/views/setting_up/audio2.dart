@@ -23,8 +23,6 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart' as rx;
 
 import '../../../../../core/assets.dart';
-// import 'package:wave/config.dart';
-// import 'package:wave/wave.dart';
 
 class Audio2Screen extends StatefulWidget {
   const Audio2Screen({super.key});

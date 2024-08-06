@@ -57,12 +57,8 @@ class ReportUser extends StatelessWidget {
                         .where((word) => word.isNotEmpty)
                         .toList();
                     if (words.length > 100) {
-                      final truncatedText = words.take(100).join(' ');
-                      ctr.reportController.value = TextEditingValue(
-                        text: truncatedText,
-                        selection: TextSelection.collapsed(
-                            offset: truncatedText.length),
-                      );
+                      ctr.warningMessage.value =
+                          'You have exceeded the 100-word limit';
                     }
                   },
                   maxLines: 5,

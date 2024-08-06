@@ -31,6 +31,7 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
+        centerTitle: true,
         elevation: 0,
       ),
       backgroundColor: white,

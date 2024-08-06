@@ -81,6 +81,7 @@ class _Audio4ScreenState extends State<Audio4Screen> {
         backgroundColor: white,
         appBar: AppBar(
           backgroundColor: white,
+          centerTitle: true,
           title: SizedBox(
             width: width(context) * .5,
             child: LinearProgressIndicator(

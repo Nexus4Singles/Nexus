@@ -385,7 +385,6 @@ class _Audio1ScreenState extends State<Audio1Screen> {
               position, bufferedPosition, duration ?? Duration.zero));
 
   void _startOrStopRecording(AuthNotifier model) async {
-    debugPrint("This has been called...");
     try {
       if (isRecording) {
         recorderController.reset();

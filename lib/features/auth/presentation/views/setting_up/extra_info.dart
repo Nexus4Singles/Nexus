@@ -69,6 +69,7 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
               borderRadius: BorderRadius.circular(20),
             ),
           ),
+          centerTitle: true,
         ),
         body: GestureDetector(
           onTap: () {
