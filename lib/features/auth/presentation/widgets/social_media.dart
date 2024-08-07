@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:nexus/core/assets.dart';
-import 'package:nexus/core/utils/helper.dart';
-import 'package:nexus/core/size_boxes.dart';
+import 'package:Nexus/core/assets.dart';
+import 'package:Nexus/core/utils/helper.dart';
+import 'package:Nexus/core/size_boxes.dart';
 
 class SocialMediaWidget extends StatelessWidget {
   const SocialMediaWidget({super.key});

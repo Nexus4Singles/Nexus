@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nexus/features/chat/views/chats.dart';
-import 'package:nexus/features/explore/presentation/views/explore.dart';
-import 'package:nexus/features/home/presentation/views/home.dart';
-import 'package:nexus/features/match/presentation/views/matches.dart';
-import 'package:nexus/features/profile/presentation/views/profile.dart';
+import 'package:Nexus/features/chat/views/chats.dart';
+import 'package:Nexus/features/explore/presentation/views/explore.dart';
+import 'package:Nexus/features/home/presentation/views/home.dart';
+import 'package:Nexus/features/match/presentation/views/matches.dart';
+import 'package:Nexus/features/profile/presentation/views/profile.dart';
 
 class BottomNavModel extends ChangeNotifier {
   //Current index of the bottom nav-bar

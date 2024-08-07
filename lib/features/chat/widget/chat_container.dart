@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:nexus/core/style.dart';
+import 'package:Nexus/core/style.dart';
 import '../../../core/colors.dart';
 
 class ChatContainer extends StatelessWidget {

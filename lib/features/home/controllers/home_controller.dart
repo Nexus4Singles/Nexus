@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/constant.dart';
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/core/services/api_service.dart';
-import 'package:nexus/core/services/fcm.dart';
+import 'package:Nexus/core/constant.dart';
+import 'package:Nexus/core/models/user.dart';
+import 'package:Nexus/core/services/api_service.dart';
+import 'package:Nexus/core/services/fcm.dart';
 
 class HomeController extends GetxController {
   static HomeController get instance => Get.find<HomeController>();

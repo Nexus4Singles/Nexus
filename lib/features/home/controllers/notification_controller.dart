@@ -1,9 +1,9 @@
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/models/notification_model.dart';
-import 'package:nexus/core/services/notifications_service.dart';
-import 'package:nexus/core/utils/app_logger.dart';
-import 'package:nexus/features/home/controllers/home_controller.dart';
+import 'package:Nexus/core/models/notification_model.dart';
+import 'package:Nexus/core/services/notifications_service.dart';
+import 'package:Nexus/core/utils/app_logger.dart';
+import 'package:Nexus/features/home/controllers/home_controller.dart';
 import 'package:rename/platform_file_editors/abs_platform_file_editor.dart';
 
 class NotificationController extends GetxController {

@@ -1,8 +1,8 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/style.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/style.dart';
 
 class ProfileDropDown extends StatefulWidget {
   final List<String> items;

@@ -30,7 +30,7 @@ exports.sendMessageNotification = functions.firestore
         }
         const senderName = senderDoc.data().username;
 
-        payload.notification.body = `@${senderName} sent you a message`;
+        payload.notification.body = `${senderName} sent you a message`;
 
         const recipientRef = admin.firestore().collection("users").doc(rcpId);
         const recipientDoc = await recipientRef.get();

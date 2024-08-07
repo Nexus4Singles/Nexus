@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/style.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/style.dart';
 
 class TextContainer extends StatelessWidget {
   final String text;

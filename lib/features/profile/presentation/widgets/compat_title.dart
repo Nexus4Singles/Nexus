@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:nexus/core/style.dart';
+import 'package:Nexus/core/style.dart';
 
 class CampaTitle extends StatelessWidget {
   final String title;

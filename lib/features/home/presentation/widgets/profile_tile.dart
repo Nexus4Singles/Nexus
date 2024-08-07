@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/features/home/controllers/notification_controller.dart';
-import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
-import 'package:nexus/router.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
+import 'package:Nexus/features/home/controllers/notification_controller.dart';
+import 'package:Nexus/features/home/presentation/change_notifier/home_notifier.dart';
+import 'package:Nexus/router.dart';
 
 class ProfileTile extends StatelessWidget {
   final HomeNotifier model;

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:nexus/core/entities/location.dart';
+import 'package:Nexus/core/entities/location.dart';
 
 part 'location.g.dart';
 

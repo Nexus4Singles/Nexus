@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:nexus/core/models/user.dart';
+import 'package:Nexus/core/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthenticationRepository {

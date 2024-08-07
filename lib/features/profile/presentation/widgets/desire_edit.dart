@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nexus/features/profile/presentation/controllers/profile_ctr.dart';
+import 'package:Nexus/features/profile/presentation/controllers/profile_ctr.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/button.dart';
 import '../../../../core/colors.dart';

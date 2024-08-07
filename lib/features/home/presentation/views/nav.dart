@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nexus/core/colors.dart';
+import 'package:Nexus/core/colors.dart';
 import 'package:provider/provider.dart';
-import 'package:nexus/features/home/presentation/change_notifier/bottom_nav.dart';
+import 'package:Nexus/features/home/presentation/change_notifier/bottom_nav.dart';
 
 class MainNav extends StatefulWidget {
   final int? initialPage;

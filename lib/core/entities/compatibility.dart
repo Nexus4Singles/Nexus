@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:nexus/core/constant.dart';
+import 'package:Nexus/core/constant.dart';
 
 class CompatibilityEntity extends Equatable {
   const CompatibilityEntity({

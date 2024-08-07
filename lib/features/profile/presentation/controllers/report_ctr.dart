@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/models/user.dart';
+import 'package:Nexus/core/models/user.dart';
 
 import '../../../../core/colors.dart';
 

@@ -2,11 +2,11 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/button.dart';
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/utils/text_area.dart';
-import 'package:nexus/features/profile/presentation/controllers/report_ctr.dart';
+import 'package:Nexus/core/button.dart';
+import 'package:Nexus/core/models/user.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/utils/text_area.dart';
+import 'package:Nexus/features/profile/presentation/controllers/report_ctr.dart';
 
 import '../../../../core/colors.dart';
 import '../../../../core/style.dart';

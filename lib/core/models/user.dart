@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:nexus/core/entities/user.dart';
-import 'package:nexus/core/models/compatibility.dart';
-import 'package:nexus/core/models/location.dart';
+import 'package:Nexus/core/entities/user.dart';
+import 'package:Nexus/core/models/compatibility.dart';
+import 'package:Nexus/core/models/location.dart';
 
 part 'user.g.dart';
 

@@ -3,13 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:nexus/features/profile/presentation/change_notifier/settings_notifier.dart';
-import 'package:nexus/features/profile/presentation/constants/payment.dart';
+import 'package:Nexus/features/profile/presentation/change_notifier/settings_notifier.dart';
+import 'package:Nexus/features/profile/presentation/constants/payment.dart';
 import 'package:provider/provider.dart';
 import 'package:pay/pay.dart';
-import 'package:nexus/core/button.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/style.dart';
+import 'package:Nexus/core/button.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/style.dart';
 import '../helpers/subscription_helper.dart';
 import '../provider/subscription_provider.dart';
 
@@ -166,11 +166,14 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                   ),);
                                   }
                                 :() async {
+
                             await SubscriptionHelper.onSubscribe(context);
 
                           },
 
                       ),
+                      if(model.isLoading)
+                        AppCircularProgressIndicator()
 
                       /*SizedBox(height: 10.h),
                 _buildPlanContainer(

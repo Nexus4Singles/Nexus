@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:nexus/core/models/notification_model.dart';
+import 'package:Nexus/core/models/notification_model.dart';
 
-import 'package:nexus/core/services/api_service.dart';
+import 'package:Nexus/core/services/api_service.dart';
 
 class NotificationsService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

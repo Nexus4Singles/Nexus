@@ -2,12 +2,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/assets.dart';
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/core/text_field.dart';
-import 'package:nexus/features/chat/controllers/chat_ctr.dart';
+import 'package:Nexus/core/assets.dart';
+import 'package:Nexus/core/models/user.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
+import 'package:Nexus/core/text_field.dart';
+import 'package:Nexus/features/chat/controllers/chat_ctr.dart';
 import '../../../../core/colors.dart';
 
 class ChatImageSelector extends StatelessWidget {

@@ -49,5 +49,11 @@ class SubscriptionProvider extends ChangeNotifier {
     _subExpDate = user?.subExpDate;
   }
 
+  bool _isLoading = false;
+  set isLoading(bool isLoading) {
+    _isLoading = isLoading;
+    notifyListeners();
+  }
+  bool get isLoading => _isLoading;
 
 }

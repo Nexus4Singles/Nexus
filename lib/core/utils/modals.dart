@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/assets.dart';
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/core/utils/empty_state.dart';
-import 'package:nexus/features/subscription/views/subscription.dart';
+import 'package:Nexus/core/assets.dart';
+import 'package:Nexus/core/models/user.dart';
+import 'package:Nexus/core/utils/empty_state.dart';
+import 'package:Nexus/features/subscription/views/subscription.dart';
 import '../../features/home/presentation/widgets/coming_soon_modal.dart';
 import '../../features/match/presentation/widgets/matchUsersCompatibilityModal.dart';
 import '../colors.dart';

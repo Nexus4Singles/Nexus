@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
-import 'package:nexus/core/storage/storage_impl.dart';
-import 'package:nexus/core/usecases/usecases.dart';
+import 'package:Nexus/core/storage/storage_impl.dart';
+import 'package:Nexus/core/usecases/usecases.dart';
 
 @lazySingleton
 class HasStratedUsecase extends Usecase<void, NoParams> {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/utils/device.dart';
-import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/utils/device.dart';
+import 'package:Nexus/features/home/presentation/change_notifier/home_notifier.dart';
 
 import 'package:provider/provider.dart';
 import 'package:story/story_image.dart';

@@ -1,15 +1,15 @@
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/core/network/remote.dart';
+import 'package:Nexus/core/models/user.dart';
+import 'package:Nexus/core/network/remote.dart';
 import 'package:injectable/injectable.dart';
-import 'package:nexus/core/constant.dart';
+import 'package:Nexus/core/constant.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:dartz/dartz.dart';
-import 'package:nexus/core/network/formatter.dart';
-import 'package:nexus/core/storage/storage_impl.dart';
+import 'package:Nexus/core/network/formatter.dart';
+import 'package:Nexus/core/storage/storage_impl.dart';
 import 'package:logger/logger.dart';
-import 'package:nexus/features/auth/domain/repositories/auth_repo.dart';
+import 'package:Nexus/features/auth/domain/repositories/auth_repo.dart';
 import 'package:uuid/uuid.dart';
 
 import '../data-sources/remote-datasource/auth_remote.dart';

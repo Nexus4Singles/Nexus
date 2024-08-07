@@ -3,11 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/core/utils/app_logger.dart';
-import 'package:nexus/features/explore/controllers/explore_ctr.dart';
-import 'package:nexus/features/home/controllers/notification_controller.dart';
-import 'package:nexus/features/match/presentation/views/matched.dart';
+import 'package:Nexus/core/models/user.dart';
+import 'package:Nexus/core/utils/app_logger.dart';
+import 'package:Nexus/features/explore/controllers/explore_ctr.dart';
+import 'package:Nexus/features/home/controllers/notification_controller.dart';
+import 'package:Nexus/features/match/presentation/views/matched.dart';
 import '../../../core/constant.dart';
 import '../../chat/controllers/chat_ctr.dart';
 

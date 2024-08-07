@@ -14,7 +14,7 @@ import '../widgets/pay_wall_widget.dart';
 
 class SubscriptionHelper {
 
-  ///GooglePay
+  ///Store-Pay
   static Future<void> onSubscribe(BuildContext context) async {
     try {
       final offerings = await Glassfy.offerings();
@@ -31,34 +31,65 @@ class SubscriptionHelper {
             borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
           ),
           context: context,
-          builder: (context) =>
-              PayWallWidget(
-                title: 'Upgrade Your Plan',
-                description: 'Upgrade to a new plan to enjoy more benefits',
-                offer: offer,
-                onClickedSku: (sku) async {
-                  final transaction = await SubscriptionService.purchaseSku(
-                      sku);
-                  if (!context.mounted) return;
+          builder: (context) {
+            return Consumer<SubscriptionProvider>(
+              builder: (context, subProvider, child) {
+                return PayWallWidget(
+                  title: 'Upgrade Your Plan',
+                  description: 'Upgrade to a new plan to enjoy more benefits',
+                  offer: offer,
+                  onClickedSku: (sku) async {
+                    subProvider.isLoading = true;
 
-                  if (transaction != null) {
-                    final permissions = transaction.permissions!.all!;
-                    final permission = permissions.firstWhere(
-                            (permission) =>
-                        permission.permissionId == 'premium');
-                      await checkPermission(permission, context);
+                    final transaction = await SubscriptionService.purchaseSku(sku);
 
-                  }
-                  //Navigator.of(context).pop();
-                },
-              ),
+                    if (!context.mounted) return;
+
+                    if (transaction != null) {
+                      subProvider.isLoading = true;
+                      final permissions = transaction.permissions!.all!;
+                      final permission = permissions.firstWhere(
+                              (permission) =>
+                          permission.permissionId == 'premium');
+                      if (permission.isValid!) {
+                        subProvider.isLoading = false;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const AcknowledgmentScreen()),
+                        );
+                        String formattedDate = DateFormat('dd/MM/yyyy').format(permission!.expireDate!);
+                        voidUpdateProvider(subProvider, true, true, formattedDate);
+                        await updateSubBackend(subProvider.currentUser, true, true, formattedDate, context);
+                      } else {
+                        subProvider.isLoading = false;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Unsuccessful'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }
+                    } else {
+                      subProvider.isLoading = false;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Unsuccessful'),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }
+                  },
+                );
+              },
+            );
+          },
         );
       }
     } catch (e) {
       if(context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(e.toString()),
+            content: Text('Error occurred check Internet connection.${e.toString()}'),
             duration: const Duration(
                 seconds: 2),
           ),
@@ -67,24 +98,6 @@ class SubscriptionHelper {
     }
   }
 
-  ///Permission-Check
-  static Future<void> checkPermission(GlassfyPermission permission, BuildContext context) async {
-    final subProvider = context.read<SubscriptionProvider>();
-    if (permission.isValid!) {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> const AcknowledgmentScreen()));
-      String formattedDate = DateFormat('dd/MM/yyyy').format(permission.expireDate!);
-      voidUpdateProvider(subProvider, true, true, formattedDate);
-      await updateSubBackend(subProvider.currentUser, true, true, formattedDate, context);
-    } else{
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Unsuccessful'),
-          duration: Duration(
-              seconds: 2),
-        ),
-      );
-    }
-  }
 
   ///Expiry-Date-Helper
   static Future<bool> isSubscriptionValid(BuildContext context, String? subExpDate) async {
@@ -103,7 +116,7 @@ class SubscriptionHelper {
     // Check if the current date is after the subscription expiry date
     bool isAfterExpiry = DateTime.now().isAfter(DateFormat('dd/MM/yyyy').parse(subExpDate ?? ''));
 
-    if (isAfterExpiry) {
+    //if (isAfterExpiry) {
 
       if (user != null) {
         try {
@@ -122,8 +135,8 @@ class SubscriptionHelper {
             }
             else{
               logger.e('subscription no longer valid');
-              await SubscriptionHelper.updateBackendPremiumStatus(user, false, context);
               subProvider.onPremium = false;
+              await SubscriptionHelper.updateBackendPremiumStatus(user, false, context);
               subValid = false;
             }
           });
@@ -145,13 +158,13 @@ class SubscriptionHelper {
         logger.e('user is null');
 
       }
-    }
-    else {
+   // }
+   /* else {
       // Subscription is still valid because the current date is before the expiry date
       subValid = true;
 
     }
-
+*/
     return subValid;
   }
 

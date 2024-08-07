@@ -6,10 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:nexus/core/constant.dart';
-import 'package:nexus/core/utils/methods.dart';
-import 'package:nexus/core/utils/toast.dart';
-import 'package:nexus/router.dart';
+import 'package:Nexus/core/constant.dart';
+import 'package:Nexus/core/utils/methods.dart';
+import 'package:Nexus/core/utils/toast.dart';
+import 'package:Nexus/router.dart';
 import '../../../../core/models/location.dart';
 
 class ProfileCtr extends GetxController {

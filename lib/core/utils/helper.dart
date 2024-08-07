@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:nexus/core/colors.dart';
+import 'package:Nexus/core/colors.dart';
 
 enum Providers { email, google, facebook, apple }
 

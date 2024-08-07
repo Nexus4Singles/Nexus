@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/assets.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/models/notification_model.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/core/utils/progress_indicator.dart';
-import 'package:nexus/features/home/controllers/home_controller.dart';
-import 'package:nexus/features/home/controllers/notification_controller.dart';
-import 'package:nexus/features/notifications/presentation/widgets/notify_container.dart';
+import 'package:Nexus/core/assets.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/models/notification_model.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
+import 'package:Nexus/core/utils/progress_indicator.dart';
+import 'package:Nexus/features/home/controllers/home_controller.dart';
+import 'package:Nexus/features/home/controllers/notification_controller.dart';
+import 'package:Nexus/features/notifications/presentation/widgets/notify_container.dart';
 import 'package:intl/intl.dart';
 
 class NotificationScreen extends StatefulWidget {

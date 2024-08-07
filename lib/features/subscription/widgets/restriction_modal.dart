@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:nexus/features/subscription/views/subscription.dart';
+import 'package:Nexus/features/subscription/views/subscription.dart';
 
 import '../../../core/colors.dart';
 import '../../../core/utils/empty_state.dart';

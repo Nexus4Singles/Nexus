@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:nexus/core/constant.dart';
-import 'package:nexus/core/models/compatibility.dart';
-import 'package:nexus/core/models/location.dart';
-import 'package:nexus/core/models/user.dart';
+import 'package:Nexus/core/constant.dart';
+import 'package:Nexus/core/models/compatibility.dart';
+import 'package:Nexus/core/models/location.dart';
+import 'package:Nexus/core/models/user.dart';
 
 class UserEntity extends Equatable {
 
