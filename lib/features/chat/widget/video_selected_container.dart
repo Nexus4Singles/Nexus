@@ -49,91 +49,97 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration:
-          BoxDecoration(color: white, borderRadius: BorderRadius.circular(16)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              ctr.imageFile.value = File('');
+              ctr.chatController.clear();
+              Get.back();
+            },
+            icon: const CircleAvatar(
+              backgroundColor: white,
+              child: Icon(
+                Icons.close,
+                color: black,
+                size: 20,
+              ),
+            )),
+      ),
+      body: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+              color: white, borderRadius: BorderRadius.circular(16)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              IconButton(
-                  onPressed: () {
-                    ctr.imageFile.value = File('');
-                    ctr.chatController.clear();
-                    Get.back();
-                  },
-                  icon: const CircleAvatar(
-                    backgroundColor: white,
-                    child: Icon(
-                      Icons.close,
-                      color: black,
-                      size: 20,
+              _controller.value.isInitialized
+                  ? SizedBox(
+                      height: Get.height / 2.0,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          CachedVideoPlayerPlus(_controller),
+                          IconButton(
+                            icon: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
+                                  color: Colors.black26,
+                                  shape: BoxShape.circle),
+                              child: Icon(
+                                _controller.value.isPlaying
+                                    ? Icons.pause
+                                    : Icons.play_arrow,
+                                size: 20,
+                                color: white,
+                              ),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _controller.value.isPlaying
+                                    ? _controller.pause()
+                                    : _controller.play();
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    )
+                  : const CircularProgressIndicator(strokeWidth: 1),
+              Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 32.0, top: 16, left: 12, right: 12),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CustomTextField(
+                          fillColor: grey,
+                          borderColor: Colors.transparent,
+                          controller: ctr.chatController,
+                          hintText: "Add a message"),
                     ),
-                  ))
+                    const SizedBoxW10(),
+                    InkWell(
+                      onTap: () {
+                        ctr.sendMessage(
+                            widget.chatModel.messageID,
+                            ctr.chatController.text,
+                            widget.chatModel.userModel!);
+                        Get.back();
+                      },
+                      child: CircleAvatar(
+                          radius: 24,
+                          backgroundColor: primary,
+                          child: SvgPicture.asset('$svgPath/send.svg')),
+                    )
+                  ],
+                ),
+              ),
             ],
           ),
-          _controller.value.isInitialized
-              ? Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child:
-                            Center(child: CachedVideoPlayerPlus(_controller))),
-                    IconButton(
-                      icon: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            color: Colors.black26, shape: BoxShape.circle),
-                        child: Icon(
-                          _controller.value.isPlaying
-                              ? Icons.pause
-                              : Icons.play_arrow,
-                          size: 20,
-                          color: white,
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _controller.value.isPlaying
-                              ? _controller.pause()
-                              : _controller.play();
-                        });
-                      },
-                    ),
-                  ],
-                )
-              : const CircularProgressIndicator(strokeWidth: 1),
-          Padding(
-            padding: const EdgeInsets.only(
-                bottom: 32.0, top: 16, left: 12, right: 12),
-            child: Row(
-              children: [
-                Expanded(
-                  child: CustomTextField(
-                      fillColor: grey,
-                      borderColor: Colors.transparent,
-                      controller: ctr.chatController,
-                      hintText: "Add a message"),
-                ),
-                const SizedBoxW10(),
-                InkWell(
-                  onTap: () {
-                    ctr.sendMessage(widget.chatModel.messageID,
-                        ctr.chatController.text, widget.chatModel.userModel!);
-                    Get.back();
-                  },
-                  child: CircleAvatar(
-                      radius: 24,
-                      backgroundColor: primary,
-                      child: SvgPicture.asset('$svgPath/send.svg')),
-                )
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

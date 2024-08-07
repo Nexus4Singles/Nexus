@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Padding(
           padding: EdgeInsets.all(15.sp),
           child: Obx(
-            () => ListView(
+            () => Column(
               children: [
                 ProfileTile(),
                 const SizedBoxH20(),
@@ -94,8 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   )
                 else
-                  SizedBox(
-                    height: Get.height / 1.3,
+                  Expanded(
                     child: CardSwiper(
                       numberOfCardsDisplayed: 1,
                       cardsCount: homeCtr.allUsers.length,
@@ -115,51 +114,43 @@ class _HomeScreenState extends State<HomeScreen> {
                         return true;
                       },
                       allowedSwipeDirection: const AllowedSwipeDirection.only(
-                        up: false,
-                        down: false,
-                        right: true,
-                        left: true,
-                      ),
+                          up: false, down: false, right: true, left: true),
                       // duration: const Duration(milliseconds: 10),
                       padding: const EdgeInsets.all(0),
                       cardBuilder: (context, index, percentThresholdX,
                           percentThresholdY) {
                         UserModel user = homeCtr.allUsers[index];
-                        // homeCtr.getFilteredUsers(true);
-                        return SingleChildScrollView(
-                          child: UserCard(
-                            userModel: user,
-                            onClosed: () async {
-                              await matchCtr
-                                  .addToUnRecommend(user.id)
-                                  .then((val) {
-                                cardSwiperController.moveTo(index + 1);
-                              });
-                            },
-                            onLike: () {
-                              matchCtr.ctr.myProfile.value.matchedUsers ==
-                                          null ||
-                                      !matchCtr
-                                          .ctr.myProfile.value.matchedUsers!
-                                          .contains(user.id)
-                                  ? matchCtr.toggleLike(user).then((val) {
-                                      cardSwiperController.moveTo(index + 1);
-                                    })
-                                  : debugPrint("This users are matched");
-                            },
-                            onRefresh: () {
-                              matchCtr.undoUnRecommend(
-                                  true, cardSwiperController);
-                            },
-                            onSaved: () {
-                              matchCtr.toggleSave(user.id).then((val) {});
-                            },
-                            onClick: () {},
-                          ),
+
+                        return UserCard(
+                          userModel: user,
+                          onClosed: () async {
+                            await matchCtr
+                                .addToUnRecommend(user.id)
+                                .then((val) {
+                              cardSwiperController.moveTo(index + 1);
+                            });
+                          },
+                          onLike: () {
+                            matchCtr.ctr.myProfile.value.matchedUsers == null ||
+                                    !matchCtr.ctr.myProfile.value.matchedUsers!
+                                        .contains(user.id)
+                                ? matchCtr.toggleLike(user).then((val) {
+                                    cardSwiperController.moveTo(index + 1);
+                                  })
+                                : debugPrint("This users are matched");
+                          },
+                          onRefresh: () {
+                            matchCtr.undoUnRecommend(
+                                true, cardSwiperController);
+                          },
+                          onSaved: () {
+                            matchCtr.toggleSave(user.id).then((val) {});
+                          },
+                          onClick: () {},
                         );
                       },
                     ),
-                  )
+                  ),
               ],
             ),
           ),

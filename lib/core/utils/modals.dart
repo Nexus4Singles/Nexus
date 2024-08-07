@@ -52,18 +52,15 @@ subscribeModal(context) {
     context: context,
     barrierDismissible: true,
     builder: (context) {
-      return Dialog(
+      return AlertDialog.adaptive(
         backgroundColor: white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        child: SizedBox(
-          height: Get.height / 2.5,
-          child: EmptyStateWidget(
-              showClose: true,
-              buttonText: "Subscribe",
-              buttonFunc: () {},
-              message:
-                  'This is a premium feature. The free version of Nexus allows you to search by City & Country of Residence. Subscribing gives you access to use advanced filters to narrow down your search.'),
-        ),
+        content: EmptyStateWidget(
+            showClose: true,
+            buttonText: "Subscribe",
+            buttonFunc: () {},
+            message:
+                'This is a premium feature. The free version of Nexus allows you to search by City & Country of Residence. Subscribing gives you access to use advanced filters to narrow down your search.'),
       );
     },
   );
@@ -74,21 +71,16 @@ chatWarningModal(context) {
     context: context,
     barrierDismissible: true,
     builder: (context) {
-      return Dialog(
+      return AlertDialog.adaptive(
         backgroundColor: white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: Get.height / 3.0,
-              child: EmptyStateWidget(
-                  buttonText: "",
-                  showClose: true,
-                  buttonFunc: () {},
-                  svgAssetPath: "$svgPath/chatWarning.svg",
-                  message:
-                      'We highly recommend spending enough time getting to know each other here before exchanging personal contacts \n\nHappy Texting!'),
-            )),
+        content: EmptyStateWidget(
+            buttonText: "",
+            showClose: true,
+            buttonFunc: () {},
+            svgAssetPath: "$svgPath/chatWarning.svg",
+            message:
+                'We highly recommend spending enough time getting to know each other here before exchanging personal contacts \n\nHappy Texting!'),
       );
     },
   );

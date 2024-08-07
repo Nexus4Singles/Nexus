@@ -134,19 +134,19 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
             ),
           ),
           SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Transform.translate(
-                  offset: Offset(0, Get.height / 4),
+                Padding(
+                  padding: EdgeInsets.only(top: Get.height / 3.0),
                   child: Column(
                     children: [
                       userBio(),
                       Container(
                         width: width(context),
-                        height: Get.height / 0.57,
                         decoration: BoxDecoration(
                           color: white,
                           borderRadius: BorderRadius.vertical(
@@ -388,11 +388,15 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                         progressIndicatorBuilder:
                                             (context, url, downloadProgress) =>
                                                 SizedBox(
-                                          width: 30,
-                                          height: 30,
-                                          child: CircularProgressIndicator(
+                                          width: 16,
+                                          height: 16,
+                                          child: CircularProgressIndicator
+                                              .adaptive(
                                             value: downloadProgress.progress,
-                                            color: primary,
+                                            strokeWidth: 1,
+                                            valueColor:
+                                                const AlwaysStoppedAnimation(
+                                                    primary),
                                           ),
                                         ),
                                         errorWidget: (context, url, error) =>
@@ -403,33 +407,35 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               ],
                             ),
                             const SizedBoxH20(),
+                            widget.userModel.matchedUsers != null &&
+                                    widget.userModel.matchedUsers!
+                                        .contains(ctr.auth.currentUser!.uid)
+                                ? Center(
+                                    child: TextButton(
+                                        onPressed: () {
+                                          compatibilityModal(
+                                              context, widget.userModel);
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.all(12),
+                                          decoration: BoxDecoration(
+                                              color: primary.withOpacity(0.1),
+                                              borderRadius:
+                                                  BorderRadius.circular(100)),
+                                          child: Text(
+                                            "View Compatibility Data",
+                                            style: textStyle14.copyWith(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        )),
+                                  )
+                                : const SizedBoxH10(),
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBoxH40(),
-                widget.userModel.matchedUsers != null &&
-                        widget.userModel.matchedUsers!
-                            .contains(ctr.auth.currentUser!.uid)
-                    ? TextButton(
-                        onPressed: () {
-                          compatibilityModal(context, widget.userModel);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                              color: primary.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(100)),
-                          child: Text(
-                            "View Compatibility Data",
-                            style: textStyle14.copyWith(
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ))
-                    : const SizedBoxH10(),
-                const SizedBoxH40(),
               ],
             ),
           ),

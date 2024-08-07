@@ -28,13 +28,13 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void nextScreen() async {
-    final ctr = ExploreCtr.instance;
     bool firstTime = await SharedPref.getBool(kFirstTime) ?? true;
     var email = await SharedPref.getString("email");
     if (firstTime) {
       Get.offAndToNamed(AppRoutes.onboardingHandler);
     } else if (email.isNotEmpty) {
-      ctr.allUsers.isNotEmpty ? Get.offAndToNamed(AppRoutes.mainNav) : () {};
+      // ctr.allUsers.isNotEmpty : () {}?
+      Get.offAndToNamed(AppRoutes.mainNav);
     } else {
       Get.offAndToNamed(AppRoutes.login);
     }

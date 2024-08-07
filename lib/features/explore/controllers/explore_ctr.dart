@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nexus/core/models/user.dart';
+import 'package:nexus/core/utils/app_logger.dart';
 import '../../../core/constant.dart';
 
 class ExploreCtr extends GetxController {
@@ -32,6 +33,7 @@ class ExploreCtr extends GetxController {
         users.docs.map((data) => UserModel.fromJson(data.data())).toList();
     allUsers.assignAll(data);
     for (var data in allUsers) {
+      appLog("this is all users == >$data");
       if (data.id == auth.currentUser!.uid) {
         myProfile.value = data;
         allUsers.where((users) => users.gender != myProfile.value.gender);
@@ -60,7 +62,8 @@ class ExploreCtr extends GetxController {
         .toList()
         .forEach((vals) {
       if (vals.location!.place!.toLowerCase().contains(place.toLowerCase())) {
-        print(vals.location!.place);
+        print(
+            "this is what is being searched ==? ${vals.location!.place} this is what is the place ==?$place");
         searchedUsers.add(vals);
         filteredUsers.add(vals);
       }

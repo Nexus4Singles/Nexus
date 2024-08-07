@@ -34,7 +34,6 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
 
   @override
   void initState() {
-    print(ctr.exploreCtr.myProfile.value.usersChatWarning);
     if (ctr.exploreCtr.myProfile.value.usersChatWarning == null) {
       Future.delayed(
           const Duration(milliseconds: 100), () => chatWarningModal(context));

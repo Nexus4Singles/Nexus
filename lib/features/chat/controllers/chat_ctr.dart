@@ -184,14 +184,12 @@ class ChatCtr extends GetxController {
       mediaType.value = "Video";
       Get.back();
       Get.bottomSheet(
-          SizedBox(
-              height: Get.height / 1.5,
-              child: VideoWidget(
-                chatModel: model,
-                videoUrl: imageFile.value,
-              )),
+          VideoWidget(
+            chatModel: model,
+            videoUrl: imageFile.value,
+          ),
           isDismissible: false,
-          enableDrag: false,
+          enableDrag: true,
           isScrollControlled: true);
     }
   }

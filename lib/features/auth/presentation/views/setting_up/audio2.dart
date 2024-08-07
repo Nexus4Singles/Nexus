@@ -440,6 +440,7 @@ class _Audio2ScreenState extends State<Audio2Screen> {
     _timer!.cancel();
     setState(() {
       isRecording = false;
+      recordingCompleted = false;
       isRecordingCompleted = false;
       recPosition = Duration.zero;
     });

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:logger/logger.dart';
 import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
@@ -358,6 +359,7 @@ class _EditProfileState extends State<EditProfile> {
                   double.parse(prediction.lat!),
                   prediction.placeId!,
                 );
+                Logger().d(prediction.structuredFormatting);
               },
               itemClick: (prediction) {
                 // model.getFormattedLocation(

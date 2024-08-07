@@ -316,8 +316,6 @@ class _Audio1ScreenState extends State<Audio1Screen> {
                             if (isRecordingCompleted) {
                               if (player.playing) {
                                 player.pause();
-                                // Logger().d(player.p);
-                                // player.bufferedPositionStream.
                                 setState(() {
                                   isPlaying = false;
                                 });
@@ -427,6 +425,7 @@ class _Audio1ScreenState extends State<Audio1Screen> {
 
   void resetPlayer() async {
     await recorderController.stop(true);
+    recordingCompleted = false;
     _positionDataStream.listen((event) {
       event.position = Duration.zero;
       event.bufferedPosition = Duration.zero;
