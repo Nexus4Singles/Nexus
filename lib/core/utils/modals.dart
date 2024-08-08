@@ -6,7 +6,9 @@ import 'package:Nexus/core/utils/empty_state.dart';
 import 'package:Nexus/features/subscription/views/subscription.dart';
 import '../../features/home/presentation/widgets/coming_soon_modal.dart';
 import '../../features/match/presentation/widgets/matchUsersCompatibilityModal.dart';
+import '../../features/profile/presentation/widgets/compatibility_modal.dart';
 import '../colors.dart';
+import '../style.dart';
 
 compatibilityModal(context, UserModel userModel) {
   showAdaptiveDialog(
@@ -22,6 +24,25 @@ compatibilityModal(context, UserModel userModel) {
               padding: const EdgeInsets.all(8.0),
               child: MatchedUsersCompatibilityModal(userModel: userModel)),
         ),
+      );
+    },
+  );
+}
+
+compatibilityQuestions(context) {
+  return showAdaptiveDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) {
+      return AlertDialog.adaptive(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: Text(
+          'Compatibility Quiz',
+          style: textStyle16,
+        ),
+        content: const CompatabiltyModal(),
       );
     },
   );
@@ -57,20 +78,16 @@ chatWarningModal(context) {
     context: context,
     barrierDismissible: true,
     builder: (context) {
-      return Dialog(
+      return AlertDialog.adaptive(
         backgroundColor: white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: Get.height / 3.0,
-              child: EmptyStateWidget(
-                  buttonText: "",
-                  buttonFunc: () {},
-                  svgAssetPath: "$svgPath/chatWarning.svg",
-                  message:
-                      'We highly recommend spending enough time getting to know each other here before exchanging personal contacts \n\nHappy Texting!'),
-            )),
+        content: EmptyStateWidget(
+            buttonText: "",
+            showClose: true,
+            buttonFunc: () {},
+            svgAssetPath: "$svgPath/chatWarning.svg",
+            message:
+                'We highly recommend spending enough time getting to know each other here before exchanging personal contacts \n\nHappy Texting!'),
       );
     },
   );

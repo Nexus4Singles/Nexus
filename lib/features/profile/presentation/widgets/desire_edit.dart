@@ -23,8 +23,7 @@ class _DesireEditState extends State<DesireEdit> {
 
   @override
   void initState() {
-    var currentUser =
-        Provider.of<HomeNotifier>(context, listen: false).currentUser!;
+    var currentUser = HomeController.instance.user.value;
     selectedDesires.assignAll(currentUser.desiredQualities!);
     super.initState();
   }

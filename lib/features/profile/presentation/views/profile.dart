@@ -16,6 +16,7 @@ import 'package:Nexus/features/profile/presentation/widgets/compatibility_modal.
 import 'package:Nexus/features/profile/presentation/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 import '../../../../router.dart';
+import '../../../home/controllers/home_controller.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -30,6 +31,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     _init();
   }
+
+  var currentUser = HomeController.instance.user.value;
+  var homeModel = HomeController.instance;
 
   FutureOr _init() {
     _setAudioPlayer();
@@ -57,8 +61,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
       });
     }
-
-// ada(context: context, builder: )
   }
 
   AudioPlayer player = AudioPlayer();
@@ -68,10 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late Duration playerPosition;
 
   Future _setAudioPlayer() async {
-    var currentUser =
-        Provider.of<HomeNotifier>(context, listen: false).currentUser!;
-
-    // if (playerId == '1') {
+    print("this is for audio==>${currentUser.relationshipWithGod}");
     await player.setUrl(currentUser.relationshipWithGod!);
 
     player.durationStream.listen((d) {
@@ -106,36 +105,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeNotifier>(builder: (context, homeModel, _) {
-      return Scaffold(
+    return Scaffold(
+      backgroundColor: white,
+      appBar: AppBar(
         backgroundColor: white,
-        appBar: AppBar(
-          backgroundColor: white,
-          leading: const SizedBox.shrink(),
-          actions: [
-            InkWell(
-              onTap: () {
-                Get.toNamed(AppRoutes.settings);
-              },
-              child: const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Icon(
-                  Iconsax.setting_4,
-                ),
+        leading: const SizedBox.shrink(),
+        actions: [
+          InkWell(
+            onTap: () {
+              Get.toNamed(AppRoutes.settings);
+            },
+            child: const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Icon(
+                Iconsax.setting_4,
               ),
             ),
-          ],
-          title: Text(
-            'Your Profile',
-            style: textStyle18.copyWith(fontWeight: FontWeight.bold),
           ),
-          centerTitle: true,
-          foregroundColor: black,
-          elevation: 0,
+        ],
+        title: Text(
+          'Your Profile',
+          style: textStyle18.copyWith(fontWeight: FontWeight.bold),
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: Column(
+        centerTitle: true,
+        foregroundColor: black,
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Obx(
+          () => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
@@ -144,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   CircleAvatar(
                     radius: 55.r,
                     backgroundImage: NetworkImage(
-                      homeModel.currentUser!.profileUrl!,
+                      homeModel.user.value.profileUrl!,
                     ),
                   ),
                 ],
@@ -154,7 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '${homeModel.currentUser!.username}, ${homeModel.currentUser!.age}',
+                    '${homeModel.user.value.username}, ${homeModel.user.value.age}',
                     style: textStyle8.copyWith(
                         color: black,
                         fontSize: 24,
@@ -169,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBoxW5(),
                       Flexible(
                         child: Text(
-                          '${homeModel.currentUser!.location!.place}',
+                          '${homeModel.user.value.location!.place}',
                           overflow: TextOverflow.ellipsis,
                           style: textStyle14.copyWith(
                               fontWeight: FontWeight.w300, color: black),
@@ -196,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
-                    homeModel.currentUser!.stateOfOrigin ?? '',
+                    homeModel.user.value.stateOfOrigin ?? '',
                     style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: black),
                   ),
@@ -211,7 +210,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
-                    homeModel.currentUser!.educationLevel ?? '',
+                    homeModel.user.value.educationLevel ?? '',
                     style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: black),
                   ),
@@ -226,7 +225,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
-                    homeModel.currentUser!.profession ?? '',
+                    homeModel.user.value.profession ?? '',
                     style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: black),
                   ),
@@ -241,7 +240,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
-                    homeModel.currentUser!.churchName ?? '',
+                    homeModel.user.value.churchName ?? '',
                     style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: black),
                   ),
@@ -260,7 +259,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 spacing: 15,
                 runSpacing: 15,
                 children: [
-                  for (var hob in homeModel.currentUser!.hobbies!)
+                  for (var hob in homeModel.user.value.hobbies!)
                     TextContainer(
                       text: hob,
                     ),
@@ -285,7 +284,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 spacing: 15,
                 runSpacing: 15,
                 children: [
-                  for (var des in homeModel.currentUser!.desiredQualities!)
+                  for (var des in homeModel.user.value.desiredQualities!)
                     TextContainer(
                       text: des,
                     ),
@@ -372,14 +371,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 alignment: WrapAlignment.spaceEvenly,
                 children: [
-                  for (var item in homeModel.currentUser!.photos!)
+                  for (var item in homeModel.user.value.photos!)
                     InkWell(
                       onTap: () {
                         Get.to(
                           () => PhotoViewScreen(
                             selectedIndex:
-                                homeModel.currentUser!.photos!.indexOf(item),
-                            photos: homeModel.currentUser!.photos!,
+                                homeModel.user.value.photos!.indexOf(item),
+                            photos: homeModel.user.value.photos!,
                           ),
                         );
                       },
@@ -407,7 +406,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
         ),
-      );
-    });
+      ),
+    );
   }
 }

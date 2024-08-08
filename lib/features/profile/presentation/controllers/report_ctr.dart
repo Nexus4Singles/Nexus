@@ -45,11 +45,6 @@ class ReportCtr extends GetxController {
 
     if (words.length > 100) {
       warningMessage.value = 'You have exceeded the 100-word limit';
-      final truncatedText = words.take(100).join(' ');
-      reportController.text = truncatedText;
-      reportController.selection = TextSelection.fromPosition(
-        TextPosition(offset: reportController.text.length),
-      );
     } else {
       warningMessage.value = '';
     }

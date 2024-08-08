@@ -7,14 +7,14 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:Nexus/core/assets.dart';
-import 'package:Nexus/core/colors.dart';
-import 'package:Nexus/core/models/chats_model.dart';
-import 'package:Nexus/core/size_boxes.dart';
-import 'package:Nexus/core/style.dart';
-import 'package:Nexus/core/utils/modals.dart';
-import 'package:Nexus/features/chat/controllers/chat_ctr.dart';
-import 'package:Nexus/features/home/presentation/views/user_details.dart';
+import 'package:nexus/core/assets.dart';
+import 'package:nexus/core/colors.dart';
+import 'package:nexus/core/models/chats_model.dart';
+import 'package:nexus/core/size_boxes.dart';
+import 'package:nexus/core/style.dart';
+import 'package:nexus/core/utils/modals.dart';
+import 'package:nexus/features/chat/controllers/chat_ctr.dart';
+import 'package:nexus/features/home/presentation/views/user_details.dart';
 import '../../../core/models/message_model.dart';
 import '../../profile/presentation/views/report_user.dart';
 
@@ -34,7 +34,18 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
 
   @override
   void initState() {
-   // Future.delayed(const Duration(milliseconds: 100), () => chatWarningModal(context));
+    if (ctr.exploreCtr.myProfile.value.usersChatWarning == null) {
+      Future.delayed(
+          const Duration(milliseconds: 100), () => chatWarningModal(context));
+      ctr.setUserTohaveShowWarning(widget.chatModel.userModel!.id);
+    } else {
+      if (!ctr.exploreCtr.myProfile.value.usersChatWarning!
+          .contains(widget.chatModel.userModel!.id)) {
+        Future.delayed(
+            const Duration(milliseconds: 100), () => chatWarningModal(context));
+        ctr.setUserTohaveShowWarning(widget.chatModel.userModel!.id);
+      } else {}
+    }
 
     super.initState();
   }
@@ -121,10 +132,6 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                       user: ChatUser(id: element.sentBy, profileImage: ""),
                       createdAt: element.timestamp.toDate()));
                 }
-                messages.length.isLowerThan(10)
-                    ? Future.delayed(const Duration(milliseconds: 100),
-                        () => chatWarningModal(context))
-                    : () {};
                 return DashChat(
                   currentUser: ChatUser(id: ctr.auth.currentUser!.uid),
                   inputOptions: InputOptions(
@@ -162,7 +169,6 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                             ),
                             itemBuilder: (BuildContext context) {
                               return {
-                                'Audio': Iconsax.microphone5,
                                 'Video': Iconsax.video_add5,
                                 'Image': Iconsax.image1,
                               }.entries.map((entry) {

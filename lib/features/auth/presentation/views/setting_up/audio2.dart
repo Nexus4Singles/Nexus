@@ -23,8 +23,6 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart' as rx;
 
 import '../../../../../core/assets.dart';
-// import 'package:wave/config.dart';
-// import 'package:wave/wave.dart';
 
 class Audio2Screen extends StatefulWidget {
   const Audio2Screen({super.key});
@@ -442,6 +440,7 @@ class _Audio2ScreenState extends State<Audio2Screen> {
     _timer!.cancel();
     setState(() {
       isRecording = false;
+      recordingCompleted = false;
       isRecordingCompleted = false;
       recPosition = Duration.zero;
     });

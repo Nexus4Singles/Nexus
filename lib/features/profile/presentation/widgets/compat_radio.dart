@@ -24,10 +24,10 @@ class CompatRadio extends StatelessWidget {
         value: val,
         title: Text(
           val,
-          style: GoogleFonts.sen(fontSize: 13),
-          overflow: TextOverflow.ellipsis,
+          style: GoogleFonts.sen(fontSize: 12),
+          textAlign: TextAlign.start,
         ),
-        contentPadding: const EdgeInsets.all(0),
+        contentPadding: EdgeInsets.zero,
         activeColor: primary,
         groupValue: groupVal,
         onChanged: onChanged,

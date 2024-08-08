@@ -27,7 +27,7 @@ class CustomTextArea extends StatelessWidget {
     this.height = 150.0,
     this.hintStyle,
     this.errorText,
-    this.borderRadius = 8.0,
+    this.borderRadius = 16.0,
     this.fillColor = white,
     this.borderColor,
     this.isFilled = true,

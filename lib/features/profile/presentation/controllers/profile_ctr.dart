@@ -10,6 +10,7 @@ import 'package:Nexus/core/constant.dart';
 import 'package:Nexus/core/utils/methods.dart';
 import 'package:Nexus/core/utils/toast.dart';
 import 'package:Nexus/router.dart';
+import 'package:logger/logger.dart';
 import '../../../../core/models/location.dart';
 
 class ProfileCtr extends GetxController {
@@ -34,7 +35,7 @@ class ProfileCtr extends GetxController {
         'https://maps.googleapis.com/maps/api/geocode/json?place_id=$pId&key=AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y';
     final response = await http.get(Uri.parse(url));
     final data = json.decode(response.body);
-    // Logger().d(data);
+    Logger().d(data);
     final address = data['results'][0]['formatted_address'];
     final placeId = data['results'][0]['place_id'];
 

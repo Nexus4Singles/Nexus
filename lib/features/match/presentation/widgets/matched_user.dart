@@ -25,54 +25,48 @@ class MatchedUserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPress,
-      child: CachedNetworkImage(
-        imageUrl: photo,
-        imageBuilder: (context, image) => Container(
-          padding: EdgeInsets.all(15.sp),
-          height: 317.h,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.r),
-            color: black,
-            image:
-                DecorationImage(fit: BoxFit.cover, opacity: .8, image: image),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                '$name, $age',
-                style: textStyle16.copyWith(
-                  color: white,
-                  fontWeight: FontWeight.w600,
-                ),
+      child: Container(
+        padding: EdgeInsets.all(15.sp),
+        height: 317.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.r),
+          color: black,
+          image: DecorationImage(
+              fit: BoxFit.cover, opacity: .8, image: NetworkImage(photo)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              '$name, $age',
+              style: textStyle16.copyWith(
+                color: white,
+                fontWeight: FontWeight.w600,
               ),
-              Row(
-                children: [
-                  const Icon(
-                    Iconsax.location5,
-                    color: white,
-                    size: 14,
-                  ),
-                  const SizedBoxW5(),
-                  Flexible(
-                    child: Text(
-                      location,
-                      overflow: TextOverflow.ellipsis,
-                      style: textStyle12.copyWith(
-                        color: white,
-                      ),
+            ),
+            Row(
+              children: [
+                const Icon(
+                  Iconsax.location5,
+                  color: white,
+                  size: 14,
+                ),
+                const SizedBoxW5(),
+                Flexible(
+                  child: Text(
+                    location,
+                    overflow: TextOverflow.ellipsis,
+                    style: textStyle12.copyWith(
+                      color: white,
                     ),
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
-        placeholder: (context, url) =>
-            const CircularProgressIndicator.adaptive(),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
       ),
     );
   }

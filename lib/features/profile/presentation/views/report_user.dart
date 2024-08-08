@@ -34,11 +34,14 @@ class ReportUser extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-                "We want to ensure the quality of users on this platform is constantly refined. Please assist us to achieve this goal by reporting any user who was toxic or manipulative to you or any user who recorded gibberish on their audio recordings just to create a profile. Thank you!",
-                textAlign: TextAlign.center,
-                style: textStyle10),
+            Center(
+              child: Text(
+                  "We want to ensure the quality of users on this platform is constantly refined. Please assist us to achieve this goal by reporting any user who was toxic or manipulative to you or any user who recorded gibberish on their audio recordings just to create a profile. Thank you!",
+                  textAlign: TextAlign.center,
+                  style: textStyle10),
+            ),
             const SizedBoxH25(),
             CustomTextField(
               enabled: false,
@@ -48,31 +51,25 @@ class ReportUser extends StatelessWidget {
             ),
             const SizedBoxH15(),
             Obx(
-              () => Expanded(
-                child: CustomTextArea(
-                  onChanged: (val) {
-                    final words = val
-                        .trim()
-                        .split(RegExp(r'\s+'))
-                        .where((word) => word.isNotEmpty)
-                        .toList();
-                    if (words.length > 100) {
-                      final truncatedText = words.take(100).join(' ');
-                      ctr.reportController.value = TextEditingValue(
-                        text: truncatedText,
-                        selection: TextSelection.collapsed(
-                            offset: truncatedText.length),
-                      );
-                    }
-                  },
-                  maxLines: 5,
-                  errorText: ctr.warningMessage.value == ''
-                      ? null
-                      : ctr.warningMessage.value,
-                  controller: ctr.reportController,
-                  hintText:
-                      'Please state briefly why you are reporting this user (100 words max)',
-                ),
+              () => CustomTextArea(
+                onChanged: (val) {
+                  final words = val
+                      .trim()
+                      .split(RegExp(r'\s+'))
+                      .where((word) => word.isNotEmpty)
+                      .toList();
+                  if (words.length > 100) {
+                    ctr.warningMessage.value =
+                        'You have exceeded the 100-word limit';
+                  }
+                },
+                maxLines: 5,
+                errorText: ctr.warningMessage.value == ''
+                    ? null
+                    : ctr.warningMessage.value,
+                controller: ctr.reportController,
+                hintText:
+                    'Please state briefly why you are reporting this user (100 words max)',
               ),
             ),
             const Spacer(),

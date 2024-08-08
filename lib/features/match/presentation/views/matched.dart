@@ -21,14 +21,6 @@ class Matched extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: TextButton(
-            onPressed: () {
-              compatibilityModal(context, userModel);
-            },
-            child: Text("View Compatibility Data", style: textStyle16)),
-      ),
       appBar: AppBar(
         leading: const SizedBox(),
         actions: [
@@ -40,36 +32,36 @@ class Matched extends StatelessWidget {
           const SizedBoxW10()
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBoxH10(),
-          Center(
-            child: Text("You and ${userModel.username} liked each other!",
-                style: textStyle14.copyWith(fontWeight: FontWeight.w700)),
-          ),
-          const SizedBoxH20(),
-          Container(
-            height: Get.height / 2,
-            width: Get.width / 1.2,
-            decoration: BoxDecoration(
-                boxShadow: [boxShadow],
-                border: Border.all(
-                    color: white,
-                    width: 5,
-                    strokeAlign: BorderSide.strokeAlignOutside),
-                borderRadius: BorderRadius.circular(12),
-                image: DecorationImage(
-                    image: NetworkImage(userModel.photos![0]),
-                    fit: BoxFit.cover)),
-            child: Transform.translate(
-                offset: const Offset(0, 70),
-                child: Image.asset("$imgPath/matched.png")),
-          ),
-          Transform.translate(
-            offset: const Offset(0, 50),
-            child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBoxH10(),
+            Center(
+              child: Text("You and ${userModel.username} liked each other!",
+                  style: textStyle14.copyWith(fontWeight: FontWeight.w700)),
+            ),
+            const SizedBoxH20(),
+            Container(
+              height: Get.height / 2,
+              width: Get.width / 1.2,
+              decoration: BoxDecoration(
+                  boxShadow: [boxShadow],
+                  border: Border.all(
+                      color: white,
+                      width: 5,
+                      strokeAlign: BorderSide.strokeAlignOutside),
+                  borderRadius: BorderRadius.circular(12),
+                  image: DecorationImage(
+                      image: NetworkImage(userModel.photos![0]),
+                      fit: BoxFit.cover)),
+              child: Transform.translate(
+                  offset: const Offset(0, 70),
+                  child: Image.asset("$imgPath/matched.png")),
+            ),
+            const SizedBox(height: 45),
+            Column(
               children: [
                 Text(
                   "We are rooting for you both!",
@@ -101,11 +93,17 @@ class Matched extends StatelessWidget {
                       ),
                       controller: ctr.chatController,
                       hintText: "Send a message"),
-                )
+                ),
+                const SizedBoxH10(),
+                TextButton(
+                    onPressed: () {
+                      compatibilityModal(context, userModel);
+                    },
+                    child: Text("View Compatibility Data", style: textStyle16)),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

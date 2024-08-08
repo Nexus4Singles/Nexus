@@ -39,6 +39,7 @@ class _DesiredQualityScreenState extends State<DesiredQualityScreen> {
               borderRadius: BorderRadius.circular(20),
             ),
           ),
+          centerTitle: true,
           elevation: 0,
         ),
         backgroundColor: white,

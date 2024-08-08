@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Nexus/core/models/user.dart';
+import 'package:Nexus/core/models/user.dart';
+import 'package:Nexus/core/utils/app_logger.dart';
 import '../../../core/constant.dart';
 
 class ExploreCtr extends GetxController {
@@ -11,7 +13,7 @@ class ExploreCtr extends GetxController {
   final allUsers = <UserModel>[].obs;
   final searchedUsers = <UserModel>[].obs;
   final filteredUsers = <UserModel>[].obs;
-  final myProfile = const UserModel(
+  final myProfile = UserModel(
           id: "", name: '', username: "", email: "", age: 0, gender: "")
       .obs;
   final db = FirebaseFirestore.instance;
@@ -32,6 +34,7 @@ class ExploreCtr extends GetxController {
         users.docs.map((data) => UserModel.fromJson(data.data())).toList();
     allUsers.assignAll(data);
     for (var data in allUsers) {
+      appLog("this is all users == >$data");
       if (data.id == auth.currentUser!.uid) {
         myProfile.value = data;
         allUsers.where((users) => users.gender != myProfile.value.gender);
@@ -46,7 +49,7 @@ class ExploreCtr extends GetxController {
     myProfile.value = data;
   }
 
-  searchCountry(String country) async {
+  searchCountry(String place) async {
     exploreError.value = "";
     isLoading.value = true;
     searchedUsers.clear();
@@ -59,7 +62,9 @@ class ExploreCtr extends GetxController {
             val.gender.toLowerCase() != myProfile.value.gender.toLowerCase())
         .toList()
         .forEach((vals) {
-      if (country.toLowerCase().contains(vals.country!.toLowerCase())) {
+      if (vals.location!.place!.toLowerCase().contains(place.toLowerCase())) {
+        print(
+            "this is what is being searched ==? ${vals.location!.place} this is what is the place ==?$place");
         searchedUsers.add(vals);
         filteredUsers.add(vals);
       }

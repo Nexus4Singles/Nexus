@@ -107,12 +107,12 @@ class _UserCardState extends State<UserCard> {
             boxShadow,
           ],
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CachedNetworkImage(
-              imageUrl: widget.userModel.photos![0],
-              imageBuilder: (context, imageProvider) => Container(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
                 height: height(context) * .55,
                 width: width(context),
                 padding: EdgeInsets.all(15.sp),
@@ -240,256 +240,257 @@ class _UserCardState extends State<UserCard> {
                   ],
                 ),
               ),
-            ),
-            SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBoxH20(),
-                  Text(
-                    'About',
-                    style: textStyle14.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: black,
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBoxH20(),
+                    Text(
+                      'About',
+                      style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: black,
+                      ),
                     ),
-                  ),
-                  const SizedBoxH15(),
-                  Row(
-                    children: [
-                      Text(
-                        'State of Origin: ',
-                        style: textStyle14.copyWith(
-                            fontWeight: FontWeight.w500, color: ash),
-                      ),
-                      Text(
-                        widget.userModel.stateOfOrigin ?? '',
-                        style: textStyle16.copyWith(
-                            fontWeight: FontWeight.w500, color: black),
-                      ),
-                    ],
-                  ),
-                  const SizedBoxH10(),
-                  Row(
-                    children: [
-                      Text(
-                        'Education Level: ',
-                        style: textStyle14.copyWith(
-                            fontWeight: FontWeight.w500, color: ash),
-                      ),
-                      Text(
-                        widget.userModel.educationLevel ?? '',
-                        style: textStyle16.copyWith(
-                            fontWeight: FontWeight.w500, color: black),
-                      ),
-                    ],
-                  ),
-                  const SizedBoxH10(),
-                  Row(
-                    children: [
-                      Text(
-                        'Profession/Industry: ',
-                        style: textStyle14.copyWith(
-                            fontWeight: FontWeight.w500, color: ash),
-                      ),
-                      Flexible(
-                        child: Text(
-                          widget.userModel.profession ?? '',
-                          overflow: TextOverflow.ellipsis,
+                    const SizedBoxH15(),
+                    Row(
+                      children: [
+                        Text(
+                          'State of Origin: ',
+                          style: textStyle14.copyWith(
+                              fontWeight: FontWeight.w500, color: ash),
+                        ),
+                        Text(
+                          widget.userModel.stateOfOrigin ?? '',
                           style: textStyle16.copyWith(
                               fontWeight: FontWeight.w500, color: black),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBoxH10(),
-                  Row(
-                    children: [
-                      Text(
-                        'Church: ',
-                        style: textStyle14.copyWith(
-                            fontWeight: FontWeight.w500, color: ash),
-                      ),
-                      Flexible(
-                        child: Text(
-                          widget.userModel.churchName ?? '',
-                          overflow: TextOverflow.ellipsis,
+                      ],
+                    ),
+                    const SizedBoxH10(),
+                    Row(
+                      children: [
+                        Text(
+                          'Education Level: ',
+                          style: textStyle14.copyWith(
+                              fontWeight: FontWeight.w500, color: ash),
+                        ),
+                        Text(
+                          widget.userModel.educationLevel ?? '',
                           style: textStyle16.copyWith(
                               fontWeight: FontWeight.w500, color: black),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBoxH30(),
-                  Text(
-                    'Hobbies / Interests',
-                    style: textStyle14.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: black,
+                      ],
                     ),
-                  ),
-                  const SizedBoxH10(),
-                  Wrap(
-                    spacing: 15,
-                    runSpacing: 15,
-                    children: [
-                      for (var hob in widget.userModel.hobbies!)
-                        TextContainer(
-                          text: hob,
+                    const SizedBoxH10(),
+                    Row(
+                      children: [
+                        Text(
+                          'Profession/Industry: ',
+                          style: textStyle14.copyWith(
+                              fontWeight: FontWeight.w500, color: ash),
                         ),
-                    ],
-                  ),
-                  const SizedBoxH30(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Most Desired Qualities',
-                        style: textStyle14.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: black,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBoxH10(),
-                  Wrap(
-                    spacing: 15,
-                    runSpacing: 15,
-                    children: [
-                      for (var des in widget.userModel.desiredQualities!)
-                        TextContainer(
-                          text: des,
-                        ),
-                    ],
-                  ),
-                  const SizedBoxH40(),
-                  Text(
-                    'Audio Recordings',
-                    style: textStyle14.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: black,
-                    ),
-                  ),
-                  const SizedBoxH15(),
-                  Text(
-                    "1. The summary of ${widget.userModel.username}'s relationship with God",
-                    style: textStyle14.copyWith(
-                        color: black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBoxH10(),
-                  AudioFilePlayer(
-                    player: player,
-                    onPlay: () async {
-                      player2.stop();
-                      player2.seek(Duration.zero);
-                      player3.stop();
-                      player3.seek(Duration.zero);
-                      player.play();
-                    },
-                    onPause: () async {
-                      player.pause();
-                    },
-                  ),
-                  const SizedBoxH25(),
-                  Text(
-                    "2. ${widget.userModel.username}'s view on Gender roles in marriage",
-                    style: textStyle14.copyWith(
-                        color: black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBoxH10(),
-                  AudioFilePlayer(
-                    player: player2,
-                    onPlay: () async {
-                      player.stop();
-                      player.seek(Duration.zero);
-                      player3.stop();
-                      player3.seek(Duration.zero);
-                      player2.play();
-                    },
-                    onPause: () async {
-                      player2.pause();
-                    },
-                  ),
-                  const SizedBoxH25(),
-                  Text(
-                    "3.${widget.userModel.username}'s favourite qualities about ${widget.userModel.gender.toLowerCase().contains("f") ? "herself" : "himself"}",
-                    style: textStyle14.copyWith(
-                        color: black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBoxH10(),
-                  AudioFilePlayer(
-                    player: player3,
-                    onPlay: () async {
-                      player.stop();
-                      player.seek(Duration.zero);
-                      player2.stop();
-                      player2.seek(Duration.zero);
-                      player3.play();
-                    },
-                    onPause: () async {
-                      player3.pause();
-                    },
-                  ),
-                  const SizedBoxH30(),
-                  Text(
-                    'Gallery',
-                    style: textStyle14.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: black,
-                    ),
-                  ),
-                  const SizedBoxH10(),
-                  Wrap(
-                    runSpacing: 15,
-                    spacing: 15,
-                    children: [
-                      for (var item in widget.userModel.photos!)
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(15.r),
-                          child: InkWell(
-                            onTap: () {
-                              int index =
-                                  widget.userModel.photos!.indexOf(item);
-                              Get.to(() => PhotoViewScreen(
-                                  selectedIndex: index,
-                                  photos: widget.userModel.photos!));
-                            },
-                            child: CachedNetworkImage(
-                              width: width(context) * .4,
-                              height: 100.h,
-                              fit: BoxFit.cover,
-                              imageUrl: item,
-                              progressIndicatorBuilder:
-                                  (context, url, downloadProgress) => Center(
-                                child: SizedBox(
-                                  width: 16,
-                                  height: 16,
-                                  child: CircularProgressIndicator(
-                                    value: downloadProgress.progress,
-                                    strokeWidth: 1,
-                                    color: primary,
-                                  ),
-                                ),
-                              ),
-                              errorWidget: (context, url, error) => Container(),
-                            ),
+                        Flexible(
+                          child: Text(
+                            widget.userModel.profession ?? '',
+                            overflow: TextOverflow.ellipsis,
+                            style: textStyle16.copyWith(
+                                fontWeight: FontWeight.w500, color: black),
                           ),
                         ),
-                    ],
-                  ),
-                  const SizedBoxH20(),
-                ],
+                      ],
+                    ),
+                    const SizedBoxH10(),
+                    Row(
+                      children: [
+                        Text(
+                          'Church: ',
+                          style: textStyle14.copyWith(
+                              fontWeight: FontWeight.w500, color: ash),
+                        ),
+                        Flexible(
+                          child: Text(
+                            widget.userModel.churchName ?? '',
+                            overflow: TextOverflow.ellipsis,
+                            style: textStyle16.copyWith(
+                                fontWeight: FontWeight.w500, color: black),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBoxH30(),
+                    Text(
+                      'Hobbies / Interests',
+                      style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: black,
+                      ),
+                    ),
+                    const SizedBoxH10(),
+                    Wrap(
+                      spacing: 15,
+                      runSpacing: 15,
+                      children: [
+                        for (var hob in widget.userModel.hobbies!)
+                          TextContainer(
+                            text: hob,
+                          ),
+                      ],
+                    ),
+                    const SizedBoxH30(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Most Desired Qualities',
+                          style: textStyle14.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: black,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBoxH10(),
+                    Wrap(
+                      spacing: 15,
+                      runSpacing: 15,
+                      children: [
+                        for (var des in widget.userModel.desiredQualities!)
+                          TextContainer(
+                            text: des,
+                          ),
+                      ],
+                    ),
+                    const SizedBoxH40(),
+                    Text(
+                      'Audio Recordings',
+                      style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: black,
+                      ),
+                    ),
+                    const SizedBoxH15(),
+                    Text(
+                      "1. The summary of ${widget.userModel.username}'s relationship with God",
+                      style: textStyle14.copyWith(
+                          color: black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBoxH10(),
+                    AudioFilePlayer(
+                      player: player,
+                      onPlay: () async {
+                        player2.stop();
+                        player2.seek(Duration.zero);
+                        player3.stop();
+                        player3.seek(Duration.zero);
+                        player.play();
+                      },
+                      onPause: () async {
+                        player.pause();
+                      },
+                    ),
+                    const SizedBoxH25(),
+                    Text(
+                      "2. ${widget.userModel.username}'s view on Gender roles in marriage",
+                      style: textStyle14.copyWith(
+                          color: black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBoxH10(),
+                    AudioFilePlayer(
+                      player: player2,
+                      onPlay: () async {
+                        player.stop();
+                        player.seek(Duration.zero);
+                        player3.stop();
+                        player3.seek(Duration.zero);
+                        player2.play();
+                      },
+                      onPause: () async {
+                        player2.pause();
+                      },
+                    ),
+                    const SizedBoxH25(),
+                    Text(
+                      "3.${widget.userModel.username}'s favourite qualities about ${widget.userModel.gender.toLowerCase().contains("f") ? "herself" : "himself"}",
+                      style: textStyle14.copyWith(
+                          color: black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBoxH10(),
+                    AudioFilePlayer(
+                      player: player3,
+                      onPlay: () async {
+                        player.stop();
+                        player.seek(Duration.zero);
+                        player2.stop();
+                        player2.seek(Duration.zero);
+                        player3.play();
+                      },
+                      onPause: () async {
+                        player3.pause();
+                      },
+                    ),
+                    const SizedBoxH30(),
+                    Text(
+                      'Gallery',
+                      style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: black,
+                      ),
+                    ),
+                    const SizedBoxH10(),
+                    Wrap(
+                      runSpacing: 15,
+                      spacing: 15,
+                      children: [
+                        for (var item in widget.userModel.photos!)
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(15.r),
+                            child: InkWell(
+                              onTap: () {
+                                int index =
+                                    widget.userModel.photos!.indexOf(item);
+                                Get.to(() => PhotoViewScreen(
+                                    selectedIndex: index,
+                                    photos: widget.userModel.photos!));
+                              },
+                              child: CachedNetworkImage(
+                                width: width(context) * .4,
+                                height: 100.h,
+                                fit: BoxFit.cover,
+                                imageUrl: item,
+                                progressIndicatorBuilder:
+                                    (context, url, downloadProgress) => Center(
+                                  child: SizedBox(
+                                    width: 16,
+                                    height: 16,
+                                    child: CircularProgressIndicator(
+                                      value: downloadProgress.progress,
+                                      strokeWidth: 1,
+                                      color: primary,
+                                    ),
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    Container(),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 80)
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

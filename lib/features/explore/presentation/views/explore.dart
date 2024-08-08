@@ -28,6 +28,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
   final ctr = Get.put(ExploreCtr());
 
   @override
+  void initState() {
+    ctr.searchedUsers.clear();
+    ctr.filteredUsers.clear();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -97,6 +104,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     onTap: () {
                       showModalBottomSheet(
                         context: context,
+                        isScrollControlled: true,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.vertical(
                             top: Radius.circular(25.r),
@@ -104,7 +112,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         ),
                         showDragHandle: true,
                         builder: (context) {
-                          return const ExploreFilterModal();
+                          return SizedBox(
+                              height: Get.height / 1.8,
+                              child: const ExploreFilterModal());
                         },
                       );
                       // showModal(

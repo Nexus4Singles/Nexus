@@ -72,9 +72,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 Get.toNamed(AppRoutes.subscription3);
               },
             ),
-            const Divider(
-              color: Colors.transparent,
-            ),
+            const Divider(color: Colors.transparent),
             SettingsContainer(
                 text: 'Contact Us',
                 icon: true,

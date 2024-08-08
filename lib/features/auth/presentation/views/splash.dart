@@ -6,6 +6,8 @@ import 'package:Nexus/core/constant.dart';
 import 'package:Nexus/core/utils/shared_pref.dart';
 import 'package:Nexus/router.dart';
 
+import '../../../explore/controllers/explore_ctr.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -29,8 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
     bool firstTime = await SharedPref.getBool(kFirstTime) ?? true;
     var email = await SharedPref.getString("email");
     if (firstTime) {
-      Get.offAndToNamed(AppRoutes.login);
+      Get.offAndToNamed(AppRoutes.onboardingHandler);
     } else if (email.isNotEmpty) {
+      // ctr.allUsers.isNotEmpty : () {}?
       Get.offAndToNamed(AppRoutes.mainNav);
     } else {
       Get.offAndToNamed(AppRoutes.login);

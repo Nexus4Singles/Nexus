@@ -407,6 +407,7 @@ class _Audio3ScreenState extends State<Audio3Screen> {
     setState(() {
       isRecording = false;
       isRecordingCompleted = false;
+      recordingCompleted = false;
       recPosition = Duration.zero;
     });
   }
@@ -470,10 +471,6 @@ class _Audio3ScreenState extends State<Audio3Screen> {
       model.setAudio3(path);
       debugPrint("Recorded file size: ${model.audioPath3}");
     }
-  }
-
-  void _refreshWave() {
-    if (isRecording) recorderController.refresh();
   }
 
   void audioStream() {

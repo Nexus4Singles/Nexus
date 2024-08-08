@@ -41,6 +41,7 @@ class _GenderScreenState extends State<GenderScreen> {
     return Consumer<AuthNotifier>(builder: (context, model, _) {
       return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: SizedBox(
             width: width(context) * .5,
             child: LinearProgressIndicator(
