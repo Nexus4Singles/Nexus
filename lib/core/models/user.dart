@@ -8,7 +8,7 @@ part 'user.g.dart';
 @JsonSerializable()
 class UserModel extends UserEntity {
 
-  const UserModel({
+   UserModel({
     required String id,
     required String name,
     required String username,
@@ -81,46 +81,13 @@ class UserModel extends UserEntity {
     compatibilitySetted: compatibilitySetted,
     location: location,
     fcmToken: fcmToken,
-    onPremium: onPremium,
+     usersChatWarning: usersChatWarning,
+     onPremium: onPremium,
     prevSubscribed: prevSubscribed,
     usedOneFreeText: usedOneFreeText,
     subExpDate: subExpDate,
   );
-          id: id,
-          name: name,
-          username: username,
-          email: email,
-          profileUrl: profileUrl,
-          age: age,
-          gender: gender,
-          unrecommendedUsers: unRecommendUsers,
-          usersChatWarning: usersChatWarning,
-          bestQualotiesOrTraits: bestQualotiesOrTraits,
-          city: city,
-          matchedUsers: matchedUsers,
-          desiredQualities: desiredQualities,
-          educationLevel: educationLevel,
-          likeMe: likeMe,
-          myLikes: myLikes,
-          mySaves: mySaves,
-          hobbies: hobbies,
-          isVerified: isVerified,
-          photos: photos,
-          profession: profession,
-          relationshipWithGod: relationshipWithGod,
-          roleOfHusband: roleOfHusband,
-          stateOfOrigin: stateOfOrigin,
-          notificationToken: notificationToken,
-          phoneNumber: phoneNumber,
-          registrationProgress: registrationProgress,
-          country: country,
-          countLike: countLike,
-          churchName: churchName,
-          compatibility: compatibility,
-          compatibilitySetted: compatibilitySetted,
-          location: location,
-          fcmToken: fcmToken,
-        );
+
 
   factory UserModel.fromJson(Map<String, dynamic> map) =>
       _$UserModelFromJson(map);

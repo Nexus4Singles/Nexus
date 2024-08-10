@@ -9,6 +9,7 @@ import '../../../../core/style.dart';
 import '../../../../core/utils/toast.dart';
 import '../../../auth/data/data-sources/local-datasource/list_items.dart';
 import '../../../auth/presentation/widgets/hobbie_card.dart';
+import '../../../home/controllers/home_controller.dart';
 import '../../../home/presentation/change_notifier/home_notifier.dart';
 
 class DesireEdit extends StatefulWidget {

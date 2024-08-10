@@ -22,9 +22,6 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
           .toList(),
       hobbies:
           (json['hobbies'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      usersChatWarning: (json['usersChatWarning'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
       photos:
           (json['photos'] as List<dynamic>?)?.map((e) => e as String).toList(),
       likeMe:
@@ -33,10 +30,10 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
           (json['myLikes'] as List<dynamic>?)?.map((e) => e as String).toList(),
       mySaves:
           (json['mySaves'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      matchedUsers: (json['matchedUsers'] as List<dynamic>?)
+      usersChatWarning: (json['usersChatWarning'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      unRecommendUsers: (json['unRecommendUsers'] as List<dynamic>?)
+      matchedUsers: (json['matchedUsers'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
       educationLevel: json['education_level'] as String?,
@@ -80,6 +77,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'education_level': instance.educationLevel,
       'profession': instance.profession,
       'hobbies': instance.hobbies,
+      'usersChatWarning': instance.usersChatWarning,
       'matchedUsers': instance.matchedUsers,
       'likeMe': instance.likeMe,
       'myLikes': instance.myLikes,

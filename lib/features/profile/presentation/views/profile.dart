@@ -10,13 +10,12 @@ import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
 import 'package:Nexus/features/auth/presentation/widgets/record_completed.dart';
-import 'package:Nexus/features/home/presentation/change_notifier/home_notifier.dart';
+import 'package:Nexus/features/home/controllers/home_controller.dart';
 import 'package:Nexus/features/home/presentation/views/photo_view.dart';
 import 'package:Nexus/features/profile/presentation/widgets/compatibility_modal.dart';
 import 'package:Nexus/features/profile/presentation/widgets/text_container.dart';
-import 'package:provider/provider.dart';
+import '../../../../core/size_boxes.dart';
 import '../../../../router.dart';
-import '../../../home/controllers/home_controller.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -37,8 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   FutureOr _init() {
     _setAudioPlayer();
-    var currentUser =
-        Provider.of<HomeNotifier>(context, listen: false).currentUser!;
+
     if (currentUser.compatibilitySetted == null ||
         currentUser.compatibilitySetted == false) {
       Future.delayed(const Duration(seconds: 1), () {
@@ -134,7 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Obx(
-          () => Column(
+              () => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
@@ -375,9 +373,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     InkWell(
                       onTap: () {
                         Get.to(
-                          () => PhotoViewScreen(
+                              () => PhotoViewScreen(
                             selectedIndex:
-                                homeModel.user.value.photos!.indexOf(item),
+                            homeModel.user.value.photos!.indexOf(item),
                             photos: homeModel.user.value.photos!,
                           ),
                         );
@@ -391,7 +389,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           imageUrl: item,
                           progressIndicatorBuilder:
                               (context, url, downloadProgress) =>
-                                  const SizedBox(
+                          const SizedBox(
                             width: 30,
                             height: 30,
                           ),

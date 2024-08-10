@@ -141,12 +141,12 @@ class TabItems extends StatelessWidget {
   final BottomNavModel? navController;
   const TabItems(
       {Key? key,
-      this.navController,
-      this.iconImage,
-      this.iconImage2,
-      this.text,
-      this.onTap,
-      this.currentIndex})
+        this.navController,
+        this.iconImage,
+        this.iconImage2,
+        this.text,
+        this.onTap,
+        this.currentIndex})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -170,13 +170,13 @@ class TabItems extends StatelessWidget {
               children: [
                 navController!.currentIndex == currentIndex
                     ? Icon(
-                        iconImage2!,
-                        color: primary,
-                      )
+                  iconImage2!,
+                  color: primary,
+                )
                     : Icon(
-                        iconImage!,
-                        color: white,
-                      ),
+                  iconImage!,
+                  color: white,
+                ),
                 // if (Platform.isAndroid) const SizedBoxH10(),
               ],
             ),

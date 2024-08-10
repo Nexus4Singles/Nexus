@@ -15,9 +15,10 @@ exports.sendMessageNotification = functions.firestore
           title: "New Message",
           body: "", // To be set dynamically
           sound: "beep",
-          channel_id: "HUNGRY",
-          android_channel_id: "HUNGRY",
+          channel_id: "NEXUS",
+          android_channel_id: "NEXUS",
           priority: "high",
+          icon: "ic_launcher",
         },
       };
 
@@ -39,7 +40,6 @@ exports.sendMessageNotification = functions.firestore
           return;
         }
         const recipientToken = recipientDoc.data().fcm_token;
-        console.log("e work joo!!");
 
         if (recipientToken) {
           await admin.messaging().sendToDevice(recipientToken, payload);
@@ -81,9 +81,11 @@ exports.sendMatchNotification = functions.firestore
             title: "New Match!",
             body: "You have a new match😍😍😍",
             sound: "beep",
-            channel_id: "HUNGRY",
-            android_channel_id: "HUNGRY",
+            channel_id: "NEXUS",
+            android_channel_id: "NEXUS",
             priority: "high",
+            icon: "ic_launcher",
+
           },
         };
 
@@ -104,44 +106,54 @@ exports.sendLikeNotification = functions.firestore
     .onUpdate(async (change, context) => {
       const before = change.before.data();
       const after = change.after.data();
-
-      if (before.myLikes.length < after.myLikes.length) {
+      // Check if a new like was added
+      if (before.likeMe.length < after.likeMe.length) {
         const userId = context.params.userId;
-        const newLikeId = after.myLikes[after.myLikes.length - 1];
+        console.log(userId);
+        const newLikeId = after.likeMe[after.likeMe.length - 1];
+        console.log(newLikeId);
 
-        const likerCol = await admin.firestore().collection("users");
-        const likerDoc = likerCol.doc(newLikeId).get();
-        if (!likerDoc.exists) {
-          console.error("Liker document not found:", newLikeId);
-          return;
-        }
-        const likerName = likerDoc.data().username;
+        try {
+          // Get the liker document
+          const likerDoc = await admin.firestore()
+              .collection("users").doc(newLikeId).get();
+          if (!likerDoc.exists) {
+            console.error("Liker document not found:", newLikeId);
+            return null;
+          }
+          const likerName = likerDoc.data().username;
 
+          const payload = {
+            notification: {
+              title: "New Like",
+              body: `${likerName} liked your profile.`,
+              sound: "beep",
+              channel_id: "NEXUS",
+              android_channel_id: "NEXUS",
+              priority: "high",
+              icon: "ic_launcher",
+            },
+          };
 
-        const payload = {
-          notification: {
-            title: "New Like",
-            body: `${likerName} liked your profile.`,
-            sound: "beep",
-            channel_id: "HUNGRY",
-            android_channel_id: "HUNGRY",
-            priority: "high",
-          },
-        };
+          // Get the recipient document
+          const recipientDoc = await admin.firestore()
+              .collection("users").doc(userId).get();
+          if (!recipientDoc.exists) {
+            console.error("Recipient document not found:", userId);
+            return null;
+          }
+          const recipientToken = recipientDoc.data().fcm_token;
 
-        const rcpCol = await admin.firestore().collection("users");
-        const rcpDoc = rcpCol.doc(userId).get();
-        if (!rcpDoc.exists) {
-          console.error("Recipient document not found:", userId);
-          return;
-        }
-        const recipientToken = rcpDoc.data().fcm_token;
-
-        if (recipientToken) {
-          await admin.messaging().sendToDevice(recipientToken, payload);
-          console.log("Like notification sent successfully");
-        } else {
-          console.log("No FCM token for recipient:", userId);
+          if (recipientToken) {
+            // Send notification
+            await admin.messaging().sendToDevice(recipientToken, payload);
+            console.log("Like notification sent successfully");
+          } else {
+            console.log("No FCM token for recipient:", userId);
+          }
+        } catch (error) {
+          console.error("Error sending like notification:", error);
         }
       }
+      return null;
     });
