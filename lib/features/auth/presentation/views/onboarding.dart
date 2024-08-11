@@ -26,7 +26,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'id': '1',
       "title": "Create a Profile",
       "subtitle":
-          "Nexus is designed for Christian singles who genuinely have a relationship with God & creating a profile requires users to answer 3 questions through audio recordings. \n\nBeyond just viewing the profile pictures & bio-data of different users, listening to their recordings will give you insights into their beliefs & thought processes, which can help you make informed decisions on who to connect with. \n\nIf you struggle with articulating your thoughts, we strongly recommend developing this skill before joining Nexus.Lovely profile pictures are great, but your recordings will truly determine if users would want to connect with you!",
+          "Nexus is designed for Christian singles who genuinely have a relationship with God & creating a profile requires users to answer 3 questions through audio recordings. \n\nBeyond just viewing the profile pictures & bio-data of different users, listening to their recordings will give you insights into their beliefs & thought processes, which can help you make informed decisions on who to connect with. \n\nIf you struggle with articulating your thoughts, we strongly recommend developing this skill before joining Nexus. Lovely profile pictures are great, but your recordings will truly determine if users would want to connect with you!",
       "image": iOnboard1,
     },
     {
