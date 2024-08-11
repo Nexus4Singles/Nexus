@@ -55,7 +55,7 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
                   optionsMenu(
                       userModel.compatibility!.haveKids!.toLowerCase() == "no"
                           ? "${userModel.username} doesn't have kids"
-                          : "${userModel.username} have kids"),
+                          : "${userModel.username} has kids"),
                   optionsMenu(
                       "${userModel.username} has an ${userModel.compatibility!.genotype} Genotype"),
                   optionsMenu(
@@ -64,7 +64,7 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
                               .toLowerCase() ==
                           "yes"
                       ? "${userModel.username} has a regular source of income"
-                      : "${userModel.username} doesn't  have a regular source of income"),
+                      : "${userModel.username} doesn't have a regular source of income"),
                   optionsMenu(
                     "${userModel.username} ${userModel.compatibility!.marrySomeoneNotFS!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
                   ),
@@ -72,13 +72,13 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
                     "${userModel.username} ${userModel.compatibility!.longDistance!.contains("Yes") ? "is" : "is not"} open to a long distance relationship",
                   ),
                   optionsMenu(
-                    "${userModel.username} ${userModel.compatibility!.believeInCohiabiting!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} in cohabiting before marriage",
+                    "${userModel.username} ${userModel.compatibility!.believeInCohiabiting!.toLowerCase().contains("yes") ? "believes" : "doesn't believe"} in cohabiting before marriage",
                   ),
                   optionsMenu(
-                    "${userModel.username} ${userModel.compatibility!.shouldChristianSpeakInTongue!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} every Christian should desire to speak in tongues",
+                    "${userModel.username} ${userModel.compatibility!.shouldChristianSpeakInTongue!.toLowerCase().contains("yes") ? "believes" : "doesn't believe"} every Christian should desire to speak in tongues",
                   ),
                   optionsMenu(
-                    "${userModel.username} ${userModel.compatibility!.believeInTithing!.toLowerCase().contains("yes") ? "believe" : "doesn't believe"} in tithing",
+                    "${userModel.username} ${userModel.compatibility!.believeInTithing!.toLowerCase().contains("yes") ? "believes" : "doesn't believe"} in tithing",
                   )
                 ],
               ),
