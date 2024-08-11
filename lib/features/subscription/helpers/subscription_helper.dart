@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:rename/platform_file_editors/abs_platform_file_editor.dart';
 import '../../../core/models/user.dart';
+import '../../home/controllers/home_controller.dart';
 import '../provider/subscription_provider.dart';
 import '../services/subscription_service.dart';
 import '../views/acknowledgment.dart';
@@ -52,14 +53,15 @@ class SubscriptionHelper {
                               (permission) =>
                           permission.permissionId == 'premium');
                       if (permission.isValid!) {
+                        String formattedDate = DateFormat('dd/MM/yyyy').format(permission!.expireDate!);
+                        voidUpdateProvider(subProvider, true, true, formattedDate);
+                        await updateSubBackend(subProvider.currentUser, true, true, formattedDate, context);
                         subProvider.isLoading = false;
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => const AcknowledgmentScreen()),
                         );
-                        String formattedDate = DateFormat('dd/MM/yyyy').format(permission!.expireDate!);
-                        voidUpdateProvider(subProvider, true, true, formattedDate);
-                        await updateSubBackend(subProvider.currentUser, true, true, formattedDate, context);
+
                       } else {
                         subProvider.isLoading = false;
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -101,9 +103,10 @@ class SubscriptionHelper {
 
   ///Expiry-Date-Helper
   static Future<bool> isSubscriptionValid(BuildContext context, String? subExpDate) async {
+    final homeCtr = HomeController.instance;
     final subProvider = context.read<SubscriptionProvider>();
 
-    final user = subProvider.currentUser;
+    final user = homeCtr.user.value;;
 
     bool subValid = false;
     String? newExpDateToUpload;
@@ -113,10 +116,11 @@ class SubscriptionHelper {
      subProvider.onPremium = false;
     }
 
-    // Check if the current date is after the subscription expiry date
-    bool isAfterExpiry = DateTime.now().isAfter(DateFormat('dd/MM/yyyy').parse(subExpDate ?? ''));
+    bool isAfterExpiry = false;
 
-    //if (isAfterExpiry) {
+    if (subExpDate != null && subExpDate.isNotEmpty) {
+      isAfterExpiry = DateTime.now().isAfter(DateFormat('dd/MM/yyyy').parse(subExpDate));
+    }
 
       if (user != null) {
         try {
@@ -129,7 +133,7 @@ class SubscriptionHelper {
               newExpDateToUpload = newExpDate;
               subValid = true;
               subProvider.onPremium = true;
-              subProvider.subExpDate = newExpDate;
+              subProvider.subExpDate = newExpDate ?? '';
               logger.i('subscription still valid autoRenewal or Re-subscription');
 
             }
@@ -174,7 +178,6 @@ class SubscriptionHelper {
     if (user == null) {
       return;
     }
-
     DocumentReference userDoc = FirebaseFirestore.instance.collection('users').doc(user.id);
 
     // Data to update
@@ -236,7 +239,7 @@ class SubscriptionHelper {
     if (user == null) {
       return;
     }
-
+    logger.i('is it null in updating freetextstsus');
     DocumentReference userDoc = FirebaseFirestore.instance.collection('users').doc(user.id);
 
     // Data to update

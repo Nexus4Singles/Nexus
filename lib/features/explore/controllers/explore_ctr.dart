@@ -35,7 +35,7 @@ class ExploreCtr extends GetxController {
     allUsers.assignAll(data);
     for (var data in allUsers) {
       appLog("this is all users == >$data");
-      if (data.id == auth.currentUser!.uid) {
+      if (data.id == auth.currentUser!.uid ){
         myProfile.value = data;
         allUsers.where((users) => users.gender != myProfile.value.gender);
       }

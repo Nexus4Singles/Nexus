@@ -15,6 +15,7 @@ import 'package:Nexus/features/home/presentation/widgets/user_card.dart';
 import 'package:Nexus/features/match/controllers/matches_ctr.dart';
 import 'package:Nexus/features/subscription/helpers/subscription_helper.dart';
 import 'package:provider/provider.dart';
+import 'package:rename/platform_file_editors/abs_platform_file_editor.dart';
 import '../../../subscription/widgets/restriction_modal.dart';
 import '../../../../core/utils/shared_pref.dart';
 import '../../../subscription/provider/subscription_provider.dart';
@@ -41,12 +42,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   FutureOr _init() async {
+    //logger.i('init');
     var currentUser = homeCtr.user.value;
     var subProvider =  Provider.of<SubscriptionProvider>(context, listen: false);
     subProvider.initSubDet(currentUser);
     SharedPref.setString("email", currentUser.email);
     NotificationController.instance.getAllNotifications();
     await homeCtr.getFilteredUsers(true);
+    //logger.i('before 5s');
+    await SubscriptionHelper.isSubscriptionValid(context, currentUser.subExpDate ?? '');
     await Future.delayed(const Duration(seconds: 5), () {
       if (homeCtr.user.value.compatibilitySetted == null ||
           homeCtr.user.value.compatibilitySetted == false) {
@@ -55,8 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
             "Check for compatibiliity status with this ${homeCtr.user.value.compatibilitySetted}");
       }
     });
-    await SubscriptionHelper.isSubscriptionValid(context, currentUser.subExpDate);
-
+    //logger.i('after 5s');
   }
 
   @override
@@ -73,7 +76,8 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.all(15.sp),
           child: Consumer<SubscriptionProvider>(
             builder: (context, provider, child) {
-
+              logger.i('rebuilt');
+              provider.initSubDet(homeCtr.user.value);
               return Obx(
                     () => Column(
                   children: [
@@ -153,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 })
                                     : debugPrint("This users are matched");
                               },
-                              onRefresh: provider.onPremium
+                              onRefresh: homeCtr.user.value.onPremium
                                   ? () {
                                 matchCtr.undoUnRecommend(
                                     true, cardSwiperController);
@@ -164,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   dismisable: true,
                                 );
                               },
-                              onSaved: provider.onPremium
+                              onSaved: homeCtr.user.value.onPremium
                                   ? () {
                                 matchCtr.toggleSave(user.id);
                               }
