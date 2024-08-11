@@ -50,7 +50,7 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
                     userModel.compatibility!.maritalStatus!.toLowerCase() ==
                             "never married"
                         ? "${userModel.username} has never been married"
-                        : "${userModel.username} has been married",
+                        : "${userModel.username} has been married before",
                   ),
                   optionsMenu(
                       userModel.compatibility!.haveKids!.toLowerCase() == "no"
@@ -64,7 +64,7 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
                               .toLowerCase() ==
                           "yes"
                       ? "${userModel.username} has a regular source of income"
-                      : "${userModel.username} doesn't  have a regular source of income"),
+                      : "${userModel.username} doesn't have a regular source of income"),
                   optionsMenu(
                     "${userModel.username} ${userModel.compatibility!.marrySomeoneNotFS!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
                   ),
