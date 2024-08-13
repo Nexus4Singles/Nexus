@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:nexus/core/constant.dart';
+import 'package:nexus/core/models/locationIQModel.dart';
 import 'package:nexus/core/utils/methods.dart';
 import 'package:nexus/core/utils/toast.dart';
 import 'package:nexus/router.dart';
@@ -25,33 +26,8 @@ class ProfileCtr extends GetxController {
   var profession = "".obs;
   var church = "".obs;
   var city = "".obs;
-  LocationModel? locationModel;
+  LocationIqModel? locationModel;
   List imageUrls = [];
-
-  Future<void> getFormattedLocation(
-      double latitude, double longitude, String pId) async {
-    EasyLoading.show();
-    String url =
-        'https://maps.googleapis.com/maps/api/geocode/json?place_id=$pId&key=AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y';
-    final response = await http.get(Uri.parse(url));
-    final data = json.decode(response.body);
-    Logger().d(data);
-    final address = data['results'][0]['formatted_address'];
-    final placeId = data['results'][0]['place_id'];
-
-    Map<String, dynamic> loc = {
-      'place': address,
-      'latitude': latitude,
-      'longitude': longitude,
-      'id': placeId,
-      'city': data['results'][0]['address_components'][0]['long_name'],
-    };
-    locationModel = LocationModel.fromJson(loc);
-    searchText.text = address;
-    city.value = data['results'][0]['address_components'][0]['long_name'];
-    update();
-    EasyLoading.dismiss();
-  }
 
   updateProfile(List<File> imageFiles) async {
     EasyLoading.show();
@@ -64,7 +40,14 @@ class ProfileCtr extends GetxController {
       'education_level': eduLevel.value,
       'profession': profession.value,
       'church_name': church.value,
-      'location': locationModel?.toJson()
+      'location': LocationModel(
+              id: locationModel!.placeId,
+              latitude: double.parse(locationModel!.lat!),
+              longitude: double.parse(locationModel!.lon!),
+              place: locationModel!.displayName,
+              country: locationModel!.address!.country,
+              city: locationModel!.address!.city)
+          .toJson(),
     });
     Get.back();
     EasyLoading.dismiss();

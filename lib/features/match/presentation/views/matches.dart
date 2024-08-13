@@ -13,14 +13,14 @@ import 'package:nexus/features/match/presentation/widgets/matched_user.dart';
 import '../../../../router.dart';
 import '../../../home/presentation/views/user_details.dart';
 
-class MatcheScreen extends StatefulWidget {
-  const MatcheScreen({super.key});
+class MatchScreen extends StatefulWidget {
+  const MatchScreen({super.key});
 
   @override
-  State<MatcheScreen> createState() => _MatcheScreenState();
+  State<MatchScreen> createState() => _MatchScreenState();
 }
 
-class _MatcheScreenState extends State<MatcheScreen> {
+class _MatchScreenState extends State<MatchScreen> {
   var ctr = Get.put(MatchesCtr());
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class _MatcheScreenState extends State<MatcheScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
                     'This is a list of of users you have liked,  users who liked  your profile, as well as profiles you have saved.',
-                    style: textStyle12.copyWith(),
+                    style: textStyle12.copyWith(fontSize: 13),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -92,7 +92,7 @@ class _MatcheScreenState extends State<MatcheScreen> {
                                     ]),
                         ),
                 ),
-                const SizedBoxH20(),
+                const SizedBox(height: 80)
               ],
             ),
           ),

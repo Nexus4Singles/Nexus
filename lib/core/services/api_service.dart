@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-// import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -173,11 +172,16 @@ class ApiService {
     }
   }
 
-  Future<void> getUserInfo(
-    int userId, {
-    required Function(dynamic data) onSuccess,
-    required Function(dynamic error) onError,
-  }) {
+  Future<void> getUserInfo(int userId,
+      {required Function(dynamic data) onSuccess,
+      required Function(dynamic error) onError}) {
+    final path = '/users/$userId';
+    return get(path, onSuccess: onSuccess, onError: onError);
+  }
+
+  Future<void> locationIQ(String userId,
+      {required Function(dynamic data) onSuccess,
+      required Function(dynamic error) onError}) {
     final path = '/users/$userId';
     return get(path, onSuccess: onSuccess, onError: onError);
   }
@@ -218,4 +222,6 @@ class ApiService {
       onError(error.response);
     }
   }
+
+  // OpenAPILoader openAPILoader = OpenAPILoader();
 }

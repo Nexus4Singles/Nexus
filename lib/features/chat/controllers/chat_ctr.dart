@@ -26,14 +26,18 @@ class ChatCtr extends GetxController {
   var mediaType = "".obs;
   var mediaFile = "".obs;
 
-  getAllMyChats() async {
-    allChatUsers.clear();
-    var data = await db
+  Stream<QuerySnapshot> getAllMyChats() {
+    return db
         .collection(kCHAT)
         .where(kPARTICIPANT, arrayContains: auth.currentUser!.uid)
-        .get();
-    var chats =
-        data.docs.map((data) => ChatModel.fromJson(data.data())).toList();
+        .snapshots();
+  }
+
+  List<ChatModel> filterChatList(dynamic data) {
+    var allChatUsers = <ChatModel>[];
+    var chats = data
+        .map((data) => ChatModel.fromJson(data.data() as Map<String, dynamic>))
+        .toList();
     for (var chat in chats) {
       for (var val in exploreCtr.allUsers) {
         if (chat.participant.contains(val.id)) {
@@ -48,14 +52,22 @@ class ChatCtr extends GetxController {
         }
       }
     }
-    var filteredUsers = allChatUsers
+    allChatUsers.sort((a, b) {
+      if (a.timestamp.toDate().isAtSameMomentAs(DateTime.now()) &&
+          !b.timestamp.toDate().isAtSameMomentAs(DateTime.now())) {
+        return -1;
+      } else if (!a.timestamp.toDate().isAtSameMomentAs(DateTime.now()) &&
+          b.timestamp.toDate().isAtSameMomentAs(DateTime.now())) {
+        return 1;
+      }
+      return b.timestamp.toDate().compareTo(a.timestamp.toDate());
+    });
+    return allChatUsers
         .where((val) => val.userModel!.id != auth.currentUser!.uid)
         .toList();
-    allChatUsers.assignAll(filteredUsers);
-    print("all my chats ==> ${allChatUsers.length}");
   }
 
-  setUserTohaveShowWarning(id) async {
+  setUserToHaveShowWarning(id) async {
     db.collection(kUSER).doc(auth.currentUser!.uid).update({
       "usersChatWarning": FieldValue.arrayUnion([id])
     }).then((val) async {
@@ -119,10 +131,6 @@ class ChatCtr extends GetxController {
         imageFile.value = File('');
         mediaFile.value = "";
         mediaType.value = "";
-        // @John This part is not needed the code here just updates the db from local image to server image thats all
-
-        // notificationController.sendMessageNotification(
-        //     recipient.id, mediaFile.value, mediaType.value);
       });
     } else {}
     chatController.clear();
@@ -153,7 +161,6 @@ class ChatCtr extends GetxController {
         });
       }
     });
-    getAllMyChats();
   }
 
   void pickImage(ChatModel model) async {

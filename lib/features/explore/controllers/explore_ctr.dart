@@ -61,7 +61,7 @@ class ExploreCtr extends GetxController {
             val.gender.toLowerCase() != myProfile.value.gender.toLowerCase())
         .toList()
         .forEach((vals) {
-      if (vals.location!.place!.toLowerCase().contains(place.toLowerCase())) {
+      if (vals.location!.country!.toLowerCase().contains(place.toLowerCase())) {
         print(
             "this is what is being searched ==? ${vals.location!.place} this is what is the place ==?$place");
         searchedUsers.add(vals);
@@ -114,7 +114,6 @@ class ExploreCtr extends GetxController {
   generateNumberList(int startNumber, int endNumber) {
     ageRange.assignAll(List<int>.generate(
         endNumber - startNumber + 1, (index) => startNumber + index));
-    print("${ageRange.length}");
   }
 
   resetFilter() {

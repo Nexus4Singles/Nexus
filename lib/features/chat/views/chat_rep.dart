@@ -37,13 +37,13 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
     if (ctr.exploreCtr.myProfile.value.usersChatWarning == null) {
       Future.delayed(
           const Duration(milliseconds: 100), () => chatWarningModal(context));
-      ctr.setUserTohaveShowWarning(widget.chatModel.userModel!.id);
+      ctr.setUserToHaveShowWarning(widget.chatModel.userModel!.id);
     } else {
       if (!ctr.exploreCtr.myProfile.value.usersChatWarning!
           .contains(widget.chatModel.userModel!.id)) {
         Future.delayed(
             const Duration(milliseconds: 100), () => chatWarningModal(context));
-        ctr.setUserTohaveShowWarning(widget.chatModel.userModel!.id);
+        ctr.setUserToHaveShowWarning(widget.chatModel.userModel!.id);
       } else {}
     }
 

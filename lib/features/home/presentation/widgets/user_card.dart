@@ -417,7 +417,7 @@ class _UserCardState extends State<UserCard> {
                     ),
                     const SizedBoxH25(),
                     Text(
-                      "3.${widget.userModel.username}'s favourite qualities about ${widget.userModel.gender.toLowerCase().contains("f") ? "herself" : "himself"}",
+                      "3. ${widget.userModel.username}'s favourite qualities about ${widget.userModel.gender.toLowerCase().contains("f") ? "herself" : "himself"}",
                       style: textStyle14.copyWith(
                           color: black,
                           fontSize: 14,

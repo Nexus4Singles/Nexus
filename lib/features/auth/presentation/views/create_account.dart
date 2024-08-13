@@ -121,8 +121,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               if (!value.isAlphabetOnly) {
                                 return 'Username cannot contain numbers';
                               }
-                              if (value.length < 5) {
-                                return 'Username must be at least 5 characters';
+                              if (value.length < 3) {
+                                return 'Username must be at least 3 characters';
                               }
                               return null;
                             },

@@ -406,10 +406,10 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                   ),
                               ],
                             ),
-                            const SizedBoxH20(),
+                            const SizedBoxH25(),
                             widget.userModel.matchedUsers != null &&
-                                    widget.userModel.matchedUsers!
-                                        .contains(ctr.auth.currentUser!.uid)
+                                    ctr.ctr.myProfile.value.matchedUsers!
+                                        .contains(widget.userModel.id)
                                 ? Center(
                                     child: TextButton(
                                         onPressed: () {
@@ -430,6 +430,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                         )),
                                   )
                                 : const SizedBoxH10(),
+                            const SizedBoxH10(),
                           ],
                         ),
                       ),

@@ -4,13 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_places_flutter/google_places_flutter.dart';
-import 'package:google_places_flutter/model/prediction.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:logger/logger.dart';
 import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
+import 'package:nexus/core/models/locationIQModel.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
@@ -18,6 +16,7 @@ import 'package:nexus/features/home/controllers/home_controller.dart';
 import 'package:nexus/features/profile/presentation/controllers/profile_ctr.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/utils/image_compressor.dart';
+import '../../../../core/utils/locationIQ_widget.dart';
 import '../../../../core/utils/toast.dart';
 import '../../../auth/data/data-sources/local-datasource/list_items.dart';
 import '../../../auth/presentation/widgets/drop_down.dart';
@@ -45,7 +44,14 @@ class _EditProfileState extends State<EditProfile> {
     ctr.profession.value = currentUser.profession!;
     ctr.church.value = currentUser.churchName!;
     ctr.searchText.text = currentUser.location!.place!;
-    ctr.locationModel = currentUser.location;
+    ctr.locationModel = LocationIqModel(
+        displayName: currentUser.location!.place,
+        lon: currentUser.location!.longitude.toString(),
+        lat: currentUser.location!.latitude.toString(),
+        placeId: currentUser.location!.id,
+        address: Address(
+            country: currentUser.location!.country,
+            city: currentUser.location!.city));
     ctr.usernameCtr.text = currentUser.username;
     allImage.assignAll(currentUser.photos!.toList());
     super.initState();
@@ -314,22 +320,17 @@ class _EditProfileState extends State<EditProfile> {
                   ))
             ]),
             const SizedBoxH15(),
-            GooglePlaceAutoCompleteTextField(
+            LocationIQWidget(
               textEditingController: ctr.searchText,
-              googleAPIKey: 'AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y',
-              // countries: const ['NG'],
-              textStyle: textStyle14.copyWith(color: black),
+              textStyle: textStyle14,
+              locationIQAPIKey: 'pk.da653605da38d00bec98323b179bd52e',
               inputDecoration: InputDecoration(
                 fillColor: white,
                 filled: true,
-                labelStyle: textStyle14,
-                helperStyle: textStyle14,
                 hintText: 'Select your City, Country of Residence',
                 hintStyle: textStyle14.copyWith(color: otherGrey),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 5,
-                ),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 border: outlineInputBorder.copyWith(
                   borderRadius: BorderRadius.circular(16),
                   borderSide: const BorderSide(
@@ -352,39 +353,11 @@ class _EditProfileState extends State<EditProfile> {
               boxDecoration:
                   BoxDecoration(border: Border.all(color: Colors.transparent)),
               debounceTime: 800,
-              isLatLngRequired: true,
-              getPlaceDetailWithLatLng: (Prediction prediction) {
-                ctr.getFormattedLocation(
-                  double.parse(prediction.lat!),
-                  double.parse(prediction.lat!),
-                  prediction.placeId!,
-                );
-                Logger().d(prediction.structuredFormatting);
-              },
-              itemClick: (prediction) {
-                // model.getFormattedLocation(
-                //     double.parse(prediction.lat!),
-                //     double.parse(prediction.lat!));
-                // Logger().d(prediction.toJson());
-              },
-              itemBuilder: (context, index, Prediction prediction) {
-                return Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.location_on),
-                      const SizedBox(
-                        width: 7,
-                      ),
-                      Expanded(
-                          child: Text(prediction.description ?? "",
-                              style: textStyle14.copyWith(color: black)))
-                    ],
-                  ),
-                );
-              },
               seperatedBuilder: const Divider(),
               isCrossBtnShown: true,
+              onClick: (model) {
+                ctr.locationModel = model;
+              },
             ),
             const SizedBoxH15(),
             CustomTextField(

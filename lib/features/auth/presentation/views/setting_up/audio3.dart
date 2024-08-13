@@ -16,7 +16,6 @@ import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.d
 import 'package:nexus/features/auth/presentation/widgets/seek_bar.dart';
 import 'package:nexus/router.dart';
 import 'package:audio_waveforms/audio_waveforms.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
@@ -69,16 +68,6 @@ class _Audio3ScreenState extends State<Audio3Screen> {
       ..androidOutputFormat = AndroidOutputFormat.mpeg4
       ..iosEncoder = IosEncoder.kAudioFormatMPEG4AAC
       ..sampleRate = 44100;
-  }
-
-  void _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      musicFile = result.files.single.path;
-      setState(() {});
-    } else {
-      debugPrint("File not picked");
-    }
   }
 
   @override

@@ -13,6 +13,7 @@ class CompatibilitySuccessful extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 0.sp),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

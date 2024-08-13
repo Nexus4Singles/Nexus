@@ -18,7 +18,7 @@ class BottomNavModel extends ChangeNotifier {
   final List<Widget> _navs = [
     const HomeScreen(),
     const ExploreScreen(),
-    const MatcheScreen(),
+    const MatchScreen(),
     const ChatsScreen(),
     const ProfileScreen(),
   ];

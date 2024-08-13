@@ -389,9 +389,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
                                     ),
-                                    content: SizedBox(
-                                        height: Get.height / 2,
-                                        child: const CompatibilitySuccessful()),
+                                    content: const CompatibilitySuccessful(),
                                   );
                                 },
                               );

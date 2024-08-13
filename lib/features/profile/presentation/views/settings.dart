@@ -6,6 +6,8 @@ import 'package:nexus/features/profile/presentation/views/contact_us.dart';
 import 'package:nexus/router.dart';
 import 'package:nexus/features/profile/presentation/widgets/login_modal_sheet.dart';
 import 'package:nexus/features/profile/presentation/widgets/setting_container.dart';
+import 'package:ruut/models/user.model.dart';
+import 'package:ruut/ruut.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -26,6 +28,28 @@ class _SettingScreenState extends State<SettingScreen> {
           style: textStyle18.copyWith(
               fontSize: 24, fontWeight: FontWeight.w700, color: black),
         ),
+        actions: [
+          InkWell(
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(Icons.add),
+            ),
+            onTap: () {
+              Get.to(Ruut(
+                ruutToken: 'M9Hp8qy4wYBmPa1HN6EsdYDt',
+                user: RuutUser(
+                  id: 'USER_ID',
+                  email: 'user@example.com',
+                  fullName: 'John Doe',
+                  // Add other user details here
+                ),
+                onReady: () {
+                  print('Ruut is ready');
+                },
+              ));
+            },
+          )
+        ],
         centerTitle: true,
         foregroundColor: black,
         elevation: 0,

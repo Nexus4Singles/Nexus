@@ -2,12 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-import 'package:google_places_flutter/google_places_flutter.dart';
-import 'package:google_places_flutter/model/prediction.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/constant.dart';
+import 'package:nexus/core/models/location.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/text_field.dart';
@@ -18,6 +16,7 @@ import 'package:nexus/features/auth/presentation/widgets/drop_down.dart';
 import 'package:nexus/router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../core/utils/locationIQ_widget.dart';
 import '../../../../../core/utils/toast.dart';
 
 class ExtraInformationScreen extends StatefulWidget {
@@ -110,11 +109,10 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                     ),
                     const SizedBoxH40(),
                     const SizedBoxH20(),
-                    GooglePlaceAutoCompleteTextField(
+                    LocationIQWidget(
                       textEditingController: model.search,
                       textStyle: textStyle14,
-                      googleAPIKey: 'AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y',
-                      // countries: const ['NG'],
+                      locationIQAPIKey: 'pk.da653605da38d00bec98323b179bd52e',
                       inputDecoration: InputDecoration(
                         fillColor: white,
                         filled: true,
@@ -144,38 +142,11 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                       boxDecoration: BoxDecoration(
                           border: Border.all(color: Colors.transparent)),
                       debounceTime: 800,
-                      isLatLngRequired: true,
-                      getPlaceDetailWithLatLng: (Prediction prediction) {
-                        Logger().d(prediction.toJson());
-                        model.getFormattedLocation(
-                            double.parse(prediction.lat!),
-                            double.parse(prediction.lat!),
-                            prediction.placeId!);
-                      },
-                      itemClick: (prediction) {
-                        // model.getFormattedLocation(
-                        //     double.parse(prediction.lat!),
-                        //     double.parse(prediction.lat!));
-                        // Logger().d(prediction.toJson());
-                      },
-                      itemBuilder: (context, index, Prediction prediction) {
-                        return Container(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.location_on),
-                              const SizedBox(width: 7),
-                              Expanded(
-                                  child: Text(
-                                prediction.description ?? "",
-                                style: textStyle14,
-                              ))
-                            ],
-                          ),
-                        );
-                      },
                       seperatedBuilder: const Divider(),
                       isCrossBtnShown: true,
+                      onClick: (models) {
+                        model.locationIQModel = models;
+                      },
                     ),
                     const SizedBoxH15(),
                     ProfileDropDown(
@@ -247,36 +218,37 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
             children: [
               CustomButton(
                 onPressed: () {
-                  if (model.location.place!.contains(" ")) {
-                    bool validate = _formkey.currentState!.validate();
-                    if (validate &&
-                        churchController.text.isNotEmpty &&
-                        churchController.text.toLowerCase() != "other") {
-                      Map<String, dynamic> map = {
-                        kCOUNTRY: 'Nigeria', //todo Nigeria as default
-                        kCHURCHNAME: churchController.text.isEmpty
-                            ? church
-                            : churchController.text,
-                        kEDULEVEL: eduLevel,
-                        kSTATEOFORIGIN: state,
-                        kPROFESSION: profession,
-                        kREGPROGRESS: 'extra',
-                        kCITY: model.city, //todo set city
-                        kLOCATION: model.location.toJson(),
-                      };
-                      model.updateProfile(
-                        map: map,
-                        onCompleted: () {
-                          Get.toNamed(AppRoutes.hobbies);
-                        },
-                      );
-                    } else {
-                      AppToast().showErrorToast(
-                          "Please type the name of your Church");
-                    }
+                  bool validate = _formkey.currentState!.validate();
+                  if (validate &&
+                      churchController.text.isNotEmpty &&
+                      churchController.text.toLowerCase() != "other") {
+                    Map<String, dynamic> map = {
+                      kCOUNTRY: 'Nigeria', //todo Nigeria as default
+                      kCHURCHNAME: churchController.text.isEmpty
+                          ? church
+                          : churchController.text,
+                      kEDULEVEL: eduLevel,
+                      kSTATEOFORIGIN: state,
+                      kPROFESSION: profession,
+                      kREGPROGRESS: 'extra',
+                      kCITY: model.city, //todo set city
+                      kLOCATION: LocationModel(
+                          id: model.locationIQModel!.placeId,
+                          latitude: double.parse(model.locationIQModel!.lat!),
+                          longitude: double.parse(model.locationIQModel!.lon!),
+                          place: model.locationIQModel!.displayName,
+                          country: model.locationIQModel!.address!.country,
+                          city: model.locationIQModel!.address!.city),
+                    };
+                    model.updateProfile(
+                      map: map,
+                      onCompleted: () {
+                        Get.toNamed(AppRoutes.hobbies);
+                      },
+                    );
                   } else {
-                    AppToast().showErrorToast(
-                        "Please select a city with the country");
+                    AppToast()
+                        .showErrorToast("Please type the name of your Church");
                   }
                 },
                 child: Text(

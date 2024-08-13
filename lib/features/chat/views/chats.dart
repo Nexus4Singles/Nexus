@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -44,24 +45,31 @@ class _ChatsScreenState extends State<ChatsScreen> {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 15.sp),
-            child: Obx(
-              () => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Recent Matches',
-                    style: textStyle18.copyWith(
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBoxH15(),
-                  ctr.allChatUsers.isNotEmpty
-                      ? SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Recent Matches',
+                  style: textStyle18.copyWith(fontWeight: FontWeight.w800),
+                ),
+                const SizedBoxH15(),
+                StreamBuilder<QuerySnapshot>(
+                    stream: ctr.getAllMyChats(),
+                    builder: (context, snapshot) {
+                      print(
+                          "does this snapshot have data ==> ${snapshot.hasData}");
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator.adaptive();
+                      } else {
+                        var data = snapshot.data!.docs;
+                        var allChatUsers = ctr.filterChatList(data);
+                        debugPrint("${allChatUsers.length}");
+                        return SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           physics: const BouncingScrollPhysics(),
                           child: Row(
                             children: [
-                              ...ctr.allChatUsers.map((users) {
+                              ...allChatUsers.map((users) {
                                 return InkWell(
                                   onTap: () {
                                     Get.to(
@@ -79,26 +87,35 @@ class _ChatsScreenState extends State<ChatsScreen> {
                               }).toList()
                             ],
                           ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.only(top: 24.0),
-                          child: Center(
-                              child: Text(
-                            "You don’t have any matches yet",
-                            style: textStyle14.copyWith(color: dustyGrey),
-                          )),
-                        ),
-                  const SizedBoxH40(),
-                  Text('Chats',
-                      style: textStyle18.copyWith(fontWeight: FontWeight.w800)),
-                  const SizedBoxH10(),
-                  ctr.allChatUsers
-                          .where((val) => val.lastMessage.isNotEmpty)
-                          .isNotEmpty
-                      ? ListView(
+                        );
+                      }
+                    }),
+                const SizedBoxH40(),
+                Text('Chats',
+                    style: textStyle18.copyWith(fontWeight: FontWeight.w800)),
+                const SizedBoxH10(),
+                StreamBuilder<QuerySnapshot>(
+                    stream: ctr.getAllMyChats(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return SizedBox(
+                          height: Get.height / 2,
+                          child: const Center(
+                            child: EmptyStateWidget(
+                                shouldShowImage: false,
+                                message: 'You will see your chats here'),
+                          ),
+                        );
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const CircularProgressIndicator.adaptive();
+                      } else {
+                        var data = snapshot.data!.docs;
+                        var allChatUsers = ctr.filterChatList(data);
+                        return ListView(
                           shrinkWrap: true,
                           children: [
-                            ...ctr.allChatUsers
+                            ...allChatUsers
                                 .where((val) => val.lastMessage.isNotEmpty)
                                 .map((val) {
                               return ChatContainer(
@@ -116,17 +133,10 @@ class _ChatsScreenState extends State<ChatsScreen> {
                               );
                             }).toList(),
                           ],
-                        )
-                      : SizedBox(
-                          height: Get.height / 2,
-                          child: const Center(
-                            child: EmptyStateWidget(
-                                shouldShowImage: false,
-                                message: 'You will see your chats here'),
-                          ),
-                        )
-                ],
-              ),
+                        );
+                      }
+                    }),
+              ],
             ),
           ),
         ],

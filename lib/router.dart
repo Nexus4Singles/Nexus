@@ -124,11 +124,6 @@ final appRouter = [
     page: () => const LoginScreen(),
     binding: BindingsBuilder(() {}),
   ),
-  // GetPage(
-  //   name: AppRoutes.login,
-  //   page: () => const LoginScreen(),
-  //   binding: BindingsBuilder(() {}),
-  // ),
   GetPage(
     name: AppRoutes.createAccount,
     page: () => const CreateAccountScreen(),
@@ -334,6 +329,11 @@ final appRouter = [
   // GetPage(
   //   name: AppRoutes.photoViews,
   //   page: () => const PhotoViewScreen(),
+  //   binding: BindingsBuilder(() {}),
+  // ),
+  // GetPage(
+  //   name: AppRoutes.login,
+  //   page: () => const LoginScreen(),
   //   binding: BindingsBuilder(() {}),
   // ),
 ];
