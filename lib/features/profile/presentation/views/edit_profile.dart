@@ -43,6 +43,7 @@ class _EditProfileState extends State<EditProfile> {
     ctr.eduLevel.value = currentUser.educationLevel!;
     ctr.profession.value = currentUser.profession!;
     ctr.church.value = currentUser.churchName!;
+    ctr.churchCtr.text = currentUser.churchName!;
     ctr.searchText.text = currentUser.location!.place!;
     ctr.locationModel = LocationIqModel(
         displayName: currentUser.location!.place,
@@ -396,9 +397,8 @@ class _EditProfileState extends State<EditProfile> {
                   : ctr.church.value,
               hintText: 'Church',
               onChanged: (p0) {
-                setState(() {
-                  ctr.church.value = p0!;
-                });
+                ctr.church.value = p0!;
+                setState(() {});
               },
             ),
             const SizedBoxH15(),
@@ -411,12 +411,11 @@ class _EditProfileState extends State<EditProfile> {
                       ? CustomTextField(
                           fillColor: white,
                           radius: 12,
-                          controller: TextEditingController(
-                              text: currentUser.churchName),
+                          controller: ctr.churchCtr,
                           onChanged: (val) {
                             ctr.church.value = val;
                           },
-                          hintText: "Username",
+                          hintText: "Church name",
                           suffixIcon: SvgPicture.asset(
                             "$svgPath/edit.svg",
                             fit: BoxFit.scaleDown,

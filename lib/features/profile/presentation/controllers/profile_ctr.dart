@@ -22,6 +22,7 @@ class ProfileCtr extends GetxController {
   TextEditingController currentPassword = TextEditingController();
   TextEditingController newPassword = TextEditingController();
   TextEditingController coNewPassword = TextEditingController();
+  TextEditingController churchCtr = TextEditingController();
   var eduLevel = "".obs;
   var profession = "".obs;
   var church = "".obs;
