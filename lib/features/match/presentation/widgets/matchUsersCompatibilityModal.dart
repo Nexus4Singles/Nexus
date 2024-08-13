@@ -55,7 +55,7 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
                   optionsMenu(
                       userModel.compatibility!.haveKids!.toLowerCase() == "no"
                           ? "${userModel.username} doesn't have kids"
-                          : "${userModel.username} have kids"),
+                          : "${userModel.username} has kids"),
                   optionsMenu(
                       "${userModel.username} has an ${userModel.compatibility!.genotype} Genotype"),
                   optionsMenu(
@@ -64,7 +64,7 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
                               .toLowerCase() ==
                           "yes"
                       ? "${userModel.username} has a regular source of income"
-                      : "${userModel.username} doesn't  have a regular source of income"),
+                      : "${userModel.username} doesn't have a regular source of income"),
                   optionsMenu(
                     "${userModel.username} ${userModel.compatibility!.marrySomeoneNotFS!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
                   ),
