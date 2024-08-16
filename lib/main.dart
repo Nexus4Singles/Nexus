@@ -68,16 +68,21 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => sl<HomeNotifier>()),
       ],
       child: Consumer<ThemeProvider>(builder: (context, theme, _) {
-        return ScreenUtilInit(
-          splitScreenMode: false,
-          builder: (context, child) => GetMaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Nexus',
-            theme: lightTheme,
-            // theme: darkTheme,
-            initialRoute: AppRoutes.splash,
-            getPages: appRouter,
-            builder: EasyLoading.init(),
+        return GestureDetector(
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: ScreenUtilInit(
+            splitScreenMode: false,
+            builder: (context, child) => GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Nexus',
+              theme: lightTheme,
+              // theme: darkTheme,
+              initialRoute: AppRoutes.splash,
+              getPages: appRouter,
+              builder: EasyLoading.init(),
+            ),
           ),
         );
       }),

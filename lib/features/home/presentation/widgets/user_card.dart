@@ -249,7 +249,7 @@ class _UserCardState extends State<UserCard> {
                     Text(
                       'About',
                       style: textStyle14.copyWith(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
                         color: black,
                       ),
                     ),
@@ -323,7 +323,7 @@ class _UserCardState extends State<UserCard> {
                     Text(
                       'Hobbies / Interests',
                       style: textStyle14.copyWith(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
                         color: black,
                       ),
                     ),
@@ -346,7 +346,7 @@ class _UserCardState extends State<UserCard> {
                         Text(
                           'Most Desired Qualities',
                           style: textStyle14.copyWith(
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.bold,
                             color: black,
                           ),
                         ),
@@ -367,7 +367,7 @@ class _UserCardState extends State<UserCard> {
                     Text(
                       'Audio Recordings',
                       style: textStyle14.copyWith(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
                         color: black,
                       ),
                     ),
@@ -441,7 +441,7 @@ class _UserCardState extends State<UserCard> {
                     Text(
                       'Gallery',
                       style: textStyle14.copyWith(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
                         color: black,
                       ),
                     ),

@@ -129,7 +129,7 @@ class _SubsciptionScreenState extends State<SubsciptionScreen> {
                 fontWeight: FontWeight.w300,
               ),
             ),
-            SizedBox(height: 10.h),
+            SizedBox(height: 24.h),
             _buildPlanContainer(
               title: 'Free',
               features: [
@@ -141,7 +141,7 @@ class _SubsciptionScreenState extends State<SubsciptionScreen> {
                 'Limited Access to Chat with Matched Users (1 User)',
               ],
             ),
-            SizedBox(height: 10.h),
+            SizedBox(height: 24.h),
             _buildPlanContainer(
               title: '\$5/month',
               features: [
@@ -152,7 +152,7 @@ class _SubsciptionScreenState extends State<SubsciptionScreen> {
               ],
               onSelectPlan: () => _showPaymentBottomSheet(context, 5),
             ),
-            SizedBox(height: 10.h),
+            SizedBox(height: 24.h),
             _buildPlanContainer(
               title: '\$12/3 months',
               features: [
