@@ -195,7 +195,6 @@ class AuthNotifier with ChangeNotifier {
       EasyLoading.dismiss();
       user = r;
       notifyListeners();
-
       bool isVerified = FirebaseAuth.instance.currentUser!.emailVerified;
       if (isVerified) {
         switch (r.registrationProgress) {

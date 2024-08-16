@@ -233,12 +233,15 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                       kREGPROGRESS: 'extra',
                       kCITY: model.city, //todo set city
                       kLOCATION: LocationModel(
-                          id: model.locationIQModel!.placeId,
-                          latitude: double.parse(model.locationIQModel!.lat!),
-                          longitude: double.parse(model.locationIQModel!.lon!),
-                          place: model.locationIQModel!.displayName,
-                          country: model.locationIQModel!.address!.country,
-                          city: model.locationIQModel!.address!.city),
+                              id: model.locationIQModel!.placeId,
+                              latitude:
+                                  double.parse(model.locationIQModel!.lat!),
+                              longitude:
+                                  double.parse(model.locationIQModel!.lon!),
+                              place: model.locationIQModel!.displayName,
+                              country: model.locationIQModel!.address!.country,
+                              city: model.locationIQModel!.address!.city)
+                          .toJson(),
                     };
                     model.updateProfile(
                       map: map,

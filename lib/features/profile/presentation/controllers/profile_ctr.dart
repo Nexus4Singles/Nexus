@@ -15,6 +15,7 @@ import 'package:nexus/router.dart';
 import '../../../../core/models/location.dart';
 
 class ProfileCtr extends GetxController {
+  static ProfileCtr get instance => Get.find<ProfileCtr>();
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
   TextEditingController searchText = TextEditingController();

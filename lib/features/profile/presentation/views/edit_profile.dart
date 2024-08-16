@@ -32,11 +32,11 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  var ctr = Get.put(ProfileCtr());
   List<File> imageFiles = [];
   List<String> allImage = [];
   int maxPhotos = 4;
   var currentUser = HomeController.instance.user.value;
+  var ctr = ProfileCtr.instance;
 
   @override
   void initState() {
