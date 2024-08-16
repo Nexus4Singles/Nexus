@@ -135,7 +135,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           fontWeight: FontWeight.w300,
                         ),
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 30.h),
                       _buildPlanContainer(
                         title: 'Free',
                         features: [
@@ -147,7 +147,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           'Limited Access to Chat with Matched Users (1 User)',
                         ],
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 20.h),
                       _buildPlanContainer(
                           title: 'Premium',
                           features: [
