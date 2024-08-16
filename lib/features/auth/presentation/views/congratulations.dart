@@ -3,16 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/button.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/core/utils/device.dart';
-import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
-import 'package:nexus/router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/assets.dart';
+import '../../../../core/button.dart';
+import '../../../../core/colors.dart';
+import '../../../../core/size_boxes.dart';
+import '../../../../core/style.dart';
+import '../../../../core/utils/device.dart';
+import '../../../../router.dart';
+import '../change_notifier/auth_notifier.dart';
 
 class CongratulationScreen extends StatefulWidget {
   final String username;
@@ -74,7 +74,7 @@ class _CongratulationScreenState extends State<CongratulationScreen> {
                               SvgPicture.asset('$svgPath/congrats.svg'),
                               const SizedBoxH20(),
                               Text(
-                                'Hello ${username}',
+                                'Hello $username',
                                 overflow: TextOverflow.ellipsis,
                                 style: headerStyle.copyWith(
                                   fontSize: 28.sp,

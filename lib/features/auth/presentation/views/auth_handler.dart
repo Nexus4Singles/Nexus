@@ -3,17 +3,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nexus/core/assets.dart';
-import 'package:nexus/core/button.dart';
-import 'package:nexus/core/button_outline.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/core/utils/toast.dart';
-import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
-import 'package:nexus/features/auth/presentation/widgets/country_modal.dart';
-import 'package:nexus/router.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../core/assets.dart';
+import '../../../../core/button.dart';
+import '../../../../core/button_outline.dart';
+import '../../../../core/colors.dart';
+import '../../../../core/size_boxes.dart';
+import '../../../../core/style.dart';
+import '../../../../core/utils/toast.dart';
+import '../../../../router.dart';
+import '../change_notifier/auth_notifier.dart';
+import '../widgets/country_modal.dart';
 
 class AuthHandler extends StatefulWidget {
   const AuthHandler({super.key});

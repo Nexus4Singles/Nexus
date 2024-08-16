@@ -10,7 +10,6 @@ import 'package:nexus/core/text_field.dart';
 import 'package:nexus/core/utils/empty_state.dart';
 import 'package:nexus/features/explore/controllers/explore_ctr.dart';
 import 'package:nexus/features/explore/presentation/widgets/filter_modal.dart';
-import 'package:nexus/features/home/presentation/widgets/coming_soon_modal.dart';
 import '../../../../core/utils/progress_indicator.dart';
 import '../../../home/presentation/views/user_details.dart';
 import '../widgets/user_tile.dart';

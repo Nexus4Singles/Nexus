@@ -9,7 +9,6 @@ import 'package:nexus/core/utils/progress_indicator.dart';
 import 'package:nexus/features/match/controllers/matches_ctr.dart';
 import 'package:nexus/features/match/presentation/widgets/match_stat.dart';
 import 'package:nexus/features/match/presentation/widgets/matched_user.dart';
-
 import '../../../../router.dart';
 import '../../../home/presentation/views/user_details.dart';
 
@@ -21,7 +20,7 @@ class MatchScreen extends StatefulWidget {
 }
 
 class _MatchScreenState extends State<MatchScreen> {
-  var ctr = Get.put(MatchesCtr());
+  var ctr = MatchesCtr.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,10 +95,6 @@ class _MatchScreenState extends State<MatchScreen> {
               ],
             ),
           ),
-          // const ComingSoonWidget(
-          //   text:
-          //       'You will be able to view the list of users who have liked your profile here. ',
-          // ),
         ],
       ),
     );

@@ -6,8 +6,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:nexus/core/network/client.dart';
 import 'package:path/path.dart' as path;
+
+import '../../../../../core/network/client.dart';
 
 abstract class AuthenticationRemoteDatasource {
   Future<dynamic> login(Map<String, dynamic> map);

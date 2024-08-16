@@ -92,7 +92,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 //   header: 'Coming soon',
                 // );
 
-                Get.toNamed(AppRoutes.cancelPlan);
+                Get.toNamed(AppRoutes.subscription3);
               },
             ),
             const Divider(color: Colors.transparent),
@@ -123,16 +123,16 @@ class _SettingScreenState extends State<SettingScreen> {
                 onPress: () {
                   Get.toNamed(AppRoutes.privacy);
                 }),
-            const Divider(
-              color: Colors.transparent,
-            ),
-            SettingsContainer(
-                text: 'Change Password',
-                icon: true,
-                onPress: () {
-                  Get.toNamed(AppRoutes.changePassword);
-                  // Get.toNamed(AppRoutes.changePassword);
-                }),
+            // const Divider(
+            // color: Colors.transparent,
+            // ),
+            // SettingsContainer(
+            //   text: 'Change Password',
+            //   icon: true,
+            //  onPress: () {
+            //  Get.toNamed(AppRoutes.changePassword);
+            // Get.toNamed(AppRoutes.changePassword);
+            // }),
             const Divider(color: Colors.transparent),
             SettingsContainer(
                 text: 'Delete Account',

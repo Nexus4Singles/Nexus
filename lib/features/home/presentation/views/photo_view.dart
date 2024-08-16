@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
-
 import 'package:provider/provider.dart';
 import 'package:story/story_image.dart';
 import 'package:story/story_page_view.dart';

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/utils/empty_state.dart';
+import 'package:nexus/features/subscription/views/subscription.dart';
 import '../../features/home/presentation/widgets/coming_soon_modal.dart';
 import '../../features/match/presentation/widgets/matchUsersCompatibilityModal.dart';
 import '../../features/profile/presentation/widgets/compatibility_modal.dart';
@@ -52,15 +53,22 @@ subscribeModal(context) {
     context: context,
     barrierDismissible: true,
     builder: (context) {
-      return AlertDialog.adaptive(
+      return Dialog(
         backgroundColor: white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        content: EmptyStateWidget(
-            showClose: true,
-            buttonText: "Subscribe",
-            buttonFunc: () {},
-            message:
-                'This is a premium feature. The free version of Nexus allows you to search by City & Country of Residence. Subscribing gives you access to use advanced filters to narrow down your search.'),
+        child: SizedBox(
+          height: Get.height / 2.7,
+          child: EmptyStateWidget(
+              buttonText: "Subscribe",
+              buttonFunc: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SubscriptionScreen()));
+              },
+              message:
+                  'This is a premium feature. The free version of nexus allows you to search by City & Country of Residence. Subscribing gives you access to use advanced filters to narrow down your search.'),
+        ),
       );
     },
   );

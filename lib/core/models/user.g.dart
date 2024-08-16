@@ -12,19 +12,16 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       username: json['username'] as String,
       email: json['email'] as String,
       profileUrl: json['profile_url'] as String?,
-      age: json['age'] as int,
-      countLike: json['countLike'] ?? 0,
+      age: (json['age'] as num).toInt(),
       gender: json['gender'] as String,
       bestQualotiesOrTraits: json['best_qualities_or_traits'] as String?,
       city: json['city'] as String?,
+      countLike: (json['countLike'] as num?)?.toInt(),
       desiredQualities: (json['desired_qualities'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
       hobbies:
           (json['hobbies'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      usersChatWarning: (json['usersChatWarning'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
       photos:
           (json['photos'] as List<dynamic>?)?.map((e) => e as String).toList(),
       likeMe:
@@ -33,10 +30,10 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
           (json['myLikes'] as List<dynamic>?)?.map((e) => e as String).toList(),
       mySaves:
           (json['mySaves'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      matchedUsers: (json['matchedUsers'] as List<dynamic>?)
+      usersChatWarning: (json['usersChatWarning'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      unRecommendUsers: (json['unRecommendUsers'] as List<dynamic>?)
+      matchedUsers: (json['matchedUsers'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
       educationLevel: json['education_level'] as String?,
@@ -59,6 +56,10 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
           ? null
           : LocationModel.fromJson(json['location'] as Map<String, dynamic>),
       fcmToken: json['fcm_token'] as String?,
+      onPremium: json['onPremium'] as bool? ?? false,
+      prevSubscribed: json['prevSubscribed'] as bool? ?? false,
+      subExpDate: json['subExpDate'] as String?,
+      usedOneFreeText: json['usedOneFreeText'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -71,10 +72,12 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'gender': instance.gender,
       'age': instance.age,
       'city': instance.city,
+      'countLike': instance.countLike,
       'state_of_origin': instance.stateOfOrigin,
       'education_level': instance.educationLevel,
       'profession': instance.profession,
       'hobbies': instance.hobbies,
+      'usersChatWarning': instance.usersChatWarning,
       'matchedUsers': instance.matchedUsers,
       'likeMe': instance.likeMe,
       'myLikes': instance.myLikes,
@@ -93,4 +96,8 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'compatibility_setted': instance.compatibilitySetted,
       'location': instance.location,
       'fcm_token': instance.fcmToken,
+      'onPremium': instance.onPremium,
+      'prevSubscribed': instance.prevSubscribed,
+      'subExpDate': instance.subExpDate,
+      'usedOneFreeText': instance.usedOneFreeText,
     };

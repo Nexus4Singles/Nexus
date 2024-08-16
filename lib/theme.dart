@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/constant.dart';
-import 'package:nexus/core/utils/shared_pref.dart';
+
+import 'core/colors.dart';
+import 'core/constant.dart';
+import 'core/utils/shared_pref.dart';
 
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,

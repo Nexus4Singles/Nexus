@@ -1,52 +1,50 @@
 import 'package:get/get.dart';
-import 'package:nexus/features/chat/views/chats.dart';
-import 'package:nexus/features/auth/presentation/views/auth_handler.dart';
-import 'package:nexus/features/auth/presentation/views/login.dart';
-import 'package:nexus/features/auth/presentation/views/onboarding.dart';
-import 'package:nexus/features/auth/presentation/views/onboarding_handler.dart';
-import 'package:nexus/features/auth/presentation/views/setting_up/audio1.dart';
-import 'package:nexus/features/auth/presentation/views/setting_up/audio2.dart';
-import 'package:nexus/features/auth/presentation/views/setting_up/audio3.dart';
-import 'package:nexus/features/auth/presentation/views/setting_up/audio_recoding_completed.dart';
-import 'package:nexus/features/auth/presentation/views/splash.dart';
-import 'package:nexus/features/home/bindings/home_bindings.dart';
-import 'package:nexus/features/home/presentation/views/nav.dart';
-import 'package:nexus/features/home/presentation/views/user_details.dart';
-import 'package:nexus/features/notifications/presentation/views/notification.dart';
-import 'package:nexus/features/auth/presentation/views/congratulations.dart';
-import 'package:nexus/features/auth/presentation/views/create_account.dart';
-import 'package:nexus/features/auth/presentation/views/forgotten_password.dart';
-import 'package:nexus/features/auth/presentation/views/verify_account.dart';
-import 'package:nexus/features/profile/presentation/views/about.dart';
-import 'package:nexus/features/profile/presentation/views/add_card.dart';
-import 'package:nexus/features/profile/presentation/views/change_plan.dart';
-import 'package:nexus/features/profile/presentation/views/change_password.dart';
-import 'package:nexus/features/profile/presentation/views/compatibilty_quiz.dart';
-import 'package:nexus/features/profile/presentation/views/delete_account.dart';
-import 'package:nexus/features/profile/presentation/views/edit_profile.dart';
-import 'package:nexus/features/profile/presentation/widgets/login_modal_sheet.dart';
-import 'package:nexus/features/profile/presentation/views/payment.dart';
-import 'package:nexus/features/profile/presentation/views/payment_success.dart';
-import 'package:nexus/features/profile/presentation/views/privacy.dart';
-import 'package:nexus/features/profile/presentation/views/profile.dart';
-import 'package:nexus/features/profile/presentation/views/review.dart';
-import 'package:nexus/features/profile/presentation/views/settings.dart';
-import 'package:nexus/features/profile/presentation/views/subscription.dart';
-import 'package:nexus/features/settings/presentation/views/subscription3.dart';
-import 'package:nexus/features/settings/presentation/views/subscription4.dart';
-import 'package:nexus/features/profile/presentation/views/terms.dart';
-import 'package:nexus/features/profile/presentation/views/verify_acc.dart';
-import 'package:nexus/features/auth/presentation/views/setting_up/age.dart';
-import 'package:nexus/features/auth/presentation/views/setting_up/audio_recording.dart';
-
-import 'package:nexus/features/auth/presentation/views/setting_up/desired_quality.dart';
-import 'package:nexus/features/auth/presentation/views/setting_up/extra_info.dart';
-import 'package:nexus/features/auth/presentation/views/setting_up/gender.dart';
-import 'package:nexus/features/auth/presentation/views/setting_up/hobbies.dart';
-import 'package:nexus/features/auth/presentation/views/setting_up/profile_completed.dart';
-import 'package:nexus/features/auth/presentation/views/setting_up/upload_photo.dart';
-
+import 'features/auth/presentation/views/auth_handler.dart';
+import 'features/auth/presentation/views/congratulations.dart';
+import 'features/auth/presentation/views/create_account.dart';
+import 'features/auth/presentation/views/forgotten_password.dart';
+import 'features/auth/presentation/views/login.dart';
+import 'features/auth/presentation/views/onboarding.dart';
+import 'features/auth/presentation/views/onboarding_handler.dart';
+import 'features/auth/presentation/views/setting_up/age.dart';
+import 'features/auth/presentation/views/setting_up/audio1.dart';
+import 'features/auth/presentation/views/setting_up/audio2.dart';
+import 'features/auth/presentation/views/setting_up/audio3.dart';
+import 'features/auth/presentation/views/setting_up/audio_recoding_completed.dart';
+import 'features/auth/presentation/views/setting_up/audio_recording.dart';
+import 'features/auth/presentation/views/setting_up/desired_quality.dart';
+import 'features/auth/presentation/views/setting_up/extra_info.dart';
+import 'features/auth/presentation/views/setting_up/gender.dart';
+import 'features/auth/presentation/views/setting_up/hobbies.dart';
+import 'features/auth/presentation/views/setting_up/profile_completed.dart';
+import 'features/auth/presentation/views/setting_up/upload_photo.dart';
+import 'features/auth/presentation/views/splash.dart';
+import 'features/auth/presentation/views/verify_account.dart';
 import 'features/chat/views/chat_rep.dart';
+import 'features/chat/views/chats.dart';
+import 'features/home/bindings/home_bindings.dart';
+import 'features/home/presentation/views/nav.dart';
+import 'features/home/presentation/views/user_details.dart';
+import 'features/notifications/presentation/views/notification.dart';
+import 'features/profile/presentation/views/about.dart';
+import 'features/profile/presentation/views/add_card.dart';
+import 'features/profile/presentation/views/change_password.dart';
+import 'features/profile/presentation/views/change_plan.dart';
+import 'features/profile/presentation/views/compatibilty_quiz.dart';
+import 'features/profile/presentation/views/delete_account.dart';
+import 'features/profile/presentation/views/edit_profile.dart';
+import 'features/profile/presentation/views/payment.dart';
+import 'features/profile/presentation/views/payment_success.dart';
+import 'features/profile/presentation/views/privacy.dart';
+import 'features/profile/presentation/views/profile.dart';
+import 'features/profile/presentation/views/review.dart';
+import 'features/profile/presentation/views/settings.dart';
+import 'features/profile/presentation/views/terms.dart';
+import 'features/profile/presentation/views/verify_acc.dart';
+import 'features/profile/presentation/widgets/login_modal_sheet.dart';
+import 'features/settings/presentation/views/subscription3.dart';
+import 'features/settings/presentation/views/subscription4.dart';
+import 'features/subscription/views/subscription.dart';
 
 class AppRoutes {
   static String splash = '/';
@@ -151,7 +149,7 @@ final appRouter = [
   ),
   GetPage(
     name: AppRoutes.subscription,
-    page: () => const SubsciptionScreen(),
+    page: () => const SubscriptionScreen(),
     binding: BindingsBuilder(() {}),
   ),
   GetPage(
@@ -175,12 +173,12 @@ final appRouter = [
     binding: BindingsBuilder(() {}),
   ),
   GetPage(
-    name: AppRoutes.cancelPlan,
+    name: AppRoutes.subscription3,
     page: () => const ChangePlanScreen(),
     binding: BindingsBuilder(() {}),
   ),
   GetPage(
-    name: AppRoutes.subscription3,
+    name: AppRoutes.cancelPlan,
     page: () => const CancelSubScreen(),
     binding: BindingsBuilder(() {}),
   ),
@@ -306,7 +304,7 @@ final appRouter = [
   ),
   GetPage(
     name: AppRoutes.chats,
-    page: () => const ChatsScreen(),
+    page: () => ChatsScreen(),
     binding: BindingsBuilder(() {}),
   ),
   GetPage(

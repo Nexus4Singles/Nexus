@@ -6,14 +6,11 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/colors.dart';
-// import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
-// import 'package:nexus/core/utils/toast.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:nexus/router.dart';
-// import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 
 class VerifyAccountScreen extends StatefulWidget {

@@ -68,6 +68,10 @@ class AuthNotifier with ChangeNotifier {
   }
 
   Map<String, dynamic> _credential = {
+    'onPremium': false,
+    'prevSubscribed': false,
+    'subExpDate': null,
+    'usedOneFreeText': false,
     kEMAIL: '',
     kPASSWORD: '',
     kPHONENUMBER: '',
@@ -122,6 +126,10 @@ class AuthNotifier with ChangeNotifier {
 
   void clearCredential() {
     _credential = {
+      'onPremium': false,
+      'prevSubscribed': false,
+      'subExpDate': null,
+      'usedOneFreeText': false,
       kEMAIL: '',
       kPASSWORD: '',
       kPHONENUMBER: '',
@@ -195,6 +203,7 @@ class AuthNotifier with ChangeNotifier {
       EasyLoading.dismiss();
       user = r;
       notifyListeners();
+
       bool isVerified = FirebaseAuth.instance.currentUser!.emailVerified;
       if (isVerified) {
         switch (r.registrationProgress) {

@@ -5,10 +5,8 @@ import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/services/api_service.dart';
 import 'package:nexus/core/services/fcm.dart';
-import 'package:nexus/core/utils/app_logger.dart';
-import 'package:nexus/features/explore/controllers/explore_ctr.dart';
-
 import '../../../core/utils/shared_pref.dart';
+import '../../explore/controllers/explore_ctr.dart';
 
 class HomeController extends GetxController {
   static HomeController get instance => Get.find<HomeController>();
@@ -52,9 +50,9 @@ class HomeController extends GetxController {
     isLoading.value = false;
   }
 
-  final user = const UserModel(
-          id: "", name: '', username: "", email: "", age: 0, gender: "")
-      .obs;
+  final user =
+      UserModel(id: "", name: '', username: "", email: "", age: 0, gender: "")
+          .obs;
 
   getMyProfile() async {
     await db.collection(kUSER).doc(auth.currentUser!.uid).get().then((val) {

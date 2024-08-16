@@ -19,7 +19,7 @@ class BottomNavModel extends ChangeNotifier {
     const HomeScreen(),
     const ExploreScreen(),
     const MatchScreen(),
-    const ChatsScreen(),
+    ChatsScreen(),
     const ProfileScreen(),
   ];
 

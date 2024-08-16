@@ -12,19 +12,17 @@ import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
-import 'package:provider/provider.dart';
 import '../../../auth/presentation/widgets/record_completed.dart';
 import '../../../match/controllers/matches_ctr.dart';
 import '../../../profile/presentation/widgets/text_container.dart';
-import '../change_notifier/home_notifier.dart';
 import '../views/photo_view.dart';
 
 class UserCard extends StatefulWidget {
   final UserModel userModel;
-  final VoidCallback onRefresh;
+  final VoidCallback? onRefresh;
   final VoidCallback onClosed;
   final VoidCallback onLike;
-  final VoidCallback onSaved;
+  final VoidCallback? onSaved;
   final VoidCallback onClick;
   const UserCard({
     super.key,

@@ -15,6 +15,7 @@ import '../../../core/models/chats_model.dart';
 import '../../../core/utils/methods.dart';
 
 class ChatCtr extends GetxController {
+  static ChatCtr get instance => Get.find<ChatCtr>();
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
   var notificationController = NotificationController.instance;
@@ -103,6 +104,7 @@ class ChatCtr extends GetxController {
         message: messages,
         messageType: mediaType.value.isEmpty ? 'text' : mediaType.value,
         sentBy: auth.currentUser!.uid,
+        recipientId: recipient.id,
         timestamp: Timestamp.now());
     if (messages.isNotEmpty || imageFile.value.path.isNotEmpty) {
       db

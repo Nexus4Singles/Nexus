@@ -12,9 +12,9 @@ class ExploreCtr extends GetxController {
   final allUsers = <UserModel>[].obs;
   final searchedUsers = <UserModel>[].obs;
   final filteredUsers = <UserModel>[].obs;
-  final myProfile = const UserModel(
-          id: "", name: '', username: "", email: "", age: 0, gender: "")
-      .obs;
+  final myProfile =
+      UserModel(id: "", name: '', username: "", email: "", age: 0, gender: "")
+          .obs;
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
   var isLoading = false.obs;

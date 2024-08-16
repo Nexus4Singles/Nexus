@@ -57,7 +57,7 @@ class NotificationController extends GetxController {
         // appLog("Message notification sent successfully!", response);
       },
       onError: (error) {
-        // appLog("Failed to send message notification", error);
+        //appLog("Failed to send message notification", error);
       },
     );
   }

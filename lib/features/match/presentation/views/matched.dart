@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/assets.dart';
+import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
@@ -10,13 +11,12 @@ import 'package:nexus/core/text_field.dart';
 import 'package:nexus/core/utils/modals.dart';
 import 'package:nexus/features/chat/controllers/chat_ctr.dart';
 import 'package:nexus/router.dart';
-import '../../../../core/colors.dart';
 
 class Matched extends StatelessWidget {
   final UserModel userModel;
   final int messageID;
   Matched({super.key, required this.userModel, required this.messageID});
-  final ctr = Get.put(ChatCtr());
+  final ctr = ChatCtr.instance;
 
   @override
   Widget build(BuildContext context) {

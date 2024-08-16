@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,6 @@ import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/core/utils/image_compressor.dart';
 import 'package:nexus/core/utils/toast.dart';

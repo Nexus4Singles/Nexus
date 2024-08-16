@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:nexus/core/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../../../core/models/user.dart';
 
 abstract class AuthenticationRepository {
   Future<Either<void, UserModel>> login(Map<String, dynamic> map);

@@ -39,6 +39,10 @@ class UserEntity extends Equatable {
     this.location,
     this.countLike,
     this.fcmToken,
+    this.onPremium = false,
+    this.prevSubscribed = false,
+    this.subExpDate = '',
+    this.usedOneFreeText = false,
     this.usersChatWarning,
   });
 
@@ -96,6 +100,10 @@ class UserEntity extends Equatable {
   final LocationModel? location;
   @JsonKey(name: kFCMTOKEN)
   final String? fcmToken;
+  final bool onPremium;
+  final bool prevSubscribed;
+  final String? subExpDate;
+  final bool usedOneFreeText;
 
   @override
   List<Object?> get props => [
@@ -133,5 +141,9 @@ class UserEntity extends Equatable {
         mySaves,
         likeMe,
         fcmToken,
+        onPremium,
+        prevSubscribed,
+        subExpDate,
+        usedOneFreeText,
       ];
 }

@@ -10,11 +10,10 @@ import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
+import 'package:nexus/router.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:nexus/features/auth/presentation/widgets/record_completed.dart';
-import 'package:nexus/router.dart';
 import 'package:provider/provider.dart';
-
 import 'package:just_audio/just_audio.dart';
 
 class Audio4Screen extends StatefulWidget {

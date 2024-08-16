@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:nexus/core/assets.dart';
+import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
@@ -15,11 +15,11 @@ import 'package:nexus/core/utils/toast.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:nexus/features/auth/presentation/widgets/seek_bar.dart';
 import 'package:nexus/router.dart';
-import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart' as rx;
+import '../../../../../core/assets.dart';
 
 class Audio3Screen extends StatefulWidget {
   const Audio3Screen({super.key});

@@ -3,13 +3,12 @@ import 'package:get/get.dart';
 import 'package:nexus/core/button.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/features/home/controllers/home_controller.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../core/colors.dart';
 import '../../../../core/utils/toast.dart';
 import '../../../auth/data/data-sources/local-datasource/list_items.dart';
 import '../../../auth/presentation/widgets/hobbie_card.dart';
+import '../../../home/controllers/home_controller.dart';
 import '../../../home/presentation/change_notifier/home_notifier.dart';
 import '../controllers/profile_ctr.dart';
 

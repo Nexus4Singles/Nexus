@@ -5,8 +5,9 @@ import 'package:logger/logger.dart';
 import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/features/auth/presentation/widgets/seek_bar.dart';
 import 'package:rxdart/rxdart.dart' as rx;
+
+import 'seek_bar.dart';
 
 class AudioFilePlayer extends StatefulWidget {
   final AudioPlayer player;

@@ -1,4 +1,4 @@
-# nexus
+# Nexus
 
 A new Flutter project.
 

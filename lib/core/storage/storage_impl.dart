@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:injectable/injectable.dart';
 import 'package:nexus/core/constant.dart';
 import 'package:nexus/core/storage/storage.dart';
-
 import '../models/user.dart';
 
 abstract class Storage {

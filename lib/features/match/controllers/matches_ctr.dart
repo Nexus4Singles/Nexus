@@ -6,11 +6,11 @@ import 'package:get/get.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/utils/app_logger.dart';
 import 'package:nexus/features/explore/controllers/explore_ctr.dart';
-import 'package:nexus/features/home/controllers/home_controller.dart';
 import 'package:nexus/features/home/controllers/notification_controller.dart';
 import 'package:nexus/features/match/presentation/views/matched.dart';
 import '../../../core/constant.dart';
 import '../../chat/controllers/chat_ctr.dart';
+import '../../home/controllers/home_controller.dart';
 
 class MatchesCtr extends GetxController {
   static MatchesCtr get instance => Get.find<MatchesCtr>();
@@ -142,6 +142,10 @@ class MatchesCtr extends GetxController {
         "matchedUsers": FieldValue.arrayUnion([currentUserId])
       }),
     ]);
+    await db.collection('matches').add({
+      'timestamp': FieldValue.serverTimestamp(),
+      'matchedUsers': [currentUserId, userModel.id]
+    });
     var messageID = DateTime.now().millisecondsSinceEpoch;
     await chatCtr.saveToChat(userModel.id, messageID);
     Get.to(() => Matched(userModel: userModel, messageID: messageID));

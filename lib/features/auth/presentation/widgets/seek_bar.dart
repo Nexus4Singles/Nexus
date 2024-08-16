@@ -104,7 +104,6 @@ class SeekBarState extends State<SeekBar> {
       ],
     );
   }
-
 }
 
 class HiddenThumbComponentShape extends SliderComponentShape {

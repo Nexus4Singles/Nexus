@@ -14,10 +14,11 @@ import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/core/utils/modals.dart';
 import 'package:nexus/features/auth/presentation/widgets/record_completed.dart';
-import 'package:nexus/features/home/presentation/views/photo_view.dart';
 import 'package:nexus/features/match/controllers/matches_ctr.dart';
 import 'package:nexus/features/profile/presentation/views/report_user.dart';
 import 'package:nexus/features/profile/presentation/widgets/text_container.dart';
+
+import 'photo_view.dart';
 
 class UserDetailScreen extends StatefulWidget {
   final UserModel userModel;
@@ -76,7 +77,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
     // }
   }
 
-  var ctr = Get.put(MatchesCtr());
+  final ctr = MatchesCtr.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +164,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Text(
                               'About',
                               style: textStyle14.copyWith(
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w700,
                                 color: black,
                               ),
                             ),
@@ -241,7 +242,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Text(
                               'Hobbies / Interests',
                               style: textStyle14.copyWith(
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w700,
                                 color: black,
                               ),
                             ),
@@ -264,7 +265,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                 Text(
                                   'Most Desired Qualities',
                                   style: textStyle14.copyWith(
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w700,
                                     color: black,
                                   ),
                                 ),
@@ -286,7 +287,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Text(
                               'Audio Recordings',
                               style: textStyle14.copyWith(
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w700,
                                 color: black,
                               ),
                             ),
@@ -336,7 +337,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             ),
                             const SizedBoxH25(),
                             Text(
-                              '3. Favourite qualities or traits about ${widget.userModel.username}',
+                              "3. Favourite qualities or traits about ${widget.userModel.username}",
                               style: textStyle14.copyWith(
                                   color: black,
                                   fontSize: 14,
@@ -360,7 +361,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Text(
                               'Gallery',
                               style: textStyle14.copyWith(
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w700,
                                 color: black,
                               ),
                             ),

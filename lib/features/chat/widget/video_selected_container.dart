@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:cached_video_player_plus/cached_video_player_plus.dart';
 import 'package:nexus/core/colors.dart';
-
 import '../../../core/assets.dart';
 import '../../../core/models/chats_model.dart';
 import '../../../core/size_boxes.dart';

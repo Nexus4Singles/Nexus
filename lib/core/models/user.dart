@@ -1,13 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:nexus/core/entities/user.dart';
-import 'package:nexus/core/models/compatibility.dart';
-import 'package:nexus/core/models/location.dart';
-
+import '../entities/user.dart';
+import 'compatibility.dart';
+import 'location.dart';
 part 'user.g.dart';
 
 @JsonSerializable()
 class UserModel extends UserEntity {
-  const UserModel({
+  UserModel({
     required String id,
     required String name,
     required String username,
@@ -42,6 +41,10 @@ class UserModel extends UserEntity {
     bool? compatibilitySetted,
     LocationModel? location,
     String? fcmToken,
+    bool onPremium = false,
+    bool prevSubscribed = false,
+    String? subExpDate,
+    bool usedOneFreeText = false,
   }) : super(
           id: id,
           name: name,
@@ -51,7 +54,6 @@ class UserModel extends UserEntity {
           age: age,
           gender: gender,
           unrecommendedUsers: unRecommendUsers,
-          usersChatWarning: usersChatWarning,
           bestQualotiesOrTraits: bestQualotiesOrTraits,
           city: city,
           matchedUsers: matchedUsers,
@@ -77,6 +79,11 @@ class UserModel extends UserEntity {
           compatibilitySetted: compatibilitySetted,
           location: location,
           fcmToken: fcmToken,
+          usersChatWarning: usersChatWarning,
+          onPremium: onPremium,
+          prevSubscribed: prevSubscribed,
+          usedOneFreeText: usedOneFreeText,
+          subExpDate: subExpDate,
         );
 
   factory UserModel.fromJson(Map<String, dynamic> map) =>

@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:nexus/features/auth/domain/repositories/auth_repo.dart';
 import 'package:injectable/injectable.dart';
-import 'package:nexus/core/usecases/usecases.dart';
+
+import '../../../../core/usecases/usecases.dart';
+import '../repositories/auth_repo.dart';
 
 @lazySingleton
 class UpdateProfileUsecase extends Usecase<void, Map<String, dynamic>> {

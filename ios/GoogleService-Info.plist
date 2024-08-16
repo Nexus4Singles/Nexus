@@ -3,28 +3,28 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyDstuD4yjDsXKXydeh74ic4XVqv4X-BWZM</string>
+	<string>AIzaSyCRXUOlD6BB6fPmDFHtbBykDI9mmO_zbYg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>196661066636</string>
+	<string>327599352691</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.nexus.app</string>
+	<string>com.nexus4singles.nexus</string>
 	<key>PROJECT_ID</key>
-	<string>nexusapp-7bed8</string>
+	<string>nexus-visibility-app</string>
 	<key>STORAGE_BUCKET</key>
-	<string>nexusapp-7bed8.appspot.com</string>
+	<string>nexus-visibility-app.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:196661066636:ios:b9dd0c33f6b5bce37274a9</string>
+	<string>1:327599352691:ios:ddd1141d47e32fd205b306</string>
 </dict>
 </plist>

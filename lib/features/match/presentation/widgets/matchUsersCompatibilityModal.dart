@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
+import 'package:nexus/core/models/user.dart';
 
 class MatchedUsersCompatibilityModal extends StatelessWidget {
   final UserModel userModel;
@@ -50,7 +49,7 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
                     userModel.compatibility!.maritalStatus!.toLowerCase() ==
                             "never married"
                         ? "${userModel.username} has never been married"
-                        : "${userModel.username} has been married",
+                        : "${userModel.username} has been married before",
                   ),
                   optionsMenu(
                       userModel.compatibility!.haveKids!.toLowerCase() == "no"

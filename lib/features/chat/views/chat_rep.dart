@@ -15,6 +15,7 @@ import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/modals.dart';
 import 'package:nexus/features/chat/controllers/chat_ctr.dart';
 import 'package:nexus/features/home/presentation/views/user_details.dart';
+
 import '../../../core/models/message_model.dart';
 import '../../profile/presentation/views/report_user.dart';
 

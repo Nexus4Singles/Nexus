@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/features/auth/domain/repositories/auth_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
-import 'package:nexus/core/usecases/core/google.dart';
+import '../../../../core/models/user.dart';
+import '../../../../core/usecases/core/google.dart';
+import '../repositories/auth_repo.dart';
 
 @lazySingleton
 class RegisterWithGoogleUsecase

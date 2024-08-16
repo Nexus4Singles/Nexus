@@ -1,16 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
-// import 'package:logger/logger.dart';
 import 'package:nexus/core/models/user.dart';
-import 'package:nexus/core/storage/cache_service.dart';
 import 'package:nexus/core/usecases/usecases.dart';
 import 'package:nexus/core/utils/app_logger.dart';
 import 'package:nexus/features/auth/data/data-sources/remote-datasource/auth_remote.dart';
 import 'package:nexus/features/auth/domain/usecases/profile.dart';
-import 'package:nexus/features/explore/controllers/explore_ctr.dart';
 import 'package:nexus/features/home/domain/usecases/get_users.dart';
 import 'package:nexus/features/home/domain/usecases/get_users_filterable.dart';
 
