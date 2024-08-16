@@ -163,7 +163,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Text(
                               'About',
                               style: textStyle14.copyWith(
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w700,
                                 color: black,
                               ),
                             ),
@@ -241,7 +241,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Text(
                               'Hobbies / Interests',
                               style: textStyle14.copyWith(
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w700,
                                 color: black,
                               ),
                             ),
@@ -264,7 +264,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                 Text(
                                   'Most Desired Qualities',
                                   style: textStyle14.copyWith(
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w700,
                                     color: black,
                                   ),
                                 ),
@@ -286,7 +286,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Text(
                               'Audio Recordings',
                               style: textStyle14.copyWith(
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w700,
                                 color: black,
                               ),
                             ),
@@ -360,7 +360,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Text(
                               'Gallery',
                               style: textStyle14.copyWith(
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w700,
                                 color: black,
                               ),
                             ),
