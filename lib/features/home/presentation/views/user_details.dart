@@ -336,7 +336,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             ),
                             const SizedBoxH25(),
                             Text(
-                              '3. Favourite qualities or traits about ${widget.userModel.username}',
+                              "3. Favourite qualities or traits about ${widget.userModel.username}",
                               style: textStyle14.copyWith(
                                   color: black,
                                   fontSize: 14,
