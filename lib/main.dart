@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:isolate';
+import 'package:Nexus/features/chat/chat_manager.dart';
 import 'package:Nexus/router.dart';
 import 'package:Nexus/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,6 +24,7 @@ import 'features/home/presentation/change_notifier/home_notifier.dart';
 import 'features/profile/presentation/change_notifier/settings_notifier.dart';
 import 'features/subscription/provider/subscription_provider.dart';
 import 'features/subscription/services/subscription_service.dart';
+final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
   runZonedGuarded<Future<void>>(() async {
@@ -75,7 +77,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SettingsNotifier()),
         ChangeNotifierProvider(create: (_) => sl<AuthNotifier>()),
         ChangeNotifierProvider(create: (_) => sl<HomeNotifier>()),
-        ChangeNotifierProvider(create: (_) => SubscriptionProvider())
+        ChangeNotifierProvider(create: (_) => SubscriptionProvider()),
+       // ChangeNotifierProvider(create: (_) => ChatManager())
       ],
       child: Consumer<ThemeProvider>(builder: (context, theme, _) {
         return ScreenUtilInit(

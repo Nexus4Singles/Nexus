@@ -1,3 +1,5 @@
+import 'package:Nexus/core/services/fcm.dart';
+import 'package:Nexus/features/home/controllers/home_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -58,7 +60,8 @@ class _LoginModalSheetState extends State<LoginModalSheet> {
                   const SizedBoxW15(),
                   Expanded(
                     child: CustomButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        await FCMService.setFcmTokenToNull(HomeController.instance.user.value.id);
                         Get.offAndToNamed(AppRoutes.login);
                         SharedPref.deleteAll();
                       },

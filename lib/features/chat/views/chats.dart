@@ -1,3 +1,4 @@
+import 'package:Nexus/core/services/fcm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,15 +17,16 @@ import '../../../router.dart';
 import '../../subscription/provider/subscription_provider.dart';
 import 'chat_rep.dart';
 
-class ChatsScreen extends StatefulWidget {
+class ChatsScreen extends StatefulWidget  {
   const ChatsScreen({super.key});
 
   @override
   State<ChatsScreen> createState() => _ChatsScreenState();
 }
 
-class _ChatsScreenState extends State<ChatsScreen> {
+class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
   var ctr = Get.put(ChatCtr());
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +48,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           ),
         ],
       ),
-      body: Consumer<SubscriptionProvider>(
-        builder: (context, subProvider, child) {
-          return Column(
+      body: Column(
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 15.sp),
@@ -72,46 +72,8 @@ class _ChatsScreenState extends State<ChatsScreen> {
                             ...ctr.allChatUsers.map((users) {
                               return GestureDetector(
                                 onTap: () async {
+                                  Get.to(() => ChatWithScreen(chatModel: users));
 
-                                  bool hasSentMessages = ctr.allChatUsers
-                                      .where((val) => val.lastMessage.isNotEmpty)
-                                      .contains(users);
-
-                                  if (hasSentMessages) {
-                                    Get.to(() => ChatWithScreen(chatModel: users));
-                                    return;
-                                  }
-
-                                  if (subProvider.onPremium == true) {
-                                    Get.to(() => ChatWithScreen(chatModel: users));
-                                  }
-                                  else if (subProvider.onPremium == false && subProvider.usedOneFreeText == false)  {
-                                    Get.to(() => ChatWithScreen(chatModel: users));
-
-                                    if(hasSentMessages) {
-                                      subProvider.usedOneFreeText = true;
-                                      await SubscriptionHelper
-                                          .updateFreeTextStatus(
-                                        subProvider.currentUser,
-                                        true,
-                                        context,
-                                      );
-                                    }
-
-                                  } else if (subProvider.onPremium == false && subProvider.usedOneFreeText == true  && subProvider.prevSubscribed == false) {
-                                    restrictionModal(
-                                      context: context,
-                                      dismisable: true,
-                                      text: 'You have used up your limit of one (1) chat per matched \nuser on our free version.\nKindly subscribe to chat with other matched users.',
-                                    );
-
-                                  } else {
-                                    restrictionModal(
-                                      context: context,
-                                      dismisable: true,
-                                      text: 'Your subscription has expired!\nKindly subscribe to be able to send messages\nand use other features.',
-                                    );
-                                  }
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(12.0),
@@ -177,9 +139,26 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 ),
               ),
             ],
-          );
-        },
-      ),
+          ),
     );
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      FCMService.clearRedundantNotifs();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 }

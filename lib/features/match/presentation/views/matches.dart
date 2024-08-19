@@ -10,6 +10,7 @@ import 'package:Nexus/features/match/controllers/matches_ctr.dart';
 import 'package:Nexus/features/match/presentation/widgets/match_stat.dart';
 import 'package:Nexus/features/match/presentation/widgets/matched_user.dart';
 
+import '../../../../core/services/fcm.dart';
 import '../../../../router.dart';
 import '../../../home/presentation/views/user_details.dart';
 
@@ -24,6 +25,7 @@ class _MatcheScreenState extends State<MatcheScreen> {
   var ctr = Get.put(MatchesCtr());
   @override
   Widget build(BuildContext context) {
+    FCMService.clearRedundantNotifs();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
