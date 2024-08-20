@@ -7,8 +7,7 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class UserModel extends UserEntity {
-
-   UserModel({
+  UserModel({
     required String id,
     required String name,
     required String username,
@@ -47,52 +46,51 @@ class UserModel extends UserEntity {
     bool prevSubscribed = false,
     String? subExpDate,
     bool usedOneFreeText = false,
+    String entitledUser = 'null',
   }) : super(
-    id: id,
-    name: name,
-    username: username,
-    email: email,
-    profileUrl: profileUrl,
-    age: age,
-    gender: gender,
-    unrecommendedUsers: unRecommendUsers,
-    bestQualotiesOrTraits: bestQualotiesOrTraits,
-    city: city,
-    matchedUsers: matchedUsers,
-    desiredQualities: desiredQualities,
-    educationLevel: educationLevel,
-    likeMe: likeMe,
-    myLikes: myLikes,
-    mySaves: mySaves,
-    hobbies: hobbies,
-    isVerified: isVerified,
-    photos: photos,
-    profession: profession,
-    relationshipWithGod: relationshipWithGod,
-    roleOfHusband: roleOfHusband,
-    stateOfOrigin: stateOfOrigin,
-    notificationToken: notificationToken,
-    phoneNumber: phoneNumber,
-    registrationProgress: registrationProgress,
-    country: country,
-    countLike: countLike,
-    churchName: churchName,
-    compatibility: compatibility,
-    compatibilitySetted: compatibilitySetted,
-    location: location,
-    fcmToken: fcmToken,
-     usersChatWarning: usersChatWarning,
-     onPremium: onPremium,
-    prevSubscribed: prevSubscribed,
-    usedOneFreeText: usedOneFreeText,
-    subExpDate: subExpDate,
-  );
-
+          id: id,
+          name: name,
+          username: username,
+          email: email,
+          profileUrl: profileUrl,
+          age: age,
+          gender: gender,
+          unrecommendedUsers: unRecommendUsers,
+          bestQualotiesOrTraits: bestQualotiesOrTraits,
+          city: city,
+          matchedUsers: matchedUsers,
+          desiredQualities: desiredQualities,
+          educationLevel: educationLevel,
+          likeMe: likeMe,
+          myLikes: myLikes,
+          mySaves: mySaves,
+          hobbies: hobbies,
+          isVerified: isVerified,
+          photos: photos,
+          profession: profession,
+          relationshipWithGod: relationshipWithGod,
+          roleOfHusband: roleOfHusband,
+          stateOfOrigin: stateOfOrigin,
+          notificationToken: notificationToken,
+          phoneNumber: phoneNumber,
+          registrationProgress: registrationProgress,
+          country: country,
+          countLike: countLike,
+          churchName: churchName,
+          compatibility: compatibility,
+          compatibilitySetted: compatibilitySetted,
+          location: location,
+          fcmToken: fcmToken,
+          usersChatWarning: usersChatWarning,
+          onPremium: onPremium,
+          prevSubscribed: prevSubscribed,
+          usedOneFreeText: usedOneFreeText,
+          subExpDate: subExpDate,
+          entitledUser: entitledUser,
+        );
 
   factory UserModel.fromJson(Map<String, dynamic> map) =>
       _$UserModelFromJson(map);
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
-
-
 }

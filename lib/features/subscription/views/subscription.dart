@@ -13,7 +13,6 @@ import 'package:Nexus/core/style.dart';
 import '../helpers/subscription_helper.dart';
 import '../provider/subscription_provider.dart';
 
-
 class SubscriptionScreen extends StatefulWidget {
   const SubscriptionScreen({super.key});
 
@@ -100,11 +99,10 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<SubscriptionProvider>(
-        builder: (context, model, _)
-    {
+    return Consumer<SubscriptionProvider>(builder: (context, model, _) {
       return Scaffold(
         backgroundColor: white,
         appBar: AppBar(
@@ -121,61 +119,57 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           foregroundColor: black,
           elevation: 0,
         ),
-        body:  SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'The free version of Nexus provides unlimited access to most features. However, some features have been made premium. We incur some monthly costs to ensure your profiles and audio recordings are securely stored and accessible to users. Hence, we are charging a small subscription fee to access premium features. This is to ensure we are able to maintain our services to you. ',
-                        style: textStyle12.copyWith(
-                          fontSize: 11.sp,
-                          color: black,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                      SizedBox(height: 30.h),
-                      _buildPlanContainer(
-                        title: 'Free',
-                        features: [
-                          'Unlimited Access to Search & View Profiles',
-                          'Unlimited Access to Like Profiles',
-                          'Unlimited Access to View Profiles You Liked',
-                          'Unlimited Access to View Who Liked Your Profile',
-                          'Unlimited Access to View Compatibility Data',
-                          'Limited Access to Chat with Matched Users (1 User)',
-                        ],
-                      ),
-                      SizedBox(height: 20.h),
-                      _buildPlanContainer(
-                          title: 'Premium',
-                          features: [
-                            'Unlimited Messaging',
-                            'Save Profiles to View Later',
-                            'Backtrack if you mistakenly swiped left',
-                            'Access to Advanced Filters on Explore Page',
-                          ],
-                          onSelectPlan:model.onPremium
-                              ? () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                  content: Text("You are already a Premium User!"),
-                                  duration: Duration(
-                                  seconds: 2),
-                                  ),);
-                                  }
-                                :() async {
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 10.h),
+              Text(
+                'The free version of Nexus provides unlimited access to most features. However, some features have been made premium. We incur some monthly costs to ensure your profiles and audio recordings are securely stored and accessible to users. Hence, we are charging a small subscription fee to access premium features. This is to ensure we are able to maintain our services to you. ',
+                style: textStyle12.copyWith(
+                  fontSize: 11.sp,
+                  color: black,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              SizedBox(height: 60.h),
+              _buildPlanContainer(
+                title: 'Free',
+                features: [
+                  'Unlimited Access to Search & View Profiles',
+                  'Unlimited Access to Like Profiles',
+                  'Unlimited Access to View Profiles You Liked',
+                  'Unlimited Access to View Who Liked Your Profile',
+                  'Unlimited Access to View Compatibility Data',
+                  'Limited Access to Chat with Matched Users (1 User)',
+                ],
+              ),
+              SizedBox(height: 60.h),
+              _buildPlanContainer(
+                title: 'Premium',
+                features: [
+                  'Unlimited Messaging',
+                  'Save Profiles to View Later',
+                  'Backtrack if you mistakenly swiped left',
+                  'Access to Advanced Filters on Explore Page',
+                ],
+                onSelectPlan: model.onPremium
+                    ? () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("You are already a Premium User!"),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }
+                    : () async {
+                        await SubscriptionHelper.onSubscribe(context);
+                      },
+              ),
+              if (model.isLoading) AppCircularProgressIndicator()
 
-                            await SubscriptionHelper.onSubscribe(context);
-
-                          },
-
-                      ),
-                      if(model.isLoading)
-                        AppCircularProgressIndicator()
-
-                      /*SizedBox(height: 10.h),
+              /*SizedBox(height: 10.h),
                 _buildPlanContainer(
                   title: '\$12/3 months',
                   features: [
@@ -186,11 +180,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   ],
                   onSelectPlan: () => _showPaymentBottomSheet(context, 12),
                 ),*/
-                    ],
-                  ),
-                ),
-
-
+            ],
+          ),
+        ),
       );
     });
   }
@@ -246,7 +238,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             const SizedBox(height: 10),
             if (onSelectPlan != null)
               CustomButton(
-                onPressed: ()async { await onSelectPlan(); },
+                onPressed: () async {
+                  await onSelectPlan();
+                },
                 child: const Text(
                   'Subscribe',
                   style: TextStyle(color: Colors.white, fontSize: 13),

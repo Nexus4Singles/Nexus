@@ -47,6 +47,7 @@ class UserEntity extends Equatable {
     this.subExpDate = '',
     this.usedOneFreeText = false,
     this.usersChatWarning,
+    this.entitledUser = 'null',
   });
 
   final String id;
@@ -107,6 +108,7 @@ class UserEntity extends Equatable {
   final bool prevSubscribed;
   final String? subExpDate;
   final bool usedOneFreeText;
+  final String? entitledUser;
 
   @override
   List<Object?> get props => [
@@ -148,6 +150,7 @@ class UserEntity extends Equatable {
         prevSubscribed,
         subExpDate,
         usedOneFreeText,
+        entitledUser,
       ];
 
 

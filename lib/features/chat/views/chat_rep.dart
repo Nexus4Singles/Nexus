@@ -27,6 +27,7 @@ import '../chat_manager.dart';
 
 class ChatWithScreen extends StatefulWidget {
   final ChatModel chatModel;
+
   const ChatWithScreen({
     super.key,
     required this.chatModel,
@@ -59,7 +60,6 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
     });
   }
 
-
   @override
   void dispose() {
     ChatManager.closeChat();
@@ -68,10 +68,9 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final subProvider = Provider.of<SubscriptionProvider>(context, listen: false);
-    logger.i(subProvider.onPremium);
-    logger.i(subProvider.prevSubscribed);
-    logger.i(subProvider.usedOneFreeText);
+    final subProvider =
+        Provider.of<SubscriptionProvider>(context, listen: false);
+
     return Scaffold(
         appBar: AppBar(
           leadingWidth: 32,
@@ -124,136 +123,136 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
           ),
         ),
         body: StreamBuilder<QuerySnapshot>(
-               stream: ctr.getMyConversations(widget.chatModel.messageID),
-               builder: (context, snapshot) {
-                 if (!snapshot.hasData) {
-                   return const Center(child: Text("No Message yet!."));
-                 } else {
-                   var data = snapshot.data!.docs;
-                   final message = data
-                       .map((e) =>
-                       MessageModel.fromJson(e.data() as Map<String, dynamic>))
-                       .toList();
-                   List<ChatMessage> messages = <ChatMessage>[];
-                   for (var element in message) {
-                     messages.add(ChatMessage(
-                         text: element.message,
-                         customProperties: {"id": element.id},
-                         medias: element.media.isEmpty
-                             ? []
-                             : [
-                           ChatMedia(
-                               url: element.media,
-                               fileName: element.media,
-                               type: element.messageType == "Video"
-                                   ? MediaType.video
-                                   : MediaType.image)
-                         ],
-                         user: ChatUser(id: element.sentBy, profileImage: ""),
-                         createdAt: element.timestamp.toDate()));
-                   }
-                   return DashChat(
-                     currentUser: ChatUser(id: ctr.auth.currentUser!.uid),
-                     inputOptions: InputOptions(
-                         textController: ctr.chatController,
-                         textInputAction: TextInputAction.newline,
-                         alwaysShowSend: true,
-                         sendButtonBuilder: (val) {
-                           return InkWell(
-                             onTap: () {
-                               // Trigger the send action with current message
-                               var message = ChatMessage(
-                                 text: ctr.chatController.text,
-                                 customProperties: {},
-                                 medias: [],
-                                 user: ChatUser(id: ctr.auth.currentUser!.uid, profileImage: ""),
-                                 createdAt: DateTime.now(),
-                               );
-                               // Call the new method to handle sending or restrictions
-                               _handleSendMessage(message, subProvider);
-                             },
-                             child: Padding(
-                               padding: const EdgeInsets.all(8.0),
-                               child: CircleAvatar(
-                                 backgroundColor: primary,
-                                 child: SvgPicture.asset("$svgPath/send.svg"),
-                               ),
-                             ),
-                           );
-                         },
-                         inputDecoration: InputDecoration(
-                             hintText: "Send a message",
-                             hintStyle: const TextStyle(color: Colors.grey),
-                             prefixIcon: PopupMenuButton<Map<String, IconData>>(
-                               position: PopupMenuPosition.over,
-                               shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(12)),
-                               onSelected: (item) {},
-                               child: const Padding(
-                                 padding: EdgeInsets.all(8.0),
-                                 child: CircleAvatar(
-                                     backgroundColor: primary,
-                                     child: Icon(
-                                       Icons.add_box_rounded,
-                                       color: Colors.white,
-                                     )),
-                               ),
-                               itemBuilder: (BuildContext context) {
-                                 return {
-                                   'Video': Iconsax.video_add5,
-                                   'Image': Iconsax.image1,
-                                 }.entries.map((entry) {
-                                   return PopupMenuItem<Map<String, IconData>>(
-                                     value: {
-                                       entry.key: entry.value
-                                     }, // Map as value
-                                     textStyle: textStyle14.copyWith(
-                                         color: black),
-                                     child: InkWell(
-                                       onTap: () {
-                                         entry.key == "Image"
-                                             ? ctr.pickImage(widget.chatModel)
-                                             : entry.key == "Video"
-                                             ? ctr.pickVideo(widget.chatModel)
-                                             : () {};
-                                       },
-                                       child: Row(
-                                         children: [
-                                           Icon(entry.value),
-                                           const SizedBox(width: 8),
-                                           Text(entry.key),
-                                         ],
-                                       ),
-                                     ),
-                                   );
-                                 }).toList();
-                               },
-                               // ... rest of your code ...
-                             ),
-                             contentPadding: EdgeInsets.zero,
-                             filled: true,
-                             border: OutlineInputBorder(
-                                 borderRadius: BorderRadius.circular(100),
-                                 borderSide: const BorderSide(color: grey)))),
-                     messageOptions: MessageOptions(
-                         onLongPressMessage: (message) {
-                           if (widget.chatModel.userModel!.id ==
-                               message.user.id) {} else {
-                             openModal(context, message);
-                           }
-                         },
-                         showOtherUsersAvatar: false,
-                         containerColor: babyPink,
-                         currentUserContainerColor: whiteblue),
-                     onSend:
-                         (ChatMessage message) {
-                       // Handle sending or showing restriction modal
-                       _handleSendMessage(message, subProvider);
-                     },
-                     messages: messages,
-                   );
-                 }
-               }));
+            stream: ctr.getMyConversations(widget.chatModel.messageID),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(child: Text("No Message yet!."));
+              } else {
+                var data = snapshot.data!.docs;
+                final message = data
+                    .map((e) =>
+                        MessageModel.fromJson(e.data() as Map<String, dynamic>))
+                    .toList();
+                List<ChatMessage> messages = <ChatMessage>[];
+                for (var element in message) {
+                  messages.add(ChatMessage(
+                      text: element.message,
+                      customProperties: {"id": element.id},
+                      medias: element.media.isEmpty
+                          ? []
+                          : [
+                              ChatMedia(
+                                  url: element.media,
+                                  fileName: element.media,
+                                  type: element.messageType == "Video"
+                                      ? MediaType.video
+                                      : MediaType.image)
+                            ],
+                      user: ChatUser(id: element.sentBy, profileImage: ""),
+                      createdAt: element.timestamp.toDate()));
+                }
+                return DashChat(
+                  currentUser: ChatUser(id: ctr.auth.currentUser!.uid),
+                  inputOptions: InputOptions(
+                      textController: ctr.chatController,
+                      textInputAction: TextInputAction.newline,
+                      alwaysShowSend: true,
+                      sendButtonBuilder: (val) {
+                        return InkWell(
+                          onTap: () {
+                            // Trigger the send action with current message
+                            var message = ChatMessage(
+                              text: ctr.chatController.text,
+                              customProperties: {},
+                              medias: [],
+                              user: ChatUser(
+                                  id: ctr.auth.currentUser!.uid,
+                                  profileImage: ""),
+                              createdAt: DateTime.now(),
+                            );
+                            // Call the new method to handle sending or restrictions
+                            _handleSendMessage(message, subProvider);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CircleAvatar(
+                              backgroundColor: primary,
+                              child: SvgPicture.asset("$svgPath/send.svg"),
+                            ),
+                          ),
+                        );
+                      },
+                      inputDecoration: InputDecoration(
+                          hintText: "Send a message",
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          prefixIcon: PopupMenuButton<Map<String, IconData>>(
+                            position: PopupMenuPosition.over,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            onSelected: (item) {},
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: CircleAvatar(
+                                  backgroundColor: primary,
+                                  child: Icon(
+                                    Icons.add_box_rounded,
+                                    color: Colors.white,
+                                  )),
+                            ),
+                            itemBuilder: (BuildContext context) {
+                              return {
+                                'Video': Iconsax.video_add5,
+                                'Image': Iconsax.image1,
+                              }.entries.map((entry) {
+                                return PopupMenuItem<Map<String, IconData>>(
+                                  value: {
+                                    entry.key: entry.value
+                                  }, // Map as value
+                                  textStyle: textStyle14.copyWith(color: black),
+                                  child: InkWell(
+                                    onTap: () {
+                                      entry.key == "Image"
+                                          ? ctr.pickImage(widget.chatModel)
+                                          : entry.key == "Video"
+                                              ? ctr.pickVideo(widget.chatModel)
+                                              : () {};
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(entry.value),
+                                        const SizedBox(width: 8),
+                                        Text(entry.key),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }).toList();
+                            },
+                            // ... rest of your code ...
+                          ),
+                          contentPadding: EdgeInsets.zero,
+                          filled: true,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(100),
+                              borderSide: const BorderSide(color: grey)))),
+                  messageOptions: MessageOptions(
+                      onLongPressMessage: (message) {
+                        if (widget.chatModel.userModel!.id == message.user.id) {
+                        } else {
+                          openModal(context, message);
+                        }
+                      },
+                      showOtherUsersAvatar: false,
+                      containerColor: babyPink,
+                      currentUserContainerColor: whiteblue),
+                  onSend: (ChatMessage message) {
+                    // Handle sending or showing restriction modal
+                    _handleSendMessage(message, subProvider);
+                  },
+                  messages: messages,
+                );
+              }
+            }));
   }
 
   openModal(context, ChatMessage message) {
@@ -292,31 +291,46 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
     );
   }
 
-  void _handleSendMessage(ChatMessage message, SubscriptionProvider subProvider) {
+  void _handleSendMessage(
+      ChatMessage message, SubscriptionProvider subProvider) {
     if (subProvider.onPremium == false &&
         subProvider.usedOneFreeText == true &&
-        subProvider.prevSubscribed == false) {
+        subProvider.prevSubscribed == false &&
+        subProvider.entitledUser != widget.chatModel.userModel?.id) {
       restrictionModal(
         context: context,
         dismisable: true,
-        text: 'You have used up your limit of one (1) chat per matched \nuser on our free version.\nKindly subscribe to chat with other matched users.',
+        text:
+            'You have used up your limit of one (1) chat per matched \nuser on our free version.\nKindly subscribe to chat with other matched users.',
       );
-    } else if(subProvider.onPremium == false &&
+    } else if (subProvider.onPremium == false &&
         subProvider.usedOneFreeText == true &&
-        subProvider.prevSubscribed == true){
+        subProvider.prevSubscribed == true &&
+        subProvider.entitledUser != widget.chatModel.userModel?.id) {
       restrictionModal(
         context: context,
         dismisable: true,
-        text: 'Your subscription has expired!\nKindly subscribe to be able to send messages\nand user other features.',
+        text:
+            'Your subscription has expired!\nKindly subscribe to be able to send messages\nand user other features.',
       );
-    } else if(subProvider.onPremium == false &&
-        subProvider.usedOneFreeText == false ){
-      ctr.sendMessage(widget.chatModel.messageID, message.text, widget.chatModel.userModel!);
+    } else if (subProvider.onPremium == false &&
+        subProvider.usedOneFreeText == false &&
+        subProvider.prevSubscribed == false) {
+      ctr.sendMessage(widget.chatModel.messageID, message.text,
+          widget.chatModel.userModel!);
       subProvider.usedOneFreeText = true;
-      SubscriptionHelper.updateFreeTextStatus(subProvider.currentUser, true, context);
-    }else {
-      ctr.sendMessage(widget.chatModel.messageID, message.text, widget.chatModel.userModel!);
+      subProvider.entitledUser = widget.chatModel.userModel?.id;
+      SubscriptionHelper.updateFreeTextStatus(subProvider.currentUser, true,
+          context, widget.chatModel.userModel?.id);
+    } else if (subProvider.onPremium == false &&
+        subProvider.usedOneFreeText == true &&
+        subProvider.prevSubscribed == false &&
+        subProvider.entitledUser == widget.chatModel.userModel?.id) {
+      ctr.sendMessage(widget.chatModel.messageID, message.text,
+          widget.chatModel.userModel!);
+    } else if (subProvider.onPremium == true) {
+      ctr.sendMessage(widget.chatModel.messageID, message.text,
+          widget.chatModel.userModel!);
     }
   }
-
 }

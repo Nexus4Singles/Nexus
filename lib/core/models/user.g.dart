@@ -60,6 +60,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       prevSubscribed: json['prevSubscribed'] as bool? ?? false,
       subExpDate: json['subExpDate'] as String?,
       usedOneFreeText: json['usedOneFreeText'] as bool? ?? false,
+      entitledUser: json['entitledUser'] as String? ?? 'null',
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -100,4 +101,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'prevSubscribed': instance.prevSubscribed,
       'subExpDate': instance.subExpDate,
       'usedOneFreeText': instance.usedOneFreeText,
+      'entitledUser': instance.entitledUser,
     };

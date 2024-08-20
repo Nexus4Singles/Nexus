@@ -19,7 +19,7 @@ class FCMService {
   static String? apnsToken;
 
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   static const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'NEXUS', // id
@@ -29,7 +29,6 @@ class FCMService {
   );
   static final Map<String, List<int>> notificationIdsMap = {};
   static String? conversationId;
-
 
   static Future<void> init() async {
     await Firebase.initializeApp(
@@ -41,15 +40,15 @@ class FCMService {
   }
 
   static Future<void> initPushNotifications() async {
-   // await flutterLocalNotificationsPlugin.cancelAll();
+    // await flutterLocalNotificationsPlugin.cancelAll();
 
     await FirebaseMessaging.instance
         .requestPermission(
-      sound: true,
-      badge: true,
-      alert: true,
-      announcement: true,
-    )
+          sound: true,
+          badge: true,
+          alert: true,
+          announcement: true,
+        )
         .then((NotificationSettings settings) {})
         .catchError((error) {});
 
@@ -81,7 +80,6 @@ class FCMService {
           conversationId = message.data['conversationId'] ?? '';
         }
         //logger.i(conversationId);
-
 
         //logger.i(senderId);
         //logger.i(ChatManager.activeChatUserId);
@@ -125,8 +123,7 @@ class FCMService {
     if (message != null) {
       appLog('message-->', message.data);
       // FcmMessageHandler().handle(message.data);
-     // savePushNotification(message);
-
+      // savePushNotification(message);
     }
   }
 
@@ -134,7 +131,6 @@ class FCMService {
     if (message != null) {
       appLog('message-->', message.data);
       // FcmMessageHandler().handleClick(message.data);
-
     }
   }
 
@@ -143,7 +139,7 @@ class FCMService {
       await Firebase.initializeApp();
       initPushNotifications();
       await savePushNotification(message);
-    } catch(e){
+    } catch (e) {
       logger.e(e);
     }
   }
@@ -161,8 +157,8 @@ class FCMService {
     );
 
     final androidPlatform =
-    flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
+        flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
 
     await androidPlatform?.createNotificationChannel(channel);
   }
@@ -177,18 +173,16 @@ class FCMService {
       title,
       message,
       NotificationDetails(
-        android: AndroidNotificationDetails(
-          channel.id,
-          channel.name,
-          channelDescription: channel.description,
-          importance: Importance.high,
-          icon: '@drawable/ic_stat_ic_launcher_nbg',
-          color: primary
-        ),
+        android: AndroidNotificationDetails(channel.id, channel.name,
+            channelDescription: channel.description,
+            importance: Importance.high,
+            icon: '@drawable/ic_stat_ic_launcher_nbg',
+            color: primary),
         iOS: const DarwinNotificationDetails(),
       ),
     );
   }
+
   static void saveNotification(RemoteMessage message) {
     // try {
     //   List notifications = StorageService.getList(key: "notifications") ?? [];
@@ -206,7 +200,8 @@ class FCMService {
     // }
   }
 
-  static Map<String, List<int>> notificationMap = {}; // Stores notification IDs by conversation ID
+  static Map<String, List<int>> notificationMap =
+      {}; // Stores notification IDs by conversation ID
 
   static Future<void> savePushNotification(RemoteMessage message) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -220,7 +215,8 @@ class FCMService {
     }
   }
 
-  static Future<void> clearNotificationsForConversation(String conversationId) async {
+  static Future<void> clearNotificationsForConversation(
+      String conversationId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String>? ids = prefs.getStringList(conversationId);
 
@@ -256,7 +252,8 @@ class FCMService {
   static Future<void> setFcmTokenToNull(String userId) async {
     try {
       // Reference to the user's document in Firestore
-      DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(userId);
+      DocumentReference userDocRef =
+          FirebaseFirestore.instance.collection('users').doc(userId);
 
       // Update the document by setting the fcm_token field to null
       await userDocRef.update({
@@ -269,4 +266,3 @@ class FCMService {
     }
   }
 }
-

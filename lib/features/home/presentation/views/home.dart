@@ -44,13 +44,14 @@ class _HomeScreenState extends State<HomeScreen> {
   FutureOr _init() async {
     //logger.i('init');
     var currentUser = homeCtr.user.value;
-    var subProvider =  Provider.of<SubscriptionProvider>(context, listen: false);
+    var subProvider = Provider.of<SubscriptionProvider>(context, listen: false);
     subProvider.initSubDet(currentUser);
     SharedPref.setString("email", currentUser.email);
     NotificationController.instance.getAllNotifications();
     await homeCtr.getFilteredUsers(true);
     //logger.i('before 5s');
-    await SubscriptionHelper.isSubscriptionValid(context, currentUser.subExpDate ?? '');
+    await SubscriptionHelper.isSubscriptionValid(
+        context, currentUser.subExpDate ?? '');
     await Future.delayed(const Duration(seconds: 5), () {
       if (homeCtr.user.value.compatibilitySetted == null ||
           homeCtr.user.value.compatibilitySetted == false) {
@@ -79,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
               logger.i('rebuilt');
               provider.initSubDet(homeCtr.user.value);
               return Obx(
-                    () => Column(
+                () => Column(
                   children: [
                     ProfileTile(),
                     const SizedBoxH20(),
@@ -104,11 +105,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 buttonText: "Go to Explore",
                                 buttonFunc: () async {
                                   await Provider.of<BottomNavModel>(context,
-                                      listen: false)
+                                          listen: false)
                                       .updateIndex(1);
                                 },
                                 message:
-                                "Check back tomorrow or Use the explore page to search and filter more profiles globally"),
+                                    "Check back tomorrow or Use the explore page to search and filter more profiles globally"),
                           ],
                         ),
                       )
@@ -132,8 +133,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             }
                             return true;
                           },
-                          allowedSwipeDirection: const AllowedSwipeDirection.only(
-                              up: false, down: false, right: true, left: true),
+                          allowedSwipeDirection:
+                              const AllowedSwipeDirection.only(
+                                  up: false,
+                                  down: false,
+                                  right: true,
+                                  left: true),
                           padding: const EdgeInsets.all(0),
                           cardBuilder: (context, index, percentThresholdX,
                               percentThresholdY) {
@@ -149,35 +154,37 @@ class _HomeScreenState extends State<HomeScreen> {
                                 });
                               },
                               onLike: () {
-                                matchCtr.ctr.myProfile.value.matchedUsers == null ||
-                                    !matchCtr.ctr.myProfile.value.matchedUsers!
-                                        .contains(user.id)
+                                matchCtr.ctr.myProfile.value.matchedUsers ==
+                                            null ||
+                                        !matchCtr
+                                            .ctr.myProfile.value.matchedUsers!
+                                            .contains(user.id)
                                     ? matchCtr.toggleLike(user).then((val) {
-                                  cardSwiperController.moveTo(index + 1);
-                                })
+                                        cardSwiperController.moveTo(index + 1);
+                                      })
                                     : debugPrint("This users are matched");
                               },
                               onRefresh: homeCtr.user.value.onPremium
                                   ? () {
-                                matchCtr.undoUnRecommend(
-                                    true, cardSwiperController);
-                              }
+                                      matchCtr.undoUnRecommend(
+                                          true, cardSwiperController);
+                                    }
                                   : () {
-                                restrictionModal(
-                                  context: context,
-                                  dismisable: true,
-                                );
-                              },
+                                      restrictionModal(
+                                        context: context,
+                                        dismisable: true,
+                                      );
+                                    },
                               onSaved: homeCtr.user.value.onPremium
                                   ? () {
-                                matchCtr.toggleSave(user.id);
-                              }
+                                      matchCtr.toggleSave(user.id);
+                                    }
                                   : () {
-                                restrictionModal(
-                                  context: context,
-                                  dismisable: true,
-                                );
-                              },
+                                      restrictionModal(
+                                        context: context,
+                                        dismisable: true,
+                                      );
+                                    },
                               onClick: () {},
                             );
                           },
@@ -192,5 +199,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 }
