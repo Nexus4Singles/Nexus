@@ -73,6 +73,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  buffer:
+    dependency: transitive
+    description:
+      name: buffer
+      sha256: "389da2ec2c16283c8787e0adaede82b1842102f8c8aae2f49003a766c5c6b3d1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.3"
   build:
     dependency: transitive
     description:
@@ -285,10 +293,10 @@ packages:
     dependency: transitive
     description:
       name: crypto
-      sha256: ff625774173754681d66daaf4a448684fb04b78f902da9cb3d308c19cc5e8bab
+      sha256: ec30d999af904f33454ba22ed9a86162b35e52b44ac4807d1d93c288041d7d27
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.3"
+    version: "3.0.5"
   csslib:
     dependency: transitive
     description:
@@ -897,10 +905,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: "761a297c042deedc1ffbb156d6e2af13886bb305c2a343a4d972504cd67dd938"
+      sha256: b9c29a161230ee03d3ccf545097fccd9b87a5264228c5d348202e0f0c28f9010
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.2"
   http_multi_server:
     dependency: transitive
     description:
@@ -1030,7 +1038,7 @@ packages:
     source: hosted
     version: "1.0.0+1"
   intl:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: intl
       sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
@@ -1237,6 +1245,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  minio_flutter:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: fbfbfcd3b16435b80777725e7cac6b4fab0f00d3
+      url: "https://github.com/Captured-Heart/MinIo--upgraded---DigitalOcean-x-Flutter-.git"
+    source: git
+    version: "0.0.1"
   mockito:
     dependency: "direct dev"
     description:
@@ -1586,6 +1603,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  slide_countdown:
+    dependency: "direct main"
+    description:
+      name: slide_countdown
+      sha256: "345cbe6d749bf8525df020cbc3763fa5005fed9a8fce59b32c61a5e1bac07b4e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.6.1"
   smart_auth:
     dependency: transitive
     description:
@@ -1682,6 +1707,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  stream_duration:
+    dependency: transitive
+    description:
+      name: stream_duration
+      sha256: d4e833a8db38faec87325ca784079d1e90ba66f78c365ca96f353a59b26bd62e
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.2"
   stream_transform:
     dependency: transitive
     description:
