@@ -38,16 +38,16 @@ class ReportUser extends StatelessWidget {
           children: [
             Center(
               child: Text(
-                  "We want to ensure the quality of users on Nexus are constantly refined. Please assist us to achieve this goal by reporting any user who was toxic or manipulative to you, or any user with empty or gibbersih recordings. Thank you!",
+                  "We want to ensure that the quality of users on Nexus are constantly refined. Please assist us to achieve this goal by reporting any user who was toxic or manipulative to you, or any user with empty or gibbersih recordings. Thank you!",
                   textAlign: TextAlign.center,
-                  style: textStyle11),
+                  style: textStyle12),
             ),
             const SizedBoxH25(),
             CustomTextField(
               enabled: false,
               fillColor: white,
               controller: TextEditingController(text: userModel.username),
-              hintText: 'Username of the user to be reported',
+              hintText: 'Username of the User to be Reported',
             ),
             const SizedBoxH15(),
             Obx(
