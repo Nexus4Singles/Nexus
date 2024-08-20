@@ -1,3 +1,4 @@
+import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -26,9 +27,11 @@ class ChatContainer extends StatelessWidget {
     return InkWell(
       onTap: onPress,
       child: ListTile(
-        leading: CircleAvatar(
-          radius: 24,
-          backgroundImage: NetworkImage(image),
+        leading: CacheNetworkWidget(
+          imgUrl: image,
+          height: 48,
+          width: 48,
+          isNotCircle: false,
         ),
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,8 +60,7 @@ class ChatContainer extends StatelessWidget {
               name,
               style: textStyle14.copyWith(fontWeight: FontWeight.w600),
             ),
-            Text(DateFormat.jm().format(time).capitalizeFirst!,
-                style: textStyle12),
+            Text(DateFormat.jm().format(time).capitalizeFirst!, style: textStyle12),
           ],
         ),
       ),
