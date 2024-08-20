@@ -117,14 +117,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     //TODO: you can see example here
                                     headerText: homeCtr.recommendedState() ==
                                             RecommendedState.hasNotExceededButEmpty
-                                        ? "Recommended list is empty"
+                                        ? "No More Recommendations!!"
                                         : "That's It For Now!!",
                                     buttonText: "Go to Explore",
                                     buttonFunc: () async {
                                       model.jumpToNavPage(1);
                                     },
                                     message:
-                                        "Check back tomorrow or Use the explore page to search and filter more profiles globally",
+                                        "Check Back Later or Use the Explore Page to Search & Filter More Profiles Globally",
                                   );
                                 }),
 
@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ? matchCtr.toggleLike(user).then((val) {
                                                     cardSwiperController.moveTo(index + 1);
                                                   })
-                                                : debugPrint("This users are matched");
+                                                : debugPrint("These users are matched");
                                           },
                                           onRefresh: provider.onPremium
                                               ? () {
