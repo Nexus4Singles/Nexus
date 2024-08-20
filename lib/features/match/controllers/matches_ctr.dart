@@ -32,19 +32,17 @@ class MatchesCtr extends GetxController {
     Future.delayed(const Duration(seconds: 2), () => isLoading.value = false);
     userData.clear();
     var myLikes = ctr.myProfile.value.myLikes?.toSet() ?? {};
-    userData.assignAll(
-        ctr.allUsers.where((user) => myLikes.contains(user.id)).toList());
+    userData.assignAll(ctr.allUsers.where((user) => myLikes.contains(user.id)).toList());
   }
 
   setLikedMe() {
-    emptyText.value = "You don’t have any likes yet";
+    emptyText.value = "You don't have any likes yet";
 
     isLoading.value = true;
     Future.delayed(const Duration(seconds: 2), () => isLoading.value = false);
     userData.clear();
     var likedMes = ctr.myProfile.value.likeMe?.toSet() ?? {};
-    userData.assignAll(
-        ctr.allUsers.where((user) => likedMes.contains(user.id)).toList());
+    userData.assignAll(ctr.allUsers.where((user) => likedMes.contains(user.id)).toList());
   }
 
   setSaved() {
@@ -53,8 +51,7 @@ class MatchesCtr extends GetxController {
     Future.delayed(const Duration(seconds: 2), () => isLoading.value = false);
     userData.clear();
     var savedIds = ctr.myProfile.value.mySaves?.toSet() ?? {};
-    userData.assignAll(
-        ctr.allUsers.where((user) => savedIds.contains(user.id)).toList());
+    userData.assignAll(ctr.allUsers.where((user) => savedIds.contains(user.id)).toList());
   }
 
   checkSavedAlready(String id) {
@@ -67,8 +64,8 @@ class MatchesCtr extends GetxController {
       DocumentSnapshot snapshot = await transaction.get(likeDoc);
       if (snapshot.exists) {
         var data = UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
-        transaction.update(likeDoc,
-            {'countLike': data.countLike != null ? data.countLike! + 1 : 1});
+        transaction
+            .update(likeDoc, {'countLike': data.countLike != null ? data.countLike! + 1 : 1});
       }
     });
   }
@@ -78,8 +75,7 @@ class MatchesCtr extends GetxController {
     await homeCtr.getMyProfile();
     await ctr.getMyProfile();
     // this is for users that was liked by someone already
-    if (ctr.myProfile.value.likeMe != null &&
-        ctr.myProfile.value.likeMe!.contains(userModel.id)) {
+    if (ctr.myProfile.value.likeMe != null && ctr.myProfile.value.likeMe!.contains(userModel.id)) {
       await removeFromLikeMe(userModel.id, false);
       await removeUserMyLike(userModel.id, false);
       await saveBothToMatched(userModel);
@@ -118,6 +114,7 @@ class MatchesCtr extends GetxController {
     await db.collection(kUSER).doc(auth.currentUser!.uid).update({
       "myLikes": FieldValue.arrayUnion([id])
     });
+    homeCtr.incrementViews();
   }
 
   removeFromLikeMe(id, bool isUser) async {
@@ -154,14 +151,11 @@ class MatchesCtr extends GetxController {
   Future<void> toggleSave(String id) async {
     EasyLoading.show();
 
-    final updateOperation = checkSavedAlready(id) ?? false
-        ? FieldValue.arrayRemove([id])
-        : FieldValue.arrayUnion([id]);
+    final updateOperation =
+        checkSavedAlready(id) ?? false ? FieldValue.arrayRemove([id]) : FieldValue.arrayUnion([id]);
 
-    await db
-        .collection(kUSER)
-        .doc(auth.currentUser!.uid)
-        .update({"mySaves": updateOperation});
+    await db.collection(kUSER).doc(auth.currentUser!.uid).update({"mySaves": updateOperation});
+    homeCtr.incrementViews();
 
     await homeCtr.getMyProfile();
     await ctr.getMyProfile();
@@ -176,6 +170,8 @@ class MatchesCtr extends GetxController {
       await db.collection(kUSER).doc(auth.currentUser!.uid).update({
         "unRecommendUsers": FieldValue.arrayUnion([id])
       });
+      homeCtr.incrementViews();
+
       await homeCtr.getFilteredUsers(true);
       EasyLoading.dismiss();
     } catch (e) {
