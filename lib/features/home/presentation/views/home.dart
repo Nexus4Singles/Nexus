@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     //TODO: you can see example here
                                     headerText: homeCtr.recommendedState() ==
                                             RecommendedState.hasNotExceededButEmpty
-                                        ? "No More Recommendations!!"
+                                        ? "That's It For Now!!"
                                         : "That's It For Now!!",
                                     buttonText: "Go to Explore",
                                     buttonFunc: () async {
@@ -149,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const SizedBoxH20(),
                                   Center(
                                     child: Text(
-                                      "Recommendations For You",
+                                      "Daily Recommendations For You",
                                       style: textStyle18.copyWith(
                                           color: Colors.black, fontWeight: FontWeight.w600),
                                     ),
