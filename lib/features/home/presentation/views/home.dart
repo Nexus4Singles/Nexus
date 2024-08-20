@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       model.jumpToNavPage(1);
                                     },
                                     message:
-                                        "Check Back Later or Use the Explore Page to Search & Filter More Profiles Globally",
+                                        "Check Back Tomorrow or Use the Explore Page to Search & Filter Profiles Within Other Countries",
                                   );
                                 }),
 
