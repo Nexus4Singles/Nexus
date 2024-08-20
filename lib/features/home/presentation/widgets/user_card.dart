@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,11 +12,9 @@ import 'package:Nexus/core/models/user.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
 import 'package:Nexus/core/utils/device.dart';
-import 'package:provider/provider.dart';
 import '../../../auth/presentation/widgets/record_completed.dart';
 import '../../../match/controllers/matches_ctr.dart';
 import '../../../profile/presentation/widgets/text_container.dart';
-import '../change_notifier/home_notifier.dart';
 import '../views/photo_view.dart';
 
 class UserCard extends StatefulWidget {
@@ -95,6 +93,10 @@ class _UserCardState extends State<UserCard> {
 
   @override
   Widget build(BuildContext context) {
+    // log(widget.userModel.photos![1], name: 'first image');
+    // String imgTrial =
+    //     "https://images.pexels.com/photos/20276760/pexels-photo-20276760/free-photo-of-back-view-of-woman-in-black-and-white.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
+
     return InkWell(
       onTap: widget.onClick,
       child: Container(
@@ -112,132 +114,123 @@ class _UserCardState extends State<UserCard> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
+              CacheNetworkWidget(
+                imgUrl: widget.userModel.photos![0],
+                opacity: .4,
+                color: black,
                 height: height(context) * .55,
                 width: width(context),
-                padding: EdgeInsets.all(15.sp),
-                decoration: BoxDecoration(
-                  color: black,
-                  borderRadius: BorderRadius.circular(20.r),
-                  image: DecorationImage(
-                    image: NetworkImage(widget.userModel.photos![0]),
-                    fit: BoxFit.cover,
-                    opacity: .4,
-                  ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${widget.userModel.username}, ${widget.userModel.age}',
-                      style: headerStyle.copyWith(
-                        fontSize: 24.sp,
-                        color: white,
-                      ),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Iconsax.location5,
+                borderRadius: BorderRadius.circular(20.r),
+                child: Padding(
+                  padding: EdgeInsets.all(15.sp),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${widget.userModel.username}, ${widget.userModel.age}',
+                        style: headerStyle.copyWith(
+                          fontSize: 24.sp,
                           color: white,
-                          size: 20,
                         ),
-                        const SizedBoxW10(),
-                        Flexible(
-                          child: Text(
-                            '${widget.userModel.location!.place}',
-                            textAlign: TextAlign.center,
-                            style: textStyle14.copyWith(
-                              color: white,
-                            ),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Iconsax.location5,
+                            color: white,
+                            size: 20,
                           ),
-                        )
-                      ],
-                    ),
-                    Obx(
-                      () => Padding(
-                        padding: EdgeInsets.all(15.sp),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            InkWell(
-                              onTap: widget.onRefresh,
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: white,
-                                    border: Border.all(color: primary)),
-                                child: SvgPicture.asset(
-                                  '$svgPath/back.svg',
-                                  width: 24,
-                                  color: primary,
-                                ),
+                          const SizedBoxW10(),
+                          Flexible(
+                            child: Text(
+                              '${widget.userModel.location!.place}',
+                              textAlign: TextAlign.center,
+                              style: textStyle14.copyWith(
+                                color: white,
                               ),
                             ),
-                            InkWell(
-                              onTap: widget.onClosed,
-                              child: SvgPicture.asset('assets/icons/close.svg'),
-                            ),
-                            InkWell(
-                              onTap: widget.onLike,
-                              child: CircleAvatar(
-                                  backgroundColor:
-                                      ctr.ctr.myProfile.value.myLikes == null ||
-                                              !ctr.ctr.myProfile.value.myLikes!
-                                                  .contains(widget.userModel.id)
-                                          ? white
-                                          : primary,
-                                  radius: 25,
+                          )
+                        ],
+                      ),
+                      Obx(
+                        () => Padding(
+                          padding: EdgeInsets.all(15.sp),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              InkWell(
+                                onTap: widget.onRefresh,
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: white,
+                                      border: Border.all(color: primary)),
                                   child: SvgPicture.asset(
-                                    ctr.ctr.myProfile.value.matchedUsers ==
-                                                null ||
-                                            !ctr.ctr.myProfile.value
-                                                .matchedUsers!
-                                                .contains(widget.userModel.id)
-                                        ? "$svgPath/like.svg"
-                                        : '$svgPath/sms.svg',
-                                    color: ctr.ctr.myProfile.value.myLikes ==
-                                                null ||
+                                    '$svgPath/back.svg',
+                                    width: 24,
+                                    color: primary,
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: widget.onClosed,
+                                child: SvgPicture.asset('assets/icons/close.svg'),
+                              ),
+                              InkWell(
+                                onTap: widget.onLike,
+                                child: CircleAvatar(
+                                    backgroundColor: ctr.ctr.myProfile.value.myLikes == null ||
                                             !ctr.ctr.myProfile.value.myLikes!
                                                 .contains(widget.userModel.id)
-                                        ? primary
-                                        : white,
-                                  )),
-                            ),
-                            InkWell(
-                              onTap: widget.onSaved,
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: primary),
-                                  color:
-                                      ctr.ctr.myProfile.value.mySaves == null ||
-                                              !ctr.ctr.myProfile.value.mySaves!
+                                        ? white
+                                        : primary,
+                                    radius: 25,
+                                    child: SvgPicture.asset(
+                                      ctr.ctr.myProfile.value.matchedUsers == null ||
+                                              !ctr.ctr.myProfile.value.matchedUsers!
                                                   .contains(widget.userModel.id)
-                                          ? white
-                                          : primary,
-                                ),
-                                child: SvgPicture.asset("$svgPath/bookmark.svg",
-                                    width: 24,
-                                    color: ctr.ctr.myProfile.value.mySaves ==
-                                                null ||
+                                          ? "$svgPath/like.svg"
+                                          : '$svgPath/sms.svg',
+                                      color: ctr.ctr.myProfile.value.myLikes == null ||
+                                              !ctr.ctr.myProfile.value.myLikes!
+                                                  .contains(widget.userModel.id)
+                                          ? primary
+                                          : white,
+                                    )),
+                              ),
+                              InkWell(
+                                onTap: widget.onSaved,
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: primary),
+                                    color: ctr.ctr.myProfile.value.mySaves == null ||
                                             !ctr.ctr.myProfile.value.mySaves!
                                                 .contains(widget.userModel.id)
-                                        ? primary
-                                        : white),
+                                        ? white
+                                        : primary,
+                                  ),
+                                  child: SvgPicture.asset("$svgPath/bookmark.svg",
+                                      width: 24,
+                                      color: ctr.ctr.myProfile.value.mySaves == null ||
+                                              !ctr.ctr.myProfile.value.mySaves!
+                                                  .contains(widget.userModel.id)
+                                          ? primary
+                                          : white),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               SingleChildScrollView(
@@ -258,13 +251,11 @@ class _UserCardState extends State<UserCard> {
                       children: [
                         Text(
                           'State of Origin: ',
-                          style: textStyle14.copyWith(
-                              fontWeight: FontWeight.w500, color: ash),
+                          style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
                         ),
                         Text(
                           widget.userModel.stateOfOrigin ?? '',
-                          style: textStyle16.copyWith(
-                              fontWeight: FontWeight.w500, color: black),
+                          style: textStyle16.copyWith(fontWeight: FontWeight.w500, color: black),
                         ),
                       ],
                     ),
@@ -273,13 +264,11 @@ class _UserCardState extends State<UserCard> {
                       children: [
                         Text(
                           'Education Level: ',
-                          style: textStyle14.copyWith(
-                              fontWeight: FontWeight.w500, color: ash),
+                          style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
                         ),
                         Text(
                           widget.userModel.educationLevel ?? '',
-                          style: textStyle16.copyWith(
-                              fontWeight: FontWeight.w500, color: black),
+                          style: textStyle16.copyWith(fontWeight: FontWeight.w500, color: black),
                         ),
                       ],
                     ),
@@ -288,15 +277,13 @@ class _UserCardState extends State<UserCard> {
                       children: [
                         Text(
                           'Profession/Industry: ',
-                          style: textStyle14.copyWith(
-                              fontWeight: FontWeight.w500, color: ash),
+                          style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
                         ),
                         Flexible(
                           child: Text(
                             widget.userModel.profession ?? '',
                             overflow: TextOverflow.ellipsis,
-                            style: textStyle16.copyWith(
-                                fontWeight: FontWeight.w500, color: black),
+                            style: textStyle16.copyWith(fontWeight: FontWeight.w500, color: black),
                           ),
                         ),
                       ],
@@ -306,15 +293,13 @@ class _UserCardState extends State<UserCard> {
                       children: [
                         Text(
                           'Church: ',
-                          style: textStyle14.copyWith(
-                              fontWeight: FontWeight.w500, color: ash),
+                          style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
                         ),
                         Flexible(
                           child: Text(
                             widget.userModel.churchName ?? '',
                             overflow: TextOverflow.ellipsis,
-                            style: textStyle16.copyWith(
-                                fontWeight: FontWeight.w500, color: black),
+                            style: textStyle16.copyWith(fontWeight: FontWeight.w500, color: black),
                           ),
                         ),
                       ],
@@ -375,9 +360,7 @@ class _UserCardState extends State<UserCard> {
                     Text(
                       "1. The summary of ${widget.userModel.username}'s relationship with God",
                       style: textStyle14.copyWith(
-                          color: black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700),
+                          color: black, fontSize: 14, fontWeight: FontWeight.w700),
                     ),
                     const SizedBoxH10(),
                     AudioFilePlayer(
@@ -397,9 +380,7 @@ class _UserCardState extends State<UserCard> {
                     Text(
                       "2. ${widget.userModel.username}'s view on Gender roles in marriage",
                       style: textStyle14.copyWith(
-                          color: black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700),
+                          color: black, fontSize: 14, fontWeight: FontWeight.w700),
                     ),
                     const SizedBoxH10(),
                     AudioFilePlayer(
@@ -419,9 +400,7 @@ class _UserCardState extends State<UserCard> {
                     Text(
                       "3.${widget.userModel.username}'s favourite qualities about ${widget.userModel.gender.toLowerCase().contains("f") ? "herself" : "himself"}",
                       style: textStyle14.copyWith(
-                          color: black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700),
+                          color: black, fontSize: 14, fontWeight: FontWeight.w700),
                     ),
                     const SizedBoxH10(),
                     AudioFilePlayer(
@@ -455,32 +434,12 @@ class _UserCardState extends State<UserCard> {
                             borderRadius: BorderRadius.circular(15.r),
                             child: InkWell(
                               onTap: () {
-                                int index =
-                                    widget.userModel.photos!.indexOf(item);
+                                int index = widget.userModel.photos!.indexOf(item);
                                 Get.to(() => PhotoViewScreen(
-                                    selectedIndex: index,
-                                    photos: widget.userModel.photos!));
+                                    selectedIndex: index, photos: widget.userModel.photos!));
                               },
-                              child: CachedNetworkImage(
-                                width: width(context) * .4,
-                                height: 100.h,
-                                fit: BoxFit.cover,
-                                imageUrl: item,
-                                progressIndicatorBuilder:
-                                    (context, url, downloadProgress) => Center(
-                                  child: SizedBox(
-                                    width: 16,
-                                    height: 16,
-                                    child: CircularProgressIndicator(
-                                      value: downloadProgress.progress,
-                                      strokeWidth: 1,
-                                      color: primary,
-                                    ),
-                                  ),
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    Container(),
-                              ),
+                              child: CacheNetworkWidget(
+                                  width: width(context) * .4, height: 100.h, imgUrl: item),
                             ),
                           ),
                       ],

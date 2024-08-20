@@ -1,3 +1,5 @@
+import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -43,22 +45,20 @@ class Matched extends StatelessWidget {
                   style: textStyle14.copyWith(fontWeight: FontWeight.w700)),
             ),
             const SizedBoxH20(),
-            Container(
+            CacheNetworkWidget(
               height: Get.height / 2,
               width: Get.width / 1.2,
+              imgUrl: userModel.photos![0],
               decoration: BoxDecoration(
-                  boxShadow: [boxShadow],
-                  border: Border.all(
-                      color: white,
-                      width: 5,
-                      strokeAlign: BorderSide.strokeAlignOutside),
-                  borderRadius: BorderRadius.circular(12),
-                  image: DecorationImage(
-                      image: NetworkImage(userModel.photos![0]),
-                      fit: BoxFit.cover)),
+                boxShadow: [boxShadow],
+                border:
+                    Border.all(color: white, width: 5, strokeAlign: BorderSide.strokeAlignOutside),
+                borderRadius: BorderRadius.circular(12),
+                image: DecorationImage(
+                    image: CachedNetworkImageProvider(userModel.photos![0]), fit: BoxFit.cover),
+              ),
               child: Transform.translate(
-                  offset: const Offset(0, 70),
-                  child: Image.asset("$imgPath/matched.png")),
+                  offset: const Offset(0, 70), child: Image.asset("$imgPath/matched.png")),
             ),
             const SizedBox(height: 45),
             Column(
@@ -76,8 +76,7 @@ class Matched extends StatelessWidget {
                       suffixIcon: InkWell(
                         onTap: () {
                           ctr
-                              .sendMessage(messageID.toString(),
-                                  ctr.chatController.text, userModel)
+                              .sendMessage(messageID.toString(), ctr.chatController.text, userModel)
                               .then((value) {
                             EasyLoading.showToast("Message Sent");
                           });
