@@ -19,7 +19,7 @@ restrictionModal(
     builder: (context) {
       return Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: size.height * 0.3),
+        padding: EdgeInsets.symmetric(vertical: size.height * 0.27),
         child: Stack(children: [
           Dialog(
             //insetPadding: EdgeInsets.only(top: 10),
