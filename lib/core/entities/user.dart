@@ -22,7 +22,7 @@ class UserEntity extends Equatable {
     this.educationLevel,
     this.stateOfOrigin,
     this.profession,
-    this.unrecommendedUsers,
+    this.unRecommendUsers,
     this.hobbies,
     this.desiredQualities,
     this.photos,
@@ -48,6 +48,7 @@ class UserEntity extends Equatable {
     this.usedOneFreeText = false,
     this.usersChatWarning,
     this.entitledUser = 'null',
+    this.recommendedTime,
   });
 
   final String id;
@@ -73,7 +74,7 @@ class UserEntity extends Equatable {
   @JsonKey(name: kMATCHESUSERSKEY)
   final List<String>? matchedUsers;
   @JsonKey(name: kUNRECOMMENDUSER)
-  final List<String>? unrecommendedUsers;
+  final List<String>? unRecommendUsers;
   @JsonKey(name: kMATCHESKEY)
   final List<String>? likeMe;
   final List<String>? myLikes;
@@ -109,6 +110,7 @@ class UserEntity extends Equatable {
   final String? subExpDate;
   final bool usedOneFreeText;
   final String? entitledUser;
+  final String ? recommendedTime;
 
   @override
   List<Object?> get props => [
@@ -121,7 +123,7 @@ class UserEntity extends Equatable {
         gender,
         age,
         city,
-        unrecommendedUsers,
+        unRecommendUsers,
         stateOfOrigin,
         educationLevel,
         profession,

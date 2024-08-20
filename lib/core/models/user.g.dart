@@ -36,6 +36,9 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       matchedUsers: (json['matchedUsers'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      unRecommendUsers: (json['unRecommendUsers'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       educationLevel: json['education_level'] as String?,
       profession: json['profession'] as String?,
       relationshipWithGod: json['relationship_with_god'] as String?,
@@ -61,6 +64,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       subExpDate: json['subExpDate'] as String?,
       usedOneFreeText: json['usedOneFreeText'] as bool? ?? false,
       entitledUser: json['entitledUser'] as String? ?? 'null',
+      recommendedTime: json['recommendedTime'] as String?,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -80,6 +84,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'hobbies': instance.hobbies,
       'usersChatWarning': instance.usersChatWarning,
       'matchedUsers': instance.matchedUsers,
+      'unRecommendUsers': instance.unRecommendUsers,
       'likeMe': instance.likeMe,
       'myLikes': instance.myLikes,
       'mySaves': instance.mySaves,
@@ -102,4 +107,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'subExpDate': instance.subExpDate,
       'usedOneFreeText': instance.usedOneFreeText,
       'entitledUser': instance.entitledUser,
+      'recommendedTime': instance.recommendedTime,
     };
