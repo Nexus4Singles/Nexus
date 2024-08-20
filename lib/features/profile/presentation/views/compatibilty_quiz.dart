@@ -18,8 +18,7 @@ class CompatibilityQuizScreen extends StatefulWidget {
   const CompatibilityQuizScreen({super.key});
 
   @override
-  State<CompatibilityQuizScreen> createState() =>
-      _CompatibilityQuizScreenState();
+  State<CompatibilityQuizScreen> createState() => _CompatibilityQuizScreenState();
 }
 
 class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
@@ -42,8 +41,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
           appBar: AppBar(
             title: Text(
               'Compatibility Quiz',
-              style: textStyle18.copyWith(
-                  fontSize: 24, fontWeight: FontWeight.w700, color: black),
+              style: textStyle18.copyWith(fontSize: 24, fontWeight: FontWeight.w700, color: black),
             ),
             centerTitle: true,
             foregroundColor: black,
@@ -222,8 +220,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                 const SizedBoxH20(),
                 const CampaTitle(
                   num: '6',
-                  title:
-                      'Can you date or marry someone who is not yet financially stable?',
+                  title: 'Can you date or marry someone who is not yet financially stable?',
                 ),
 
                 CompatRadio(
@@ -364,13 +361,10 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                           kGENOTYPE: genotype,
                           kPERSONALITYTYPE: personalityType,
                           kREGULARSOURCEOFINCOME: regularSourceOfIncome,
-                          kMARRYWHOISNOTFINANCIALLYSTABLE:
-                              dateWhoIsNotFinanciallyStable,
+                          kMARRYWHOISNOTFINANCIALLYSTABLE: dateWhoIsNotFinanciallyStable,
                           kLONGDISTANCERELATIONSHIP: longDistanceRelationship,
-                          kBELIEVEINCOHIABITING:
-                              believeInCohabitingBeforeMarriage,
-                          kSHOULDCHRISTIANSPEAKINTONGUE:
-                              shouldChristianSpeakInTongue,
+                          kBELIEVEINCOHIABITING: believeInCohabitingBeforeMarriage,
+                          kSHOULDCHRISTIANSPEAKINTONGUE: shouldChristianSpeakInTongue,
                           kBELIEVEINTITHING: believeInTithing,
                         }
                       };
@@ -389,9 +383,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
                                     ),
-                                    content: SizedBox(
-                                        height: Get.height / 2,
-                                        child: const CompatibilitySuccessful()),
+                                    content: const CompatibilitySuccessful(),
                                   );
                                 },
                               );
