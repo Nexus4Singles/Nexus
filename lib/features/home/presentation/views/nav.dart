@@ -21,21 +21,21 @@ class MainNav extends StatefulWidget {
 
 class _MainNav extends State<MainNav> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  PageController? controller;
+  // PageController? controller;
   bool internet = false;
 
   // final _navController = BottomNavModel();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    int currentPage = 0;
-    currentPage = widget.initialPage!;
-    controller = PageController(initialPage: currentPage);
-    setState(() {
-      controller = controller;
-    });
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   int currentPage = 0;
+  //   currentPage = widget.initialPage!;
+  //   controller = PageController(initialPage: currentPage);
+  //   setState(() {
+  //     controller = controller;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class _MainNav extends State<MainNav> {
             ),
           ),
           body: PageView(
-            controller: controller,
+            controller: model.controller,
             onPageChanged: (index) {
               model.updateIndex(index);
             },
@@ -91,7 +91,7 @@ class _MainNav extends State<MainNav> {
             iconImage: Iconsax.home,
             iconImage2: Iconsax.home5,
             text: '',
-            onTap: () => controller!.jumpToPage(0),
+            onTap: () => navController.controller.jumpToPage(0),
             currentIndex: 0,
           ),
           TabItems(
@@ -99,7 +99,7 @@ class _MainNav extends State<MainNav> {
             iconImage: Iconsax.discover,
             iconImage2: Iconsax.discover5,
             text: '',
-            onTap: () => controller!.jumpToPage(1),
+            onTap: () => navController.controller.jumpToPage(1),
             currentIndex: 1,
           ),
           TabItems(
@@ -107,7 +107,7 @@ class _MainNav extends State<MainNav> {
             iconImage: Iconsax.heart,
             iconImage2: Iconsax.heart5,
             text: '',
-            onTap: () => controller!.jumpToPage(2),
+            onTap: () => navController.controller.jumpToPage(2),
             currentIndex: 2,
           ),
           TabItems(
@@ -115,7 +115,7 @@ class _MainNav extends State<MainNav> {
             iconImage: Iconsax.message,
             iconImage2: Iconsax.message5,
             text: '',
-            onTap: () => controller!.jumpToPage(3),
+            onTap: () => navController.controller.jumpToPage(3),
             currentIndex: 3,
           ),
           TabItems(
@@ -123,7 +123,7 @@ class _MainNav extends State<MainNav> {
             iconImage: Iconsax.profile_circle,
             iconImage2: Iconsax.profile_circle5,
             text: '',
-            onTap: () => controller!.jumpToPage(4),
+            onTap: () => navController.controller.jumpToPage(4),
             currentIndex: 4,
           ),
         ],
@@ -141,12 +141,12 @@ class TabItems extends StatelessWidget {
   final BottomNavModel? navController;
   const TabItems(
       {Key? key,
-        this.navController,
-        this.iconImage,
-        this.iconImage2,
-        this.text,
-        this.onTap,
-        this.currentIndex})
+      this.navController,
+      this.iconImage,
+      this.iconImage2,
+      this.text,
+      this.onTap,
+      this.currentIndex})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -159,9 +159,7 @@ class TabItems extends StatelessWidget {
             padding: EdgeInsets.all(12.sp),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: navController!.currentIndex == currentIndex
-                  ? white
-                  : Colors.transparent,
+              color: navController!.currentIndex == currentIndex ? white : Colors.transparent,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -170,13 +168,13 @@ class TabItems extends StatelessWidget {
               children: [
                 navController!.currentIndex == currentIndex
                     ? Icon(
-                  iconImage2!,
-                  color: primary,
-                )
+                        iconImage2!,
+                        color: primary,
+                      )
                     : Icon(
-                  iconImage!,
-                  color: white,
-                ),
+                        iconImage!,
+                        color: white,
+                      ),
                 // if (Platform.isAndroid) const SizedBoxH10(),
               ],
             ),
