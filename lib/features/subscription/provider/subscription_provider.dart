@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/models/user.dart';
@@ -11,6 +10,7 @@ class SubscriptionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  UserModel? get currentUser => _currentUser;
   UserModel? get currentUser => _currentUser;
 
   bool _onPremium = false;
