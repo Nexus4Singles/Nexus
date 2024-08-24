@@ -1,3 +1,4 @@
+import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -14,8 +15,7 @@ import '../../controllers/home_controller.dart';
 class ProfileTile extends StatelessWidget {
   ProfileTile({super.key});
 
-  int get notificationsLength =>
-      NotificationController.instance.notifications.length;
+  int get notificationsLength => NotificationController.instance.notifications.length;
 
   final model = HomeController.instance;
 
@@ -30,11 +30,11 @@ class ProfileTile extends StatelessWidget {
               onTap: () {
                 Get.toNamed(AppRoutes.editProfile);
               },
-              child: CircleAvatar(
-                radius: 25.r,
-                backgroundImage: NetworkImage(
-                  model.user.value.profileUrl ?? "",
-                ),
+              child: CacheNetworkWidget(
+                height: 50.r,
+                width: 50.r,
+                imgUrl: model.user.value.profileUrl ?? "",
+                isNotCircle: false,
               ),
             ),
             const SizedBoxW10(),

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -85,8 +86,7 @@ class _EditProfileState extends State<EditProfile> {
         backgroundColor: white,
         title: Text(
           'Edit Profile',
-          style: textStyle18.copyWith(
-              fontSize: 24, fontWeight: FontWeight.w700, color: black),
+          style: textStyle18.copyWith(fontSize: 24, fontWeight: FontWeight.w700, color: black),
         ),
         centerTitle: true,
         foregroundColor: black,
@@ -105,43 +105,40 @@ class _EditProfileState extends State<EditProfile> {
               alignment: WrapAlignment.start,
               children: [
                 for (var item in currentUser.photos!)
-                  Container(
+                  CacheNetworkWidget(
                     height: 120,
                     width: 120,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
-                        image: NetworkImage(item),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: InkWell(
-                            onTap: () {
-                              if (allImage.length.isGreaterThan(2)) {
-                                showConfirmationDialog(context, item, allImage);
-                              } else {
-                                AppToast().showErrorToast(
-                                    "You need to have at least two images on your profile before you can delete any image");
-                              }
-                            },
-                            child: const CircleAvatar(
-                              backgroundColor: red,
-                              radius: 12,
-                              child: Icon(
-                                Icons.close,
-                                color: white,
-                                size: 15,
+                    imgUrl: item,
+                    borderRadius: BorderRadius.circular(20),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: InkWell(
+                              onTap: () {
+                                if (allImage.length.isGreaterThan(2)) {
+                                  showConfirmationDialog(context, item, allImage);
+                                } else {
+                                  AppToast().showErrorToast(
+                                      "You need to have at least two images on your profile before you can delete any image");
+                                }
+                              },
+                              child: const CircleAvatar(
+                                backgroundColor: red,
+                                radius: 12,
+                                child: Icon(
+                                  Icons.close,
+                                  color: white,
+                                  size: 15,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 for (var item in imageFiles)
@@ -226,14 +223,11 @@ class _EditProfileState extends State<EditProfile> {
                   InkWell(
                     onTap: () {
                       if (currentUser.photos!.length < maxPhotos) {
-                        for (int i = currentUser.photos!.length;
-                            i < maxPhotos;
-                            i++) {
+                        for (int i = currentUser.photos!.length; i < maxPhotos; i++) {
                           _pickImage();
                         }
                       } else {
-                        AppToast()
-                            .showErrorToast('Maximum of 4 photos allowed');
+                        AppToast().showErrorToast('Maximum of 4 photos allowed');
                       }
                     },
                     child: DottedBorder(
@@ -282,8 +276,7 @@ class _EditProfileState extends State<EditProfile> {
             Wrap(children: [
               ...currentUser.hobbies!.map((val) => Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child:
-                        HobbieCard(text: val, isChecked: true, onPress: () {}),
+                    child: HobbieCard(text: val, isChecked: true, onPress: () {}),
                   ))
             ]),
             const SizedBoxH15(),
@@ -309,8 +302,7 @@ class _EditProfileState extends State<EditProfile> {
             Wrap(children: [
               ...currentUser.desiredQualities!.map((val) => Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child:
-                        HobbieCard(text: val, isChecked: true, onPress: () {}),
+                    child: HobbieCard(text: val, isChecked: true, onPress: () {}),
                   ))
             ]),
             const SizedBoxH15(),
@@ -349,8 +341,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 ),
               ),
-              boxDecoration:
-                  BoxDecoration(border: Border.all(color: Colors.transparent)),
+              boxDecoration: BoxDecoration(border: Border.all(color: Colors.transparent)),
               debounceTime: 800,
               isLatLngRequired: true,
               getPlaceDetailWithLatLng: (Prediction prediction) {
@@ -418,9 +409,7 @@ class _EditProfileState extends State<EditProfile> {
             const SizedBoxH15(),
             ProfileDropDown(
               items: LocalData().church,
-              val: !LocalData().church.contains(ctr.church.value)
-                  ? "Other"
-                  : ctr.church.value,
+              val: !LocalData().church.contains(ctr.church.value) ? "Other" : ctr.church.value,
               hintText: 'Church',
               onChanged: (p0) {
                 setState(() {
@@ -433,13 +422,11 @@ class _EditProfileState extends State<EditProfile> {
               () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ctr.church.value == "Other" ||
-                          !LocalData().church.contains(ctr.church.value)
+                  ctr.church.value == "Other" || !LocalData().church.contains(ctr.church.value)
                       ? CustomTextField(
                           fillColor: white,
                           radius: 12,
-                          controller: TextEditingController(
-                              text: currentUser.churchName),
+                          controller: TextEditingController(text: currentUser.churchName),
                           onChanged: (val) {
                             ctr.church.value = val;
                           },
@@ -450,8 +437,7 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                         )
                       : const SizedBox(),
-                  ctr.church.value == "Other" ||
-                          !LocalData().church.contains(ctr.church.value)
+                  ctr.church.value == "Other" || !LocalData().church.contains(ctr.church.value)
                       ? const SizedBoxH15()
                       : const SizedBox(),
                 ],
@@ -471,8 +457,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  void showConfirmationDialog(
-      BuildContext context, String item, List allImage) {
+  void showConfirmationDialog(BuildContext context, String item, List allImage) {
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) {
@@ -486,8 +471,7 @@ class _EditProfileState extends State<EditProfile> {
                 ctr.deleteUserPhoto(item).then((val) async {
                   allImage.remove(item);
                   // check why this didn't fetch data
-                  await Provider.of<HomeNotifier>(context, listen: false)
-                      .getProfile();
+                  await Provider.of<HomeNotifier>(context, listen: false).getProfile();
                 });
                 // Navigator.pop(context, 'Deleted');
                 // Handle the destructive action

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/core/utils/device.dart';
@@ -26,8 +27,8 @@ class _PhotoViewScreenState extends State<PhotoViewScreen> {
   @override
   void initState() {
     super.initState();
-    indicatorAnimationController = ValueNotifier<IndicatorAnimationCommand>(
-        IndicatorAnimationCommand.resume);
+    indicatorAnimationController =
+        ValueNotifier<IndicatorAnimationCommand>(IndicatorAnimationCommand.resume);
   }
 
   @override
@@ -43,8 +44,7 @@ class _PhotoViewScreenState extends State<PhotoViewScreen> {
         body: Stack(
           children: [
             StoryPageView(
-              indicatorPadding:
-                  const EdgeInsets.only(top: 50, left: 16, right: 16),
+              indicatorPadding: const EdgeInsets.only(top: 50, left: 16, right: 16),
               initialPage: widget.selectedIndex,
               initialStoryIndex: (int pageIndex) {
                 return widget.selectedIndex;
@@ -61,9 +61,7 @@ class _PhotoViewScreenState extends State<PhotoViewScreen> {
                         children: [
                           StoryImage(
                             key: ValueKey(story),
-                            imageProvider: NetworkImage(
-                              story,
-                            ),
+                            imageProvider: CachedNetworkImageProvider(story),
                             fit: BoxFit.cover,
                             width: double.infinity,
                             height: height(context),

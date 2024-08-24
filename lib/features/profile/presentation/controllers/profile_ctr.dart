@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:Nexus/core/network/digital_ocean_client.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,15 +8,16 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:Nexus/core/constant.dart';
-import 'package:Nexus/core/utils/methods.dart';
 import 'package:Nexus/core/utils/toast.dart';
 import 'package:Nexus/router.dart';
 import 'package:logger/logger.dart';
 import '../../../../core/models/location.dart';
+import 'package:path/path.dart' as path;
 
 class ProfileCtr extends GetxController {
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
+  final DigitalOceanClient digitalOceanClient = DigitalOceanClient();
   TextEditingController searchText = TextEditingController();
   TextEditingController usernameCtr = TextEditingController();
   TextEditingController currentPassword = TextEditingController();
@@ -28,8 +30,7 @@ class ProfileCtr extends GetxController {
   LocationModel? locationModel;
   List imageUrls = [];
 
-  Future<void> getFormattedLocation(
-      double latitude, double longitude, String pId) async {
+  Future<void> getFormattedLocation(double latitude, double longitude, String pId) async {
     EasyLoading.show();
     String url =
         'https://maps.googleapis.com/maps/api/geocode/json?place_id=$pId&key=AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y';
@@ -59,7 +60,6 @@ class ProfileCtr extends GetxController {
       await sendImageToDb(imageFiles);
     }
     await db.collection(kUSER).doc(auth.currentUser!.uid).update({
-      "photos": FieldValue.arrayUnion(imageUrls),
       "username": usernameCtr.text,
       'education_level': eduLevel.value,
       'profession': profession.value,
@@ -72,8 +72,16 @@ class ProfileCtr extends GetxController {
 
   sendImageToDb(List<File> imageFiles) async {
     for (var file in imageFiles) {
-      await upload(file).then((value) {
-        imageUrls.add(value);
+      digitalOceanClient
+          .uploadFileToSpace(
+              bucket: 'profile',
+              objectName:
+                  '${auth.currentUser?.email}_${auth.currentUser!.uid}/${path.basename(file.path.trim())}',
+              filePath: file.path)
+          .then((value) async {
+        await db.collection(kUSER).doc(auth.currentUser!.uid).update({
+          "photos": FieldValue.arrayUnion([value]),
+        });
       });
     }
   }
@@ -91,10 +99,7 @@ class ProfileCtr extends GetxController {
 
   updateHobbies(List<String> hobbies, Function onCall) async {
     EasyLoading.show();
-    await db
-        .collection(kUSER)
-        .doc(auth.currentUser!.uid)
-        .update({"hobbies": hobbies});
+    await db.collection(kUSER).doc(auth.currentUser!.uid).update({"hobbies": hobbies});
     await onCall();
     EasyLoading.dismiss();
     Get.back();
@@ -123,8 +128,7 @@ class ProfileCtr extends GetxController {
 
   Future changePassword() async {
     if (currentPassword.text.isNotEmpty || newPassword.text.isNotEmpty) {
-      if (newPassword.text == coNewPassword.text ||
-          currentPassword.text == newPassword.text) {
+      if (newPassword.text == coNewPassword.text || currentPassword.text == newPassword.text) {
         try {
           EasyLoading.show();
           AuthCredential credential = EmailAuthProvider.credential(

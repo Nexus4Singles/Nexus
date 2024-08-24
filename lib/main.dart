@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:isolate';
+import 'package:Nexus/core/storage/digital_ocean_keys.dart';
 import 'package:Nexus/features/chat/chat_manager.dart';
 import 'package:Nexus/router.dart';
 import 'package:Nexus/theme.dart';
@@ -26,17 +27,16 @@ import 'features/subscription/provider/subscription_provider.dart';
 import 'features/subscription/services/subscription_service.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
+Future<void> main() async {
   runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
     Animate.restartOnHotReload = true;
-    await initializeDateFormatting(
-        'en_US', null); // Initialize with your desired locale
+    await initializeDateFormatting('en_US', null); // Initialize with your desired locale
 
     await configureDependencies();
     try {
       await SubscriptionService.init();
-    } catch (e){
+    } catch (e) {
       logger.e('Error occurred initializing subscription service; ${e.toString()}');
     }
     await Firebase.initializeApp();
@@ -62,6 +62,8 @@ void main() {
       errorAndStacktrace.last,
     );
   }).sendPort);
+
+  DigitalOceanConfig.initDigitalOcean();
 }
 
 class MyApp extends StatelessWidget {

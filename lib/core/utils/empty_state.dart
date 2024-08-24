@@ -14,6 +14,7 @@ class EmptyStateWidget extends StatelessWidget {
   final String buttonText;
   final bool shouldShowImage;
   final bool showClose;
+  final double? height, width;
   final Function? buttonFunc;
 
   const EmptyStateWidget({
@@ -23,51 +24,66 @@ class EmptyStateWidget extends StatelessWidget {
     this.shouldShowImage = true,
     this.buttonFunc,
     this.headerText = '',
+    this.height,
+    this.width,
     required this.message,
     this.showClose = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return
-        //Center(child:
-        Padding(
-      padding: const EdgeInsets.all(11.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          shouldShowImage
-              ? SvgPicture.asset(
-                  svgAssetPath.isEmpty ? "$svgPath/Empty.svg" : svgAssetPath,
-                  height: 100, // Adjust size as needed
-                  width: 100)
-              : const SizedBox(),
-          const SizedBoxH15(),
-          headerText.isEmpty
-              ? const SizedBox()
-              : Text(
-                  headerText,
-                  style: textStyle18.copyWith(fontWeight: FontWeight.bold),
-                ),
-          Text(
-            message,
-            textAlign: TextAlign.center,
-            style: textStyle14.copyWith(color: dustyGrey),
-          ),
-          const SizedBoxH20(),
-          buttonText.isNotEmpty
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: CustomButton(
-                      onPressed: () {
-                        buttonFunc!();
-                      },
-                      text: buttonText,
-                      borderRadius: 100),
-                )
-              : const SizedBox()
-        ],
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(11.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            showClose
+                ? Align(
+                    alignment: Alignment.topRight,
+                    child: InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const Icon(
+                          Icons.clear,
+                          color: primary,
+                        )),
+                  )
+                : const SizedBox(),
+            shouldShowImage
+                ? SvgPicture.asset(
+                    svgAssetPath.isEmpty ? "$svgPath/Empty.svg" : svgAssetPath,
+                    height: height ?? 100, // Adjust size as needed
+                    width: width ?? 100, fit: BoxFit.cover,
+                  )
+                : const SizedBox(),
+            const SizedBoxH15(),
+            headerText.isEmpty
+                ? const SizedBox()
+                : Text(
+                    headerText,
+                    style: textStyle18.copyWith(fontWeight: FontWeight.bold),
+                  ),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: textStyle14.copyWith(color: dustyGrey),
+            ),
+            const SizedBoxH20(),
+            buttonText.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: CustomButton(
+                        onPressed: () {
+                          buttonFunc!();
+                        },
+                        text: buttonText,
+                        borderRadius: 100),
+                  )
+                : const SizedBox()
+          ],
+        ),
       ),
     );
     // ,

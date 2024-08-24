@@ -7,9 +7,14 @@ import 'package:Nexus/features/match/presentation/views/matches.dart';
 import 'package:Nexus/features/profile/presentation/views/profile.dart';
 
 class BottomNavModel extends ChangeNotifier {
+  BottomNavModel() {
+    _pageController = PageController(initialPage: _currentIndex);
+  }
   //Current index of the bottom nav-bar
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
+  late PageController _pageController;
+  PageController get controller => _pageController;
 
   int _tab = 0;
   int get tab => _tab;
@@ -29,6 +34,11 @@ class BottomNavModel extends ChangeNotifier {
   updateIndex(int index) {
     _currentIndex = index;
     notifyListeners();
+  }
+
+  void jumpToNavPage(int page) {
+    _pageController.jumpToPage(page);
+    // notifyListeners();
   }
 
   setActiveTab(int tab) {

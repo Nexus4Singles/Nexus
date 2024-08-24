@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -120,17 +121,12 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
               ).createShader(bounds);
             },
             blendMode: BlendMode.darken,
-            child: Container(
+            child: CacheNetworkWidget(
+              imgUrl: widget.userModel.photos![0],
               height: Get.height / 1.5,
-              alignment: Alignment.bottomCenter,
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                    colors: [Colors.transparent, Colors.transparent, black]),
-                image: DecorationImage(
-                  image: NetworkImage(widget.userModel.photos![0]),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              width: width(context),
+              gradient:
+                  const LinearGradient(colors: [Colors.transparent, Colors.transparent, black]),
             ),
           ),
           SingleChildScrollView(
@@ -153,8 +149,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             top: Radius.circular(20.r),
                           ),
                         ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,14 +167,13 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               children: [
                                 Text(
                                   'State of Origin: ',
-                                  style: textStyle14.copyWith(
-                                      fontWeight: FontWeight.w500, color: ash),
+                                  style:
+                                      textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
                                 ),
                                 Text(
                                   widget.userModel.stateOfOrigin ?? '',
                                   style: textStyle16.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: black),
+                                      fontWeight: FontWeight.w500, color: black),
                                 ),
                               ],
                             ),
@@ -188,14 +182,13 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               children: [
                                 Text(
                                   'Education Level: ',
-                                  style: textStyle14.copyWith(
-                                      fontWeight: FontWeight.w500, color: ash),
+                                  style:
+                                      textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
                                 ),
                                 Text(
                                   widget.userModel.educationLevel ?? '',
                                   style: textStyle16.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: black),
+                                      fontWeight: FontWeight.w500, color: black),
                                 ),
                               ],
                             ),
@@ -204,16 +197,15 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               children: [
                                 Text(
                                   'Profession/Industry: ',
-                                  style: textStyle14.copyWith(
-                                      fontWeight: FontWeight.w500, color: ash),
+                                  style:
+                                      textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
                                 ),
                                 Flexible(
                                   child: Text(
                                     widget.userModel.profession ?? '',
                                     overflow: TextOverflow.ellipsis,
                                     style: textStyle16.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        color: black),
+                                        fontWeight: FontWeight.w500, color: black),
                                   ),
                                 ),
                               ],
@@ -223,16 +215,15 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               children: [
                                 Text(
                                   'Church: ',
-                                  style: textStyle14.copyWith(
-                                      fontWeight: FontWeight.w500, color: ash),
+                                  style:
+                                      textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
                                 ),
                                 Flexible(
                                   child: Text(
                                     widget.userModel.churchName ?? '',
                                     overflow: TextOverflow.ellipsis,
                                     style: textStyle16.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        color: black),
+                                        fontWeight: FontWeight.w500, color: black),
                                   ),
                                 ),
                               ],
@@ -275,8 +266,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               spacing: 15,
                               runSpacing: 15,
                               children: [
-                                for (var des
-                                    in widget.userModel.desiredQualities!)
+                                for (var des in widget.userModel.desiredQualities!)
                                   TextContainer(
                                     text: des,
                                   ),
@@ -294,9 +284,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Text(
                               "1. The summary of ${widget.userModel.username}'s relationship with God",
                               style: textStyle14.copyWith(
-                                  color: black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700),
+                                  color: black, fontSize: 14, fontWeight: FontWeight.w700),
                             ),
                             const SizedBoxH10(),
                             AudioFilePlayer(
@@ -316,9 +304,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Text(
                               "2. ${widget.userModel.username}'s view on Gender roles in marriage",
                               style: textStyle14.copyWith(
-                                  color: black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700),
+                                  color: black, fontSize: 14, fontWeight: FontWeight.w700),
                             ),
                             const SizedBoxH10(),
                             AudioFilePlayer(
@@ -338,9 +324,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Text(
                               "3. Favourite qualities or traits about ${widget.userModel.username}",
                               style: textStyle14.copyWith(
-                                  color: black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700),
+                                  color: black, fontSize: 14, fontWeight: FontWeight.w700),
                             ),
                             const SizedBoxH10(),
                             AudioFilePlayer(
@@ -374,33 +358,15 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                     borderRadius: BorderRadius.circular(15.r),
                                     child: InkWell(
                                       onTap: () {
-                                        int index = widget.userModel.photos!
-                                            .indexOf(item);
+                                        int index = widget.userModel.photos!.indexOf(item);
                                         Get.to(() => PhotoViewScreen(
                                             selectedIndex: index,
                                             photos: widget.userModel.photos!));
                                       },
-                                      child: CachedNetworkImage(
+                                      child: CacheNetworkWidget(
                                         width: width(context) * .4,
                                         height: 100.h,
-                                        fit: BoxFit.cover,
-                                        imageUrl: item,
-                                        progressIndicatorBuilder:
-                                            (context, url, downloadProgress) =>
-                                                SizedBox(
-                                          width: 16,
-                                          height: 16,
-                                          child: CircularProgressIndicator
-                                              .adaptive(
-                                            value: downloadProgress.progress,
-                                            strokeWidth: 1,
-                                            valueColor:
-                                                const AlwaysStoppedAnimation(
-                                                    primary),
-                                          ),
-                                        ),
-                                        errorWidget: (context, url, error) =>
-                                            Container(),
+                                        imgUrl: item,
                                       ),
                                     ),
                                   ),
@@ -413,19 +379,17 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                 ? Center(
                                     child: TextButton(
                                         onPressed: () {
-                                          compatibilityModal(
-                                              context, widget.userModel);
+                                          compatibilityModal(context, widget.userModel);
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.all(12),
                                           decoration: BoxDecoration(
                                               color: primary.withOpacity(0.1),
-                                              borderRadius:
-                                                  BorderRadius.circular(100)),
+                                              borderRadius: BorderRadius.circular(100)),
                                           child: Text(
                                             "View Compatibility Data",
-                                            style: textStyle14.copyWith(
-                                                fontWeight: FontWeight.bold),
+                                            style:
+                                                textStyle14.copyWith(fontWeight: FontWeight.bold),
                                           ),
                                         )),
                                   )
@@ -478,8 +442,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
           const SizedBoxH10(),
           Obx(
             () => ctr.ctr.myProfile.value.matchedUsers == null ||
-                    !ctr.ctr.myProfile.value.matchedUsers!
-                        .contains(widget.userModel.id)
+                    !ctr.ctr.myProfile.value.matchedUsers!.contains(widget.userModel.id)
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -492,12 +455,10 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               : debugPrint("This users are matched");
                         },
                         child: CircleAvatar(
-                            backgroundColor:
-                                ctr.ctr.myProfile.value.myLikes == null ||
-                                        !ctr.ctr.myProfile.value.myLikes!
-                                            .contains(widget.userModel.id)
-                                    ? white
-                                    : primary,
+                            backgroundColor: ctr.ctr.myProfile.value.myLikes == null ||
+                                    !ctr.ctr.myProfile.value.myLikes!.contains(widget.userModel.id)
+                                ? white
+                                : primary,
                             radius: 25,
                             child: SvgPicture.asset(
                               ctr.ctr.myProfile.value.matchedUsers == null ||
@@ -521,12 +482,10 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               .toString());
                         },
                         child: CircleAvatar(
-                          backgroundColor:
-                              ctr.ctr.myProfile.value.mySaves == null ||
-                                      !ctr.ctr.myProfile.value.mySaves!
-                                          .contains(widget.userModel.id)
-                                  ? white
-                                  : primary,
+                          backgroundColor: ctr.ctr.myProfile.value.mySaves == null ||
+                                  !ctr.ctr.myProfile.value.mySaves!.contains(widget.userModel.id)
+                              ? white
+                              : primary,
                           radius: 25,
                           child: SvgPicture.asset("$svgPath/bookmark.svg",
                               color: ctr.ctr.myProfile.value.mySaves == null ||

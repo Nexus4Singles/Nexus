@@ -1,4 +1,5 @@
 import 'package:Nexus/features/subscription/helpers/subscription_helper.dart';
+import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/cupertino.dart';
@@ -77,8 +78,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
           actions: [
             InkWell(
               onTap: () {
-                EasyLoading.showToast("Coming Soon",
-                    maskType: EasyLoadingMaskType.black);
+                EasyLoading.showToast("Coming Soon", maskType: EasyLoadingMaskType.black);
               },
               child: const Icon(
                 Iconsax.call,
@@ -89,8 +89,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
             InkWell(
               child: const Icon(Icons.report),
               onTap: () {
-                Get.to(
-                    () => ReportUser(userModel: widget.chatModel.userModel!));
+                Get.to(() => ReportUser(userModel: widget.chatModel.userModel!));
               },
             ),
             const SizedBoxW15()
@@ -100,12 +99,14 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
             children: [
               InkWell(
                 onTap: () {
-                  Get.to(() =>
-                      UserDetailScreen(userModel: widget.chatModel.userModel!));
+                  Get.to(() => UserDetailScreen(userModel: widget.chatModel.userModel!));
                 },
-                child: CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(widget.chatModel.userModel!.photos![0])),
+                child: CacheNetworkWidget(
+                  imgUrl: widget.chatModel.userModel!.photos![0],
+                  height: 40,
+                  width: 40,
+                  isNotCircle: false,
+                ),
               ),
               const SizedBoxW10(),
               Column(
@@ -130,8 +131,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
               } else {
                 var data = snapshot.data!.docs;
                 final message = data
-                    .map((e) =>
-                        MessageModel.fromJson(e.data() as Map<String, dynamic>))
+                    .map((e) => MessageModel.fromJson(e.data() as Map<String, dynamic>))
                     .toList();
                 List<ChatMessage> messages = <ChatMessage>[];
                 for (var element in message) {
@@ -187,8 +187,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                           hintStyle: const TextStyle(color: Colors.grey),
                           prefixIcon: PopupMenuButton<Map<String, IconData>>(
                             position: PopupMenuPosition.over,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             onSelected: (item) {},
                             child: const Padding(
                               padding: EdgeInsets.all(8.0),
@@ -205,9 +204,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                                 'Image': Iconsax.image1,
                               }.entries.map((entry) {
                                 return PopupMenuItem<Map<String, IconData>>(
-                                  value: {
-                                    entry.key: entry.value
-                                  }, // Map as value
+                                  value: {entry.key: entry.value}, // Map as value
                                   textStyle: textStyle14.copyWith(color: black),
                                   child: InkWell(
                                     onTap: () {
@@ -260,33 +257,30 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) {
-        return CupertinoActionSheet(
-            title: const Text('Options for Chat'),
-            actions: [
-              CupertinoActionSheetAction(
-                child: const Text('Reply'),
-                onPressed: () {
-                  EasyLoading.showToast("Coming soon");
-                },
-              ),
-              CupertinoActionSheetAction(
-                child: const Text('Copy Message'),
-                onPressed: () {
-                  Get.back();
-                  Clipboard.setData(ClipboardData(text: message.text));
-                  EasyLoading.showToast("Message copied");
-                },
-              ),
-              CupertinoActionSheetAction(
-                isDestructiveAction: true,
-                child: const Text('Delete'),
-                onPressed: () {
-                  ctr.deleteAMessage(widget.chatModel.messageID,
-                      message.customProperties!['id']);
-                  Get.back();
-                },
-              ),
-            ]);
+        return CupertinoActionSheet(title: const Text('Options for Chat'), actions: [
+          CupertinoActionSheetAction(
+            child: const Text('Reply'),
+            onPressed: () {
+              EasyLoading.showToast("Coming soon");
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: const Text('Copy Message'),
+            onPressed: () {
+              Get.back();
+              Clipboard.setData(ClipboardData(text: message.text));
+              EasyLoading.showToast("Message copied");
+            },
+          ),
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            child: const Text('Delete'),
+            onPressed: () {
+              ctr.deleteAMessage(widget.chatModel.messageID, message.customProperties!['id']);
+              Get.back();
+            },
+          ),
+        ]);
       },
     );
   }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Nexus/core/network/digital_ocean_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ import 'package:Nexus/features/auth/presentation/change_notifier/auth_notifier.d
 import 'package:Nexus/router.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
 
 class UploadPhotoScreen extends StatefulWidget {
   const UploadPhotoScreen({super.key});
@@ -25,6 +27,7 @@ class UploadPhotoScreen extends StatefulWidget {
 }
 
 class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
+  final DigitalOceanClient digitalOceanClient = DigitalOceanClient();
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthNotifier>(builder: (context, model, _) {
@@ -52,8 +55,7 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
             children: [
               Text(
                 'Upload Your Photos',
-                style: textStyle8.copyWith(
-                    fontSize: 30, fontWeight: FontWeight.w700, color: black),
+                style: textStyle8.copyWith(fontSize: 30, fontWeight: FontWeight.w700, color: black),
               ),
               const SizedBoxH10(),
               Align(
@@ -81,8 +83,7 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
                     InkWell(
                       onTap: () {
                         if (imageFiles.length == 4) {
-                          AppToast()
-                              .showErrorToast('Maximum of 4 photos allowed');
+                          AppToast().showErrorToast('Maximum of 4 photos allowed');
                         } else {
                           _pickImage(model);
                         }
@@ -193,14 +194,23 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
               CustomButton(
                 onPressed: () async {
                   if (imageFiles.length < 2) {
-                    AppToast()
-                        .showErrorToast('Please select at least 2 photos');
+                    AppToast().showErrorToast('Please select at least 2 photos');
                   } else {
                     List imageUrls = [];
                     for (var file in imageFiles) {
-                      await model.uploadFile(file: file).then((value) {
+                      await digitalOceanClient
+                          .uploadFileToSpace(
+                        bucket: 'profile',
+                        objectName:
+                            '${model.user?.email}_${model.user?.id}/${path.basename(file.path.trim())}',
+                        filePath: file.path,
+                      )
+                          .then((value) {
                         imageUrls.add(value);
                       });
+                      // await model.uploadFile(file: file).then((value) {
+                      //   imageUrls.add(value);
+                      // });
                     }
                     if (imageUrls.length == imageFiles.length) {
                       model.updateProfile(

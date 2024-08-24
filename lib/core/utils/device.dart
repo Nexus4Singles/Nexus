@@ -4,17 +4,17 @@ const bool devMode = false;
 
 //MediaQuery Width
 double width(BuildContext context) {
-  return MediaQuery.of(context).size.width;
+  return MediaQuery.sizeOf(context).width;
 }
 
 //MediaQuery Height
 double height(BuildContext context) {
-  return MediaQuery.of(context).size.height;
+  return MediaQuery.sizeOf(context).height;
 }
 
 //get the shortest Side of the target device
 double shortestSide(BuildContext context) {
-  return MediaQuery.of(context).size.shortestSide;
+  return MediaQuery.sizeOf(context).shortestSide;
 }
 
 //check the type of target device
