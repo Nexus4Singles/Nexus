@@ -1,19 +1,20 @@
 import 'dart:async';
-import 'dart:io';
+import 'package:Nexus/core/network/digital_ocean_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:nexus/core/button.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/constant.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/core/utils/device.dart';
-import 'package:nexus/router.dart';
-import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
-import 'package:nexus/features/auth/presentation/widgets/record_completed.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
+import 'package:Nexus/core/button.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/constant.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
+import 'package:Nexus/core/utils/device.dart';
+import 'package:Nexus/router.dart';
+import 'package:Nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
+import 'package:Nexus/features/auth/presentation/widgets/record_completed.dart';
 import 'package:provider/provider.dart';
+import 'package:path/path.dart' as path;
 import 'package:just_audio/just_audio.dart';
 
 class Audio4Screen extends StatefulWidget {
@@ -249,23 +250,67 @@ class _Audio4ScreenState extends State<Audio4Screen> {
   }
 
   void _uploadFiles(AuthNotifier model) async {
-    await model.uploadFile(file: File(model.audioPath1)).then((audi1) async {
-      await model.uploadFile(file: File(model.audioPath2)).then((audio2) async {
-        await model
-            .uploadFile(file: File(model.audioPath3))
+    //audio path 1
+    await DigitalOceanClient()
+        .uploadFileToSpace(
+      bucket: 'audio',
+      objectName:
+          '${model.user?.email}/${path.basename('${model.audioPath1}/${DateTime.now().millisecondsSinceEpoch}')}',
+      filePath: model.audioPath1,
+    )
+        .then((audi1) async {
+      //audio path 2
+      await DigitalOceanClient()
+          .uploadFileToSpace(
+              bucket: 'audio',
+              objectName:
+                  '${model.user?.email}/${path.basename('${model.audioPath2}/${DateTime.now().millisecondsSinceEpoch}')}',
+              filePath: model.audioPath2)
+          .then((audio2) async {
+        //audio path 3
+        await DigitalOceanClient()
+            .uploadFileToSpace(
+                bucket: 'audio',
+                objectName:
+                    '${model.user?.email}/${path.basename('${model.audioPath3}/${DateTime.now().millisecondsSinceEpoch}')}',
+                filePath: model.audioPath3)
             .then((audio3) async {
+          // await model.uploadFile(file: File(model.audioPath1)).then((audi1) async {
+          // await model.uploadFile(file: File(model.audioPath2)).then((audio2) async {
+          // await model.uploadFile(file: File(model.audioPath3)).then((audio3) async {
           model.updateProfile(
-              map: {
-                kRELATIONSHIPWITHGOD: audi1,
-                kROLEOFHUSBAND: audio2,
-                kBESTQUALITIESORTRAITS: audio3,
-                kREGPROGRESS: 'completed',
-              },
-              onCompleted: () {
-                Get.offAndToNamed(AppRoutes.regSuccessful);
-              });
+            map: {
+              kRELATIONSHIPWITHGOD: audi1,
+              kROLEOFHUSBAND: audio2,
+              kBESTQUALITIESORTRAITS: audio3,
+              kREGPROGRESS: 'completed',
+            },
+            onCompleted: () {
+              Get.offAndToNamed(AppRoutes.regSuccessful);
+            },
+          );
         });
       });
     });
   }
+
+  // void _uploadFiles(AuthNotifier model) async {
+  //   await model.uploadFile(file: File(model.audioPath1)).then((audi1) async {
+  //     await model.uploadFile(file: File(model.audioPath2)).then((audio2) async {
+  //       await model.uploadFile(file: File(model.audioPath3)).then((audio3) async {
+  //         model.updateProfile(
+  //           map: {
+  //             kRELATIONSHIPWITHGOD: audi1,
+  //             kROLEOFHUSBAND: audio2,
+  //             kBESTQUALITIESORTRAITS: audio3,
+  //             kREGPROGRESS: 'completed',
+  //           },
+  //           onCompleted: () {
+  //             Get.offAndToNamed(AppRoutes.regSuccessful);
+  //           },
+  //         );
+  //       });
+  //     });
+  //   });
+  // }
 }

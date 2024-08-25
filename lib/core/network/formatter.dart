@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
-import 'package:nexus/core/network/network_info.dart';
-import 'package:nexus/core/utils/toast.dart';
+import 'package:Nexus/core/network/network_info.dart';
+import 'package:Nexus/core/utils/toast.dart';
 
 abstract class MyFormatter {
   Future<Either<void, dynamic>> firebaseAuthFmt(Function func);

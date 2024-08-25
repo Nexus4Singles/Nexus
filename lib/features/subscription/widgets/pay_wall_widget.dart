@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:glassfy_flutter/models.dart';
-import 'package:nexus/core/colors.dart';
+import 'package:Nexus/core/colors.dart';
 import 'package:provider/provider.dart';
 import '../provider/subscription_provider.dart';
 

@@ -1,8 +1,7 @@
 import 'package:injectable/injectable.dart';
-import 'package:nexus/core/storage/storage_impl.dart';
-import 'package:nexus/core/usecases/usecases.dart';
-
 import '../../models/user.dart';
+import '../../storage/storage_impl.dart';
+import '../usecases.dart';
 
 @lazySingleton
 class SaveUserUsecase extends Usecase<void, UserModel> {

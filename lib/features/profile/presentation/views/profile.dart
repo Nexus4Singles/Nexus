@@ -1,19 +1,19 @@
 import 'dart:async';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/features/auth/presentation/widgets/record_completed.dart';
-import 'package:nexus/features/home/controllers/home_controller.dart';
-import 'package:nexus/features/home/presentation/views/photo_view.dart';
-import 'package:nexus/features/profile/presentation/widgets/compatibility_modal.dart';
-import 'package:nexus/features/profile/presentation/widgets/text_container.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
+import 'package:Nexus/features/auth/presentation/widgets/record_completed.dart';
+import 'package:Nexus/features/home/controllers/home_controller.dart';
+import 'package:Nexus/features/home/presentation/views/photo_view.dart';
+import 'package:Nexus/features/profile/presentation/widgets/compatibility_modal.dart';
+import 'package:Nexus/features/profile/presentation/widgets/text_container.dart';
 import '../../../../router.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -137,11 +137,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 55.r,
-                    backgroundImage: NetworkImage(
-                      homeModel.user.value.profileUrl!,
-                    ),
+                  CacheNetworkWidget(
+                    height: 110.r,
+                    width: 110.r,
+                    imgUrl: homeModel.user.value.profileUrl!,
+                    isNotCircle: false,
                   ),
                 ],
               ),
@@ -381,18 +381,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.r),
-                        child: CachedNetworkImage(
+                        child: CacheNetworkWidget(
                           width: Get.width / 2.3,
                           height: 100.h,
-                          fit: BoxFit.cover,
-                          imageUrl: item,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) =>
-                                  const SizedBox(
-                            width: 30,
-                            height: 30,
-                          ),
-                          errorWidget: (context, url, error) => Container(),
+                          imgUrl: item,
                         ),
                       ),
                     ),

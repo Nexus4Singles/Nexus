@@ -4,15 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nexus/core/constant.dart';
-import 'package:nexus/core/models/message_model.dart';
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/features/chat/widget/image_selected_container.dart';
-import 'package:nexus/features/chat/widget/video_selected_container.dart';
-import 'package:nexus/features/explore/controllers/explore_ctr.dart';
-import 'package:nexus/features/home/controllers/notification_controller.dart';
+import '../../../core/constant.dart';
 import '../../../core/models/chats_model.dart';
+import '../../../core/models/message_model.dart';
+import '../../../core/models/user.dart';
 import '../../../core/utils/methods.dart';
+import '../../explore/controllers/explore_ctr.dart';
+import '../../home/controllers/notification_controller.dart';
+import '../widget/image_selected_container.dart';
+import '../widget/video_selected_container.dart';
 
 class ChatCtr extends GetxController {
   static ChatCtr get instance => Get.find<ChatCtr>();

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/assets.dart';
-import 'package:nexus/core/button.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
+import 'package:Nexus/core/assets.dart';
+import 'package:Nexus/core/button.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
 
 import '../colors.dart';
 
@@ -14,6 +14,7 @@ class EmptyStateWidget extends StatelessWidget {
   final String buttonText;
   final bool shouldShowImage;
   final bool showClose;
+  final double? height, width;
   final Function? buttonFunc;
 
   const EmptyStateWidget({
@@ -23,6 +24,8 @@ class EmptyStateWidget extends StatelessWidget {
     this.shouldShowImage = true,
     this.buttonFunc,
     this.headerText = '',
+    this.height,
+    this.width,
     required this.message,
     this.showClose = false,
   }) : super(key: key);
@@ -51,8 +54,9 @@ class EmptyStateWidget extends StatelessWidget {
             shouldShowImage
                 ? SvgPicture.asset(
                     svgAssetPath.isEmpty ? "$svgPath/Empty.svg" : svgAssetPath,
-                    height: 100, // Adjust size as needed
-                    width: 100)
+                    height: height ?? 100, // Adjust size as needed
+                    width: width ?? 100, fit: BoxFit.cover,
+                  )
                 : const SizedBox(),
             const SizedBoxH15(),
             headerText.isEmpty
@@ -82,5 +86,6 @@ class EmptyStateWidget extends StatelessWidget {
         ),
       ),
     );
+    // ,
   }
 }

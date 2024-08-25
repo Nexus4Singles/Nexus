@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/style.dart';
+
+import '../../../../core/colors.dart';
+import '../../../../core/style.dart';
 
 class RowContainer extends StatelessWidget {
   final String text;

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:nexus/core/entities/compatibility.dart';
+import '../entities/compatibility.dart';
 part 'compatibility.g.dart';
 
 @JsonSerializable()

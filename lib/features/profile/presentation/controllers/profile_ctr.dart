@@ -1,23 +1,23 @@
-import 'dart:convert';
 import 'dart:io';
+import 'package:Nexus/core/network/digital_ocean_client.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'package:logger/logger.dart';
-import 'package:nexus/core/constant.dart';
-import 'package:nexus/core/models/locationIQModel.dart';
-import 'package:nexus/core/utils/methods.dart';
-import 'package:nexus/core/utils/toast.dart';
-import 'package:nexus/router.dart';
+import 'package:Nexus/core/constant.dart';
+import 'package:Nexus/core/utils/toast.dart';
+import 'package:Nexus/router.dart';
 import '../../../../core/models/location.dart';
+import 'package:path/path.dart' as path;
+
+import '../../../home/controllers/home_controller.dart';
 
 class ProfileCtr extends GetxController {
   static ProfileCtr get instance => Get.find<ProfileCtr>();
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
+  final DigitalOceanClient digitalOceanClient = DigitalOceanClient();
   TextEditingController usernameCtr = TextEditingController();
   TextEditingController currentPassword = TextEditingController();
   TextEditingController newPassword = TextEditingController();
@@ -39,14 +39,13 @@ class ProfileCtr extends GetxController {
     return status;
   }
 
-  updateProfile(List<File> imageFiles) async {
+  Future updateProfile(List<File> imageFiles) async {
     EasyLoading.show();
     if (isEmpty()) {
       if (imageFiles.isNotEmpty) {
         await sendImageToDb(imageFiles);
       }
       await db.collection(kUSER).doc(auth.currentUser!.uid).update({
-        "photos": FieldValue.arrayUnion(imageUrls),
         "username": usernameCtr.text,
         'education_level': eduLevel.value,
         'profession': profession.value,
@@ -60,6 +59,8 @@ class ProfileCtr extends GetxController {
                 city: cityCtr.text)
             .toJson(),
       });
+      await Future.delayed(const Duration(seconds: 5),
+          () async => await HomeController.instance.getMyProfile());
       Get.back();
       EasyLoading.dismiss();
     } else {
@@ -69,8 +70,16 @@ class ProfileCtr extends GetxController {
 
   sendImageToDb(List<File> imageFiles) async {
     for (var file in imageFiles) {
-      await upload(file).then((value) {
-        imageUrls.add(value);
+      digitalOceanClient
+          .uploadFileToSpace(
+              bucket: 'profile',
+              objectName:
+                  '${auth.currentUser?.email}_${auth.currentUser!.uid}/${path.basename(file.path.trim())}',
+              filePath: file.path)
+          .then((value) async {
+        await db.collection(kUSER).doc(auth.currentUser!.uid).update({
+          "photos": FieldValue.arrayUnion([value]),
+        });
       });
     }
   }
@@ -102,6 +111,7 @@ class ProfileCtr extends GetxController {
     await db.collection(kUSER).doc(auth.currentUser!.uid).update({
       "photos": FieldValue.arrayRemove([image])
     });
+    await HomeController.instance.getMyProfile();
     EasyLoading.dismiss();
     Get.back();
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nexus/core/colors.dart';
+
+import '../colors.dart';
 
 class CustomCircularProgressIndicator extends StatelessWidget {
   const CustomCircularProgressIndicator({

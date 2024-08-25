@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/colors.dart';
+
+import '../colors.dart';
 
 class AppToast {
   void showToast(String label) {

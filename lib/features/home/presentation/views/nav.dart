@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/features/home/presentation/change_notifier/bottom_nav.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../core/colors.dart';
+import '../change_notifier/bottom_nav.dart';
 
 class MainNav extends StatefulWidget {
   final int? initialPage;
@@ -21,21 +22,21 @@ class MainNav extends StatefulWidget {
 
 class _MainNav extends State<MainNav> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  PageController? controller;
+  // PageController? controller;
   bool internet = false;
 
   // final _navController = BottomNavModel();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    int currentPage = 0;
-    currentPage = widget.initialPage!;
-    controller = PageController(initialPage: currentPage);
-    setState(() {
-      controller = controller;
-    });
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   int currentPage = 0;
+  //   currentPage = widget.initialPage!;
+  //   controller = PageController(initialPage: currentPage);
+  //   setState(() {
+  //     controller = controller;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +70,7 @@ class _MainNav extends State<MainNav> {
             ),
           ),
           body: PageView(
-            controller: controller,
+            controller: model.controller,
             onPageChanged: (index) {
               model.updateIndex(index);
             },
@@ -91,7 +92,7 @@ class _MainNav extends State<MainNav> {
             iconImage: Iconsax.home,
             iconImage2: Iconsax.home5,
             text: '',
-            onTap: () => controller!.jumpToPage(0),
+            onTap: () => navController.controller.jumpToPage(0),
             currentIndex: 0,
           ),
           TabItems(
@@ -99,7 +100,7 @@ class _MainNav extends State<MainNav> {
             iconImage: Iconsax.discover,
             iconImage2: Iconsax.discover5,
             text: '',
-            onTap: () => controller!.jumpToPage(1),
+            onTap: () => navController.controller.jumpToPage(1),
             currentIndex: 1,
           ),
           TabItems(
@@ -107,7 +108,7 @@ class _MainNav extends State<MainNav> {
             iconImage: Iconsax.heart,
             iconImage2: Iconsax.heart5,
             text: '',
-            onTap: () => controller!.jumpToPage(2),
+            onTap: () => navController.controller.jumpToPage(2),
             currentIndex: 2,
           ),
           TabItems(
@@ -115,7 +116,7 @@ class _MainNav extends State<MainNav> {
             iconImage: Iconsax.message,
             iconImage2: Iconsax.message5,
             text: '',
-            onTap: () => controller!.jumpToPage(3),
+            onTap: () => navController.controller.jumpToPage(3),
             currentIndex: 3,
           ),
           TabItems(
@@ -123,7 +124,7 @@ class _MainNav extends State<MainNav> {
             iconImage: Iconsax.profile_circle,
             iconImage2: Iconsax.profile_circle5,
             text: '',
-            onTap: () => controller!.jumpToPage(4),
+            onTap: () => navController.controller.jumpToPage(4),
             currentIndex: 4,
           ),
         ],

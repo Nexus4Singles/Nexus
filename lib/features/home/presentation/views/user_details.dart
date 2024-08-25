@@ -1,23 +1,23 @@
 import 'dart:async';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:nexus/core/assets.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/core/utils/device.dart';
-import 'package:nexus/core/utils/modals.dart';
-import 'package:nexus/features/auth/presentation/widgets/record_completed.dart';
-import 'package:nexus/features/explore/controllers/explore_ctr.dart';
-import 'package:nexus/features/match/controllers/matches_ctr.dart';
-import 'package:nexus/features/profile/presentation/views/report_user.dart';
-import 'package:nexus/features/profile/presentation/widgets/text_container.dart';
+import 'package:Nexus/core/assets.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/models/user.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
+import 'package:Nexus/core/utils/device.dart';
+import 'package:Nexus/core/utils/modals.dart';
+import 'package:Nexus/features/auth/presentation/widgets/record_completed.dart';
+import 'package:Nexus/features/explore/controllers/explore_ctr.dart';
+import 'package:Nexus/features/match/controllers/matches_ctr.dart';
+import 'package:Nexus/features/profile/presentation/views/report_user.dart';
+import 'package:Nexus/features/profile/presentation/widgets/text_container.dart';
 
 import 'photo_view.dart';
 
@@ -122,17 +122,12 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
               ).createShader(bounds);
             },
             blendMode: BlendMode.darken,
-            child: Container(
+            child: CacheNetworkWidget(
+              imgUrl: widget.userModel.photos![0],
               height: Get.height / 1.5,
-              alignment: Alignment.bottomCenter,
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                    colors: [Colors.transparent, Colors.transparent, black]),
-                image: DecorationImage(
-                  image: NetworkImage(widget.userModel.photos![0]),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              width: width(context),
+              gradient: const LinearGradient(
+                  colors: [Colors.transparent, Colors.transparent, black]),
             ),
           ),
           SingleChildScrollView(
@@ -382,27 +377,10 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                             selectedIndex: index,
                                             photos: widget.userModel.photos!));
                                       },
-                                      child: CachedNetworkImage(
+                                      child: CacheNetworkWidget(
                                         width: width(context) * .4,
                                         height: 100.h,
-                                        fit: BoxFit.cover,
-                                        imageUrl: item,
-                                        progressIndicatorBuilder:
-                                            (context, url, downloadProgress) =>
-                                                SizedBox(
-                                          width: 16,
-                                          height: 16,
-                                          child: CircularProgressIndicator
-                                              .adaptive(
-                                            value: downloadProgress.progress,
-                                            strokeWidth: 1,
-                                            valueColor:
-                                                const AlwaysStoppedAnimation(
-                                                    primary),
-                                          ),
-                                        ),
-                                        errorWidget: (context, url, error) =>
-                                            Container(),
+                                        imgUrl: item,
                                       ),
                                     ),
                                   ),

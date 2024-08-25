@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/style.dart';
+
+import 'colors.dart';
+import 'style.dart';
 
 class CustomTextFieldPassword extends StatefulWidget {
   final TextEditingController controller;

@@ -36,6 +36,9 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       matchedUsers: (json['matchedUsers'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      unRecommendUsers: (json['unRecommendUsers'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       educationLevel: json['education_level'] as String?,
       profession: json['profession'] as String?,
       relationshipWithGod: json['relationship_with_god'] as String?,
@@ -60,6 +63,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       prevSubscribed: json['prevSubscribed'] as bool? ?? false,
       subExpDate: json['subExpDate'] as String?,
       usedOneFreeText: json['usedOneFreeText'] as bool? ?? false,
+      entitledUser: json['entitledUser'] as String? ?? 'null',
+      recommendedTime: json['recommendedTime'] as String?,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -78,6 +83,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'profession': instance.profession,
       'hobbies': instance.hobbies,
       'usersChatWarning': instance.usersChatWarning,
+      'unRecommendUsers': instance.unRecommendUsers,
       'matchedUsers': instance.matchedUsers ?? [],
       'likeMe': instance.likeMe,
       'myLikes': instance.myLikes,
@@ -100,4 +106,6 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'prevSubscribed': instance.prevSubscribed,
       'subExpDate': instance.subExpDate,
       'usedOneFreeText': instance.usedOneFreeText,
+      'entitledUser': instance.entitledUser,
+      'recommendedTime': instance.recommendedTime,
     };

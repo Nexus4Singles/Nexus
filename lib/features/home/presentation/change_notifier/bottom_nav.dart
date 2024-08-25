@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nexus/features/chat/views/chats.dart';
-import 'package:nexus/features/explore/presentation/views/explore.dart';
-import 'package:nexus/features/home/presentation/views/home.dart';
-import 'package:nexus/features/match/presentation/views/matches.dart';
-import 'package:nexus/features/profile/presentation/views/profile.dart';
+import 'package:Nexus/features/chat/views/chats.dart';
+import 'package:Nexus/features/explore/presentation/views/explore.dart';
+import 'package:Nexus/features/home/presentation/views/home.dart';
+import 'package:Nexus/features/match/presentation/views/matches.dart';
+import 'package:Nexus/features/profile/presentation/views/profile.dart';
 
 class BottomNavModel extends ChangeNotifier {
+  BottomNavModel() {
+    _pageController = PageController(initialPage: _currentIndex);
+  }
   //Current index of the bottom nav-bar
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
+  late PageController _pageController;
+  PageController get controller => _pageController;
 
   int _tab = 0;
   int get tab => _tab;
@@ -19,7 +24,7 @@ class BottomNavModel extends ChangeNotifier {
     const HomeScreen(),
     const ExploreScreen(),
     const MatchScreen(),
-    ChatsScreen(),
+    const ChatsScreen(),
     const ProfileScreen(),
   ];
 
@@ -29,6 +34,11 @@ class BottomNavModel extends ChangeNotifier {
   updateIndex(int index) {
     _currentIndex = index;
     notifyListeners();
+  }
+
+  void jumpToNavPage(int page) {
+    _pageController.jumpToPage(page);
+    // notifyListeners();
   }
 
   setActiveTab(int tab) {

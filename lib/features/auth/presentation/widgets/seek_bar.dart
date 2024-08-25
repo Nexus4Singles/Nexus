@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/style.dart';
+
+import '../../../../core/colors.dart';
+import '../../../../core/style.dart';
 
 class SeekBar extends StatefulWidget {
   final Duration duration;

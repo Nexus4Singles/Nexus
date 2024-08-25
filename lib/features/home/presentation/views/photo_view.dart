@@ -1,10 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/utils/device.dart';
-import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:story/story_image.dart';
 import 'package:story/story_page_view.dart';
+
+import '../../../../core/colors.dart';
+import '../../../../core/utils/device.dart';
+import '../change_notifier/home_notifier.dart';
 
 class PhotoViewScreen extends StatefulWidget {
   final int selectedIndex;
@@ -60,9 +62,7 @@ class _PhotoViewScreenState extends State<PhotoViewScreen> {
                         children: [
                           StoryImage(
                             key: ValueKey(story),
-                            imageProvider: NetworkImage(
-                              story,
-                            ),
+                            imageProvider: CachedNetworkImageProvider(story),
                             fit: BoxFit.cover,
                             width: double.infinity,
                             height: height(context),

@@ -1,3 +1,5 @@
+import 'package:Nexus/features/subscription/helpers/subscription_helper.dart';
+import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,21 +9,26 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nexus/core/assets.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/models/chats_model.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/core/utils/modals.dart';
-import 'package:nexus/features/chat/controllers/chat_ctr.dart';
-import 'package:nexus/features/home/presentation/views/user_details.dart';
-
+import 'package:Nexus/core/assets.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/models/chats_model.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
+import 'package:Nexus/core/utils/modals.dart';
+import 'package:Nexus/features/chat/controllers/chat_ctr.dart';
+import 'package:Nexus/features/home/presentation/views/user_details.dart';
+import 'package:provider/provider.dart';
 import '../../../core/models/message_model.dart';
+import '../../../core/services/fcm.dart';
 import '../../home/presentation/views/photo_view.dart';
 import '../../profile/presentation/views/report_user.dart';
+import '../../subscription/provider/subscription_provider.dart';
+import '../../subscription/widgets/restriction_modal.dart';
+import '../chat_manager.dart';
 
 class ChatWithScreen extends StatefulWidget {
   final ChatModel chatModel;
+
   const ChatWithScreen({
     super.key,
     required this.chatModel,
@@ -36,24 +43,35 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
 
   @override
   void initState() {
-    if (ctr.exploreCtr.myProfile.value.usersChatWarning == null) {
-      Future.delayed(
-          const Duration(milliseconds: 100), () => chatWarningModal(context));
-      ctr.setUserToHaveShowWarning(widget.chatModel.userModel!.id);
-    } else {
-      if (!ctr.exploreCtr.myProfile.value.usersChatWarning!
-          .contains(widget.chatModel.userModel!.id)) {
-        Future.delayed(
-            const Duration(milliseconds: 100), () => chatWarningModal(context));
-        ctr.setUserToHaveShowWarning(widget.chatModel.userModel!.id);
-      } else {}
-    }
-
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ChatManager.openChat(widget.chatModel.userModel!.id);
+      FCMService.clearNotificationsForConversation(widget.chatModel.messageID);
+
+      if (ctr.exploreCtr.myProfile.value.usersChatWarning == null) {
+        chatWarningModal(context);
+        ctr.setUserToHaveShowWarning(widget.chatModel.userModel!.id);
+      } else {
+        if (!ctr.exploreCtr.myProfile.value.usersChatWarning!
+            .contains(widget.chatModel.userModel!.id)) {
+          chatWarningModal(context);
+          ctr.setUserToHaveShowWarning(widget.chatModel.userModel!.id);
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    ChatManager.closeChat();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final subProvider =
+        Provider.of<SubscriptionProvider>(context, listen: false);
+
     return Scaffold(
         appBar: AppBar(
           leadingWidth: 32,
@@ -86,9 +104,12 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                   Get.to(() =>
                       UserDetailScreen(userModel: widget.chatModel.userModel!));
                 },
-                child: CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(widget.chatModel.userModel!.photos![0])),
+                child: CacheNetworkWidget(
+                  imgUrl: widget.chatModel.userModel!.photos![0],
+                  height: 40,
+                  width: 40,
+                  isNotCircle: false,
+                ),
               ),
               const SizedBoxW10(),
               Column(
@@ -142,7 +163,20 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                       alwaysShowSend: true,
                       sendButtonBuilder: (val) {
                         return InkWell(
-                          onTap: val,
+                          onTap: () {
+                            // Trigger the send action with current message
+                            var message = ChatMessage(
+                              text: ctr.chatController.text,
+                              customProperties: {},
+                              medias: [],
+                              user: ChatUser(
+                                  id: ctr.auth.currentUser!.uid,
+                                  profileImage: ""),
+                              createdAt: DateTime.now(),
+                            );
+                            // Call the new method to handle sending or restrictions
+                            _handleSendMessage(message, subProvider);
+                          },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: CircleAvatar(
@@ -224,8 +258,8 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                       containerColor: babyPink,
                       currentUserContainerColor: whiteblue),
                   onSend: (ChatMessage message) {
-                    ctr.sendMessage(widget.chatModel.messageID, message.text,
-                        widget.chatModel.userModel!);
+                    // Handle sending or showing restriction modal
+                    _handleSendMessage(message, subProvider);
                   },
                   messages: messages,
                 );
@@ -267,5 +301,48 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
             ]);
       },
     );
+  }
+
+  void _handleSendMessage(
+      ChatMessage message, SubscriptionProvider subProvider) {
+    if (subProvider.onPremium == false &&
+        subProvider.usedOneFreeText == true &&
+        subProvider.prevSubscribed == false &&
+        subProvider.entitledUser != widget.chatModel.userModel?.id) {
+      restrictionModal(
+        context: context,
+        dismisable: true,
+        text:
+            'You have used up your limit of one (1) chat per matched \nuser on our free version.\nKindly subscribe to chat with other matched users.',
+      );
+    } else if (subProvider.onPremium == false &&
+        subProvider.usedOneFreeText == true &&
+        subProvider.prevSubscribed == true &&
+        subProvider.entitledUser != widget.chatModel.userModel?.id) {
+      restrictionModal(
+        context: context,
+        dismisable: true,
+        text:
+            'Your subscription has expired!\nKindly subscribe to be able to send messages\nand user other features.',
+      );
+    } else if (subProvider.onPremium == false &&
+        subProvider.usedOneFreeText == false &&
+        subProvider.prevSubscribed == false) {
+      ctr.sendMessage(widget.chatModel.messageID, message.text,
+          widget.chatModel.userModel!);
+      subProvider.usedOneFreeText = true;
+      subProvider.entitledUser = widget.chatModel.userModel?.id;
+      SubscriptionHelper.updateFreeTextStatus(subProvider.currentUser, true,
+          context, widget.chatModel.userModel?.id);
+    } else if (subProvider.onPremium == false &&
+        subProvider.usedOneFreeText == true &&
+        subProvider.prevSubscribed == false &&
+        subProvider.entitledUser == widget.chatModel.userModel?.id) {
+      ctr.sendMessage(widget.chatModel.messageID, message.text,
+          widget.chatModel.userModel!);
+    } else if (subProvider.onPremium == true) {
+      ctr.sendMessage(widget.chatModel.messageID, message.text,
+          widget.chatModel.userModel!);
+    }
   }
 }

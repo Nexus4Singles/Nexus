@@ -1,9 +1,10 @@
+import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
 
 class MatchedUserCard extends StatelessWidget {
   final String age;
@@ -23,47 +24,47 @@ class MatchedUserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPress,
-      child: Container(
-        padding: EdgeInsets.all(15.sp),
+      child: CacheNetworkWidget(
+        imgUrl: photo,
         height: 317.h,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.r),
-          color: black,
-          image: DecorationImage(
-              fit: BoxFit.cover, opacity: .8, image: NetworkImage(photo)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              '$name, $age',
-              style: textStyle16.copyWith(
-                color: white,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Row(
-              children: [
-                const Icon(
-                  Iconsax.location5,
+        opacity: 0.8,
+        color: black,
+        borderRadius: BorderRadius.circular(15.r),
+        child: Padding(
+          padding: EdgeInsets.all(15.sp),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                '$name, $age',
+                style: textStyle16.copyWith(
                   color: white,
-                  size: 14,
+                  fontWeight: FontWeight.w600,
                 ),
-                const SizedBoxW5(),
-                Flexible(
-                  child: Text(
-                    location,
-                    overflow: TextOverflow.ellipsis,
-                    style: textStyle12.copyWith(
-                      color: white,
+              ),
+              Row(
+                children: [
+                  const Icon(
+                    Iconsax.location5,
+                    color: white,
+                    size: 14,
+                  ),
+                  const SizedBoxW5(),
+                  Flexible(
+                    child: Text(
+                      location,
+                      overflow: TextOverflow.ellipsis,
+                      style: textStyle12.copyWith(
+                        color: white,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

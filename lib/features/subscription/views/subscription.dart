@@ -3,13 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:nexus/features/profile/presentation/change_notifier/settings_notifier.dart';
-import 'package:nexus/features/profile/presentation/constants/payment.dart';
+import 'package:Nexus/features/profile/presentation/change_notifier/settings_notifier.dart';
+import 'package:Nexus/features/profile/presentation/constants/payment.dart';
 import 'package:provider/provider.dart';
 import 'package:pay/pay.dart';
-import 'package:nexus/core/button.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/style.dart';
+import 'package:Nexus/core/button.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/style.dart';
 import '../helpers/subscription_helper.dart';
 import '../provider/subscription_provider.dart';
 
@@ -124,15 +124,16 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 10.h),
               Text(
-                'The free version of nexus provides unlimited access to most features. However, some features have been made premium. We incur some monthly costs to ensure your profiles and audio recordings are securely stored and accessible to users. Hence, we are charging a small subscription fee to access premium features. This is to ensure we are able to maintain our services to you. ',
+                'The free version of Nexus provides unlimited access to most features. However, some features have been made premium. We incur some monthly costs to ensure your profiles and audio recordings are securely stored and accessible to users. Hence, we are charging a small subscription fee to access premium features. This is to ensure we are able to maintain our services to you. ',
                 style: textStyle12.copyWith(
                   fontSize: 11.sp,
                   color: black,
                   fontWeight: FontWeight.w300,
                 ),
               ),
-              SizedBox(height: 30.h),
+              SizedBox(height: 25.h),
               _buildPlanContainer(
                 title: 'Free',
                 features: [
@@ -144,7 +145,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   'Limited Access to Chat with Matched Users (1 User)',
                 ],
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 25.h),
               _buildPlanContainer(
                 title: 'Premium',
                 features: [
@@ -166,7 +167,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         await SubscriptionHelper.onSubscribe(context);
                       },
               ),
-              if (model.isLoading) const AppCircularProgressIndicator()
+              if (model.isLoading) AppCircularProgressIndicator()
 
               /*SizedBox(height: 10.h),
                 _buildPlanContainer(

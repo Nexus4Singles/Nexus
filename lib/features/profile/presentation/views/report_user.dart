@@ -1,13 +1,10 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/button.dart';
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/utils/text_area.dart';
-import 'package:nexus/features/profile/presentation/controllers/report_ctr.dart';
-
+import 'package:Nexus/core/button.dart';
+import 'package:Nexus/core/models/user.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/utils/text_area.dart';
+import 'package:Nexus/features/profile/presentation/controllers/report_ctr.dart';
 import '../../../../core/colors.dart';
 import '../../../../core/style.dart';
 import '../../../../core/text_field.dart';
@@ -38,7 +35,7 @@ class ReportUser extends StatelessWidget {
           children: [
             Center(
               child: Text(
-                  "We want to ensure the quality of users on nexus are constantly refined. Please assist us to achieve this goal by reporting any user who was toxic or manipulative to you, or any user with empty or gibbersih recordings. Thank you!",
+                  "We want to ensure the quality of users on Nexus are constantly refined. Please assist us to achieve this goal by reporting any user who was toxic or manipulative to you, or any user with empty or gibberish recordings. Thank you!",
                   textAlign: TextAlign.center,
                   style: textStyle12),
             ),
@@ -47,7 +44,7 @@ class ReportUser extends StatelessWidget {
               enabled: false,
               fillColor: white,
               controller: TextEditingController(text: userModel.username),
-              hintText: 'Username of the user to be reported',
+              hintText: 'Username of the User to be Reported',
             ),
             const SizedBoxH15(),
             Obx(

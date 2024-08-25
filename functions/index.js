@@ -18,7 +18,13 @@ exports.sendMessageNotification = functions.firestore
           channel_id: "NEXUS",
           android_channel_id: "NEXUS",
           priority: "high",
-          icon: "ic_launcher",
+          icon: "ic_stat_ic_launcher_nbg",
+        },
+        data: {
+          rcpId: rcpId,
+          senderId: senderId,
+          conversationId: context.params.conversationId,
+          messageId: context.params.messageId,
         },
       };
 
@@ -84,7 +90,7 @@ exports.sendMatchNotification = functions.firestore
             channel_id: "NEXUS",
             android_channel_id: "NEXUS",
             priority: "high",
-            icon: "ic_launcher",
+            icon: "ic_stat_ic_launcher_nbg",
 
           },
         };
@@ -131,7 +137,7 @@ exports.sendLikeNotification = functions.firestore
               channel_id: "NEXUS",
               android_channel_id: "NEXUS",
               priority: "high",
-              icon: "ic_launcher",
+              icon: "ic_stat_ic_launcher_nbg",
             },
           };
 

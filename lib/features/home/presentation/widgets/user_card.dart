@@ -1,17 +1,17 @@
 import 'dart:async';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:nexus/core/assets.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/core/utils/device.dart';
+import 'package:Nexus/core/assets.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/models/user.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
+import 'package:Nexus/core/utils/device.dart';
 import '../../../auth/presentation/widgets/record_completed.dart';
 import '../../../match/controllers/matches_ctr.dart';
 import '../../../profile/presentation/widgets/text_container.dart';
@@ -110,132 +110,132 @@ class _UserCardState extends State<UserCard> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
+              CacheNetworkWidget(
+                imgUrl: widget.userModel.photos![0],
+                opacity: .4,
+                color: black,
                 height: height(context) * .55,
                 width: width(context),
-                padding: EdgeInsets.all(15.sp),
-                decoration: BoxDecoration(
-                  color: black,
-                  borderRadius: BorderRadius.circular(20.r),
-                  image: DecorationImage(
-                    image: NetworkImage(widget.userModel.photos![0] ?? ""),
-                    fit: BoxFit.cover,
-                    opacity: .4,
-                  ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${widget.userModel.username}, ${widget.userModel.age}',
-                      style: headerStyle.copyWith(
-                        fontSize: 24.sp,
-                        color: white,
-                      ),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Iconsax.location5,
+                borderRadius: BorderRadius.circular(20.r),
+                child: Padding(
+                  padding: EdgeInsets.all(15.sp),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${widget.userModel.username}, ${widget.userModel.age}',
+                        style: headerStyle.copyWith(
+                          fontSize: 24.sp,
                           color: white,
-                          size: 20,
                         ),
-                        const SizedBoxW10(),
-                        Flexible(
-                          child: Text(
-                            '${widget.userModel.location!.place}',
-                            textAlign: TextAlign.center,
-                            style: textStyle14.copyWith(
-                              color: white,
-                            ),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Iconsax.location5,
+                            color: white,
+                            size: 20,
                           ),
-                        )
-                      ],
-                    ),
-                    Obx(
-                      () => Padding(
-                        padding: EdgeInsets.all(15.sp),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            InkWell(
-                              onTap: widget.onRefresh,
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: white,
-                                    border: Border.all(color: primary)),
-                                child: SvgPicture.asset(
-                                  '$svgPath/back.svg',
-                                  width: 24,
-                                  color: primary,
-                                ),
+                          const SizedBoxW10(),
+                          Flexible(
+                            child: Text(
+                              '${widget.userModel.location!.place}',
+                              textAlign: TextAlign.center,
+                              style: textStyle14.copyWith(
+                                color: white,
                               ),
                             ),
-                            InkWell(
-                              onTap: widget.onClosed,
-                              child: SvgPicture.asset('assets/icons/close.svg'),
-                            ),
-                            InkWell(
-                              onTap: widget.onLike,
-                              child: CircleAvatar(
-                                  backgroundColor:
-                                      ctr.ctr.myProfile.value.myLikes == null ||
-                                              !ctr.ctr.myProfile.value.myLikes!
-                                                  .contains(widget.userModel.id)
-                                          ? white
-                                          : primary,
-                                  radius: 25,
+                          )
+                        ],
+                      ),
+                      Obx(
+                        () => Padding(
+                          padding: EdgeInsets.all(15.sp),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              InkWell(
+                                onTap: widget.onRefresh,
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: white,
+                                      border: Border.all(color: primary)),
                                   child: SvgPicture.asset(
-                                    ctr.ctr.myProfile.value.matchedUsers ==
-                                                null ||
-                                            !ctr.ctr.myProfile.value
-                                                .matchedUsers!
-                                                .contains(widget.userModel.id)
-                                        ? "$svgPath/like.svg"
-                                        : '$svgPath/sms.svg',
-                                    color: ctr.ctr.myProfile.value.myLikes ==
+                                    '$svgPath/back.svg',
+                                    width: 24,
+                                    color: primary,
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: widget.onClosed,
+                                child:
+                                    SvgPicture.asset('assets/icons/close.svg'),
+                              ),
+                              InkWell(
+                                onTap: widget.onLike,
+                                child: CircleAvatar(
+                                    backgroundColor: ctr.ctr.myProfile.value
+                                                    .myLikes ==
                                                 null ||
                                             !ctr.ctr.myProfile.value.myLikes!
                                                 .contains(widget.userModel.id)
-                                        ? primary
-                                        : white,
-                                  )),
-                            ),
-                            InkWell(
-                              onTap: widget.onSaved,
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: primary),
-                                  color:
-                                      ctr.ctr.myProfile.value.mySaves == null ||
-                                              !ctr.ctr.myProfile.value.mySaves!
+                                        ? white
+                                        : primary,
+                                    radius: 25,
+                                    child: SvgPicture.asset(
+                                      ctr.ctr.myProfile.value.matchedUsers ==
+                                                  null ||
+                                              !ctr.ctr.myProfile.value
+                                                  .matchedUsers!
                                                   .contains(widget.userModel.id)
-                                          ? white
-                                          : primary,
-                                ),
-                                child: SvgPicture.asset("$svgPath/bookmark.svg",
-                                    width: 24,
+                                          ? "$svgPath/like.svg"
+                                          : '$svgPath/sms.svg',
+                                      color: ctr.ctr.myProfile.value.myLikes ==
+                                                  null ||
+                                              !ctr.ctr.myProfile.value.myLikes!
+                                                  .contains(widget.userModel.id)
+                                          ? primary
+                                          : white,
+                                    )),
+                              ),
+                              InkWell(
+                                onTap: widget.onSaved,
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: primary),
                                     color: ctr.ctr.myProfile.value.mySaves ==
                                                 null ||
                                             !ctr.ctr.myProfile.value.mySaves!
                                                 .contains(widget.userModel.id)
-                                        ? primary
-                                        : white),
+                                        ? white
+                                        : primary,
+                                  ),
+                                  child: SvgPicture.asset(
+                                      "$svgPath/bookmark.svg",
+                                      width: 24,
+                                      color: ctr.ctr.myProfile.value.mySaves ==
+                                                  null ||
+                                              !ctr.ctr.myProfile.value.mySaves!
+                                                  .contains(widget.userModel.id)
+                                          ? primary
+                                          : white),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               SingleChildScrollView(
@@ -459,26 +459,10 @@ class _UserCardState extends State<UserCard> {
                                     selectedIndex: index,
                                     photos: widget.userModel.photos!));
                               },
-                              child: CachedNetworkImage(
-                                width: width(context) * .4,
-                                height: 100.h,
-                                fit: BoxFit.cover,
-                                imageUrl: item,
-                                progressIndicatorBuilder:
-                                    (context, url, downloadProgress) => Center(
-                                  child: SizedBox(
-                                    width: 16,
-                                    height: 16,
-                                    child: CircularProgressIndicator(
-                                      value: downloadProgress.progress,
-                                      strokeWidth: 1,
-                                      color: primary,
-                                    ),
-                                  ),
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    Container(),
-                              ),
+                              child: CacheNetworkWidget(
+                                  width: width(context) * .4,
+                                  height: 100.h,
+                                  imgUrl: item),
                             ),
                           ),
                       ],

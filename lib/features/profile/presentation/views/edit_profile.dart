@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,19 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nexus/core/assets.dart';
-import 'package:nexus/core/button.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/models/locationIQModel.dart';
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/core/text_field.dart';
-import 'package:nexus/features/home/controllers/home_controller.dart';
-import 'package:nexus/features/profile/presentation/controllers/profile_ctr.dart';
+import 'package:Nexus/core/assets.dart';
+import 'package:Nexus/core/button.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
+import 'package:Nexus/core/text_field.dart';
+import 'package:Nexus/features/home/controllers/home_controller.dart';
+import 'package:Nexus/features/profile/presentation/controllers/profile_ctr.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/utils/image_compressor.dart';
-import '../../../../core/utils/locationIQ_widget.dart';
 import '../../../../core/utils/toast.dart';
 import '../../../auth/data/data-sources/local-datasource/list_items.dart';
 import '../../../auth/presentation/widgets/drop_down.dart';
@@ -42,6 +40,11 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   void initState() {
+    init();
+    super.initState();
+  }
+
+  init() {
     ctr.eduLevel.value = currentUser.value.educationLevel!;
     ctr.profession.value = currentUser.value.profession!;
     ctr.church.value = currentUser.value.churchName!;
@@ -50,7 +53,7 @@ class _EditProfileState extends State<EditProfile> {
     ctr.countryCtr.text = currentUser.value.location!.country!;
     ctr.usernameCtr.text = currentUser.value.username;
     allImage.assignAll(currentUser.value.photos!.toList());
-    super.initState();
+    setState(() {});
   }
 
   void _pickImage() async {
@@ -99,26 +102,21 @@ class _EditProfileState extends State<EditProfile> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Obx(
-              () => Wrap(
-                runSpacing: 8,
-                spacing: 12,
-                crossAxisAlignment: WrapCrossAlignment.start,
-                runAlignment: WrapAlignment.start,
-                alignment: WrapAlignment.start,
-                children: [
-                  for (var item in currentUser.value.photos!)
-                    Container(
-                      height: 120,
-                      width: 120,
+            Wrap(
+              runSpacing: 8,
+              spacing: 12,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              runAlignment: WrapAlignment.start,
+              alignment: WrapAlignment.start,
+              children: [
+                for (var item in currentUser.value.photos!)
+                  CacheNetworkWidget(
+                    height: 120,
+                    width: 120,
+                    imgUrl: item,
+                    borderRadius: BorderRadius.circular(20),
+                    child: Padding(
                       padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                          image: NetworkImage(item),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -148,120 +146,122 @@ class _EditProfileState extends State<EditProfile> {
                         ],
                       ),
                     ),
-                  for (var item in imageFiles)
-                    Container(
-                      height: 120,
-                      width: 120,
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                          image: FileImage(item),
-                          fit: BoxFit.cover,
-                        ),
+                  ),
+                for (var item in imageFiles)
+                  Container(
+                    height: 120,
+                    width: 120,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      image: DecorationImage(
+                        image: FileImage(item),
+                        fit: BoxFit.cover,
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  if (allImage.length.isGreaterThan(2)) {
-                                    allImage.remove(item.path);
-                                    imageFiles.remove(item);
-                                  } else {
-                                    AppToast().showErrorToast(
-                                        "You need to have at least two images on this list before you can delete any image");
-                                  }
-                                });
-                              },
-                              child: const CircleAvatar(
-                                backgroundColor: white,
-                                radius: 12,
-                                child: Icon(
-                                  Icons.close,
-                                  color: black,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                if (allImage.length.isGreaterThan(2)) {
+                                  allImage.remove(item.path);
+                                  imageFiles.remove(item);
+                                } else {
+                                  AppToast().showErrorToast(
+                                      "You need to have at least two images on this list before you can delete any image");
+                                }
+                              });
+                            },
+                            child: const CircleAvatar(
+                              backgroundColor: white,
+                              radius: 12,
+                              child: Icon(
+                                Icons.close,
+                                color: black,
+                                size: 12,
+                              ),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            int index = imageFiles.indexOf(item);
+                            _changeImage(index, item);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: black.withOpacity(.4),
+                              border: Border.all(
+                                color: white,
+                              ),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.camera,
+                                  color: white,
                                   size: 12,
                                 ),
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              int index = imageFiles.indexOf(item);
-                              _changeImage(index, item);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: black.withOpacity(.4),
-                                border: Border.all(
-                                  color: white,
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.camera,
+                                const SizedBoxW5(),
+                                Text(
+                                  'Change Photo',
+                                  style: textStyle10.copyWith(
                                     color: white,
-                                    size: 12,
                                   ),
-                                  const SizedBoxW5(),
-                                  Text(
-                                    'Change Photo',
-                                    style: textStyle10.copyWith(
-                                      color: white,
-                                    ),
-                                  )
-                                ],
-                              ),
+                                )
+                              ],
                             ),
-                          )
-                        ],
-                      ),
+                          ),
+                        )
+                      ],
                     ),
-                  if (allImage.length.isLowerThan(maxPhotos))
-                    InkWell(
-                      onTap: () {
-                        if (currentUser.value.photos!.length < maxPhotos) {
-                          for (int i = currentUser.value.photos!.length;
-                              i < maxPhotos;
-                              i++) {
-                            _pickImage();
-                          }
-                        } else {
-                          AppToast()
-                              .showErrorToast('Maximum of 4 photos allowed');
+                  ),
+                // if(imageFiles.length)
+                // logic for the other variant here...
+                if (allImage.length.isLowerThan(maxPhotos))
+                  InkWell(
+                    onTap: () {
+                      if (currentUser.value.photos!.length < maxPhotos) {
+                        for (int i = currentUser.value.photos!.length;
+                            i < maxPhotos;
+                            i++) {
+                          _pickImage();
                         }
-                      },
-                      child: DottedBorder(
-                        borderType: BorderType.RRect,
-                        strokeWidth: 1,
-                        stackFit: StackFit.passthrough,
-                        // customPath: (size) => customPath,
-                        dashPattern: const [6, 3, 0, 3],
-                        color: Colors.blue.withOpacity(.2),
-                        radius: const Radius.circular(20),
-                        child: Container(
-                          height: 120,
-                          width: 120,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xffeeeeee),
-                          ),
-                          child: const Icon(
-                            Icons.add_circle,
-                            color: primary,
-                          ),
+                      } else {
+                        AppToast()
+                            .showErrorToast('Maximum of 4 photos allowed');
+                      }
+                    },
+                    child: DottedBorder(
+                      borderType: BorderType.RRect,
+                      strokeWidth: 1,
+                      stackFit: StackFit.passthrough,
+                      // customPath: (size) => customPath,
+                      dashPattern: const [6, 3, 0, 3],
+                      color: Colors.blue.withOpacity(.2),
+                      radius: const Radius.circular(20),
+                      child: Container(
+                        height: 120,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color(0xffeeeeee),
+                        ),
+                        child: const Icon(
+                          Icons.add_circle,
+                          color: primary,
                         ),
                       ),
                     ),
-                ],
-              ),
+                  ),
+              ],
             ),
             const SizedBoxH20(),
             Row(
@@ -379,7 +379,6 @@ class _EditProfileState extends State<EditProfile> {
               onChanged: (p0) {
                 setState(() {
                   ctr.profession.value = p0!;
-                  ctr.isEmpty();
                 });
               },
             ),
@@ -427,10 +426,9 @@ class _EditProfileState extends State<EditProfile> {
             const SizedBoxH40(),
             CustomButton(
                 onPressed: () async {
-                  await ctr.updateProfile(imageFiles);
-                  await HomeController.instance.getMyProfile();
-                  allImage.assignAll(
-                      HomeController.instance.user.value.photos!.toList());
+                  await ctr.updateProfile(imageFiles).then((val) {
+                    init();
+                  });
                 },
                 text: "Update Profile"),
             const SizedBoxH40(),
@@ -453,13 +451,8 @@ class _EditProfileState extends State<EditProfile> {
               isDestructiveAction: true,
               onPressed: () {
                 ctr.deleteUserPhoto(item).then((val) async {
-                  allImage.remove(item);
-                  // check why this didn't fetch data
-                  await Provider.of<HomeNotifier>(context, listen: false)
-                      .getProfile();
+                  init();
                 });
-                // Navigator.pop(context, 'Deleted');
-                // Handle the destructive action
               },
               child: const Text('Delete'),
             ),

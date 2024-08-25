@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/button.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/constant.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/core/utils/device.dart';
-import 'package:nexus/core/utils/toast.dart';
-import 'package:nexus/features/auth/data/data-sources/local-datasource/list_items.dart';
-import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
-import 'package:nexus/features/auth/presentation/widgets/hobbie_card.dart';
-import 'package:nexus/router.dart';
+import 'package:Nexus/core/button.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/constant.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
+import 'package:Nexus/core/utils/device.dart';
+import 'package:Nexus/core/utils/toast.dart';
+import 'package:Nexus/features/auth/data/data-sources/local-datasource/list_items.dart';
+import 'package:Nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
+import 'package:Nexus/features/auth/presentation/widgets/hobbie_card.dart';
+import 'package:Nexus/router.dart';
 import 'package:provider/provider.dart';
 
 class DesiredQualityScreen extends StatefulWidget {

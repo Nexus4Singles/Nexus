@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nexus/core/services/api_service.dart';
 import 'package:rxdart/rxdart.dart';
 import '../models/locationIQModel.dart';
+import '../services/api_service.dart';
 
 class LocationIQWidget extends StatefulWidget {
   final InputDecoration inputDecoration;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nexus/core/button.dart';
-import 'package:nexus/core/size_boxes.dart';
+import 'package:Nexus/core/button.dart';
+import 'package:Nexus/core/size_boxes.dart';
 import '../../../core/assets.dart';
 import '../../../core/style.dart';
 import '../../profile/presentation/views/change_plan.dart';

@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/assets.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/constant.dart';
-import 'package:nexus/core/utils/shared_pref.dart';
-import 'package:nexus/router.dart';
+import 'package:Nexus/core/assets.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/constant.dart';
+import 'package:Nexus/core/utils/shared_pref.dart';
+import 'package:Nexus/router.dart';
 
 import '../../../explore/controllers/explore_ctr.dart';
 

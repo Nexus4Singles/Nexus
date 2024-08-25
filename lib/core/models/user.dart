@@ -6,7 +6,7 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class UserModel extends UserEntity {
-  UserModel({
+  const UserModel({
     required String id,
     required String name,
     required String username,
@@ -45,6 +45,8 @@ class UserModel extends UserEntity {
     bool prevSubscribed = false,
     String? subExpDate,
     bool usedOneFreeText = false,
+    String entitledUser = 'null',
+    String? recommendedTime,
   }) : super(
           id: id,
           name: name,
@@ -53,7 +55,7 @@ class UserModel extends UserEntity {
           profileUrl: profileUrl,
           age: age,
           gender: gender,
-          unrecommendedUsers: unRecommendUsers,
+          unRecommendUsers: unRecommendUsers,
           bestQualotiesOrTraits: bestQualotiesOrTraits,
           city: city,
           matchedUsers: matchedUsers,
@@ -84,6 +86,8 @@ class UserModel extends UserEntity {
           prevSubscribed: prevSubscribed,
           usedOneFreeText: usedOneFreeText,
           subExpDate: subExpDate,
+          entitledUser: entitledUser,
+          recommendedTime: recommendedTime,
         );
 
   factory UserModel.fromJson(Map<String, dynamic> map) =>

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/features/profile/presentation/widgets/privacy_item.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
+import 'package:Nexus/features/profile/presentation/widgets/privacy_item.dart';
 
 class PrivacyPolicyScreen extends StatefulWidget {
   const PrivacyPolicyScreen({super.key});
@@ -42,7 +42,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
               ),
               const SizedBoxH20(),
               Text(
-                'At nexus, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy outlines how we collect, use, and safeguard your data when you use our Christian dating app. By accessing or using nexus, you agree to the terms outlined in this policy.',
+                'At Nexus, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy outlines how we collect, use, and safeguard your data when you use our Christian dating app. By accessing or using nexus, you agree to the terms outlined in this policy.',
                 style: textStyle14.copyWith(color: black),
               ),
               const SizedBoxH20(),

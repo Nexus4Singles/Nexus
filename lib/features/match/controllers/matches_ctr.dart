@@ -3,11 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/core/utils/app_logger.dart';
-import 'package:nexus/features/explore/controllers/explore_ctr.dart';
-import 'package:nexus/features/home/controllers/notification_controller.dart';
-import 'package:nexus/features/match/presentation/views/matched.dart';
+import 'package:Nexus/core/models/user.dart';
+import 'package:Nexus/core/utils/app_logger.dart';
+import 'package:Nexus/features/explore/controllers/explore_ctr.dart';
+import 'package:Nexus/features/home/controllers/notification_controller.dart';
+import 'package:Nexus/features/match/presentation/views/matched.dart';
 import '../../../core/constant.dart';
 import '../../chat/controllers/chat_ctr.dart';
 import '../../home/controllers/home_controller.dart';
@@ -37,7 +37,7 @@ class MatchesCtr extends GetxController {
   }
 
   setLikedMe() {
-    emptyText.value = "You don’t have any likes yet";
+    emptyText.value = "You don't have any likes yet";
 
     isLoading.value = true;
     Future.delayed(const Duration(seconds: 2), () => isLoading.value = false);
@@ -118,6 +118,7 @@ class MatchesCtr extends GetxController {
     await db.collection(kUSER).doc(auth.currentUser!.uid).update({
       "myLikes": FieldValue.arrayUnion([id])
     });
+    homeCtr.incrementViews();
   }
 
   removeFromLikeMe(id, bool isUser) async {
@@ -162,6 +163,7 @@ class MatchesCtr extends GetxController {
         .collection(kUSER)
         .doc(auth.currentUser!.uid)
         .update({"mySaves": updateOperation});
+    homeCtr.incrementViews();
 
     await homeCtr.getMyProfile();
     await ctr.getMyProfile();
@@ -176,6 +178,8 @@ class MatchesCtr extends GetxController {
       await db.collection(kUSER).doc(auth.currentUser!.uid).update({
         "unRecommendUsers": FieldValue.arrayUnion([id])
       });
+      homeCtr.incrementViews();
+
       await homeCtr.getFilteredUsers(true);
       EasyLoading.dismiss();
     } catch (e) {

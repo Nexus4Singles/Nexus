@@ -2,11 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/assets.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/models/chats_model.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/text_field.dart';
+import 'package:Nexus/core/assets.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/models/chats_model.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/text_field.dart';
 import '../controllers/chat_ctr.dart';
 
 class ImageSelectedContainer extends StatelessWidget {

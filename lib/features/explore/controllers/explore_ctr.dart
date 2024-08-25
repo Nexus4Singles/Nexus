@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/core/utils/app_logger.dart';
 import '../../../core/constant.dart';
+import '../../../core/models/user.dart';
+import '../../../core/utils/app_logger.dart';
 
 class ExploreCtr extends GetxController {
   static ExploreCtr get instance => Get.find<ExploreCtr>();
@@ -12,9 +12,9 @@ class ExploreCtr extends GetxController {
   final allUsers = <UserModel>[].obs;
   final searchedUsers = <UserModel>[].obs;
   final filteredUsers = <UserModel>[].obs;
-  final myProfile =
-      UserModel(id: "", name: '', username: "", email: "", age: 0, gender: "")
-          .obs;
+  final myProfile = const UserModel(
+          id: "", name: '', username: "", email: "", age: 0, gender: "")
+      .obs;
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
   var isLoading = false.obs;

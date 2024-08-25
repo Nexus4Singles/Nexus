@@ -2,7 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:nexus/core/utils/app_logger.dart';
+
+import '../utils/app_logger.dart';
 // ignore: library_prefixes
 
 class ApiService {

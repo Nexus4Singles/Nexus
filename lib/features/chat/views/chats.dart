@@ -1,25 +1,33 @@
+import 'package:Nexus/core/services/fcm.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/core/utils/empty_state.dart';
-import 'package:nexus/features/chat/controllers/chat_ctr.dart';
-import 'package:nexus/features/chat/widget/chat_container.dart';
-import 'package:nexus/features/subscription/helpers/subscription_helper.dart';
-import 'package:nexus/features/subscription/provider/subscription_provider.dart';
-import 'package:nexus/features/subscription/widgets/restriction_modal.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
+import 'package:Nexus/core/utils/empty_state.dart';
+import 'package:Nexus/features/chat/controllers/chat_ctr.dart';
+import 'package:Nexus/features/chat/widget/chat_container.dart';
+import 'package:Nexus/features/subscription/helpers/subscription_helper.dart';
+import 'package:Nexus/features/subscription/provider/subscription_provider.dart';
+import 'package:Nexus/features/subscription/widgets/restriction_modal.dart';
 import 'package:provider/provider.dart';
 import '../../../router.dart';
+import '../../home/presentation/widgets/cache_network_widget.dart';
 import 'chat_rep.dart';
 
-class ChatsScreen extends StatelessWidget {
-  final ctr = ChatCtr.instance;
+class ChatsScreen extends StatefulWidget {
+  const ChatsScreen({super.key});
 
-  ChatsScreen({super.key});
+  @override
+  State<ChatsScreen> createState() => _ChatsScreenState();
+}
+
+class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
+  var ctr = Get.put(ChatCtr());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,10 +111,10 @@ class ChatsScreen extends StatelessWidget {
                                                   true;
                                               await SubscriptionHelper
                                                   .updateFreeTextStatus(
-                                                subProvider.currentUser,
-                                                true,
-                                                context,
-                                              );
+                                                      subProvider.currentUser,
+                                                      true,
+                                                      context,
+                                                      users.userModel!.id);
                                             }
                                           } else if (subProvider.onPremium ==
                                                   false &&
@@ -133,10 +141,11 @@ class ChatsScreen extends StatelessWidget {
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.all(12.0),
-                                          child: CircleAvatar(
-                                            radius: 32,
-                                            backgroundImage: NetworkImage(
-                                                users.userModel!.photos![0]),
+                                          child: CacheNetworkWidget(
+                                            imgUrl: users.userModel!.photos![0],
+                                            height: 50.r,
+                                            width: 50.r,
+                                            isNotCircle: false,
                                           ),
                                         ),
                                       );
@@ -212,5 +221,24 @@ class ChatsScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      FCMService.clearRedundantNotifs();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 }

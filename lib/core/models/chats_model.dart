@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nexus/core/models/user.dart';
+import 'user.dart';
 
 class ChatModel {
   String lastMessage;

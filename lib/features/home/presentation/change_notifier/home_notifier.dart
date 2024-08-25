@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:nexus/core/models/user.dart';
-import 'package:nexus/core/usecases/usecases.dart';
-import 'package:nexus/core/utils/app_logger.dart';
-import 'package:nexus/features/auth/data/data-sources/remote-datasource/auth_remote.dart';
-import 'package:nexus/features/auth/domain/usecases/profile.dart';
-import 'package:nexus/features/home/domain/usecases/get_users.dart';
-import 'package:nexus/features/home/domain/usecases/get_users_filterable.dart';
+import 'package:Nexus/core/models/user.dart';
+import 'package:Nexus/core/usecases/usecases.dart';
+import 'package:Nexus/core/utils/app_logger.dart';
+import 'package:Nexus/features/auth/data/data-sources/remote-datasource/auth_remote.dart';
+import 'package:Nexus/features/auth/domain/usecases/profile.dart';
+import 'package:Nexus/features/home/domain/usecases/get_users.dart';
+import 'package:Nexus/features/home/domain/usecases/get_users_filterable.dart';
 
 @injectable
 class HomeNotifier with ChangeNotifier {

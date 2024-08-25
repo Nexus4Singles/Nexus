@@ -1,10 +1,11 @@
+import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
 
 class ExploreUserTile extends StatelessWidget {
   final String name;
@@ -24,10 +25,12 @@ class ExploreUserTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: CircleAvatar(
-        radius: 24.r,
-        backgroundColor: altoGrey,
-        backgroundImage: NetworkImage(image),
+      leading: CacheNetworkWidget(
+        imgUrl: image,
+        color: altoGrey,
+        height: 48.r,
+        width: 48.r,
+        isNotCircle: false,
       ),
       onTap: onPress,
       contentPadding: EdgeInsets.zero,
@@ -56,8 +59,7 @@ class ExploreUserTile extends StatelessWidget {
         onTap: onPress,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          decoration: BoxDecoration(
-              color: primary, borderRadius: BorderRadius.circular(100)),
+          decoration: BoxDecoration(color: primary, borderRadius: BorderRadius.circular(100)),
           child: Text(
             "View Profile",
             style: textStyle10.copyWith(color: white),

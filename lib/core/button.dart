@@ -1,6 +1,7 @@
+import 'package:Nexus/core/style.dart';
 import 'package:flutter/material.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/style.dart';
+
+import 'colors.dart';
 
 class CustomButton extends StatelessWidget {
   final String? text;

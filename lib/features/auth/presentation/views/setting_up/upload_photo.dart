@@ -1,21 +1,22 @@
 import 'dart:io';
-
+import 'package:Nexus/core/network/digital_ocean_client.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/button.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/constant.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/core/utils/device.dart';
-import 'package:nexus/core/utils/image_compressor.dart';
-import 'package:nexus/core/utils/toast.dart';
-import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
-import 'package:nexus/router.dart';
+import 'package:Nexus/core/button.dart';
+import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/constant.dart';
+import 'package:Nexus/core/size_boxes.dart';
+import 'package:Nexus/core/style.dart';
+import 'package:Nexus/core/utils/device.dart';
+import 'package:Nexus/core/utils/image_compressor.dart';
+import 'package:Nexus/core/utils/toast.dart';
+import 'package:Nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
+import 'package:Nexus/router.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
 
 class UploadPhotoScreen extends StatefulWidget {
   const UploadPhotoScreen({super.key});
@@ -25,6 +26,7 @@ class UploadPhotoScreen extends StatefulWidget {
 }
 
 class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
+  final DigitalOceanClient digitalOceanClient = DigitalOceanClient();
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthNotifier>(builder: (context, model, _) {
@@ -198,9 +200,19 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
                   } else {
                     List imageUrls = [];
                     for (var file in imageFiles) {
-                      await model.uploadFile(file: file).then((value) {
+                      await digitalOceanClient
+                          .uploadFileToSpace(
+                        bucket: 'profile',
+                        objectName:
+                            '${model.user?.email}_${model.user?.id}/${path.basename(file.path.trim())}',
+                        filePath: file.path,
+                      )
+                          .then((value) {
                         imageUrls.add(value);
                       });
+                      // await model.uploadFile(file: file).then((value) {
+                      //   imageUrls.add(value);
+                      // });
                     }
                     if (imageUrls.length == imageFiles.length) {
                       model.updateProfile(

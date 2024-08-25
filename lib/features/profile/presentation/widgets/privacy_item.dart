@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
+
+import '../../../../core/size_boxes.dart';
+import '../../../../core/style.dart';
 
 class PrivacyItem extends StatelessWidget {
   final String title;

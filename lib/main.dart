@@ -9,12 +9,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:nexus/router.dart';
-import 'package:nexus/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:rename/platform_file_editors/abs_platform_file_editor.dart';
 import 'core/di/injection_container.dart';
+import 'core/storage/digital_ocean_keys.dart';
 import 'features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'features/explore/controllers/explore_ctr.dart';
 import 'features/home/presentation/change_notifier/bottom_nav.dart';
@@ -22,8 +21,12 @@ import 'features/home/presentation/change_notifier/home_notifier.dart';
 import 'features/profile/presentation/change_notifier/settings_notifier.dart';
 import 'features/subscription/provider/subscription_provider.dart';
 import 'features/subscription/services/subscription_service.dart';
+import 'router.dart';
+import 'theme.dart';
 
-void main() {
+final navigatorKey = GlobalKey<NavigatorState>();
+
+Future<void> main() async {
   runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
     Animate.restartOnHotReload = true;
@@ -60,6 +63,8 @@ void main() {
       errorAndStacktrace.last,
     );
   }).sendPort);
+
+  DigitalOceanConfig.initDigitalOcean();
 }
 
 class MyApp extends StatelessWidget {
@@ -75,7 +80,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SettingsNotifier()),
         ChangeNotifierProvider(create: (_) => sl<AuthNotifier>()),
         ChangeNotifierProvider(create: (_) => sl<HomeNotifier>()),
-        ChangeNotifierProvider(create: (_) => SubscriptionProvider())
+        ChangeNotifierProvider(create: (_) => SubscriptionProvider()),
+        // ChangeNotifierProvider(create: (_) => ChatManager())
       ],
       child: Consumer<ThemeProvider>(builder: (context, theme, _) {
         return GestureDetector(

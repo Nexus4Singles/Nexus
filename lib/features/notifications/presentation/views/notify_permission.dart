@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:nexus/core/assets.dart';
-import 'package:nexus/core/size_boxes.dart';
+import '../../../../core/assets.dart';
 import '../../../../core/colors.dart';
+import '../../../../core/size_boxes.dart';
 import '../../../../core/style.dart';
 
 class NotifyPermission extends StatelessWidget {

@@ -11,6 +11,7 @@ TextStyle subHeaderStyle =
 
 TextStyle textStyle8 = GoogleFonts.outfit(fontSize: 8.0);
 TextStyle textStyle10 = GoogleFonts.outfit(fontSize: 10.0);
+TextStyle textStyle11 = GoogleFonts.outfit(fontSize: 11.0);
 TextStyle textStyle12 = GoogleFonts.outfit(fontSize: 12.0);
 TextStyle textStyle14 = GoogleFonts.outfit(fontSize: 14.0);
 TextStyle textStyle16 = GoogleFonts.outfit(fontSize: 16.0);

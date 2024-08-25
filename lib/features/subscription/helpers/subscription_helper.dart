@@ -12,16 +12,14 @@ import '../services/subscription_service.dart';
 import '../views/acknowledgment.dart';
 import '../widgets/pay_wall_widget.dart';
 
-
 class SubscriptionHelper {
-
   ///Store-Pay
   static Future<void> onSubscribe(BuildContext context) async {
     try {
       final offerings = await Glassfy.offerings();
 
-      final offer = offerings.all
-      !.singleWhere((offering) => offering.offeringId == 'Premium');
+      final offer = offerings.all!
+          .singleWhere((offering) => offering.offeringId == 'Premium');
 
       if (context.mounted) {
         showModalBottomSheet(
@@ -42,7 +40,8 @@ class SubscriptionHelper {
                   onClickedSku: (sku) async {
                     subProvider.isLoading = true;
 
-                    final transaction = await SubscriptionService.purchaseSku(sku);
+                    final transaction =
+                        await SubscriptionService.purchaseSku(sku);
 
                     if (!context.mounted) return;
 
@@ -50,18 +49,25 @@ class SubscriptionHelper {
                       subProvider.isLoading = true;
                       final permissions = transaction.permissions!.all!;
                       final permission = permissions.firstWhere(
-                              (permission) =>
-                          permission.permissionId == 'premium');
+                          (permission) => permission.permissionId == 'premium');
                       if (permission.isValid!) {
-                        String formattedDate = DateFormat('dd/MM/yyyy').format(permission!.expireDate!);
-                        voidUpdateProvider(subProvider, true, true, formattedDate);
-                        await updateSubBackend(subProvider.currentUser, true, true, formattedDate, context);
+                        String formattedDate = DateFormat('dd/MM/yyyy')
+                            .format(permission!.expireDate!);
+                        voidUpdateProvider(
+                            subProvider, true, true, formattedDate, 'null');
+                        await updateSubBackend(subProvider.currentUser, true,
+                            true, formattedDate, context);
+                        await updateFreeTextStatus(
+                            subProvider.currentUser, true, context, 'null');
+                        updateEntitledUserStatus(
+                            subProvider.currentUser, 'null', context);
                         subProvider.isLoading = false;
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const AcknowledgmentScreen()),
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const AcknowledgmentScreen()),
                         );
-
                       } else {
                         subProvider.isLoading = false;
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -88,82 +94,89 @@ class SubscriptionHelper {
         );
       }
     } catch (e) {
-      if(context.mounted) {
+      if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error occurred check Internet connection.${e.toString()}'),
-            duration: const Duration(
-                seconds: 2),
+            content: Text(
+                'Error occurred check Internet connection.${e.toString()}'),
+            duration: const Duration(seconds: 2),
           ),
         );
       }
     }
   }
 
-
   ///Expiry-Date-Helper
-  static Future<bool> isSubscriptionValid(BuildContext context, String? subExpDate) async {
+  static Future<bool> isSubscriptionValid(
+      BuildContext context, String? subExpDate) async {
     final homeCtr = HomeController.instance;
     final subProvider = context.read<SubscriptionProvider>();
 
-    final user = homeCtr.user.value;;
+    final user = homeCtr.user.value;
 
     bool subValid = false;
     String? newExpDateToUpload;
 
     if (subExpDate == null) {
-     updateBackendPremiumStatus(subProvider.currentUser, false, context);
-     subProvider.onPremium = false;
+      await updateBackendPremiumStatus(subProvider.currentUser, false, context);
+      subProvider.onPremium = false;
+    }
+
+    if (subProvider.onPremium == false &&
+        subProvider.prevSubscribed == true &&
+        subProvider.usedOneFreeText == true) {
+      await updateEntitledUserStatus(user, 'null', context);
+      subProvider.entitledUser = 'null';
     }
 
     bool isAfterExpiry = false;
 
     if (subExpDate != null && subExpDate.isNotEmpty) {
-      isAfterExpiry = DateTime.now().isAfter(DateFormat('dd/MM/yyyy').parse(subExpDate));
+      isAfterExpiry =
+          DateTime.now().isAfter(DateFormat('dd/MM/yyyy').parse(subExpDate));
     }
 
-      if (user != null) {
-        try {
+    if (user != null) {
+      try {
+        var permissions = await Glassfy.permissions();
 
-          var permissions = await Glassfy.permissions();
-
-          permissions.all?.forEach((p) async {
-            if (p.permissionId == "premium" && p.isValid == true) {
-              String newExpDate = DateFormat('dd/MM/yyyy').format(p.expireDate!);
-              newExpDateToUpload = newExpDate;
-              subValid = true;
-              subProvider.onPremium = true;
-              subProvider.subExpDate = newExpDate ?? '';
-              logger.i('subscription still valid autoRenewal or Re-subscription');
-
-            }
-            else{
-              logger.e('subscription no longer valid');
-              subProvider.onPremium = false;
-              await SubscriptionHelper.updateBackendPremiumStatus(user, false, context);
-              subValid = false;
-            }
-          });
-        } catch (e) {
-          logger.e(e.toString());
-        }
-
-        try {
-          // Update Firestore with the subscription status
-          await FirebaseFirestore.instance.collection('users').doc(user.id).update({
-            'onPremium': subValid,
-            'subExpDate': newExpDateToUpload,
-          });
-        } catch (error) {
-          logger.e('Error updating premium status: $error');
-        }
+        permissions.all?.forEach((p) async {
+          if (p.permissionId == "premium" && p.isValid == true) {
+            String newExpDate = DateFormat('dd/MM/yyyy').format(p.expireDate!);
+            newExpDateToUpload = newExpDate;
+            subValid = true;
+            subProvider.onPremium = true;
+            subProvider.subExpDate = newExpDate ?? '';
+            logger.i('subscription still valid autoRenewal or Re-subscription');
+          } else {
+            logger.e('subscription no longer valid');
+            subProvider.onPremium = false;
+            await SubscriptionHelper.updateBackendPremiumStatus(
+                user, false, context);
+            subValid = false;
+          }
+        });
+      } catch (e) {
+        logger.e(e.toString());
       }
-      else {
-        logger.e('user is null');
 
+      try {
+        // Update Firestore with the subscription status
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.id)
+            .update({
+          'onPremium': subValid,
+          'subExpDate': newExpDateToUpload,
+        });
+      } catch (error) {
+        logger.e('Error updating premium status: $error');
       }
-   // }
-   /* else {
+    } else {
+      logger.e('user is null');
+    }
+    // }
+    /* else {
       // Subscription is still valid because the current date is before the expiry date
       subValid = true;
 
@@ -172,13 +185,13 @@ class SubscriptionHelper {
     return subValid;
   }
 
-
-
-  static Future<void> updateSubBackend(UserModel? user, bool onP, bool prevSub, String? subExp,BuildContext context) async {
+  static Future<void> updateSubBackend(UserModel? user, bool onP, bool prevSub,
+      String? subExp, BuildContext context) async {
     if (user == null) {
       return;
     }
-    DocumentReference userDoc = FirebaseFirestore.instance.collection('users').doc(user.id);
+    DocumentReference userDoc =
+        FirebaseFirestore.instance.collection('users').doc(user.id);
 
     // Data to update
     Map<String, dynamic> data = {
@@ -194,30 +207,59 @@ class SubscriptionHelper {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(e.toString()),
-            duration: const Duration(
-                seconds: 2),
+            duration: const Duration(seconds: 2),
           ),
         );
       }
     }
   }
 
-  static void voidUpdateProvider(SubscriptionProvider sp, bool onP, bool prevSub, String? subExp){
+  static void voidUpdateProvider(
+      SubscriptionProvider sp, bool onP, bool prevSub, String? subExp,
+      [String? entitledUser]) {
     sp.onPremium = onP;
     sp.prevSubscribed = prevSub;
     sp.subExpDate = subExp;
+    sp.entitledUser = entitledUser;
   }
 
-  static Future<void> updateBackendPremiumStatus(UserModel? user, bool onP,BuildContext context) async {
+  static Future<void> updateBackendPremiumStatus(
+      UserModel? user, bool onP, BuildContext context) async {
     if (user == null) {
       return;
     }
 
-    DocumentReference userDoc = FirebaseFirestore.instance.collection('users').doc(user.id);
+    DocumentReference userDoc =
+        FirebaseFirestore.instance.collection('users').doc(user.id);
 
     // Data to update
+    Map<String, dynamic> data = {'onPremium': onP};
+
+    try {
+      await userDoc.update(data);
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
+    }
+  }
+
+  static Future<void> updateFreeTextStatus(UserModel? user, bool usedFreeText,
+      BuildContext context, String? entitledUser) async {
+    if (user == null) {
+      return;
+    }
+    DocumentReference userDoc =
+        FirebaseFirestore.instance.collection('users').doc(user.id);
+    // Data to update
     Map<String, dynamic> data = {
-      'onPremium': onP
+      'usedOneFreeText': usedFreeText,
+      'entitledUser': entitledUser
     };
 
     try {
@@ -227,24 +269,23 @@ class SubscriptionHelper {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(e.toString()),
-            duration: const Duration(
-                seconds: 2),
+            duration: const Duration(seconds: 2),
           ),
         );
       }
     }
   }
 
-  static Future<void> updateFreeTextStatus(UserModel? user, bool usedFreeText,BuildContext context) async {
+  static Future<void> updateEntitledUserStatus(
+      UserModel? user, String? entitledUser, BuildContext context) async {
     if (user == null) {
       return;
     }
-    logger.i('is it null in updating freetextstsus');
-    DocumentReference userDoc = FirebaseFirestore.instance.collection('users').doc(user.id);
-
+    DocumentReference userDoc =
+        FirebaseFirestore.instance.collection('users').doc(user.id);
     // Data to update
     Map<String, dynamic> data = {
-      'usedOneFreeText': usedFreeText
+      'entitledUser': entitledUser,
     };
 
     try {
@@ -254,13 +295,10 @@ class SubscriptionHelper {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(e.toString()),
-            duration: const Duration(
-                seconds: 2),
+            duration: const Duration(seconds: 2),
           ),
         );
       }
     }
   }
-
 }
-

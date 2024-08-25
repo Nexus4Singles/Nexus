@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nexus/features/profile/presentation/widgets/desire_edit.dart';
 import '../../../../core/colors.dart';
+import 'desire_edit.dart';
 import 'hobbies_edit.dart';
 
 hobbiesModal(context) {

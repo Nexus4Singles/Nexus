@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:nexus/core/constant.dart';
-import 'package:nexus/core/models/compatibility.dart';
-import 'package:nexus/core/models/location.dart';
+import '../constant.dart';
+import '../models/compatibility.dart';
+import '../models/location.dart';
 
 class UserEntity extends Equatable {
   const UserEntity({
@@ -19,7 +19,7 @@ class UserEntity extends Equatable {
     this.educationLevel,
     this.stateOfOrigin,
     this.profession,
-    this.unrecommendedUsers,
+    this.unRecommendUsers,
     this.hobbies,
     this.desiredQualities,
     this.photos,
@@ -44,6 +44,8 @@ class UserEntity extends Equatable {
     this.subExpDate = '',
     this.usedOneFreeText = false,
     this.usersChatWarning,
+    this.entitledUser = 'null',
+    this.recommendedTime,
   });
 
   final String id;
@@ -69,7 +71,7 @@ class UserEntity extends Equatable {
   @JsonKey(name: kMATCHESUSERSKEY)
   final List<String>? matchedUsers;
   @JsonKey(name: kUNRECOMMENDUSER)
-  final List<String>? unrecommendedUsers;
+  final List<String>? unRecommendUsers;
   @JsonKey(name: kMATCHESKEY)
   final List<String>? likeMe;
   final List<String>? myLikes;
@@ -104,6 +106,8 @@ class UserEntity extends Equatable {
   final bool prevSubscribed;
   final String? subExpDate;
   final bool usedOneFreeText;
+  final String? entitledUser;
+  final String? recommendedTime;
 
   @override
   List<Object?> get props => [
@@ -116,7 +120,7 @@ class UserEntity extends Equatable {
         gender,
         age,
         city,
-        unrecommendedUsers,
+        unRecommendUsers,
         stateOfOrigin,
         educationLevel,
         profession,
@@ -145,5 +149,6 @@ class UserEntity extends Equatable {
         prevSubscribed,
         subExpDate,
         usedOneFreeText,
+        entitledUser,
       ];
 }

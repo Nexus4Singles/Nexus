@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nexus/core/colors.dart';
-import 'package:nexus/core/utils/device.dart';
-import 'package:nexus/features/home/presentation/widgets/coming_soon_modal.dart';
+
+import '../../../../core/colors.dart';
+import '../../../../core/utils/device.dart';
+import 'coming_soon_modal.dart';
 
 class ComingSoonWidget extends StatelessWidget {
   final String text;

@@ -1,15 +1,16 @@
+import 'package:Nexus/core/services/fcm.dart';
+import 'package:Nexus/features/home/controllers/home_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:nexus/core/button.dart';
-import 'package:nexus/core/button_outline.dart';
-import 'package:nexus/core/size_boxes.dart';
-import 'package:nexus/core/style.dart';
-import 'package:nexus/router.dart';
-
+import '../../../../core/button.dart';
+import '../../../../core/button_outline.dart';
+import '../../../../core/size_boxes.dart';
+import '../../../../core/style.dart';
 import '../../../../core/utils/shared_pref.dart';
+import '../../../../router.dart';
 
 class LoginModalSheet extends StatefulWidget {
   const LoginModalSheet({super.key});
@@ -58,7 +59,9 @@ class _LoginModalSheetState extends State<LoginModalSheet> {
                   const SizedBoxW15(),
                   Expanded(
                     child: CustomButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        await FCMService.setFcmTokenToNull(
+                            HomeController.instance.user.value.id);
                         Get.offAndToNamed(AppRoutes.login);
                         SharedPref.deleteAll();
                       },
