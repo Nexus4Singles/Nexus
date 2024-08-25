@@ -34,12 +34,12 @@ class ExploreCtr extends GetxController {
     allUsers.assignAll(data);
     for (var data in allUsers) {
       appLog("this is all users == >$data");
-      if (data.id == auth.currentUser!.uid) {
+      if (data.id == auth.currentUser?.uid) {
         myProfile.value = data;
         allUsers.where((users) => users.gender != myProfile.value.gender);
       }
     }
-    print("this is all users == >${allUsers.length}");
+    debugPrint("this is all users == >${allUsers.length}");
   }
 
   getMyProfile() async {
@@ -53,28 +53,20 @@ class ExploreCtr extends GetxController {
     isLoading.value = true;
     searchedUsers.clear();
     filteredUsers.clear();
-
     await Future.delayed(
         const Duration(seconds: 2), () => isLoading.value = false);
-    allUsers
-        .where((val) =>
-            val.gender.toLowerCase() != myProfile.value.gender.toLowerCase())
-        .toList()
-        .forEach((vals) {
+    for (var vals in allUsers) {
       if (vals.location!.country!.toLowerCase().contains(place.toLowerCase())) {
-        print(
-            "this is what is being searched ==? ${vals.location!.place} this is what is the place ==?$place");
         searchedUsers.add(vals);
         filteredUsers.add(vals);
       }
-      if (searchedUsers.isEmpty || filteredUsers.isEmpty) {
-        exploreError.value =
-            "Sorry, No Users in this Country Yet. Check Back Later!!";
-      }
-    });
-    print(
-        "THis is for searched users ${searchedUsers.length} this is filtered ${filteredUsers.length}  and this is ${exploreError.value}");
+    }
     isLoading.value = false;
+    if (searchedUsers.length.isLowerThan(1) ||
+        filteredUsers.length.isLowerThan(1)) {
+      exploreError.value =
+          "Sorry, No Users in this Country Yet. Check Back Later!!";
+    }
   }
 
   filterUsers() async {
@@ -88,7 +80,7 @@ class ExploreCtr extends GetxController {
     var filtered =
         filterUser(searchedUsers, ageRange, education.value, church.value);
     for (var user in filtered) {
-      print(
+      debugPrint(
           'Age: ${user.age}, Education: ${user.educationLevel}, Church: ${user.churchName}');
     }
     searchedUsers.assignAll(filtered);

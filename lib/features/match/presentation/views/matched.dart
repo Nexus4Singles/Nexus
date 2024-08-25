@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/assets.dart';
 import 'package:nexus/core/colors.dart';
 import 'package:nexus/core/models/user.dart';
 import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
-import 'package:nexus/core/text_field.dart';
 import 'package:nexus/core/utils/modals.dart';
 import 'package:nexus/features/chat/controllers/chat_ctr.dart';
 import 'package:nexus/router.dart';
@@ -63,37 +60,15 @@ class Matched extends StatelessWidget {
             const SizedBox(height: 45),
             Column(
               children: [
-                Text(
-                  "We are rooting for you both!",
-                  style: textStyle14.copyWith(color: ash),
-                ),
+                // Text(
+                //   "We are rooting for you both!",
+                //   style: textStyle14.copyWith(color: ash),
+                // ),
                 const SizedBoxH40(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: CustomTextField(
-                      radius: 100,
-                      fillColor: grey,
-                      suffixIcon: InkWell(
-                        onTap: () {
-                          ctr
-                              .sendMessage(messageID.toString(),
-                                  ctr.chatController.text, userModel)
-                              .then((value) {
-                            EasyLoading.showToast("Message Sent");
-                          });
-                          ctr.chatController.clear();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CircleAvatar(
-                            backgroundColor: primary,
-                            child: SvgPicture.asset("$svgPath/send.svg"),
-                          ),
-                        ),
-                      ),
-                      controller: ctr.chatController,
-                      hintText: "Send a message"),
-                ),
+                Text(
+                    "Get more information on your compatibility \nwith ${userModel.username} by clicking the button below!",
+                    style: textStyle16.copyWith(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center),
                 const SizedBoxH10(),
                 TextButton(
                     onPressed: () {
@@ -108,3 +83,30 @@ class Matched extends StatelessWidget {
     );
   }
 }
+
+// Padding(
+//                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+//                   child: CustomTextField(
+//                       radius: 100,
+//                       fillColor: grey,
+//                       suffixIcon: InkWell(
+//                         onTap: () {
+//                           ctr
+//                               .sendMessage(messageID.toString(),
+//                                   ctr.chatController.text, userModel)
+//                               .then((value) {
+//                             EasyLoading.showToast("Message Sent");
+//                           });
+//                           ctr.chatController.clear();
+//                         },
+//                         child: Padding(
+//                           padding: const EdgeInsets.all(8.0),
+//                           child: CircleAvatar(
+//                             backgroundColor: primary,
+//                             child: SvgPicture.asset("$svgPath/send.svg"),
+//                           ),
+//                         ),
+//                       ),
+//                       controller: ctr.chatController,
+//                       hintText: "Send a message"),
+//                 ),

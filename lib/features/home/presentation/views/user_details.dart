@@ -14,6 +14,7 @@ import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/device.dart';
 import 'package:nexus/core/utils/modals.dart';
 import 'package:nexus/features/auth/presentation/widgets/record_completed.dart';
+import 'package:nexus/features/explore/controllers/explore_ctr.dart';
 import 'package:nexus/features/match/controllers/matches_ctr.dart';
 import 'package:nexus/features/profile/presentation/views/report_user.dart';
 import 'package:nexus/features/profile/presentation/widgets/text_container.dart';
@@ -408,29 +409,31 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               ],
                             ),
                             const SizedBoxH25(),
-                            widget.userModel.matchedUsers != null &&
-                                    ctr.ctr.myProfile.value.matchedUsers!
-                                        .contains(widget.userModel.id)
-                                ? Center(
-                                    child: TextButton(
-                                        onPressed: () {
-                                          compatibilityModal(
-                                              context, widget.userModel);
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.all(12),
-                                          decoration: BoxDecoration(
-                                              color: primary.withOpacity(0.1),
-                                              borderRadius:
-                                                  BorderRadius.circular(100)),
-                                          child: Text(
-                                            "View Compatibility Data",
-                                            style: textStyle14.copyWith(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        )),
-                                  )
-                                : const SizedBoxH10(),
+                            Builder(builder: (context) {
+                              var myMatches = ExploreCtr
+                                  .instance.myProfile.value.matchedUsers;
+                              if (myMatches != null &&
+                                  myMatches.contains(widget.userModel.id)) {
+                                return TextButton(
+                                    onPressed: () {
+                                      compatibilityModal(
+                                          context, widget.userModel);
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                          color: primary.withOpacity(0.1),
+                                          borderRadius:
+                                              BorderRadius.circular(100)),
+                                      child: Text(
+                                        "View Compatibility Data",
+                                        style: textStyle14.copyWith(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ));
+                              }
+                              return const SizedBox();
+                            }),
                             const SizedBoxH10(),
                           ],
                         ),
@@ -469,7 +472,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                 const SizedBoxW10(),
                 Flexible(
                   child: Text(
-                    widget.userModel.location!.place!.toString(),
+                    widget.userModel.location!.place!.capitalize.toString(),
                     overflow: TextOverflow.ellipsis,
                     style: textStyle14.copyWith(color: white),
                   ),

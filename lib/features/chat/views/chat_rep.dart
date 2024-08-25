@@ -17,6 +17,7 @@ import 'package:nexus/features/chat/controllers/chat_ctr.dart';
 import 'package:nexus/features/home/presentation/views/user_details.dart';
 
 import '../../../core/models/message_model.dart';
+import '../../home/presentation/views/photo_view.dart';
 import '../../profile/presentation/views/report_user.dart';
 
 class ChatWithScreen extends StatefulWidget {
@@ -209,6 +210,14 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                         if (widget.chatModel.userModel!.id == message.user.id) {
                         } else {
                           openModal(context, message);
+                        }
+                      },
+                      onTapMedia: (media) {
+                        if (media.type == MediaType.image) {
+                          Get.to(() => PhotoViewScreen(
+                                selectedIndex: 0,
+                                photos: [media.url],
+                              ));
                         }
                       },
                       showOtherUsersAvatar: false,

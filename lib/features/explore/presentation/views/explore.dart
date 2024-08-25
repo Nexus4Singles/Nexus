@@ -179,7 +179,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                       image: val.photos![0],
                                       name: val.username,
                                       age: val.age.toString(),
-                                      location: val.location!.place ?? "",
+                                      location:
+                                          val.location!.place?.capitalize ?? "",
                                       onPress: () {
                                         Get.to(() =>
                                             UserDetailScreen(userModel: val));

@@ -42,14 +42,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   FutureOr _init() async {
-    //logger.i('init');
     var currentUser = homeCtr.user.value;
     var subProvider = Provider.of<SubscriptionProvider>(context, listen: false);
     subProvider.initSubDet(currentUser);
     SharedPref.setString("email", currentUser.email);
     NotificationController.instance.getAllNotifications();
     await homeCtr.getFilteredUsers(true);
-    //logger.i('before 5s');
     await SubscriptionHelper.isSubscriptionValid(
         context, currentUser.subExpDate ?? '');
     await Future.delayed(const Duration(seconds: 5), () {

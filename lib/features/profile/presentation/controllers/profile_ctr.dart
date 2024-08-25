@@ -18,41 +18,53 @@ class ProfileCtr extends GetxController {
   static ProfileCtr get instance => Get.find<ProfileCtr>();
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
-  TextEditingController searchText = TextEditingController();
   TextEditingController usernameCtr = TextEditingController();
   TextEditingController currentPassword = TextEditingController();
   TextEditingController newPassword = TextEditingController();
   TextEditingController coNewPassword = TextEditingController();
   TextEditingController churchCtr = TextEditingController();
+  TextEditingController countryCtr = TextEditingController();
+  TextEditingController cityCtr = TextEditingController();
   var eduLevel = "".obs;
   var profession = "".obs;
   var church = "".obs;
-  var city = "".obs;
-  LocationIqModel? locationModel;
   List imageUrls = [];
+
+  bool isEmpty() {
+    var status = usernameCtr.text.isNotEmpty &&
+        countryCtr.text.isNotEmpty &&
+        cityCtr.text.isNotEmpty &&
+        church.value.isNotEmpty;
+    print('what is the current status $status');
+    return status;
+  }
 
   updateProfile(List<File> imageFiles) async {
     EasyLoading.show();
-    if (imageFiles.isNotEmpty) {
-      await sendImageToDb(imageFiles);
+    if (isEmpty()) {
+      if (imageFiles.isNotEmpty) {
+        await sendImageToDb(imageFiles);
+      }
+      await db.collection(kUSER).doc(auth.currentUser!.uid).update({
+        "photos": FieldValue.arrayUnion(imageUrls),
+        "username": usernameCtr.text,
+        'education_level': eduLevel.value,
+        'profession': profession.value,
+        'church_name': church.value,
+        'location': LocationModel(
+                id: '',
+                latitude: 0,
+                longitude: 0,
+                place: "${cityCtr.text} , ${countryCtr.text}",
+                country: countryCtr.text,
+                city: cityCtr.text)
+            .toJson(),
+      });
+      Get.back();
+      EasyLoading.dismiss();
+    } else {
+      EasyLoading.showToast("Kindly fill all fields");
     }
-    await db.collection(kUSER).doc(auth.currentUser!.uid).update({
-      "photos": FieldValue.arrayUnion(imageUrls),
-      "username": usernameCtr.text,
-      'education_level': eduLevel.value,
-      'profession': profession.value,
-      'church_name': church.value,
-      'location': LocationModel(
-              id: locationModel!.placeId,
-              latitude: double.parse(locationModel!.lat!),
-              longitude: double.parse(locationModel!.lon!),
-              place: locationModel!.displayName,
-              country: locationModel!.address!.country,
-              city: locationModel!.address!.city)
-          .toJson(),
-    });
-    Get.back();
-    EasyLoading.dismiss();
   }
 
   sendImageToDb(List<File> imageFiles) async {

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nexus/core/assets.dart';
@@ -30,7 +31,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void nextScreen() async {
     bool firstTime = await SharedPref.getBool(kFirstTime) ?? true;
     var email = await SharedPref.getString("email");
-    if (firstTime) {
+    var auth = FirebaseAuth.instance.currentUser?.uid;
+    if (firstTime || auth == null) {
       Get.offAndToNamed(AppRoutes.onboardingHandler);
     } else if (email.isNotEmpty) {
       // ctr.allUsers.isNotEmpty : () {}?

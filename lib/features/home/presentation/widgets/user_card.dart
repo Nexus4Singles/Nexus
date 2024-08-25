@@ -118,7 +118,7 @@ class _UserCardState extends State<UserCard> {
                   color: black,
                   borderRadius: BorderRadius.circular(20.r),
                   image: DecorationImage(
-                    image: NetworkImage(widget.userModel.photos![0]),
+                    image: NetworkImage(widget.userModel.photos![0] ?? ""),
                     fit: BoxFit.cover,
                     opacity: .4,
                   ),

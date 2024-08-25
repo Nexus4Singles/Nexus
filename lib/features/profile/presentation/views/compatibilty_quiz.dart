@@ -8,6 +8,7 @@ import 'package:nexus/core/size_boxes.dart';
 import 'package:nexus/core/style.dart';
 import 'package:nexus/core/utils/toast.dart';
 import 'package:nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
+import 'package:nexus/features/home/controllers/home_controller.dart';
 import 'package:nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:nexus/features/profile/presentation/widgets/compat_radio.dart';
 import 'package:nexus/features/profile/presentation/widgets/compat_success.dart';
@@ -378,7 +379,9 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                         map: map,
                         onCompleted: () async {
                           await model.getProfile().then((value) async {
-                            await homeModel.getProfile().then((val) {
+                            await HomeController.instance
+                                .getMyProfile()
+                                .then((val) {
                               Get.back();
                               showAdaptiveDialog(
                                 context: context,

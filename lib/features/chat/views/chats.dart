@@ -60,77 +60,90 @@ class ChatsScreen extends StatelessWidget {
                       } else {
                         var data = snapshot.data!.docs;
                         var allChatUsers = ctr.filterChatList(data);
-                        debugPrint("${allChatUsers.length}");
-                        return SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          physics: const BouncingScrollPhysics(),
-                          child: Row(
-                            children: [
-                              ...allChatUsers.map((users) {
-                                var subProvider =
-                                    Provider.of<SubscriptionProvider>(context);
+                        debugPrint("this is all chat${allChatUsers.length}");
+                        return allChatUsers.length.isLowerThan(1)
+                            ? const EmptyStateWidget(
+                                shouldShowImage: false,
+                                message: 'No recent matches',
+                              )
+                            : SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                                child: Row(
+                                  children: [
+                                    ...allChatUsers.map((users) {
+                                      var subProvider =
+                                          Provider.of<SubscriptionProvider>(
+                                              context);
 
-                                return InkWell(
-                                  onTap: () async {
-                                    bool hasSentMessages = ctr.allChatUsers
-                                        .where(
-                                            (val) => val.lastMessage.isNotEmpty)
-                                        .contains(users);
-                                    if (hasSentMessages) {
-                                      Get.to(() =>
-                                          ChatWithScreen(chatModel: users));
-                                      return;
-                                    }
-                                    if (subProvider.onPremium == true) {
-                                      Get.to(() =>
-                                          ChatWithScreen(chatModel: users));
-                                    } else if (subProvider.onPremium == false &&
-                                        subProvider.usedOneFreeText == false) {
-                                      Get.to(() =>
-                                          ChatWithScreen(chatModel: users));
+                                      return InkWell(
+                                        onTap: () async {
+                                          bool hasSentMessages = ctr
+                                              .allChatUsers
+                                              .where((val) =>
+                                                  val.lastMessage.isNotEmpty)
+                                              .contains(users);
+                                          if (hasSentMessages) {
+                                            Get.to(() => ChatWithScreen(
+                                                chatModel: users));
+                                            return;
+                                          }
+                                          if (subProvider.onPremium == true) {
+                                            Get.to(() => ChatWithScreen(
+                                                chatModel: users));
+                                          } else if (subProvider.onPremium ==
+                                                  false &&
+                                              subProvider.usedOneFreeText ==
+                                                  false) {
+                                            Get.to(() => ChatWithScreen(
+                                                chatModel: users));
 
-                                      if (hasSentMessages) {
-                                        subProvider.usedOneFreeText = true;
-                                        await SubscriptionHelper
-                                            .updateFreeTextStatus(
-                                          subProvider.currentUser,
-                                          true,
-                                          context,
-                                        );
-                                      }
-                                    } else if (subProvider.onPremium == false &&
-                                        subProvider.usedOneFreeText == true &&
-                                        subProvider.prevSubscribed == false) {
-                                      restrictionModal(
-                                        context: context,
-                                        dismisable: true,
-                                        text:
-                                            'You have used up your limit of one (1) chat per matched \nuser on our free version.\nKindly subscribe to chat with other matched users.',
+                                            if (hasSentMessages) {
+                                              subProvider.usedOneFreeText =
+                                                  true;
+                                              await SubscriptionHelper
+                                                  .updateFreeTextStatus(
+                                                subProvider.currentUser,
+                                                true,
+                                                context,
+                                              );
+                                            }
+                                          } else if (subProvider.onPremium ==
+                                                  false &&
+                                              subProvider.usedOneFreeText ==
+                                                  true &&
+                                              subProvider.prevSubscribed ==
+                                                  false) {
+                                            restrictionModal(
+                                              context: context,
+                                              dismisable: true,
+                                              text:
+                                                  'You have used up your limit of one (1) chat per matched \nuser on our free version.\nKindly subscribe to chat with other matched users.',
+                                            );
+                                          } else {
+                                            restrictionModal(
+                                              context: context,
+                                              dismisable: true,
+                                              text:
+                                                  'Your subscription has expired!\nKindly subscribe to be able to send messages\nand use other features.',
+                                            );
+                                          }
+                                          Get.to(() =>
+                                              ChatWithScreen(chatModel: users));
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(12.0),
+                                          child: CircleAvatar(
+                                            radius: 32,
+                                            backgroundImage: NetworkImage(
+                                                users.userModel!.photos![0]),
+                                          ),
+                                        ),
                                       );
-                                    } else {
-                                      restrictionModal(
-                                        context: context,
-                                        dismisable: true,
-                                        text:
-                                            'Your subscription has expired!\nKindly subscribe to be able to send messages\nand use other features.',
-                                      );
-                                    }
-                                    Get.to(
-                                        () => ChatWithScreen(chatModel: users));
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: CircleAvatar(
-                                      radius: 32,
-                                      backgroundImage: NetworkImage(
-                                          users.userModel!.photos![0]),
-                                    ),
-                                  ),
-                                );
-                              }).toList()
-                            ],
-                          ),
-                        );
+                                    }).toList()
+                                  ],
+                                ),
+                              );
                       }
                     }),
                 const SizedBoxH40(),
@@ -155,28 +168,42 @@ class ChatsScreen extends StatelessWidget {
                       } else {
                         var data = snapshot.data!.docs;
                         var allChatUsers = ctr.filterChatList(data);
-                        return ListView(
-                          shrinkWrap: true,
-                          children: [
-                            ...allChatUsers
+                        return allChatUsers
                                 .where((val) => val.lastMessage.isNotEmpty)
-                                .map((val) {
-                              return ChatContainer(
-                                image: val.userModel!.photos![0],
-                                name: val.userModel!.username,
-                                time: val.timestamp.toDate(),
-                                text: val.lastMessage,
-                                count: ctr.auth.currentUser!.uid ==
-                                        val.userSentLastMessage
-                                    ? 0
-                                    : val.unreadCount,
-                                onPress: () {
-                                  Get.to(() => ChatWithScreen(chatModel: val));
-                                },
+                                .length
+                                .isLowerThan(1)
+                            ? SizedBox(
+                                height: Get.height / 3,
+                                child: const Center(
+                                  child: EmptyStateWidget(
+                                      shouldShowImage: false,
+                                      message: 'No Chats Yet'),
+                                ),
+                              )
+                            : ListView(
+                                shrinkWrap: true,
+                                children: [
+                                  ...allChatUsers
+                                      .where(
+                                          (val) => val.lastMessage.isNotEmpty)
+                                      .map((val) {
+                                    return ChatContainer(
+                                      image: val.userModel!.photos![0],
+                                      name: val.userModel!.username,
+                                      time: val.timestamp.toDate(),
+                                      text: val.lastMessage,
+                                      count: ctr.auth.currentUser!.uid ==
+                                              val.userSentLastMessage
+                                          ? 0
+                                          : val.unreadCount,
+                                      onPress: () {
+                                        Get.to(() =>
+                                            ChatWithScreen(chatModel: val));
+                                      },
+                                    );
+                                  }).toList(),
+                                ],
                               );
-                            }).toList(),
-                          ],
-                        );
                       }
                     }),
               ],

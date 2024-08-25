@@ -14,7 +14,6 @@ import 'package:nexus/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:rename/platform_file_editors/abs_platform_file_editor.dart';
-
 import 'core/di/injection_container.dart';
 import 'features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'features/explore/controllers/explore_ctr.dart';

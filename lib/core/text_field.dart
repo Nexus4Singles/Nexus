@@ -73,6 +73,7 @@ class CustomTextFieldState extends State<CustomTextField> {
       onEditingComplete: widget.onEditingCompleted,
       controller: widget.controller,
       maxLines: null,
+      onTap: widget.onTap,
       minLines: widget.minLine,
       validator: widget.validator,
       textInputAction: widget.action,

@@ -41,35 +41,36 @@ class _AuthHandlerState extends State<AuthHandler> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const SizedBoxH40(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Text(
-                      'nexus'.toUpperCase(),
-                      style: GoogleFonts.novaSquare(
-                        fontSize: 35.sp,
-                        color: white,
-                      ),
-                    ),
-                  ),
-                  const SizedBoxH15(),
-                  // Image.asset(iLogo),
-                  SvgPicture.asset("$svgPath/logo.svg"),
-                  // Image.asset('$svgPath/nexus-logo2.gif'),
-
-                  const SizedBoxH15(),
-                  Text(
-                    'Get the Visibility You Need \nto Connect with Your Future Spouse',
-                    style: GoogleFonts.novaSquare(
-                      fontSize: 16.sp,
-                      color: white,
-                    ),
-                    textAlign: TextAlign.center,
-                  )
-                ],
-              ),
+              Image.asset("$imgPath/newlogo.PNG"),
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     Center(
+              //       child: Text(
+              //         'nexus'.toUpperCase(),
+              //         style: GoogleFonts.novaSquare(
+              //           fontSize: 35.sp,
+              //           color: white,
+              //         ),
+              //       ),
+              //     ),
+              //     const SizedBoxH15(),
+              //     // Image.asset(iLogo),
+              //     SvgPicture.asset("$svgPath/logo.svg"),
+              //     // Image.asset('$svgPath/nexus-logo2.gif'),
+              //
+              //     const SizedBoxH15(),
+              //     Text(
+              //       'Get the Visibility You Need \nto Connect with Your Future Spouse',
+              //       style: GoogleFonts.novaSquare(
+              //         fontSize: 16.sp,
+              //         color: white,
+              //       ),
+              //       textAlign: TextAlign.center,
+              //     )
+              //   ],
+              // ),
               Column(
                 children: [
                   CustomButtonOut(
