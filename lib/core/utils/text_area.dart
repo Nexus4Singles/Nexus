@@ -37,42 +37,39 @@ class CustomTextArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: padding ?? const EdgeInsets.all(8.0),
-      child: SizedBox(
-        height: height,
-        child: TextField(
-          controller: controller,
-          minLines: minLines,
-          maxLines: maxLines,
-          onChanged: onChanged,
-          decoration: InputDecoration(
-            hintText: hintText,
-            errorText: errorText,
-            hintStyle: textStyle14.copyWith(
-              color: otherGrey,
-              fontSize: 14,
+    return SizedBox(
+      height: height,
+      child: TextField(
+        controller: controller,
+        minLines: minLines,
+        maxLines: maxLines,
+        onChanged: onChanged,
+        decoration: InputDecoration(
+          hintText: hintText,
+          errorText: errorText,
+          hintStyle: textStyle14.copyWith(
+            color: otherGrey,
+            fontSize: 14,
+          ),
+          fillColor: fillColor,
+          filled: isFilled,
+          contentPadding: const EdgeInsets.all(15),
+          border: outlineInputBorder.copyWith(
+            borderRadius: BorderRadius.circular(borderRadius),
+            borderSide: BorderSide(
+              color: borderColor ?? textBorderColor,
             ),
-            fillColor: fillColor,
-            filled: isFilled,
-            contentPadding: const EdgeInsets.all(15),
-            border: outlineInputBorder.copyWith(
-              borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: BorderSide(
-                color: borderColor ?? textBorderColor,
-              ),
+          ),
+          enabledBorder: outlineInputBorder.copyWith(
+            borderRadius: BorderRadius.circular(borderRadius),
+            borderSide: BorderSide(
+              color: borderColor ?? textBorderColor,
             ),
-            enabledBorder: outlineInputBorder.copyWith(
-              borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: BorderSide(
-                color: borderColor ?? textBorderColor,
-              ),
-            ),
-            focusedBorder: outlineInputBorder.copyWith(
-              borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: const BorderSide(
-                color: textBorderColor,
-              ),
+          ),
+          focusedBorder: outlineInputBorder.copyWith(
+            borderRadius: BorderRadius.circular(borderRadius),
+            borderSide: const BorderSide(
+              color: textBorderColor,
             ),
           ),
         ),

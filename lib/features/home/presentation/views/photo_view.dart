@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:Nexus/core/colors.dart';
-import 'package:Nexus/core/utils/device.dart';
-import 'package:Nexus/features/home/presentation/change_notifier/home_notifier.dart';
-
 import 'package:provider/provider.dart';
 import 'package:story/story_image.dart';
 import 'package:story/story_page_view.dart';
+
+import '../../../../core/colors.dart';
+import '../../../../core/utils/device.dart';
+import '../change_notifier/home_notifier.dart';
 
 class PhotoViewScreen extends StatefulWidget {
   final int selectedIndex;
@@ -27,8 +27,8 @@ class _PhotoViewScreenState extends State<PhotoViewScreen> {
   @override
   void initState() {
     super.initState();
-    indicatorAnimationController =
-        ValueNotifier<IndicatorAnimationCommand>(IndicatorAnimationCommand.resume);
+    indicatorAnimationController = ValueNotifier<IndicatorAnimationCommand>(
+        IndicatorAnimationCommand.resume);
   }
 
   @override
@@ -44,7 +44,8 @@ class _PhotoViewScreenState extends State<PhotoViewScreen> {
         body: Stack(
           children: [
             StoryPageView(
-              indicatorPadding: const EdgeInsets.only(top: 50, left: 16, right: 16),
+              indicatorPadding:
+                  const EdgeInsets.only(top: 50, left: 16, right: 16),
               initialPage: widget.selectedIndex,
               initialStoryIndex: (int pageIndex) {
                 return widget.selectedIndex;

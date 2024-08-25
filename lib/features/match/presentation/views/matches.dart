@@ -9,20 +9,19 @@ import 'package:Nexus/core/utils/progress_indicator.dart';
 import 'package:Nexus/features/match/controllers/matches_ctr.dart';
 import 'package:Nexus/features/match/presentation/widgets/match_stat.dart';
 import 'package:Nexus/features/match/presentation/widgets/matched_user.dart';
-
 import '../../../../core/services/fcm.dart';
 import '../../../../router.dart';
 import '../../../home/presentation/views/user_details.dart';
 
-class MatcheScreen extends StatefulWidget {
-  const MatcheScreen({super.key});
+class MatchScreen extends StatefulWidget {
+  const MatchScreen({super.key});
 
   @override
-  State<MatcheScreen> createState() => _MatcheScreenState();
+  State<MatchScreen> createState() => _MatchScreenState();
 }
 
-class _MatcheScreenState extends State<MatcheScreen> {
-  var ctr = Get.put(MatchesCtr());
+class _MatchScreenState extends State<MatchScreen> {
+  var ctr = MatchesCtr.instance;
   @override
   Widget build(BuildContext context) {
     FCMService.clearRedundantNotifs();
@@ -54,7 +53,7 @@ class _MatcheScreenState extends State<MatcheScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
                     'This is a list of of users you have liked,  users who liked  your profile, as well as profiles you have saved.',
-                    style: textStyle12.copyWith(),
+                    style: textStyle12.copyWith(fontSize: 13),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -94,7 +93,7 @@ class _MatcheScreenState extends State<MatcheScreen> {
                                     ]),
                         ),
                 ),
-                const SizedBoxH20(),
+                const SizedBox(height: 80)
               ],
             ),
           ),

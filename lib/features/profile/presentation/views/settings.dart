@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/core/style.dart';
-import 'package:Nexus/core/utils/toast.dart';
 import 'package:Nexus/features/profile/presentation/views/contact_us.dart';
 import 'package:Nexus/router.dart';
 import 'package:Nexus/features/profile/presentation/widgets/login_modal_sheet.dart';
@@ -27,6 +26,28 @@ class _SettingScreenState extends State<SettingScreen> {
           style: textStyle18.copyWith(
               fontSize: 24, fontWeight: FontWeight.w700, color: black),
         ),
+        // actions: [
+        //   InkWell(
+        //     child: const Padding(
+        //       padding: EdgeInsets.all(8.0),
+        //       child: Icon(Icons.add),
+        //     ),
+        //     onTap: () {
+        //       Get.to(Ruut(
+        //         ruutToken: 'M9Hp8qy4wYBmPa1HN6EsdYDt',
+        //         user: RuutUser(
+        //           id: 'USER_ID',
+        //           email: 'user@example.com',
+        //           fullName: 'John Doe',
+        //           // Add other user details here
+        //         ),
+        //         onReady: () {
+        //           print('Ruut is ready');
+        //         },
+        //       ));
+        //     },
+        //   )
+        // ],
         centerTitle: true,
         foregroundColor: black,
         elevation: 0,
@@ -100,16 +121,16 @@ class _SettingScreenState extends State<SettingScreen> {
                 onPress: () {
                   Get.toNamed(AppRoutes.privacy);
                 }),
-           // const Divider(
-             // color: Colors.transparent,
-           // ),
-           // SettingsContainer(
-             //   text: 'Change Password',
-             //   icon: true,
-              //  onPress: () {
-                //  Get.toNamed(AppRoutes.changePassword);
-                  // Get.toNamed(AppRoutes.changePassword);
-               // }),
+            // const Divider(
+            // color: Colors.transparent,
+            // ),
+            // SettingsContainer(
+            //   text: 'Change Password',
+            //   icon: true,
+            //  onPress: () {
+            //  Get.toNamed(AppRoutes.changePassword);
+            // Get.toNamed(AppRoutes.changePassword);
+            // }),
             const Divider(color: Colors.transparent),
             SettingsContainer(
                 text: 'Delete Account',

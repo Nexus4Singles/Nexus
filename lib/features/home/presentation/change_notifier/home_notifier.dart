@@ -1,11 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
-// import 'package:logger/logger.dart';
 import 'package:Nexus/core/models/user.dart';
-import 'package:Nexus/core/storage/cache_service.dart';
 import 'package:Nexus/core/usecases/usecases.dart';
 import 'package:Nexus/core/utils/app_logger.dart';
 import 'package:Nexus/features/auth/data/data-sources/remote-datasource/auth_remote.dart';

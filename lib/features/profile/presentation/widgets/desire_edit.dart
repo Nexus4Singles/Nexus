@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:Nexus/features/profile/presentation/controllers/profile_ctr.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/button.dart';
 import '../../../../core/colors.dart';
@@ -11,6 +10,7 @@ import '../../../auth/data/data-sources/local-datasource/list_items.dart';
 import '../../../auth/presentation/widgets/hobbie_card.dart';
 import '../../../home/controllers/home_controller.dart';
 import '../../../home/presentation/change_notifier/home_notifier.dart';
+import '../controllers/profile_ctr.dart';
 
 class DesireEdit extends StatefulWidget {
   const DesireEdit({super.key});

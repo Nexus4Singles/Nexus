@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:Nexus/core/models/user.dart';
+import 'user.dart';
 
 class ChatModel {
   String lastMessage;
@@ -22,9 +22,11 @@ class ChatModel {
   factory ChatModel.fromJson(Map<String, dynamic> json) => ChatModel(
         lastMessage: json["lastMessage"] ?? "",
         messageID: json["messageID"] ?? "",
-        participant: (json['participant'] as List<dynamic>?)!
-            .map((e) => e as String)
-            .toList(),
+        participant: json['participant'] == null
+            ? []
+            : (json['participant'] as List<dynamic>?)!
+                .map((e) => e as String)
+                .toList(),
         timestamp: json['timestamp'] ?? Timestamp.now(),
         unreadCount: json['unreadCount'] ?? 0,
         userSentLastMessage: json['userSentLastMessage'] ?? "",

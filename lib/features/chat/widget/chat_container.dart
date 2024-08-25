@@ -2,8 +2,8 @@ import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:Nexus/core/style.dart';
 import '../../../core/colors.dart';
+import '../../../core/style.dart';
 
 class ChatContainer extends StatelessWidget {
   final String image;
@@ -60,7 +60,8 @@ class ChatContainer extends StatelessWidget {
               name,
               style: textStyle14.copyWith(fontWeight: FontWeight.w600),
             ),
-            Text(DateFormat.jm().format(time).capitalizeFirst!, style: textStyle12),
+            Text(DateFormat.jm().format(time).capitalizeFirst!,
+                style: textStyle12),
           ],
         ),
       ),

@@ -1,9 +1,5 @@
 import 'dart:async';
 import 'dart:isolate';
-import 'package:Nexus/core/storage/digital_ocean_keys.dart';
-import 'package:Nexus/features/chat/chat_manager.dart';
-import 'package:Nexus/router.dart';
-import 'package:Nexus/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -16,8 +12,8 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:rename/platform_file_editors/abs_platform_file_editor.dart';
-
 import 'core/di/injection_container.dart';
+import 'core/storage/digital_ocean_keys.dart';
 import 'features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'features/explore/controllers/explore_ctr.dart';
 import 'features/home/presentation/change_notifier/bottom_nav.dart';
@@ -25,19 +21,24 @@ import 'features/home/presentation/change_notifier/home_notifier.dart';
 import 'features/profile/presentation/change_notifier/settings_notifier.dart';
 import 'features/subscription/provider/subscription_provider.dart';
 import 'features/subscription/services/subscription_service.dart';
+import 'router.dart';
+import 'theme.dart';
+
 final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
     Animate.restartOnHotReload = true;
-    await initializeDateFormatting('en_US', null); // Initialize with your desired locale
+    await initializeDateFormatting(
+        'en_US', null); // Initialize with your desired locale
 
     await configureDependencies();
     try {
       await SubscriptionService.init();
     } catch (e) {
-      logger.e('Error occurred initializing subscription service; ${e.toString()}');
+      logger.e(
+          'Error occurred initializing subscription service; ${e.toString()}');
     }
     await Firebase.initializeApp();
 
@@ -80,19 +81,24 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => sl<AuthNotifier>()),
         ChangeNotifierProvider(create: (_) => sl<HomeNotifier>()),
         ChangeNotifierProvider(create: (_) => SubscriptionProvider()),
-       // ChangeNotifierProvider(create: (_) => ChatManager())
+        // ChangeNotifierProvider(create: (_) => ChatManager())
       ],
       child: Consumer<ThemeProvider>(builder: (context, theme, _) {
-        return ScreenUtilInit(
-          splitScreenMode: false,
-          builder: (context, child) => GetMaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Nexus',
-            theme: lightTheme,
-            // theme: darkTheme,
-            initialRoute: AppRoutes.splash,
-            getPages: appRouter,
-            builder: EasyLoading.init(),
+        return GestureDetector(
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: ScreenUtilInit(
+            splitScreenMode: false,
+            builder: (context, child) => GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Nexus',
+              theme: lightTheme,
+              // theme: darkTheme,
+              initialRoute: AppRoutes.splash,
+              getPages: appRouter,
+              builder: EasyLoading.init(),
+            ),
           ),
         );
       }),

@@ -1,13 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:Nexus/core/constant.dart';
-import 'package:Nexus/core/models/compatibility.dart';
-import 'package:Nexus/core/models/location.dart';
-import 'package:Nexus/core/models/user.dart';
+import '../constant.dart';
+import '../models/compatibility.dart';
+import '../models/location.dart';
 
 class UserEntity extends Equatable {
-
   const UserEntity({
     required this.id,
     required this.email,
@@ -110,7 +107,7 @@ class UserEntity extends Equatable {
   final String? subExpDate;
   final bool usedOneFreeText;
   final String? entitledUser;
-  final String ? recommendedTime;
+  final String? recommendedTime;
 
   @override
   List<Object?> get props => [
@@ -154,7 +151,4 @@ class UserEntity extends Equatable {
         usedOneFreeText,
         entitledUser,
       ];
-
-
-
 }

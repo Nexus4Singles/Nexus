@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:Nexus/core/colors.dart';
-import 'package:Nexus/core/models/user.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
+import 'package:Nexus/core/models/user.dart';
 
 class MatchedUsersCompatibilityModal extends StatelessWidget {
   final UserModel userModel;
@@ -14,7 +13,7 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
-      height: Get.height / 2,
+      height: Get.height / 1.7,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
           color: primary, borderRadius: BorderRadius.circular(20)),

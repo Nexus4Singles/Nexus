@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,10 +14,12 @@ import 'package:Nexus/core/style.dart';
 import 'package:Nexus/core/utils/device.dart';
 import 'package:Nexus/core/utils/modals.dart';
 import 'package:Nexus/features/auth/presentation/widgets/record_completed.dart';
-import 'package:Nexus/features/home/presentation/views/photo_view.dart';
+import 'package:Nexus/features/explore/controllers/explore_ctr.dart';
 import 'package:Nexus/features/match/controllers/matches_ctr.dart';
 import 'package:Nexus/features/profile/presentation/views/report_user.dart';
 import 'package:Nexus/features/profile/presentation/widgets/text_container.dart';
+
+import 'photo_view.dart';
 
 class UserDetailScreen extends StatefulWidget {
   final UserModel userModel;
@@ -77,7 +78,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
     // }
   }
 
-  var ctr = Get.put(MatchesCtr());
+  final ctr = MatchesCtr.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -125,8 +126,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
               imgUrl: widget.userModel.photos![0],
               height: Get.height / 1.5,
               width: width(context),
-              gradient:
-                  const LinearGradient(colors: [Colors.transparent, Colors.transparent, black]),
+              gradient: const LinearGradient(
+                  colors: [Colors.transparent, Colors.transparent, black]),
             ),
           ),
           SingleChildScrollView(
@@ -149,7 +150,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             top: Radius.circular(20.r),
                           ),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 10),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,13 +169,14 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               children: [
                                 Text(
                                   'State of Origin: ',
-                                  style:
-                                      textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
+                                  style: textStyle14.copyWith(
+                                      fontWeight: FontWeight.w500, color: ash),
                                 ),
                                 Text(
                                   widget.userModel.stateOfOrigin ?? '',
                                   style: textStyle16.copyWith(
-                                      fontWeight: FontWeight.w500, color: black),
+                                      fontWeight: FontWeight.w500,
+                                      color: black),
                                 ),
                               ],
                             ),
@@ -182,13 +185,14 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               children: [
                                 Text(
                                   'Education Level: ',
-                                  style:
-                                      textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
+                                  style: textStyle14.copyWith(
+                                      fontWeight: FontWeight.w500, color: ash),
                                 ),
                                 Text(
                                   widget.userModel.educationLevel ?? '',
                                   style: textStyle16.copyWith(
-                                      fontWeight: FontWeight.w500, color: black),
+                                      fontWeight: FontWeight.w500,
+                                      color: black),
                                 ),
                               ],
                             ),
@@ -197,15 +201,16 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               children: [
                                 Text(
                                   'Profession/Industry: ',
-                                  style:
-                                      textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
+                                  style: textStyle14.copyWith(
+                                      fontWeight: FontWeight.w500, color: ash),
                                 ),
                                 Flexible(
                                   child: Text(
                                     widget.userModel.profession ?? '',
                                     overflow: TextOverflow.ellipsis,
                                     style: textStyle16.copyWith(
-                                        fontWeight: FontWeight.w500, color: black),
+                                        fontWeight: FontWeight.w500,
+                                        color: black),
                                   ),
                                 ),
                               ],
@@ -215,15 +220,16 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               children: [
                                 Text(
                                   'Church: ',
-                                  style:
-                                      textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
+                                  style: textStyle14.copyWith(
+                                      fontWeight: FontWeight.w500, color: ash),
                                 ),
                                 Flexible(
                                   child: Text(
                                     widget.userModel.churchName ?? '',
                                     overflow: TextOverflow.ellipsis,
                                     style: textStyle16.copyWith(
-                                        fontWeight: FontWeight.w500, color: black),
+                                        fontWeight: FontWeight.w500,
+                                        color: black),
                                   ),
                                 ),
                               ],
@@ -266,7 +272,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               spacing: 15,
                               runSpacing: 15,
                               children: [
-                                for (var des in widget.userModel.desiredQualities!)
+                                for (var des
+                                    in widget.userModel.desiredQualities!)
                                   TextContainer(
                                     text: des,
                                   ),
@@ -284,7 +291,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Text(
                               "1. The summary of ${widget.userModel.username}'s relationship with God",
                               style: textStyle14.copyWith(
-                                  color: black, fontSize: 14, fontWeight: FontWeight.w700),
+                                  color: black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
                             ),
                             const SizedBoxH10(),
                             AudioFilePlayer(
@@ -304,7 +313,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Text(
                               "2. ${widget.userModel.username}'s view on Gender roles in marriage",
                               style: textStyle14.copyWith(
-                                  color: black, fontSize: 14, fontWeight: FontWeight.w700),
+                                  color: black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
                             ),
                             const SizedBoxH10(),
                             AudioFilePlayer(
@@ -324,7 +335,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Text(
                               "3. Favourite qualities or traits about ${widget.userModel.username}",
                               style: textStyle14.copyWith(
-                                  color: black, fontSize: 14, fontWeight: FontWeight.w700),
+                                  color: black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
                             ),
                             const SizedBoxH10(),
                             AudioFilePlayer(
@@ -358,7 +371,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                     borderRadius: BorderRadius.circular(15.r),
                                     child: InkWell(
                                       onTap: () {
-                                        int index = widget.userModel.photos!.indexOf(item);
+                                        int index = widget.userModel.photos!
+                                            .indexOf(item);
                                         Get.to(() => PhotoViewScreen(
                                             selectedIndex: index,
                                             photos: widget.userModel.photos!));
@@ -372,28 +386,33 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                   ),
                               ],
                             ),
-                            const SizedBoxH20(),
-                            widget.userModel.matchedUsers != null &&
-                                    widget.userModel.matchedUsers!
-                                        .contains(ctr.auth.currentUser!.uid)
-                                ? Center(
-                                    child: TextButton(
-                                        onPressed: () {
-                                          compatibilityModal(context, widget.userModel);
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.all(12),
-                                          decoration: BoxDecoration(
-                                              color: primary.withOpacity(0.1),
-                                              borderRadius: BorderRadius.circular(100)),
-                                          child: Text(
-                                            "View Compatibility Data",
-                                            style:
-                                                textStyle14.copyWith(fontWeight: FontWeight.bold),
-                                          ),
-                                        )),
-                                  )
-                                : const SizedBoxH10(),
+                            const SizedBoxH25(),
+                            Builder(builder: (context) {
+                              var myMatches = ExploreCtr
+                                  .instance.myProfile.value.matchedUsers;
+                              if (myMatches != null &&
+                                  myMatches.contains(widget.userModel.id)) {
+                                return TextButton(
+                                    onPressed: () {
+                                      compatibilityModal(
+                                          context, widget.userModel);
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                          color: primary.withOpacity(0.1),
+                                          borderRadius:
+                                              BorderRadius.circular(100)),
+                                      child: Text(
+                                        "View Compatibility Data",
+                                        style: textStyle14.copyWith(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ));
+                              }
+                              return const SizedBox();
+                            }),
+                            const SizedBoxH10(),
                           ],
                         ),
                       ),
@@ -431,7 +450,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                 const SizedBoxW10(),
                 Flexible(
                   child: Text(
-                    widget.userModel.location!.place!.toString(),
+                    widget.userModel.location!.place!.capitalize.toString(),
                     overflow: TextOverflow.ellipsis,
                     style: textStyle14.copyWith(color: white),
                   ),
@@ -442,7 +461,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
           const SizedBoxH10(),
           Obx(
             () => ctr.ctr.myProfile.value.matchedUsers == null ||
-                    !ctr.ctr.myProfile.value.matchedUsers!.contains(widget.userModel.id)
+                    !ctr.ctr.myProfile.value.matchedUsers!
+                        .contains(widget.userModel.id)
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -455,10 +475,12 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               : debugPrint("This users are matched");
                         },
                         child: CircleAvatar(
-                            backgroundColor: ctr.ctr.myProfile.value.myLikes == null ||
-                                    !ctr.ctr.myProfile.value.myLikes!.contains(widget.userModel.id)
-                                ? white
-                                : primary,
+                            backgroundColor:
+                                ctr.ctr.myProfile.value.myLikes == null ||
+                                        !ctr.ctr.myProfile.value.myLikes!
+                                            .contains(widget.userModel.id)
+                                    ? white
+                                    : primary,
                             radius: 25,
                             child: SvgPicture.asset(
                               ctr.ctr.myProfile.value.matchedUsers == null ||
@@ -482,10 +504,12 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               .toString());
                         },
                         child: CircleAvatar(
-                          backgroundColor: ctr.ctr.myProfile.value.mySaves == null ||
-                                  !ctr.ctr.myProfile.value.mySaves!.contains(widget.userModel.id)
-                              ? white
-                              : primary,
+                          backgroundColor:
+                              ctr.ctr.myProfile.value.mySaves == null ||
+                                      !ctr.ctr.myProfile.value.mySaves!
+                                          .contains(widget.userModel.id)
+                                  ? white
+                                  : primary,
                           radius: 25,
                           child: SvgPicture.asset("$svgPath/bookmark.svg",
                               color: ctr.ctr.myProfile.value.mySaves == null ||

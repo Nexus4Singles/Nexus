@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:Nexus/core/assets.dart';
-import 'package:Nexus/core/models/user.dart';
-import 'package:Nexus/core/utils/empty_state.dart';
-import 'package:Nexus/features/subscription/views/subscription.dart';
 import '../../features/home/presentation/widgets/coming_soon_modal.dart';
 import '../../features/match/presentation/widgets/matchUsersCompatibilityModal.dart';
 import '../../features/profile/presentation/widgets/compatibility_modal.dart';
+import '../../features/subscription/views/subscription.dart';
+import '../assets.dart';
 import '../colors.dart';
+import '../models/user.dart';
 import '../style.dart';
+import 'empty_state.dart';
 
 compatibilityModal(context, UserModel userModel) {
   showAdaptiveDialog(

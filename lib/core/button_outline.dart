@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:Nexus/core/colors.dart';
-import 'package:Nexus/core/style.dart';
-import 'package:Nexus/core/utils/device.dart';
+
+import 'colors.dart';
+import 'style.dart';
+import 'utils/device.dart';
 
 class CustomButtonOut extends StatelessWidget {
   final String? text;

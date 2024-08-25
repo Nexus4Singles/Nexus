@@ -4,11 +4,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:Nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:rename/platform_file_editors/abs_platform_file_editor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/auth/presentation/change_notifier/auth_notifier.dart';
 import '../../features/chat/chat_manager.dart';
 import '../../firebase_options.dart';
 import '../colors.dart';

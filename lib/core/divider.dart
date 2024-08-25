@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:Nexus/core/colors.dart';
+
+import 'colors.dart';
 
 class LineDivider extends StatelessWidget {
   final bool isDark;

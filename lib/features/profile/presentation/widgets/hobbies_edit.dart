@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:Nexus/core/button.dart';
-import 'package:Nexus/core/size_boxes.dart';
-import 'package:Nexus/core/style.dart';
 import 'package:provider/provider.dart';
-
+import '../../../../core/button.dart';
 import '../../../../core/colors.dart';
+import '../../../../core/size_boxes.dart';
+import '../../../../core/style.dart';
 import '../../../../core/utils/toast.dart';
 import '../../../auth/data/data-sources/local-datasource/list_items.dart';
 import '../../../auth/presentation/widgets/hobbie_card.dart';

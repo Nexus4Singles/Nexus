@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:Nexus/core/colors.dart';
 import 'package:provider/provider.dart';
-import 'package:Nexus/features/home/presentation/change_notifier/bottom_nav.dart';
+
+import '../../../../core/colors.dart';
+import '../change_notifier/bottom_nav.dart';
 
 class MainNav extends StatefulWidget {
   final int? initialPage;
@@ -159,7 +160,9 @@ class TabItems extends StatelessWidget {
             padding: EdgeInsets.all(12.sp),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: navController!.currentIndex == currentIndex ? white : Colors.transparent,
+              color: navController!.currentIndex == currentIndex
+                  ? white
+                  : Colors.transparent,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

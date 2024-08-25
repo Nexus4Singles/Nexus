@@ -11,7 +11,6 @@ class SubscriptionProvider extends ChangeNotifier {
   }
 
   UserModel? get currentUser => _currentUser;
-  UserModel? get currentUser => _currentUser;
 
   bool _onPremium = false;
 

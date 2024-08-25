@@ -1,7 +1,4 @@
-import 'package:Nexus/features/auth/presentation/views/verify_account.dart';
-import 'package:Nexus/features/profile/presentation/views/change_plan.dart';
 import 'package:get/get.dart';
-
 import 'features/auth/presentation/views/auth_handler.dart';
 import 'features/auth/presentation/views/congratulations.dart';
 import 'features/auth/presentation/views/create_account.dart';
@@ -22,6 +19,7 @@ import 'features/auth/presentation/views/setting_up/hobbies.dart';
 import 'features/auth/presentation/views/setting_up/profile_completed.dart';
 import 'features/auth/presentation/views/setting_up/upload_photo.dart';
 import 'features/auth/presentation/views/splash.dart';
+import 'features/auth/presentation/views/verify_account.dart';
 import 'features/chat/views/chat_rep.dart';
 import 'features/chat/views/chats.dart';
 import 'features/home/bindings/home_bindings.dart';
@@ -30,8 +28,8 @@ import 'features/home/presentation/views/user_details.dart';
 import 'features/notifications/presentation/views/notification.dart';
 import 'features/profile/presentation/views/about.dart';
 import 'features/profile/presentation/views/add_card.dart';
-import 'features/profile/presentation/views/cancel_plan.dart';
 import 'features/profile/presentation/views/change_password.dart';
+import 'features/profile/presentation/views/change_plan.dart';
 import 'features/profile/presentation/views/compatibilty_quiz.dart';
 import 'features/profile/presentation/views/delete_account.dart';
 import 'features/profile/presentation/views/edit_profile.dart';
@@ -124,11 +122,6 @@ final appRouter = [
     page: () => const LoginScreen(),
     binding: BindingsBuilder(() {}),
   ),
-  // GetPage(
-  //   name: AppRoutes.login,
-  //   page: () => const LoginScreen(),
-  //   binding: BindingsBuilder(() {}),
-  // ),
   GetPage(
     name: AppRoutes.createAccount,
     page: () => const CreateAccountScreen(),
@@ -311,7 +304,7 @@ final appRouter = [
   ),
   GetPage(
     name: AppRoutes.chats,
-    page: () => const ChatsScreen(),
+    page: () => ChatsScreen(),
     binding: BindingsBuilder(() {}),
   ),
   GetPage(
@@ -334,6 +327,11 @@ final appRouter = [
   // GetPage(
   //   name: AppRoutes.photoViews,
   //   page: () => const PhotoViewScreen(),
+  //   binding: BindingsBuilder(() {}),
+  // ),
+  // GetPage(
+  //   name: AppRoutes.login,
+  //   page: () => const LoginScreen(),
   //   binding: BindingsBuilder(() {}),
   // ),
 ];

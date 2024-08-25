@@ -10,14 +10,12 @@ import 'package:Nexus/core/constant.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
 import 'package:Nexus/core/utils/device.dart';
+import 'package:Nexus/router.dart';
 import 'package:Nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:Nexus/features/auth/presentation/widgets/record_completed.dart';
-import 'package:Nexus/router.dart';
 import 'package:provider/provider.dart';
 import 'package:path/path.dart' as path;
-
 import 'package:just_audio/just_audio.dart';
-// import 'package:http/http.dart' as http;
 
 class Audio4Screen extends StatefulWidget {
   const Audio4Screen({super.key});
@@ -76,7 +74,6 @@ class _Audio4ScreenState extends State<Audio4Screen> {
     EasyLoading.dismiss();
   }
 
-  DigitalOceanClient digitalOceanClient = DigitalOceanClient();
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthNotifier>(builder: (context, model, _) {
@@ -104,8 +101,8 @@ class _Audio4ScreenState extends State<Audio4Screen> {
               Center(
                 child: Text(
                   'Audio Recordings',
-                  style:
-                      textStyle8.copyWith(fontSize: 30, fontWeight: FontWeight.w700, color: black),
+                  style: textStyle8.copyWith(
+                      fontSize: 30, fontWeight: FontWeight.w700, color: black),
                 ),
               ),
               const SizedBoxH15(),
@@ -120,13 +117,17 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                   Text(
                     '1. ',
                     style: textStyle14.copyWith(
-                        color: black, fontSize: 13, fontWeight: FontWeight.w600),
+                        color: black,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600),
                   ),
                   Expanded(
                     child: Text(
                       'How would you describe your current relationship with God and why is this relationship important to you?',
                       style: textStyle14.copyWith(
-                          color: black, fontSize: 13, fontWeight: FontWeight.w600),
+                          color: black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
@@ -154,13 +155,17 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                   Text(
                     '2. ',
                     style: textStyle14.copyWith(
-                        color: black, fontSize: 13, fontWeight: FontWeight.w600),
+                        color: black,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600),
                   ),
                   Expanded(
                     child: Text(
                       'What are your thoughts on the role of a husband and a wife in marriage?',
                       style: textStyle14.copyWith(
-                          color: black, fontSize: 13, fontWeight: FontWeight.w600),
+                          color: black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
@@ -188,13 +193,17 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                   Text(
                     '3. ',
                     style: textStyle14.copyWith(
-                        color: black, fontSize: 13, fontWeight: FontWeight.w600),
+                        color: black,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600),
                   ),
                   Expanded(
                     child: Text(
                       'What are your favourite qualities or traits about yourself?',
                       style: textStyle14.copyWith(
-                          color: black, fontSize: 13, fontWeight: FontWeight.w600),
+                          color: black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
@@ -228,7 +237,8 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                 },
                 child: Text(
                   'Complete Profile',
-                  style: textStyle16.copyWith(color: white, fontWeight: FontWeight.bold),
+                  style: textStyle16.copyWith(
+                      color: white, fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBoxH30()
@@ -241,7 +251,7 @@ class _Audio4ScreenState extends State<Audio4Screen> {
 
   void _uploadFiles(AuthNotifier model) async {
     //audio path 1
-    await digitalOceanClient
+    await DigitalOceanClient()
         .uploadFileToSpace(
       bucket: 'audio',
       objectName:
@@ -250,7 +260,7 @@ class _Audio4ScreenState extends State<Audio4Screen> {
     )
         .then((audi1) async {
       //audio path 2
-      await digitalOceanClient
+      await DigitalOceanClient()
           .uploadFileToSpace(
               bucket: 'audio',
               objectName:
@@ -258,7 +268,7 @@ class _Audio4ScreenState extends State<Audio4Screen> {
               filePath: model.audioPath2)
           .then((audio2) async {
         //audio path 3
-        await digitalOceanClient
+        await DigitalOceanClient()
             .uploadFileToSpace(
                 bucket: 'audio',
                 objectName:

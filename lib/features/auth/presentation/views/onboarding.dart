@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:Nexus/core/assets.dart';
-import 'package:Nexus/core/button.dart';
-import 'package:Nexus/core/colors.dart';
-import 'package:Nexus/core/size_boxes.dart';
-import 'package:Nexus/core/style.dart';
-import 'package:Nexus/router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../../../../core/assets.dart';
+import '../../../../core/button.dart';
+import '../../../../core/colors.dart';
+import '../../../../core/size_boxes.dart';
+import '../../../../core/style.dart';
+import '../../../../router.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

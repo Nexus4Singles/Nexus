@@ -1,10 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:Nexus/core/models/user.dart';
-import 'package:Nexus/core/usecases/usecases.dart';
-import 'package:Nexus/features/home/domain/repositories/repo.dart';
-
 import 'package:equatable/equatable.dart';
+import '../../../../core/models/user.dart';
+import '../../../../core/usecases/usecases.dart';
+import '../repositories/repo.dart';
 
 class UserFilterParams extends Equatable {
   final UserModel user;

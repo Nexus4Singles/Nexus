@@ -7,11 +7,11 @@ import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/core/models/notification_model.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
+import 'package:intl/intl.dart';
 import 'package:Nexus/core/utils/progress_indicator.dart';
 import 'package:Nexus/features/home/controllers/home_controller.dart';
 import 'package:Nexus/features/home/controllers/notification_controller.dart';
 import 'package:Nexus/features/notifications/presentation/widgets/notify_container.dart';
-import 'package:intl/intl.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -22,7 +22,7 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   final NotificationController notificationController =
-      Get.find<NotificationController>();
+      NotificationController.instance;
 
   @override
   void initState() {
@@ -123,4 +123,4 @@ class _NotificationScreenState extends State<NotificationScreen> {
   }
 }
 
-// assets/images/nexus.png
+// assets/images/Nexus.png

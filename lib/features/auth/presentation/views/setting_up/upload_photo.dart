@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:Nexus/core/network/digital_ocean_client.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,7 +9,6 @@ import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/core/constant.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:Nexus/core/utils/device.dart';
 import 'package:Nexus/core/utils/image_compressor.dart';
 import 'package:Nexus/core/utils/toast.dart';
@@ -55,7 +54,8 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
             children: [
               Text(
                 'Upload Your Photos',
-                style: textStyle8.copyWith(fontSize: 30, fontWeight: FontWeight.w700, color: black),
+                style: textStyle8.copyWith(
+                    fontSize: 30, fontWeight: FontWeight.w700, color: black),
               ),
               const SizedBoxH10(),
               Align(
@@ -83,7 +83,8 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
                     InkWell(
                       onTap: () {
                         if (imageFiles.length == 4) {
-                          AppToast().showErrorToast('Maximum of 4 photos allowed');
+                          AppToast()
+                              .showErrorToast('Maximum of 4 photos allowed');
                         } else {
                           _pickImage(model);
                         }
@@ -194,7 +195,8 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
               CustomButton(
                 onPressed: () async {
                   if (imageFiles.length < 2) {
-                    AppToast().showErrorToast('Please select at least 2 photos');
+                    AppToast()
+                        .showErrorToast('Please select at least 2 photos');
                   } else {
                     List imageUrls = [];
                     for (var file in imageFiles) {

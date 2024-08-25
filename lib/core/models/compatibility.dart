@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:Nexus/core/entities/compatibility.dart';
+import '../entities/compatibility.dart';
 part 'compatibility.g.dart';
 
 @JsonSerializable()
@@ -11,7 +11,7 @@ class CompatibilityModel extends CompatibilityEntity {
     final String? personalityType,
     final String? regularSourceOfIncome,
     final String? marrySomeoneNotFS,
-    final String? mentallyReady,
+    final String? longDistance,
     final String? believeInCohiabiting,
     final String? shouldChristianSpeakInTongue,
     final String? believeInTithing,
@@ -22,7 +22,7 @@ class CompatibilityModel extends CompatibilityEntity {
           personalityType: personalityType,
           regularSourceOfIncome: regularSourceOfIncome,
           marrySomeoneNotFS: marrySomeoneNotFS,
-          longDistance: mentallyReady,
+          longDistance: longDistance,
           believeInCohiabiting: believeInCohiabiting,
           shouldChristianSpeakInTongue: shouldChristianSpeakInTongue,
           believeInTithing: believeInCohiabiting,

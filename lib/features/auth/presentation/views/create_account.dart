@@ -4,19 +4,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:Nexus/core/button.dart';
-import 'package:Nexus/core/colors.dart';
-import 'package:Nexus/core/constant.dart';
-import 'package:Nexus/core/size_boxes.dart';
-import 'package:Nexus/core/style.dart';
-import 'package:Nexus/core/text_field.dart';
-import 'package:Nexus/core/text_field_password.dart';
-import 'package:Nexus/core/utils/shared_pref.dart';
-import 'package:Nexus/core/utils/toast.dart';
-import 'package:Nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
-import 'package:Nexus/router.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/assets.dart';
+import '../../../../core/button.dart';
+import '../../../../core/colors.dart';
+import '../../../../core/constant.dart';
+import '../../../../core/size_boxes.dart';
+import '../../../../core/style.dart';
+import '../../../../core/text_field.dart';
+import '../../../../core/text_field_password.dart';
+import '../../../../core/utils/shared_pref.dart';
+import '../../../../core/utils/toast.dart';
+import '../../../../router.dart';
+import '../change_notifier/auth_notifier.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({super.key});
@@ -121,8 +121,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               if (!value.isAlphabetOnly) {
                                 return 'Username cannot contain numbers';
                               }
-                              if (value.length < 5) {
-                                return 'Username must be at least 5 characters';
+                              if (value.length < 3) {
+                                return 'Username must be at least 3 characters';
                               }
                               return null;
                             },

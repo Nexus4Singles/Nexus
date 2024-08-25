@@ -1,24 +1,21 @@
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:Nexus/core/assets.dart';
+import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/core/models/user.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
-import 'package:Nexus/core/text_field.dart';
 import 'package:Nexus/core/utils/modals.dart';
 import 'package:Nexus/features/chat/controllers/chat_ctr.dart';
 import 'package:Nexus/router.dart';
-import '../../../../core/colors.dart';
 
 class Matched extends StatelessWidget {
   final UserModel userModel;
   final int messageID;
   Matched({super.key, required this.userModel, required this.messageID});
-  final ctr = Get.put(ChatCtr());
+  final ctr = ChatCtr.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -51,48 +48,27 @@ class Matched extends StatelessWidget {
               imgUrl: userModel.photos![0],
               decoration: BoxDecoration(
                 boxShadow: [boxShadow],
-                border:
-                    Border.all(color: white, width: 5, strokeAlign: BorderSide.strokeAlignOutside),
+                border: Border.all(
+                    color: white,
+                    width: 5,
+                    strokeAlign: BorderSide.strokeAlignOutside),
                 borderRadius: BorderRadius.circular(12),
                 image: DecorationImage(
-                    image: CachedNetworkImageProvider(userModel.photos![0]), fit: BoxFit.cover),
+                    image: CachedNetworkImageProvider(userModel.photos![0]),
+                    fit: BoxFit.cover),
               ),
               child: Transform.translate(
-                  offset: const Offset(0, 70), child: Image.asset("$imgPath/matched.png")),
+                  offset: const Offset(0, 70),
+                  child: Image.asset("$imgPath/matched.png")),
             ),
             const SizedBox(height: 45),
             Column(
               children: [
-                Text(
-                  "We are rooting for you both!",
-                  style: textStyle14.copyWith(color: ash),
-                ),
                 const SizedBoxH40(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: CustomTextField(
-                      radius: 100,
-                      fillColor: grey,
-                      suffixIcon: InkWell(
-                        onTap: () {
-                          ctr
-                              .sendMessage(messageID.toString(), ctr.chatController.text, userModel)
-                              .then((value) {
-                            EasyLoading.showToast("Message Sent");
-                          });
-                          ctr.chatController.clear();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CircleAvatar(
-                            backgroundColor: primary,
-                            child: SvgPicture.asset("$svgPath/send.svg"),
-                          ),
-                        ),
-                      ),
-                      controller: ctr.chatController,
-                      hintText: "Send a message"),
-                ),
+                Text(
+                    "Get more information on your compatibility \nwith ${userModel.username} by clicking the button below!",
+                    style: textStyle16,
+                    textAlign: TextAlign.center),
                 const SizedBoxH10(),
                 TextButton(
                     onPressed: () {

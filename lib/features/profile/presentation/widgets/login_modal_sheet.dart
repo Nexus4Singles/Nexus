@@ -5,13 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:Nexus/core/button.dart';
-import 'package:Nexus/core/button_outline.dart';
-import 'package:Nexus/core/size_boxes.dart';
-import 'package:Nexus/core/style.dart';
-import 'package:Nexus/router.dart';
-
+import '../../../../core/button.dart';
+import '../../../../core/button_outline.dart';
+import '../../../../core/size_boxes.dart';
+import '../../../../core/style.dart';
 import '../../../../core/utils/shared_pref.dart';
+import '../../../../router.dart';
 
 class LoginModalSheet extends StatefulWidget {
   const LoginModalSheet({super.key});
@@ -61,7 +60,8 @@ class _LoginModalSheetState extends State<LoginModalSheet> {
                   Expanded(
                     child: CustomButton(
                       onPressed: () async {
-                        await FCMService.setFcmTokenToNull(HomeController.instance.user.value.id);
+                        await FCMService.setFcmTokenToNull(
+                            HomeController.instance.user.value.id);
                         Get.offAndToNamed(AppRoutes.login);
                         SharedPref.deleteAll();
                       },

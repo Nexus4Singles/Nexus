@@ -42,7 +42,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
               ),
               const SizedBoxH20(),
               Text(
-                'At Nexus, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy outlines how we collect, use, and safeguard your data when you use our Christian dating app. By accessing or using Nexus, you agree to the terms outlined in this policy.',
+                'At Nexus, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy outlines how we collect, use, and safeguard your data when you use our Christian dating app. By accessing or using nexus, you agree to the terms outlined in this policy.',
                 style: textStyle14.copyWith(color: black),
               ),
               const SizedBoxH20(),

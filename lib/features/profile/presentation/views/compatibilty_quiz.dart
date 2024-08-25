@@ -8,6 +8,7 @@ import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
 import 'package:Nexus/core/utils/toast.dart';
 import 'package:Nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
+import 'package:Nexus/features/home/controllers/home_controller.dart';
 import 'package:Nexus/features/home/presentation/change_notifier/home_notifier.dart';
 import 'package:Nexus/features/profile/presentation/widgets/compat_radio.dart';
 import 'package:Nexus/features/profile/presentation/widgets/compat_success.dart';
@@ -18,7 +19,8 @@ class CompatibilityQuizScreen extends StatefulWidget {
   const CompatibilityQuizScreen({super.key});
 
   @override
-  State<CompatibilityQuizScreen> createState() => _CompatibilityQuizScreenState();
+  State<CompatibilityQuizScreen> createState() =>
+      _CompatibilityQuizScreenState();
 }
 
 class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
@@ -41,7 +43,8 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
           appBar: AppBar(
             title: Text(
               'Compatibility Quiz',
-              style: textStyle18.copyWith(fontSize: 24, fontWeight: FontWeight.w700, color: black),
+              style: textStyle18.copyWith(
+                  fontSize: 24, fontWeight: FontWeight.w700, color: black),
             ),
             centerTitle: true,
             foregroundColor: black,
@@ -220,7 +223,8 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                 const SizedBoxH20(),
                 const CampaTitle(
                   num: '6',
-                  title: 'Can you date or marry someone who is not yet financially stable?',
+                  title:
+                      'Can you date or marry someone who is not yet financially stable?',
                 ),
 
                 CompatRadio(
@@ -361,10 +365,13 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                           kGENOTYPE: genotype,
                           kPERSONALITYTYPE: personalityType,
                           kREGULARSOURCEOFINCOME: regularSourceOfIncome,
-                          kMARRYWHOISNOTFINANCIALLYSTABLE: dateWhoIsNotFinanciallyStable,
+                          kMARRYWHOISNOTFINANCIALLYSTABLE:
+                              dateWhoIsNotFinanciallyStable,
                           kLONGDISTANCERELATIONSHIP: longDistanceRelationship,
-                          kBELIEVEINCOHIABITING: believeInCohabitingBeforeMarriage,
-                          kSHOULDCHRISTIANSPEAKINTONGUE: shouldChristianSpeakInTongue,
+                          kBELIEVEINCOHIABITING:
+                              believeInCohabitingBeforeMarriage,
+                          kSHOULDCHRISTIANSPEAKINTONGUE:
+                              shouldChristianSpeakInTongue,
                           kBELIEVEINTITHING: believeInTithing,
                         }
                       };
@@ -372,7 +379,9 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                         map: map,
                         onCompleted: () async {
                           await model.getProfile().then((value) async {
-                            await homeModel.getProfile().then((val) {
+                            await HomeController.instance
+                                .getMyProfile()
+                                .then((val) {
                               Get.back();
                               showAdaptiveDialog(
                                 context: context,

@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:audio_waveforms/audio_waveforms.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
@@ -15,13 +16,10 @@ import 'package:Nexus/core/utils/toast.dart';
 import 'package:Nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:Nexus/features/auth/presentation/widgets/seek_bar.dart';
 import 'package:Nexus/router.dart';
-import 'package:audio_waveforms/audio_waveforms.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart' as rx;
-
 import '../../../../../core/assets.dart';
 
 class Audio2Screen extends StatefulWidget {

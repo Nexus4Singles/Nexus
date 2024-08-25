@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:Nexus/core/models/user.dart';
-import 'package:Nexus/core/usecases/usecases.dart';
-import 'package:Nexus/features/home/domain/repositories/repo.dart';
+
+import '../../../../core/models/user.dart';
+import '../../../../core/usecases/usecases.dart';
+import '../repositories/repo.dart';
 
 @lazySingleton
 class GetUsersUsecase extends Usecase<void, NoParams> {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:Nexus/core/colors.dart';
-import 'package:Nexus/core/style.dart';
+import '../../../../core/colors.dart';
+import '../../../../core/style.dart';
 
 class ExtraContainer extends StatelessWidget {
   final String text;

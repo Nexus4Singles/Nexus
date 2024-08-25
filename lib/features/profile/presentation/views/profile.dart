@@ -36,7 +36,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   FutureOr _init() {
     _setAudioPlayer();
 
-    if (currentUser.compatibilitySetted == null || currentUser.compatibilitySetted == false) {
+    if (currentUser.compatibilitySetted == null ||
+        currentUser.compatibilitySetted == false) {
       Future.delayed(const Duration(seconds: 1), () {
         _setAudioPlayer();
         showAdaptiveDialog(
@@ -151,7 +152,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Text(
                     '${homeModel.user.value.username}, ${homeModel.user.value.age}',
                     style: textStyle8.copyWith(
-                        color: black, fontSize: 24, fontWeight: FontWeight.w600),
+                        color: black,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600),
                   ),
                   const SizedBoxH5(),
                   Row(
@@ -164,7 +167,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Text(
                           '${homeModel.user.value.location!.place}',
                           overflow: TextOverflow.ellipsis,
-                          style: textStyle14.copyWith(fontWeight: FontWeight.w300, color: black),
+                          style: textStyle14.copyWith(
+                              fontWeight: FontWeight.w300, color: black),
                         ),
                       ),
                     ],
@@ -184,11 +188,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Text(
                     'State of Origin: ',
-                    style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
+                    style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
                     homeModel.user.value.stateOfOrigin ?? '',
-                    style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: black),
+                    style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500, color: black),
                   ),
                 ],
               ),
@@ -197,11 +203,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Text(
                     'Education Level: ',
-                    style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
+                    style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
                     homeModel.user.value.educationLevel ?? '',
-                    style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: black),
+                    style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500, color: black),
                   ),
                 ],
               ),
@@ -210,11 +218,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Text(
                     'Profession/Industry: ',
-                    style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
+                    style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
                     homeModel.user.value.profession ?? '',
-                    style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: black),
+                    style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500, color: black),
                   ),
                 ],
               ),
@@ -223,11 +233,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Text(
                     'Church: ',
-                    style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
+                    style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
                     homeModel.user.value.churchName ?? '',
-                    style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: black),
+                    style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500, color: black),
                   ),
                 ],
               ),
@@ -286,8 +298,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBoxH15(),
               Text(
                 '1. The summary of my relationship with God',
-                style:
-                    textStyle14.copyWith(color: black, fontSize: 14, fontWeight: FontWeight.w700),
+                style: textStyle14.copyWith(
+                    color: black, fontSize: 14, fontWeight: FontWeight.w700),
               ),
               const SizedBoxH10(),
               AudioFilePlayer(
@@ -306,8 +318,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBoxH25(),
               Text(
                 '2. My view on Gender roles in marriage',
-                style:
-                    textStyle14.copyWith(color: black, fontSize: 14, fontWeight: FontWeight.w700),
+                style: textStyle14.copyWith(
+                    color: black, fontSize: 14, fontWeight: FontWeight.w700),
               ),
               const SizedBoxH10(),
               AudioFilePlayer(
@@ -326,8 +338,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBoxH25(),
               Text(
                 '3. Favourite qualities or traits about myself',
-                style:
-                    textStyle14.copyWith(color: black, fontSize: 14, fontWeight: FontWeight.w700),
+                style: textStyle14.copyWith(
+                    color: black, fontSize: 14, fontWeight: FontWeight.w700),
               ),
               const SizedBoxH10(),
               AudioFilePlayer(
@@ -346,7 +358,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBoxH25(),
               Text(
                 'Gallery',
-                style: textStyle16.copyWith(fontWeight: FontWeight.w700, color: black),
+                style: textStyle16.copyWith(
+                    fontWeight: FontWeight.w700, color: black),
               ),
               const SizedBoxH10(),
               Wrap(
@@ -360,7 +373,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onTap: () {
                         Get.to(
                           () => PhotoViewScreen(
-                            selectedIndex: homeModel.user.value.photos!.indexOf(item),
+                            selectedIndex:
+                                homeModel.user.value.photos!.indexOf(item),
                             photos: homeModel.user.value.photos!,
                           ),
                         );

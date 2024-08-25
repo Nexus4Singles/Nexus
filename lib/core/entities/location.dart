@@ -6,6 +6,7 @@ class LocationEntity extends Equatable {
       required this.latitude,
       required this.longitude,
       required this.place,
+      required this.country,
       required this.city});
 
   final String? id;
@@ -13,7 +14,8 @@ class LocationEntity extends Equatable {
   final double? latitude;
   final double? longitude;
   final String? city;
+  final String? country;
 
   @override
-  List<Object?> get props => [id, latitude, longitude, place, city];
+  List<Object?> get props => [id, latitude, longitude, place, city, country];
 }

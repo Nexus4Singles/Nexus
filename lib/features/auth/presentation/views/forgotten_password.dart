@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:Nexus/core/button.dart';
-import 'package:Nexus/core/colors.dart';
-import 'package:Nexus/core/size_boxes.dart';
-import 'package:Nexus/core/style.dart';
-import 'package:Nexus/core/text_field.dart';
-import 'package:Nexus/core/utils/toast.dart';
-import 'package:Nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/assets.dart';
+import '../../../../core/button.dart';
+import '../../../../core/colors.dart';
+import '../../../../core/size_boxes.dart';
+import '../../../../core/style.dart';
+import '../../../../core/text_field.dart';
+import '../../../../core/utils/toast.dart';
+import '../change_notifier/auth_notifier.dart';
 
 class ForgottenPasswordScreen extends StatefulWidget {
   const ForgottenPasswordScreen({super.key});

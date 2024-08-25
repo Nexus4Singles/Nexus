@@ -1,4 +1,4 @@
-import 'package:Nexus/features/auth/domain/entities/response_entity.dart';
+import '../../domain/entities/response_entity.dart';
 
 class ResponseModel extends ResponseEntity {
   ResponseModel({

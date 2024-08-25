@@ -1,17 +1,14 @@
-import 'package:Nexus/core/models/user.dart';
-import 'package:Nexus/core/network/remote.dart';
 import 'package:injectable/injectable.dart';
-import 'package:Nexus/core/constant.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:dartz/dartz.dart';
-import 'package:Nexus/core/network/formatter.dart';
-import 'package:Nexus/core/storage/storage_impl.dart';
 import 'package:logger/logger.dart';
-import 'package:Nexus/features/auth/domain/repositories/auth_repo.dart';
 import 'package:uuid/uuid.dart';
-
+import '../../../../core/constant.dart';
+import '../../../../core/models/user.dart';
+import '../../../../core/network/formatter.dart';
+import '../../../../core/network/remote.dart';
+import '../../../../core/storage/storage_impl.dart';
+import '../../domain/repositories/auth_repo.dart';
 import '../data-sources/remote-datasource/auth_remote.dart';
 
 @LazySingleton(as: AuthenticationRepository)

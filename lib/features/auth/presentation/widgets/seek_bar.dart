@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:Nexus/core/colors.dart';
-import 'package:Nexus/core/style.dart';
+
+import '../../../../core/colors.dart';
+import '../../../../core/style.dart';
 
 class SeekBar extends StatefulWidget {
   final Duration duration;
@@ -104,7 +105,6 @@ class SeekBarState extends State<SeekBar> {
       ],
     );
   }
-
 }
 
 class HiddenThumbComponentShape extends SliderComponentShape {

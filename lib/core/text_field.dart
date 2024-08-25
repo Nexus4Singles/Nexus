@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:Nexus/core/colors.dart';
-import 'package:Nexus/core/style.dart';
+
+import 'colors.dart';
+import 'style.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -73,6 +74,7 @@ class CustomTextFieldState extends State<CustomTextField> {
       onEditingComplete: widget.onEditingCompleted,
       controller: widget.controller,
       maxLines: null,
+      onTap: widget.onTap,
       minLines: widget.minLine,
       validator: widget.validator,
       textInputAction: widget.action,

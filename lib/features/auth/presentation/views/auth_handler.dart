@@ -3,17 +3,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:Nexus/core/assets.dart';
-import 'package:Nexus/core/button.dart';
-import 'package:Nexus/core/button_outline.dart';
-import 'package:Nexus/core/colors.dart';
-import 'package:Nexus/core/size_boxes.dart';
-import 'package:Nexus/core/style.dart';
-import 'package:Nexus/core/utils/toast.dart';
-import 'package:Nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
-import 'package:Nexus/features/auth/presentation/widgets/country_modal.dart';
-import 'package:Nexus/router.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../core/assets.dart';
+import '../../../../core/button.dart';
+import '../../../../core/button_outline.dart';
+import '../../../../core/colors.dart';
+import '../../../../core/size_boxes.dart';
+import '../../../../core/style.dart';
+import '../../../../core/utils/toast.dart';
+import '../../../../router.dart';
+import '../change_notifier/auth_notifier.dart';
+import '../widgets/country_modal.dart';
 
 class AuthHandler extends StatefulWidget {
   const AuthHandler({super.key});
@@ -40,35 +41,36 @@ class _AuthHandlerState extends State<AuthHandler> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const SizedBoxH40(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Text(
-                      'nexus'.toUpperCase(),
-                      style: GoogleFonts.novaSquare(
-                        fontSize: 35.sp,
-                        color: white,
-                      ),
-                    ),
-                  ),
-                  const SizedBoxH15(),
-                  // Image.asset(iLogo),
-                  SvgPicture.asset("$svgPath/logo.svg"),
-                  // Image.asset('$svgPath/nexus-logo2.gif'),
-
-                  const SizedBoxH15(),
-                  Text(
-                    'Get the Visibility You Need \nto Connect with Your Future Spouse',
-                    style: GoogleFonts.novaSquare(
-                      fontSize: 16.sp,
-                      color: white,
-                    ),
-                    textAlign: TextAlign.center,
-                  )
-                ],
-              ),
+              Image.asset("$imgPath/newlogo.PNG"),
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     Center(
+              //       child: Text(
+              //         'nexus'.toUpperCase(),
+              //         style: GoogleFonts.novaSquare(
+              //           fontSize: 35.sp,
+              //           color: white,
+              //         ),
+              //       ),
+              //     ),
+              //     const SizedBoxH15(),
+              //     // Image.asset(iLogo),
+              //     SvgPicture.asset("$svgPath/logo.svg"),
+              //     // Image.asset('$svgPath/nexus-logo2.gif'),
+              //
+              //     const SizedBoxH15(),
+              //     Text(
+              //       'Get the Visibility You Need \nto Connect with Your Future Spouse',
+              //       style: GoogleFonts.novaSquare(
+              //         fontSize: 16.sp,
+              //         color: white,
+              //       ),
+              //       textAlign: TextAlign.center,
+              //     )
+              //   ],
+              // ),
               Column(
                 children: [
                   CustomButtonOut(

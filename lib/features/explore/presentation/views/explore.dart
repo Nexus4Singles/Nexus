@@ -10,7 +10,6 @@ import 'package:Nexus/core/text_field.dart';
 import 'package:Nexus/core/utils/empty_state.dart';
 import 'package:Nexus/features/explore/controllers/explore_ctr.dart';
 import 'package:Nexus/features/explore/presentation/widgets/filter_modal.dart';
-import 'package:Nexus/features/home/presentation/widgets/coming_soon_modal.dart';
 import '../../../../core/utils/progress_indicator.dart';
 import '../../../home/presentation/views/user_details.dart';
 import '../widgets/user_tile.dart';
@@ -180,7 +179,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                       image: val.photos![0],
                                       name: val.username,
                                       age: val.age.toString(),
-                                      location: val.location!.place ?? "",
+                                      location:
+                                          val.location!.place?.capitalize ?? "",
                                       onPress: () {
                                         Get.to(() =>
                                             UserDetailScreen(userModel: val));

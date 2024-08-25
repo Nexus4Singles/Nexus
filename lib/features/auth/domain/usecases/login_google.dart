@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:Nexus/core/models/user.dart';
-import 'package:Nexus/features/auth/domain/repositories/auth_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
-import 'package:Nexus/core/usecases/usecases.dart';
+import '../../../../core/models/user.dart';
+import '../../../../core/usecases/usecases.dart';
+import '../repositories/auth_repo.dart';
 
 @lazySingleton
 class LoginGoogleUsecase extends Usecase<void, AuthCredential> {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:Nexus/core/colors.dart';
-import 'package:Nexus/core/size_boxes.dart';
-import 'package:Nexus/core/style.dart';
+
+import '../../../../core/colors.dart';
+import '../../../../core/size_boxes.dart';
+import '../../../../core/style.dart';
 
 class CompatibilitySuccessful extends StatelessWidget {
   const CompatibilitySuccessful({super.key});
@@ -13,6 +14,7 @@ class CompatibilitySuccessful extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 0.sp),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

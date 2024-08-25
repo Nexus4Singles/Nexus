@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:Nexus/core/entities/location.dart';
-
+import '../entities/location.dart';
 part 'location.g.dart';
 
 @JsonSerializable()
@@ -10,11 +9,12 @@ class LocationModel extends LocationEntity {
     required double? latitude,
     required double? longitude,
     required String? place,
+    required String? country,
     required String? city,
   }) : super(
             id: id,
-            // image: image,
             latitude: latitude,
+            country: country,
             longitude: longitude,
             place: place,
             city: city);

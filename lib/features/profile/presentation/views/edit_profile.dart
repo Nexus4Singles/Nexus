@@ -1,12 +1,11 @@
 import 'dart:io';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_places_flutter/google_places_flutter.dart';
-import 'package:google_places_flutter/model/prediction.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:Nexus/core/assets.dart';
 import 'package:Nexus/core/button.dart';
@@ -14,15 +13,14 @@ import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
 import 'package:Nexus/core/text_field.dart';
+import 'package:Nexus/features/home/controllers/home_controller.dart';
 import 'package:Nexus/features/profile/presentation/controllers/profile_ctr.dart';
-import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/utils/image_compressor.dart';
 import '../../../../core/utils/toast.dart';
 import '../../../auth/data/data-sources/local-datasource/list_items.dart';
 import '../../../auth/presentation/widgets/drop_down.dart';
 import '../../../auth/presentation/widgets/hobbie_card.dart';
-import '../../../home/controllers/home_controller.dart';
 import '../../../home/presentation/change_notifier/home_notifier.dart';
 import '../widgets/modals.dart';
 
@@ -34,22 +32,28 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  var ctr = Get.put(ProfileCtr());
   List<File> imageFiles = [];
   List<String> allImage = [];
   int maxPhotos = 4;
-  var currentUser = HomeController.instance.user.value;
+  var currentUser = HomeController.instance.user;
+  var ctr = ProfileCtr.instance;
 
   @override
   void initState() {
-    ctr.eduLevel.value = currentUser.educationLevel!;
-    ctr.profession.value = currentUser.profession!;
-    ctr.church.value = currentUser.churchName!;
-    ctr.searchText.text = currentUser.location!.place!;
-    ctr.locationModel = currentUser.location;
-    ctr.usernameCtr.text = currentUser.username;
-    allImage.assignAll(currentUser.photos!.toList());
+    init();
     super.initState();
+  }
+
+  init() {
+    ctr.eduLevel.value = currentUser.value.educationLevel!;
+    ctr.profession.value = currentUser.value.profession!;
+    ctr.church.value = currentUser.value.churchName!;
+    ctr.churchCtr.text = currentUser.value.churchName!;
+    ctr.cityCtr.text = currentUser.value.location!.city!;
+    ctr.countryCtr.text = currentUser.value.location!.country!;
+    ctr.usernameCtr.text = currentUser.value.username;
+    allImage.assignAll(currentUser.value.photos!.toList());
+    setState(() {});
   }
 
   void _pickImage() async {
@@ -86,7 +90,8 @@ class _EditProfileState extends State<EditProfile> {
         backgroundColor: white,
         title: Text(
           'Edit Profile',
-          style: textStyle18.copyWith(fontSize: 24, fontWeight: FontWeight.w700, color: black),
+          style: textStyle18.copyWith(
+              fontSize: 24, fontWeight: FontWeight.w700, color: black),
         ),
         centerTitle: true,
         foregroundColor: black,
@@ -104,7 +109,7 @@ class _EditProfileState extends State<EditProfile> {
               runAlignment: WrapAlignment.start,
               alignment: WrapAlignment.start,
               children: [
-                for (var item in currentUser.photos!)
+                for (var item in currentUser.value.photos!)
                   CacheNetworkWidget(
                     height: 120,
                     width: 120,
@@ -120,7 +125,8 @@ class _EditProfileState extends State<EditProfile> {
                             child: InkWell(
                               onTap: () {
                                 if (allImage.length.isGreaterThan(2)) {
-                                  showConfirmationDialog(context, item, allImage);
+                                  showConfirmationDialog(
+                                      context, item, allImage);
                                 } else {
                                   AppToast().showErrorToast(
                                       "You need to have at least two images on your profile before you can delete any image");
@@ -222,12 +228,15 @@ class _EditProfileState extends State<EditProfile> {
                 if (allImage.length.isLowerThan(maxPhotos))
                   InkWell(
                     onTap: () {
-                      if (currentUser.photos!.length < maxPhotos) {
-                        for (int i = currentUser.photos!.length; i < maxPhotos; i++) {
+                      if (currentUser.value.photos!.length < maxPhotos) {
+                        for (int i = currentUser.value.photos!.length;
+                            i < maxPhotos;
+                            i++) {
                           _pickImage();
                         }
                       } else {
-                        AppToast().showErrorToast('Maximum of 4 photos allowed');
+                        AppToast()
+                            .showErrorToast('Maximum of 4 photos allowed');
                       }
                     },
                     child: DottedBorder(
@@ -274,9 +283,10 @@ class _EditProfileState extends State<EditProfile> {
             ),
             const SizedBoxH10(),
             Wrap(children: [
-              ...currentUser.hobbies!.map((val) => Padding(
+              ...currentUser.value.hobbies!.map((val) => Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: HobbieCard(text: val, isChecked: true, onPress: () {}),
+                    child:
+                        HobbieCard(text: val, isChecked: true, onPress: () {}),
                   ))
             ]),
             const SizedBoxH15(),
@@ -300,87 +310,52 @@ class _EditProfileState extends State<EditProfile> {
             ),
             const SizedBoxH10(),
             Wrap(children: [
-              ...currentUser.desiredQualities!.map((val) => Padding(
+              ...currentUser.value.desiredQualities!.map((val) => Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: HobbieCard(text: val, isChecked: true, onPress: () {}),
+                    child:
+                        HobbieCard(text: val, isChecked: true, onPress: () {}),
                   ))
             ]),
             const SizedBoxH15(),
-            GooglePlaceAutoCompleteTextField(
-              textEditingController: ctr.searchText,
-              googleAPIKey: 'AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y',
-              // countries: const ['NG'],
-              textStyle: textStyle14.copyWith(color: black),
-              inputDecoration: InputDecoration(
+            InkWell(
+              onTap: () {
+                showCountryPicker(
+                  countryListTheme: CountryListThemeData(
+                      textStyle: textStyle14,
+                      inputDecoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50))),
+                      borderRadius: BorderRadius.circular(24)),
+                  context: context,
+                  showPhoneCode: false,
+                  onSelect: (Country country) {
+                    ctr.countryCtr.text = country.name;
+                  },
+                );
+              },
+              child: CustomTextField(
+                enabled: false,
                 fillColor: white,
-                filled: true,
-                labelStyle: textStyle14,
-                helperStyle: textStyle14,
-                hintText: 'Select your City, Country of Residence',
-                hintStyle: textStyle14.copyWith(color: otherGrey),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 5,
-                ),
-                border: outlineInputBorder.copyWith(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: const BorderSide(
-                    color: textBorderColor,
-                  ),
-                ),
-                enabledBorder: outlineInputBorder.copyWith(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: const BorderSide(
-                    color: textBorderColor,
-                  ),
-                ),
-                focusedBorder: outlineInputBorder.copyWith(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: const BorderSide(
-                    color: textBorderColor,
-                  ),
-                ),
+                suffixIcon: const Icon(Icons.arrow_drop_down_outlined),
+                radius: 12,
+                controller: ctr.countryCtr,
+                hintText: "Country of Residence",
               ),
-              boxDecoration: BoxDecoration(border: Border.all(color: Colors.transparent)),
-              debounceTime: 800,
-              isLatLngRequired: true,
-              getPlaceDetailWithLatLng: (Prediction prediction) {
-                ctr.getFormattedLocation(
-                  double.parse(prediction.lat!),
-                  double.parse(prediction.lat!),
-                  prediction.placeId!,
-                );
-                Logger().d(prediction.structuredFormatting);
-              },
-              itemClick: (prediction) {
-                // model.getFormattedLocation(
-                //     double.parse(prediction.lat!),
-                //     double.parse(prediction.lat!));
-                // Logger().d(prediction.toJson());
-              },
-              itemBuilder: (context, index, Prediction prediction) {
-                return Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.location_on),
-                      const SizedBox(
-                        width: 7,
-                      ),
-                      Expanded(
-                          child: Text(prediction.description ?? "",
-                              style: textStyle14.copyWith(color: black)))
-                    ],
-                  ),
-                );
-              },
-              seperatedBuilder: const Divider(),
-              isCrossBtnShown: true,
             ),
             const SizedBoxH15(),
             CustomTextField(
               fillColor: white,
               radius: 12,
+              controller: ctr.cityCtr,
+              hintText: "City of Residence",
+            ),
+            const SizedBoxH15(),
+            CustomTextField(
+              fillColor: white,
+              radius: 12,
+              onChanged: (val) {
+                ctr.isEmpty();
+              },
               controller: ctr.usernameCtr,
               hintText: "Username",
             ),
@@ -392,6 +367,7 @@ class _EditProfileState extends State<EditProfile> {
               onChanged: (p0) {
                 setState(() {
                   ctr.eduLevel.value = p0!;
+                  ctr.isEmpty();
                 });
               },
             ),
@@ -409,12 +385,13 @@ class _EditProfileState extends State<EditProfile> {
             const SizedBoxH15(),
             ProfileDropDown(
               items: LocalData().church,
-              val: !LocalData().church.contains(ctr.church.value) ? "Other" : ctr.church.value,
+              val: !LocalData().church.contains(ctr.church.value)
+                  ? "Other"
+                  : ctr.church.value,
               hintText: 'Church',
               onChanged: (p0) {
-                setState(() {
-                  ctr.church.value = p0!;
-                });
+                ctr.church.value = p0!;
+                setState(() {});
               },
             ),
             const SizedBoxH15(),
@@ -422,22 +399,25 @@ class _EditProfileState extends State<EditProfile> {
               () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ctr.church.value == "Other" || !LocalData().church.contains(ctr.church.value)
+                  ctr.church.value == "Other" ||
+                          !LocalData().church.contains(ctr.church.value)
                       ? CustomTextField(
                           fillColor: white,
                           radius: 12,
-                          controller: TextEditingController(text: currentUser.churchName),
+                          controller: ctr.churchCtr,
                           onChanged: (val) {
                             ctr.church.value = val;
+                            ctr.isEmpty();
                           },
-                          hintText: "Username",
+                          hintText: "Church name",
                           suffixIcon: SvgPicture.asset(
                             "$svgPath/edit.svg",
                             fit: BoxFit.scaleDown,
                           ),
                         )
                       : const SizedBox(),
-                  ctr.church.value == "Other" || !LocalData().church.contains(ctr.church.value)
+                  ctr.church.value == "Other" ||
+                          !LocalData().church.contains(ctr.church.value)
                       ? const SizedBoxH15()
                       : const SizedBox(),
                 ],
@@ -446,8 +426,9 @@ class _EditProfileState extends State<EditProfile> {
             const SizedBoxH40(),
             CustomButton(
                 onPressed: () async {
-                  await ctr.updateProfile(imageFiles);
-                  await HomeController.instance.getMyProfile();
+                  await ctr.updateProfile(imageFiles).then((val) {
+                    init();
+                  });
                 },
                 text: "Update Profile"),
             const SizedBoxH40(),
@@ -457,7 +438,8 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  void showConfirmationDialog(BuildContext context, String item, List allImage) {
+  void showConfirmationDialog(
+      BuildContext context, String item, List allImage) {
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) {
@@ -469,12 +451,8 @@ class _EditProfileState extends State<EditProfile> {
               isDestructiveAction: true,
               onPressed: () {
                 ctr.deleteUserPhoto(item).then((val) async {
-                  allImage.remove(item);
-                  // check why this didn't fetch data
-                  await Provider.of<HomeNotifier>(context, listen: false).getProfile();
+                  init();
                 });
-                // Navigator.pop(context, 'Deleted');
-                // Handle the destructive action
               },
               child: const Text('Delete'),
             ),
@@ -491,3 +469,43 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 }
+
+//   LocationIQWidget(
+//               textEditingController: ctr.searchText,
+//               textStyle: textStyle14,
+//               locationIQAPIKey: 'pk.da653605da38d00bec98323b179bd52e',
+//               inputDecoration: InputDecoration(
+//                 fillColor: white,
+//                 filled: true,
+//                 hintText: 'Select your City, Country of Residence',
+//                 hintStyle: textStyle14.copyWith(color: otherGrey),
+//                 contentPadding:
+//                     const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+//                 border: outlineInputBorder.copyWith(
+//                   borderRadius: BorderRadius.circular(16),
+//                   borderSide: const BorderSide(
+//                     color: textBorderColor,
+//                   ),
+//                 ),
+//                 enabledBorder: outlineInputBorder.copyWith(
+//                   borderRadius: BorderRadius.circular(16),
+//                   borderSide: const BorderSide(
+//                     color: textBorderColor,
+//                   ),
+//                 ),
+//                 focusedBorder: outlineInputBorder.copyWith(
+//                   borderRadius: BorderRadius.circular(16),
+//                   borderSide: const BorderSide(
+//                     color: textBorderColor,
+//                   ),
+//                 ),
+//               ),
+//               boxDecoration:
+//                   BoxDecoration(border: Border.all(color: Colors.transparent)),
+//               debounceTime: 800,
+//               seperatedBuilder: const Divider(),
+//               isCrossBtnShown: true,
+//               onClick: (model) {
+//                 ctr.locationModel = model;
+//               },
+//             ),

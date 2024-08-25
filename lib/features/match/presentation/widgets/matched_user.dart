@@ -5,7 +5,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
-// import 'package:Nexus/core/utils/device.dart';
 
 class MatchedUserCard extends StatelessWidget {
   final String age;

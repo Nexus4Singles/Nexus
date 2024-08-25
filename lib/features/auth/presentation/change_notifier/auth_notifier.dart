@@ -6,9 +6,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
-import 'package:logger/logger.dart';
 import 'package:Nexus/core/constant.dart';
-import 'package:Nexus/core/models/location.dart';
+import 'package:Nexus/core/models/locationIQModel.dart';
 import 'package:Nexus/core/models/user.dart';
 import 'package:Nexus/core/network/formatter.dart';
 import 'package:Nexus/core/usecases/core/has_started.dart';
@@ -70,7 +69,7 @@ class AuthNotifier with ChangeNotifier {
     'onPremium': false,
     'prevSubscribed': false,
     'subExpDate': null,
-    'usedOneFreeText':false,
+    'usedOneFreeText': false,
     kEMAIL: '',
     kPASSWORD: '',
     kPHONENUMBER: '',
@@ -128,7 +127,7 @@ class AuthNotifier with ChangeNotifier {
       'onPremium': false,
       'prevSubscribed': false,
       'subExpDate': null,
-      'usedOneFreeText':false,
+      'usedOneFreeText': false,
       kEMAIL: '',
       kPASSWORD: '',
       kPHONENUMBER: '',
@@ -340,38 +339,11 @@ class AuthNotifier with ChangeNotifier {
     }
   }
 
-  LocationModel? _locationModel;
-  LocationModel get location => _locationModel!;
+  LocationIqModel? locationIQModel;
 
   TextEditingController search = TextEditingController();
   String _city = '';
   String get city => _city;
-
-  Future<void> getFormattedLocation(
-      double latitude, double longitude, String pId) async {
-    EasyLoading.show();
-    String url =
-        'https://maps.googleapis.com/maps/api/geocode/json?place_id=$pId&key=AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y';
-    final response = await http.get(Uri.parse(url));
-    final data = json.decode(response.body);
-    // Logger().d(data);
-    final address = data['results'][0]['formatted_address'];
-    final placeId = data['results'][0]['place_id'];
-
-    Map<String, dynamic> loc = {
-      'place': address,
-      'latitude': latitude,
-      'longitude': longitude,
-      'id': placeId,
-      'city': data['results'][0]['address_components'][0]['long_name'],
-    };
-    _locationModel = LocationModel.fromJson(loc);
-    search.text = address;
-    _city = data['results'][0]['address_components'][0]['long_name'];
-    EasyLoading.dismiss();
-    Logger().d(_locationModel!.toJson());
-    notifyListeners();
-  }
 
   int recordingEndSecs = 60;
 }

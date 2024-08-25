@@ -1,8 +1,8 @@
 import 'dart:developer';
-
-import 'package:Nexus/core/storage/digital_ocean_keys.dart';
 import 'package:minio_flutter/io.dart';
 import 'package:minio_flutter/minio.dart';
+
+import '../storage/digital_ocean_keys.dart';
 
 class DigitalOceanClient {
   late Minio minio;
@@ -46,5 +46,4 @@ class DigitalOceanClient {
   }
 
   //delete file
-  
 }

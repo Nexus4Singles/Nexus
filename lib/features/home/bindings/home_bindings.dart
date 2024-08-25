@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
-import 'package:Nexus/features/explore/controllers/explore_ctr.dart';
-import 'package:Nexus/features/home/controllers/home_controller.dart';
-import 'package:Nexus/features/home/controllers/notification_controller.dart';
-import 'package:Nexus/features/match/controllers/matches_ctr.dart';
+
+import '../../explore/controllers/explore_ctr.dart';
+import '../../match/controllers/matches_ctr.dart';
+import '../../profile/presentation/controllers/profile_ctr.dart';
+import '../controllers/home_controller.dart';
+import '../controllers/notification_controller.dart';
 
 // here
 class HomeBindings extends Bindings {
@@ -12,5 +14,6 @@ class HomeBindings extends Bindings {
     Get.put(NotificationController());
     Get.put(ExploreCtr());
     Get.put(MatchesCtr());
+    Get.put(ProfileCtr());
   }
 }

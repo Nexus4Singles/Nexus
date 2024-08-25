@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:injectable/injectable.dart';
-import 'package:Nexus/core/constant.dart';
-import 'package:Nexus/core/storage/storage.dart';
-
+import '../constant.dart';
 import '../models/user.dart';
+import 'storage.dart';
 
 abstract class Storage {
   Future<void> started();

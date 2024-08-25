@@ -39,83 +39,84 @@ class _ChangePlanScreenState extends State<ChangePlanScreen> {
           builder: (context, subProvider, child) {
             return subProvider.onPremium
                 ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  alignment: Alignment.topCenter,
-                  decoration: BoxDecoration(
-                      color: primary,
-                      borderRadius: BorderRadius.circular(15)),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 15),
-                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Premium',
-                            style: TextStyle(
-                                fontSize: 35,
+                      Container(
+                        width: double.infinity,
+                        alignment: Alignment.topCenter,
+                        decoration: BoxDecoration(
+                            color: primary,
+                            borderRadius: BorderRadius.circular(15)),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 15),
+                        child: Column(
+                          children: [
+                            const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'Premium',
+                                  style: TextStyle(
+                                      fontSize: 35,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            const SizedBoxH10(),
+                            Text(
+                              subProvider.subExpDate != null &&
+                                      DateTime.now().isBefore(
+                                          DateFormat('dd/MM/yyyy')
+                                              .parse(subProvider.subExpDate!))
+                                  ? 'Your subscription expires on'
+                                  : 'Your subscription expires on ',
+                              style: textStyle18.copyWith(
+                                color: white,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            const SizedBoxH5(),
+                            Text(
+                              subProvider.subExpDate!,
+                              style: textStyle12.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                        ],
-                      ),
-                      const SizedBoxH10(),
-                      Text(
-                        subProvider.subExpDate != null &&
-                            DateTime.now().isBefore(DateFormat('dd/MM/yyyy')
-                                .parse(subProvider.subExpDate!))
-                            ? 'Your subscription expires on'
-                            : 'Your subscription expires on ',
-                        style: textStyle18.copyWith(
-                          color: white,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      const SizedBoxH5(),
-                      Text(
-                        subProvider.subExpDate!,
-                        style: textStyle12.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: white,
+                                color: white,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
-                  ),
-                ),
-              ],
-            )
+                  )
                 : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text(
-                  'You currently don\'t have any subscription',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xffa7a9b7),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                CustomButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SubscriptionScreen(),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'You currently don\'t have any subscription',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xffa7a9b7),
+                        ),
                       ),
-                    );
-                  },
-                  text: 'Subscribe',
-                ),
-              ],
-            );
+                      const SizedBox(height: 20),
+                      CustomButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SubscriptionScreen(),
+                            ),
+                          );
+                        },
+                        text: 'Subscribe',
+                      ),
+                    ],
+                  );
           },
         ),
       ),

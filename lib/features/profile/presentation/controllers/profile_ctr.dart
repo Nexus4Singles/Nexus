@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:Nexus/core/network/digital_ocean_client.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,68 +5,67 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:Nexus/core/constant.dart';
 import 'package:Nexus/core/utils/toast.dart';
 import 'package:Nexus/router.dart';
-import 'package:logger/logger.dart';
 import '../../../../core/models/location.dart';
 import 'package:path/path.dart' as path;
 
+import '../../../home/controllers/home_controller.dart';
+
 class ProfileCtr extends GetxController {
+  static ProfileCtr get instance => Get.find<ProfileCtr>();
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
   final DigitalOceanClient digitalOceanClient = DigitalOceanClient();
-  TextEditingController searchText = TextEditingController();
   TextEditingController usernameCtr = TextEditingController();
   TextEditingController currentPassword = TextEditingController();
   TextEditingController newPassword = TextEditingController();
   TextEditingController coNewPassword = TextEditingController();
+  TextEditingController churchCtr = TextEditingController();
+  TextEditingController countryCtr = TextEditingController();
+  TextEditingController cityCtr = TextEditingController();
   var eduLevel = "".obs;
   var profession = "".obs;
   var church = "".obs;
-  var city = "".obs;
-  LocationModel? locationModel;
   List imageUrls = [];
 
-  Future<void> getFormattedLocation(double latitude, double longitude, String pId) async {
-    EasyLoading.show();
-    String url =
-        'https://maps.googleapis.com/maps/api/geocode/json?place_id=$pId&key=AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y';
-    final response = await http.get(Uri.parse(url));
-    final data = json.decode(response.body);
-    Logger().d(data);
-    final address = data['results'][0]['formatted_address'];
-    final placeId = data['results'][0]['place_id'];
-
-    Map<String, dynamic> loc = {
-      'place': address,
-      'latitude': latitude,
-      'longitude': longitude,
-      'id': placeId,
-      'city': data['results'][0]['address_components'][0]['long_name'],
-    };
-    locationModel = LocationModel.fromJson(loc);
-    searchText.text = address;
-    city.value = data['results'][0]['address_components'][0]['long_name'];
-    update();
-    EasyLoading.dismiss();
+  bool isEmpty() {
+    var status = usernameCtr.text.isNotEmpty &&
+        countryCtr.text.isNotEmpty &&
+        cityCtr.text.isNotEmpty &&
+        church.value.isNotEmpty;
+    print('what is the current status $status');
+    return status;
   }
 
-  updateProfile(List<File> imageFiles) async {
+  Future updateProfile(List<File> imageFiles) async {
     EasyLoading.show();
-    if (imageFiles.isNotEmpty) {
-      await sendImageToDb(imageFiles);
+    if (isEmpty()) {
+      if (imageFiles.isNotEmpty) {
+        await sendImageToDb(imageFiles);
+      }
+      await db.collection(kUSER).doc(auth.currentUser!.uid).update({
+        "username": usernameCtr.text,
+        'education_level': eduLevel.value,
+        'profession': profession.value,
+        'church_name': church.value,
+        'location': LocationModel(
+                id: '',
+                latitude: 0,
+                longitude: 0,
+                place: "${cityCtr.text} , ${countryCtr.text}",
+                country: countryCtr.text,
+                city: cityCtr.text)
+            .toJson(),
+      });
+      await Future.delayed(const Duration(seconds: 5),
+          () async => await HomeController.instance.getMyProfile());
+      Get.back();
+      EasyLoading.dismiss();
+    } else {
+      EasyLoading.showToast("Kindly fill all fields");
     }
-    await db.collection(kUSER).doc(auth.currentUser!.uid).update({
-      "username": usernameCtr.text,
-      'education_level': eduLevel.value,
-      'profession': profession.value,
-      'church_name': church.value,
-      'location': locationModel?.toJson()
-    });
-    Get.back();
-    EasyLoading.dismiss();
   }
 
   sendImageToDb(List<File> imageFiles) async {
@@ -99,7 +97,10 @@ class ProfileCtr extends GetxController {
 
   updateHobbies(List<String> hobbies, Function onCall) async {
     EasyLoading.show();
-    await db.collection(kUSER).doc(auth.currentUser!.uid).update({"hobbies": hobbies});
+    await db
+        .collection(kUSER)
+        .doc(auth.currentUser!.uid)
+        .update({"hobbies": hobbies});
     await onCall();
     EasyLoading.dismiss();
     Get.back();
@@ -110,6 +111,7 @@ class ProfileCtr extends GetxController {
     await db.collection(kUSER).doc(auth.currentUser!.uid).update({
       "photos": FieldValue.arrayRemove([image])
     });
+    await HomeController.instance.getMyProfile();
     EasyLoading.dismiss();
     Get.back();
   }
@@ -128,7 +130,8 @@ class ProfileCtr extends GetxController {
 
   Future changePassword() async {
     if (currentPassword.text.isNotEmpty || newPassword.text.isNotEmpty) {
-      if (newPassword.text == coNewPassword.text || currentPassword.text == newPassword.text) {
+      if (newPassword.text == coNewPassword.text ||
+          currentPassword.text == newPassword.text) {
         try {
           EasyLoading.show();
           AuthCredential credential = EmailAuthProvider.credential(

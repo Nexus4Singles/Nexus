@@ -1,6 +1,7 @@
-import 'package:Nexus/features/auth/domain/repositories/auth_repo.dart';
 import 'package:injectable/injectable.dart';
-import 'package:Nexus/core/usecases/usecases.dart';
+
+import '../../../../core/usecases/usecases.dart';
+import '../repositories/auth_repo.dart';
 
 @lazySingleton
 class IsAuthUsecase extends Usecase<void, NoParams> {

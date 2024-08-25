@@ -1,13 +1,12 @@
 import 'dart:async';
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-import 'package:google_places_flutter/google_places_flutter.dart';
-import 'package:google_places_flutter/model/prediction.dart';
 import 'package:Nexus/core/button.dart';
 import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/core/constant.dart';
+import 'package:Nexus/core/models/location.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
 import 'package:Nexus/core/text_field.dart';
@@ -18,6 +17,7 @@ import 'package:Nexus/features/auth/presentation/widgets/drop_down.dart';
 import 'package:Nexus/router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../core/utils/locationIQ_widget.dart';
 import '../../../../../core/utils/toast.dart';
 
 class ExtraInformationScreen extends StatefulWidget {
@@ -33,11 +33,12 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
   String profession = '';
   String country = '';
   String church = '';
+  String churchValue = '';
 
   final GlobalKey<FormState> _formkey = GlobalKey();
   TextEditingController cityController = TextEditingController();
   TextEditingController churchController = TextEditingController();
-  TextEditingController stateController = TextEditingController();
+  TextEditingController countryController = TextEditingController();
 
   @override
   void initState() {
@@ -52,6 +53,7 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
   @override
   void dispose() {
     super.dispose();
+    countryController.dispose();
     cityController.dispose();
   }
 
@@ -109,73 +111,37 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                       ),
                     ),
                     const SizedBoxH40(),
-                    const SizedBoxH20(),
-                    GooglePlaceAutoCompleteTextField(
-                      textEditingController: model.search,
-                      textStyle: textStyle14,
-                      googleAPIKey: 'AIzaSyDK9B0jBJl2A3NdXfhKzFAqreY_Djr249Y',
-                      // countries: const ['NG'],
-                      inputDecoration: InputDecoration(
-                        fillColor: white,
-                        filled: true,
-                        hintText: 'Select your City, Country of Residence',
-                        hintStyle: textStyle14.copyWith(color: otherGrey),
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 5),
-                        border: outlineInputBorder.copyWith(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: const BorderSide(
-                            color: textBorderColor,
-                          ),
-                        ),
-                        enabledBorder: outlineInputBorder.copyWith(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: const BorderSide(
-                            color: textBorderColor,
-                          ),
-                        ),
-                        focusedBorder: outlineInputBorder.copyWith(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: const BorderSide(
-                            color: textBorderColor,
-                          ),
-                        ),
-                      ),
-                      boxDecoration: BoxDecoration(
-                          border: Border.all(color: Colors.transparent)),
-                      debounceTime: 800,
-                      isLatLngRequired: true,
-                      getPlaceDetailWithLatLng: (Prediction prediction) {
-                        Logger().d(prediction.toJson());
-                        model.getFormattedLocation(
-                            double.parse(prediction.lat!),
-                            double.parse(prediction.lat!),
-                            prediction.placeId!);
-                      },
-                      itemClick: (prediction) {
-                        // model.getFormattedLocation(
-                        //     double.parse(prediction.lat!),
-                        //     double.parse(prediction.lat!));
-                        // Logger().d(prediction.toJson());
-                      },
-                      itemBuilder: (context, index, Prediction prediction) {
-                        return Container(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.location_on),
-                              const SizedBox(width: 7),
-                              Expanded(
-                                  child: Text(
-                                prediction.description ?? "",
-                                style: textStyle14,
-                              ))
-                            ],
-                          ),
+                    InkWell(
+                      onTap: () {
+                        showCountryPicker(
+                          countryListTheme: CountryListThemeData(
+                              textStyle: textStyle14,
+                              inputDecoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50))),
+                              borderRadius: BorderRadius.circular(24)),
+                          context: context,
+                          showPhoneCode: false,
+                          onSelect: (Country country) {
+                            countryController.text = country.name;
+                          },
                         );
                       },
-                      seperatedBuilder: const Divider(),
-                      isCrossBtnShown: true,
+                      child: CustomTextField(
+                        enabled: false,
+                        fillColor: white,
+                        suffixIcon: const Icon(Icons.arrow_drop_down_outlined),
+                        radius: 12,
+                        controller: countryController,
+                        hintText: "Country of Residence",
+                      ),
+                    ),
+                    const SizedBoxH15(),
+                    CustomTextField(
+                      fillColor: white,
+                      radius: 12,
+                      controller: cityController,
+                      hintText: "State or City of Residence (Correct Spelling)",
                     ),
                     const SizedBoxH15(),
                     ProfileDropDown(
@@ -218,7 +184,7 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                       onChanged: (p0) {
                         setState(() {
                           church = p0!;
-                          churchController.text = p0;
+                          // churchController.text = p0;
                         });
                       },
                     ),
@@ -226,9 +192,7 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                     church == "Other"
                         ? CustomTextField(
                             controller: churchController,
-                            onChanged: (val) {
-                              // church = val;
-                            },
+                            onChanged: (val) {},
                             hintText: "Enter your Church's full name")
                         : const SizedBox(),
                     const SizedBoxH40(),
@@ -247,36 +211,38 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
             children: [
               CustomButton(
                 onPressed: () {
-                  if (model.location.place!.contains(" ")) {
-                    bool validate = _formkey.currentState!.validate();
-                    if (validate &&
-                        churchController.text.isNotEmpty &&
-                        churchController.text.toLowerCase() != "other") {
-                      Map<String, dynamic> map = {
-                        kCOUNTRY: 'Nigeria', //todo Nigeria as default
-                        kCHURCHNAME: churchController.text.isEmpty
-                            ? church
-                            : churchController.text,
-                        kEDULEVEL: eduLevel,
-                        kSTATEOFORIGIN: state,
-                        kPROFESSION: profession,
-                        kREGPROGRESS: 'extra',
-                        kCITY: model.city, //todo set city
-                        kLOCATION: model.location.toJson(),
-                      };
-                      model.updateProfile(
-                        map: map,
-                        onCompleted: () {
-                          Get.toNamed(AppRoutes.hobbies);
-                        },
-                      );
-                    } else {
-                      AppToast().showErrorToast(
-                          "Please type the name of your Church");
-                    }
+                  setState(() {
+                    churchValue =
+                        church == "Other" ? churchController.text : church;
+                  });
+
+                  if (isNotEmpty()) {
+                    Map<String, dynamic> map = {
+                      kCOUNTRY: 'Nigeria', //todo Nigeria as default
+                      kCHURCHNAME: churchValue,
+                      kEDULEVEL: eduLevel,
+                      kSTATEOFORIGIN: state,
+                      kPROFESSION: profession,
+                      kREGPROGRESS: 'extra',
+                      kCITY: model.city, //todo set city
+                      kLOCATION: LocationModel(
+                              id: "",
+                              latitude: 0,
+                              longitude: 0,
+                              place:
+                                  "${cityController.text} , ${countryController.text}",
+                              country: countryController.text,
+                              city: cityController.text)
+                          .toJson(),
+                    };
+                    model.updateProfile(
+                      map: map,
+                      onCompleted: () {
+                        Get.toNamed(AppRoutes.hobbies);
+                      },
+                    );
                   } else {
-                    AppToast().showErrorToast(
-                        "Please select a city with the country");
+                    AppToast().showErrorToast("Kindly fill all fields");
                   }
                 },
                 child: Text(
@@ -291,4 +257,53 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
       );
     });
   }
+
+  bool isNotEmpty() {
+    return countryController.text.isNotEmpty &&
+        cityController.text.isNotEmpty &&
+        state.isNotEmpty &&
+        eduLevel.isNotEmpty &&
+        profession.isNotEmpty &&
+        churchValue.isNotEmpty;
+  }
 }
+
+//    LocationIQWidget(
+//                       textEditingController: model.search,
+//                       textStyle: textStyle14,
+//                       locationIQAPIKey: 'pk.da653605da38d00bec98323b179bd52e',
+//                       inputDecoration: InputDecoration(
+//                         fillColor: white,
+//                         filled: true,
+//                         hintText: 'Select your City, Country of Residence',
+//                         hintStyle: textStyle14.copyWith(color: otherGrey),
+//                         contentPadding: const EdgeInsets.symmetric(
+//                             horizontal: 15, vertical: 5),
+//                         border: outlineInputBorder.copyWith(
+//                           borderRadius: BorderRadius.circular(16),
+//                           borderSide: const BorderSide(
+//                             color: textBorderColor,
+//                           ),
+//                         ),
+//                         enabledBorder: outlineInputBorder.copyWith(
+//                           borderRadius: BorderRadius.circular(16),
+//                           borderSide: const BorderSide(
+//                             color: textBorderColor,
+//                           ),
+//                         ),
+//                         focusedBorder: outlineInputBorder.copyWith(
+//                           borderRadius: BorderRadius.circular(16),
+//                           borderSide: const BorderSide(
+//                             color: textBorderColor,
+//                           ),
+//                         ),
+//                       ),
+//                       boxDecoration: BoxDecoration(
+//                           border: Border.all(color: Colors.transparent)),
+//                       debounceTime: 800,
+//                       seperatedBuilder: const Divider(),
+//                       isCrossBtnShown: true,
+//                       onClick: (models) {
+//                         model.locationIQModel = models;
+//                       },
+//                     ),
