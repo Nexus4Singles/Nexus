@@ -102,6 +102,7 @@ class HomeController extends GetxController {
   }
 
 // CHECK 12 HOURS TIME BEFORE VIEW
+//TODO: RECALIBRATE TIME
   Duration calculateCountDownTime() => DateTime.now().difference(
       user.value.recommendedTime.toDate().add(const Duration(hours: 12)));
   int calculateTimeLeftToView() =>
