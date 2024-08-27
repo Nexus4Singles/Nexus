@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBma35VjGIPZZnRIwIPm3XaJ7QrWlqbOvk',
-    appId: '1:327599352691:android:62d6e36242e7d92f05b306',
+    appId: '1:327599352691:android:51d86d47fb99117105b306',
     messagingSenderId: '327599352691',
     projectId: 'nexus-visibility-app',
     storageBucket: 'nexus-visibility-app.appspot.com',
