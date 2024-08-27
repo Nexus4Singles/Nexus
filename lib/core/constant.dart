@@ -1,4 +1,6 @@
 const kTheme = 'theme';
+const kLoginTime = 'login_time';
+
 
 const kToken = 'token';
 const kFirstTime = 'firstTime';

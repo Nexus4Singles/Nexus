@@ -54,8 +54,7 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
             children: [
               Text(
                 'Upload Your Photos',
-                style: textStyle8.copyWith(
-                    fontSize: 30, fontWeight: FontWeight.w700, color: black),
+                style: textStyle8.copyWith(fontSize: 30, fontWeight: FontWeight.w700, color: black),
               ),
               const SizedBoxH10(),
               Align(
@@ -83,8 +82,7 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
                     InkWell(
                       onTap: () {
                         if (imageFiles.length == 4) {
-                          AppToast()
-                              .showErrorToast('Maximum of 4 photos allowed');
+                          AppToast().showErrorToast('Maximum of 4 photos allowed');
                         } else {
                           _pickImage(model);
                         }
@@ -195,14 +193,13 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
               CustomButton(
                 onPressed: () async {
                   if (imageFiles.length < 2) {
-                    AppToast()
-                        .showErrorToast('Please select at least 2 photos');
+                    AppToast().showErrorToast('Please select at least 2 photos');
                   } else {
                     List imageUrls = [];
                     for (var file in imageFiles) {
-                      await digitalOceanClient
-                          .uploadFileToSpace(
-                        bucket: 'profile',
+                      await model
+                          .uploadToDigitalOcean(
+                        bucketName: 'profile',
                         objectName:
                             '${model.user?.email}_${model.user?.id}/${path.basename(file.path.trim())}',
                         filePath: file.path,

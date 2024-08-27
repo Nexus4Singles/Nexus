@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:Nexus/core/network/digital_ocean_client.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -57,6 +58,8 @@ class AuthNotifier with ChangeNotifier {
   String get verificationCode {
     return _code;
   }
+
+  final DigitalOceanClient digitalOceanClient = DigitalOceanClient();
 
   bool get editProfile => _editProfile;
 
@@ -173,8 +176,7 @@ class AuthNotifier with ChangeNotifier {
 
   Future<void> started() async => await startedUsecase.call(const NoParams());
 
-  Future<bool> hasStarted() async =>
-      await hasStratedUsecase.call(const NoParams());
+  Future<bool> hasStarted() async => await hasStratedUsecase.call(const NoParams());
 
   Future<void> resendResetLink({required String email}) async {
     EasyLoading.show();
@@ -190,9 +192,7 @@ class AuthNotifier with ChangeNotifier {
     }
   }
 
-  Future<void> login(
-      {required BuildContext context,
-      required Map<String, dynamic> map}) async {
+  Future<void> login({required BuildContext context, required Map<String, dynamic> map}) async {
     EasyLoading.show();
     var response = await loginUsecase.call(map);
     response.fold((l) {
@@ -302,6 +302,21 @@ class AuthNotifier with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<String> uploadToDigitalOcean(
+      {required String objectName, required String filePath, required String bucketName}) async {
+    EasyLoading.show();
+    try {
+      String url = await digitalOceanClient.uploadFileToSpace(
+        bucket: bucketName,
+        objectName: objectName,
+        filePath: filePath,
+      );
+      return url;
+    } catch (e) {
+      throw 'something wrong occured';
+    }
+  }
+
   Future<void> updateProfile({
     required Map<String, dynamic> map,
     required VoidCallback onCompleted,
@@ -327,9 +342,7 @@ class AuthNotifier with ChangeNotifier {
   void resendVerificatioLink() async {
     EasyLoading.show();
     try {
-      await FirebaseAuth.instance.currentUser!
-          .sendEmailVerification()
-          .then((value) {
+      await FirebaseAuth.instance.currentUser!.sendEmailVerification().then((value) {
         AppToast().showToast('Email verification link has been sent');
         EasyLoading.dismiss();
       });

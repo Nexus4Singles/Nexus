@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import '../../../core/constant.dart';
 import '../../../core/models/user.dart';
 import '../../../core/services/api_service.dart';
@@ -24,16 +25,22 @@ class HomeController extends GetxController {
   var allUsers = <UserModel>[].obs;
   List<UserModel> recommendationList = [];
   final RxInt _viewedCount = 0.obs;
-
+  RxString loggedInTime = ''.obs;
   var isLoading = false.obs;
   var isEmpty = false.obs;
 
   @override
   void onInit() async {
+    getTimes();
     getMyProfile();
     super.onInit();
     FCMService.init();
     await ApiService.getToken();
+  }
+
+  getTimes() async {
+    SharedPref.setString(kLoginTime, DateTime.now().toIso8601String());
+    loggedInTime.value = await SharedPref.getString(kLoginTime);
   }
 
   getFilteredUsers(bool callApi) async {
@@ -56,15 +63,12 @@ class HomeController extends GetxController {
         .where((u) => !unRecommendUsers.contains(u.id))
         .toList());
     allUsers.shuffle();
-    debugPrint(
-        "This is a list of all my recommended users == > ${allUsers.length}");
+    debugPrint("This is a list of all my recommended users == > ${allUsers.length}");
 
     isLoading.value = false;
   }
 
-  final user = const UserModel(
-          id: "", name: '', username: "", email: "", age: 0, gender: "")
-      .obs;
+  final user = const UserModel(id: "", name: '', username: "", email: "", age: 0, gender: "").obs;
 
   String _backDateRecommendedTime() {
     DateTime now = DateTime.now();
@@ -76,8 +80,7 @@ class HomeController extends GetxController {
     await db.collection(kUSER).doc(auth.currentUser!.uid).get().then((val) {
       var userData = val.data();
       user.value = UserModel.fromJson(userData!);
-      print(
-          "This is the amount of image left here ${user.value.photos?.length}");
+      print("This is the amount of image left here ${user.value.photos?.length}");
 
       //save the time locally
       if (userData['recommendedTime'] != null) {
@@ -102,10 +105,20 @@ class HomeController extends GetxController {
   }
 
 // CHECK 12 HOURS TIME BEFORE VIEW
-  Duration calculateCountDownTime() => DateTime.now().difference(
-      user.value.recommendedTime.toDate().add(const Duration(hours: 12)));
-  int calculateTimeLeftToView() =>
-      DateTime.now().difference(user.value.recommendedTime.toDate()).inHours;
+//login_time: 2024-08-27T18:34:12.713101, recommendedTime: 2024-08-27T09:39:40.685451
+//TODO: RECALIBRATE TIME
+  Duration calculateCountDownTime() {
+    var dateTimeNow = DateTime.tryParse(loggedInTime.value);
+    dateTimeNow ??= DateTime.now();
+    return dateTimeNow
+        .difference(user.value.recommendedTime.toDate().add(const Duration(hours: 12)));
+  }
+
+  int calculateTimeLeftToView() {
+    var dateTimeNow = DateTime.tryParse(loggedInTime.value) ?? DateTime.now();
+    return dateTimeNow.difference(user.value.recommendedTime.toDate()).inHours;
+  }
+
   bool checkTimeIsAbove12hrs() => calculateTimeLeftToView() >= 12;
 
   //
@@ -124,16 +137,14 @@ class HomeController extends GetxController {
 
     //IF IT'S NOT IN OUR UNRECOMMENDED
     bool isNotUnrecommendedUsers(String othersUID) {
-      if (myProfile.unRecommendUsers.isNotNull() &&
-          othersUID.isNotEmptyOrNull()) {
+      if (myProfile.unRecommendUsers.isNotNull() && othersUID.isNotEmptyOrNull()) {
         return !myProfile.unRecommendUsers!.contains(othersUID);
       }
       return false;
     }
 
     //FOR GENDER
-    bool isDifferentGender(String gender) =>
-        myProfile.gender.toLowerCase() != gender.toLowerCase();
+    bool isDifferentGender(String gender) => myProfile.gender.toLowerCase() != gender.toLowerCase();
 
     // FOR NATIONALITY
     bool isSameCountry(String country) => myProfile.country.isNotEmptyOrNull()
@@ -179,8 +190,7 @@ class HomeController extends GetxController {
   void incrementViews() {
     _viewedCount.value++;
 
-    if (viewedCount >= getRecommendedUsers().length ||
-        getRecommendedUsers().isEmpty) {
+    if (viewedCount >= getRecommendedUsers().length || getRecommendedUsers().isEmpty) {
       db.collection(kUSER).doc(auth.currentUser!.uid).update({
         'recommendedTime': DateTime.now().toIso8601String(),
       });
@@ -206,9 +216,8 @@ class HomeController extends GetxController {
 
 extension StringExtension on String? {
   bool isNotEmptyOrNull() => this != null && this?.isNotEmpty == true;
-  DateTime toDate() => this != null
-      ? DateTime.parse(this!)
-      : DateTime.now().subtract(const Duration(days: 3));
+  DateTime toDate() =>
+      this != null ? DateTime.parse(this!) : DateTime.now().subtract(const Duration(days: 3));
 }
 
 extension ListOfItemsExtension on List? {

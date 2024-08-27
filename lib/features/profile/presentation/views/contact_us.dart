@@ -41,7 +41,7 @@ class ContactUs extends StatelessWidget {
               ),
               const TextSpan(
                 text:
-                    "You can also reach out to us for any inquiries or complaints on the same email.",
+                    "You can also reach out to us for any inquiries or complaints on the email above, or send us a DM on Instagram or Twitter @nexus4singles.",
               ),
             ], style: textStyle14.copyWith(height: 1.8)))
           ],

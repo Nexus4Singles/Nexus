@@ -101,8 +101,8 @@ class _Audio4ScreenState extends State<Audio4Screen> {
               Center(
                 child: Text(
                   'Audio Recordings',
-                  style: textStyle8.copyWith(
-                      fontSize: 30, fontWeight: FontWeight.w700, color: black),
+                  style:
+                      textStyle8.copyWith(fontSize: 30, fontWeight: FontWeight.w700, color: black),
                 ),
               ),
               const SizedBoxH15(),
@@ -117,17 +117,13 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                   Text(
                     '1. ',
                     style: textStyle14.copyWith(
-                        color: black,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600),
+                        color: black, fontSize: 13, fontWeight: FontWeight.w600),
                   ),
                   Expanded(
                     child: Text(
                       'How would you describe your current relationship with God and why is this relationship important to you?',
                       style: textStyle14.copyWith(
-                          color: black,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600),
+                          color: black, fontSize: 13, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
@@ -155,17 +151,13 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                   Text(
                     '2. ',
                     style: textStyle14.copyWith(
-                        color: black,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600),
+                        color: black, fontSize: 13, fontWeight: FontWeight.w600),
                   ),
                   Expanded(
                     child: Text(
                       'What are your thoughts on the role of a husband and a wife in marriage?',
                       style: textStyle14.copyWith(
-                          color: black,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600),
+                          color: black, fontSize: 13, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
@@ -193,17 +185,13 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                   Text(
                     '3. ',
                     style: textStyle14.copyWith(
-                        color: black,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600),
+                        color: black, fontSize: 13, fontWeight: FontWeight.w600),
                   ),
                   Expanded(
                     child: Text(
                       'What are your favourite qualities or traits about yourself?',
                       style: textStyle14.copyWith(
-                          color: black,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600),
+                          color: black, fontSize: 13, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
@@ -237,8 +225,7 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                 },
                 child: Text(
                   'Complete Profile',
-                  style: textStyle16.copyWith(
-                      color: white, fontWeight: FontWeight.bold),
+                  style: textStyle16.copyWith(color: white, fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBoxH30()
@@ -251,29 +238,31 @@ class _Audio4ScreenState extends State<Audio4Screen> {
 
   void _uploadFiles(AuthNotifier model) async {
     //audio path 1
-    await DigitalOceanClient()
-        .uploadFileToSpace(
-      bucket: 'audio',
+    await model
+        .uploadToDigitalOcean(
+      bucketName: 'audio',
       objectName:
           '${model.user?.email}/${path.basename('${model.audioPath1}/${DateTime.now().millisecondsSinceEpoch}')}',
       filePath: model.audioPath1,
     )
         .then((audi1) async {
       //audio path 2
-      await DigitalOceanClient()
-          .uploadFileToSpace(
-              bucket: 'audio',
-              objectName:
-                  '${model.user?.email}/${path.basename('${model.audioPath2}/${DateTime.now().millisecondsSinceEpoch}')}',
-              filePath: model.audioPath2)
+      await model
+          .uploadToDigitalOcean(
+        bucketName: 'audio',
+        objectName:
+            '${model.user?.email}/${path.basename('${model.audioPath2}/${DateTime.now().millisecondsSinceEpoch}')}',
+        filePath: model.audioPath2,
+      )
           .then((audio2) async {
         //audio path 3
-        await DigitalOceanClient()
-            .uploadFileToSpace(
-                bucket: 'audio',
-                objectName:
-                    '${model.user?.email}/${path.basename('${model.audioPath3}/${DateTime.now().millisecondsSinceEpoch}')}',
-                filePath: model.audioPath3)
+        await model
+            .uploadToDigitalOcean(
+          bucketName: 'audio',
+          objectName:
+              '${model.user?.email}/${path.basename('${model.audioPath3}/${DateTime.now().millisecondsSinceEpoch}')}',
+          filePath: model.audioPath3,
+        )
             .then((audio3) async {
           // await model.uploadFile(file: File(model.audioPath1)).then((audi1) async {
           // await model.uploadFile(file: File(model.audioPath2)).then((audio2) async {
