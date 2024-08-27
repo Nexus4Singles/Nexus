@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/core/style.dart';
@@ -6,6 +7,8 @@ import 'package:Nexus/features/profile/presentation/views/contact_us.dart';
 import 'package:Nexus/router.dart';
 import 'package:Nexus/features/profile/presentation/widgets/login_modal_sheet.dart';
 import 'package:Nexus/features/profile/presentation/widgets/setting_container.dart';
+
+import '../../../../core/utils/modals.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -26,28 +29,6 @@ class _SettingScreenState extends State<SettingScreen> {
           style: textStyle18.copyWith(
               fontSize: 24, fontWeight: FontWeight.w700, color: black),
         ),
-        // actions: [
-        //   InkWell(
-        //     child: const Padding(
-        //       padding: EdgeInsets.all(8.0),
-        //       child: Icon(Icons.add),
-        //     ),
-        //     onTap: () {
-        //       Get.to(Ruut(
-        //         ruutToken: 'M9Hp8qy4wYBmPa1HN6EsdYDt',
-        //         user: RuutUser(
-        //           id: 'USER_ID',
-        //           email: 'user@example.com',
-        //           fullName: 'John Doe',
-        //           // Add other user details here
-        //         ),
-        //         onReady: () {
-        //           print('Ruut is ready');
-        //         },
-        //       ));
-        //     },
-        //   )
-        // ],
         centerTitle: true,
         foregroundColor: black,
         elevation: 0,
@@ -60,39 +41,40 @@ class _SettingScreenState extends State<SettingScreen> {
               text: 'Edit Profile',
               icon: true,
               onPress: () {
-                Get.toNamed(AppRoutes.editProfile);
+                EasyLoading.showToast("Coming Soon");
+                // Get.toNamed(AppRoutes.editProfile);
                 // AppToast().showErrorToast(
                 //   'This feature will be available soon',
                 //   header: 'Coming soon',
                 // );
               },
             ),
-            const Divider(color: Colors.transparent),
-            SettingsContainer(
-                text: 'Subscription Plans',
-                icon: true,
-                onPress: () {
-                  // AppToast().showErrorToast(
-                  //   'This feature will be available soon',
-                  //   header: 'Coming soon',
-                  // );
-                  Get.toNamed(AppRoutes.subscription);
-                }),
-            const Divider(
-              color: Colors.transparent,
-            ),
-            SettingsContainer(
-              text: 'Your Subscription',
-              icon: true,
-              onPress: () {
-                // AppToast().showErrorToast(
-                //   'This feature will be available soon',
-                //   header: 'Coming soon',
-                // );
-
-                Get.toNamed(AppRoutes.subscription3);
-              },
-            ),
+            // const Divider(color: Colors.transparent),
+            // SettingsContainer(
+            //     text: 'Subscription Plans',
+            //     icon: true,
+            //     onPress: () {
+            //       // AppToast().showErrorToast(
+            //       //   'This feature will be available soon',
+            //       //   header: 'Coming soon',
+            //       // );
+            //       // Get.toNamed(AppRoutes.subscription);
+            //     }),
+            // const Divider(
+            //   color: Colors.transparent,
+            // ),
+            // SettingsContainer(
+            //   text: 'Your Subscription',
+            //   icon: true,
+            //   onPress: () {
+            //     // AppToast().showErrorToast(
+            //     //   'This feature will be available soon',
+            //     //   header: 'Coming soon',
+            //     // );
+            //
+            //     Get.toNamed(AppRoutes.subscription3);
+            //   },
+            // ),
             const Divider(color: Colors.transparent),
             SettingsContainer(
                 text: 'Contact Us',

@@ -10,6 +10,7 @@ import 'package:Nexus/core/text_field.dart';
 import 'package:Nexus/core/utils/empty_state.dart';
 import 'package:Nexus/features/explore/controllers/explore_ctr.dart';
 import 'package:Nexus/features/explore/presentation/widgets/filter_modal.dart';
+import '../../../../core/utils/modals.dart';
 import '../../../../core/utils/progress_indicator.dart';
 import '../../../home/presentation/views/user_details.dart';
 import '../widgets/user_tile.dart';
@@ -62,7 +63,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                               context: context,
                               showPhoneCode: false,
                               onSelect: (Country country) {
-                                ctr.searchCountry(country.name);
+                                // Get.back();
+                                // ctr.searchCountry(country.name);
                                 search.text = country.name;
                               },
                             );
@@ -80,7 +82,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         Positioned(
                           right: 5,
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              return comingSoonModal(
+                                  "You will be able to search for profiles within any country using filters like Age, Education Level, & Church",
+                                  context);
+                            },
                             child: Container(
                               padding: EdgeInsets.all(5.sp),
                               decoration: const BoxDecoration(

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:story/story_image.dart';
 import 'package:story/story_page_view.dart';
@@ -82,14 +83,16 @@ class _PhotoViewScreenState extends State<PhotoViewScreen> {
                 Navigator.pop(context);
               },
             ),
-            const SafeArea(
+            SafeArea(
               child: Padding(
-                padding: EdgeInsets.all(15),
-                child: CircleAvatar(
-                  backgroundColor: white,
-                  child: BackButton(
-                    color: primary,
-                  ),
+                padding: const EdgeInsets.all(15),
+                child: InkWell(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: const CircleAvatar(
+                      backgroundColor: white,
+                      child: Icon(Icons.chevron_left_rounded, color: primary)),
                 ),
               ),
             ),

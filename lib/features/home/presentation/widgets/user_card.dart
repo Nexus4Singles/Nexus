@@ -143,7 +143,7 @@ class _UserCardState extends State<UserCard> {
                           const SizedBoxW10(),
                           Flexible(
                             child: Text(
-                              '${widget.userModel.location!.place}',
+                              '${widget.userModel.location!.place?.capitalize}',
                               textAlign: TextAlign.center,
                               style: textStyle14.copyWith(
                                 color: white,

@@ -37,18 +37,18 @@ restrictionModal(
                   message: text),
             ),
           ),
-          Positioned(
-            top: size.height * 0.042,
-            right: size.height * 0.059,
-            child: InkWell(
-                onTap: () {
-                  Get.back();
-                },
-                child: const Icon(
-                  Icons.clear,
-                  color: primary,
-                )),
-          ),
+          // Positioned(
+          //   top: size.height * 0.042,
+          //   right: size.height * 0.059,
+          //   child: InkWell(
+          //       onTap: () {
+          //         Get.back();
+          //       },
+          //       child: const Icon(
+          //         Icons.clear,
+          //         color: primary,
+          //       )),
+          // ),
         ]),
       );
     },
