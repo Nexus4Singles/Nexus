@@ -156,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const SizedBoxH20(),
                                   Center(
                                     child: Text(
-                                      "Daily Recommendations For You",
+                                      "Recommendations Within Your Country",
                                       style: textStyle18.copyWith(
                                           color: Colors.black,
                                           fontWeight: FontWeight.w600),
