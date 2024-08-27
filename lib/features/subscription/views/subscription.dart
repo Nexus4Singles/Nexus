@@ -167,7 +167,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         await SubscriptionHelper.onSubscribe(context);
                       },
               ),
-              if (model.isLoading) AppCircularProgressIndicator()
+              if (model.isLoading) const AppCircularProgressIndicator()
 
               /*SizedBox(height: 10.h),
                 _buildPlanContainer(
