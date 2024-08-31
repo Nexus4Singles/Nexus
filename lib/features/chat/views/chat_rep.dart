@@ -313,7 +313,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
         context: context,
         dismisable: true,
         text:
-            'You have used up your limit of one (1) chat per matched \nuser on our free version.\nKindly subscribe to chat with other matched users.',
+            'You have used up your limit of one (1) chat per matched user on our free version.\nKindly subscribe to chat with other matched users.',
       );
     } else if (subProvider.onPremium == false &&
         subProvider.usedOneFreeText == true &&
