@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Nexus/features/home/presentation/change_notifier/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,7 +24,6 @@ class RegSuccessful extends StatefulWidget {
 class _RegSuccessfulState extends State<RegSuccessful> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _init();
   }
@@ -44,14 +44,23 @@ class _RegSuccessfulState extends State<RegSuccessful> {
             children: [
               SvgPicture.asset('$svgPath/congrats.svg'),
               const SizedBoxH20(),
-              Text(
-                'Congratulations ${model.user!.username}',
-                style: textStyle18.copyWith(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: black,
-                ),
-              ),
+              model.user?.username == null
+                  ? const SizedBox(
+                      width: 40 * 4,
+                      height: 10,
+                      child: LinearProgressIndicator(
+                        color: primary,
+                        backgroundColor: secondaryGrey2,
+                      ),
+                    )
+                  : Text(
+                      'Congratulations ${model.user?.username}',
+                      style: textStyle18.copyWith(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: black,
+                      ),
+                    ),
               const SizedBoxH20(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -63,16 +72,11 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                     TextSpan(
                         text: " @nexus4singles",
                         style: textStyle18.copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: black)),
+                            fontSize: 12, fontWeight: FontWeight.w700, color: black)),
                     const TextSpan(text: " to stay updated!"),
                   ]),
                   style: textStyle18.copyWith(
-                      fontSize: 12,
-                      height: 1.5,
-                      fontWeight: FontWeight.w300,
-                      color: black),
+                      fontSize: 12, height: 1.5, fontWeight: FontWeight.w300, color: black),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -84,7 +88,12 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                 alignment: Alignment.bottomCenter,
                 child: CustomButton(
                   onPressed: () async {
-                    Get.offAndToNamed(AppRoutes.mainNav);
+                    Provider.of<BottomNavModel>(context, listen: false).setInitialPage(4);
+
+                    Get.offAndToNamed(AppRoutes.mainNav, arguments: true);
+
+                    // Future.delayed(Durations.medium1, () {
+                    // });
                     // await Provider.of<HomeNotifier>(context, listen: false)
                     //     .getProfile()
                     //     .then((value) {
@@ -92,7 +101,7 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                     //       arguments: {'fromSignUp': true});
                     // });
                   },
-                  text: 'Go to Home',
+                  text: 'Go to Profile',
                 ),
               ),
             ],

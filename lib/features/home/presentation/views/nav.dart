@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
@@ -37,47 +40,53 @@ class _MainNav extends State<MainNav> {
   //     controller = controller;
   //   });
   // }
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BottomNavModel>(builder: (context, model, child) {
-      return Scaffold(
-          key: _scaffoldKey,
-          extendBody: true,
-          extendBodyBehindAppBar: true,
-          bottomSheet: Container(
-            margin: EdgeInsets.only(
-              left: 15.sp,
-              right: 15.sp,
-              bottom: 15.sp,
-            ),
-            // height: 65.h,
-            // color: black,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(50.r),
-                  child: BottomAppBar(
-                    elevation: 0,
-                    shape: const CircularNotchedRectangle(),
-                    color: black,
-                    child: tabItemsRow(context, model),
-                    //Theme.of(context).bottomAppBarColor,
+    return Consumer<BottomNavModel>(
+      builder: (context, model, child) {
+        return Scaffold(
+            key: _scaffoldKey,
+            extendBody: true,
+            extendBodyBehindAppBar: true,
+            bottomSheet: Container(
+              margin: EdgeInsets.only(
+                left: 15.sp,
+                right: 15.sp,
+                bottom: 15.sp,
+              ),
+              // height: 65.h,
+              // color: black,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(50.r),
+                    child: BottomAppBar(
+                      elevation: 0,
+                      shape: const CircularNotchedRectangle(),
+                      color: black,
+                      child: tabItemsRow(context, model),
+                      //Theme.of(context).bottomAppBarColor,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          body: PageView(
-            controller: model.controller,
-            onPageChanged: (index) {
-              model.updateIndex(index);
-            },
-            physics: const NeverScrollableScrollPhysics(),
-            children: model.navs,
-          ));
-    });
+            body: PageView(
+              controller: model.controller,
+              onPageChanged: (index) {
+                model.updateIndex(index);
+              },
+              physics: const NeverScrollableScrollPhysics(),
+              children: model.navs,
+            ));
+      },
+    );
   }
 
   Widget tabItemsRow(context, BottomNavModel navController) {
@@ -160,9 +169,7 @@ class TabItems extends StatelessWidget {
             padding: EdgeInsets.all(12.sp),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: navController!.currentIndex == currentIndex
-                  ? white
-                  : Colors.transparent,
+              color: navController!.currentIndex == currentIndex ? white : Colors.transparent,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -1,3 +1,4 @@
+import 'package:Nexus/core/models/appdata_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,11 +11,12 @@ class ExploreCtr extends GetxController {
   static ExploreCtr get instance => Get.find<ExploreCtr>();
 
   final allUsers = <UserModel>[].obs;
+  final isTestMode = false.obs;
+
   final searchedUsers = <UserModel>[].obs;
   final filteredUsers = <UserModel>[].obs;
-  final myProfile = const UserModel(
-          id: "", name: '', username: "", email: "", age: 0, gender: "")
-      .obs;
+  final myProfile =
+      const UserModel(id: "", name: '', username: "", email: "", age: 0, gender: "").obs;
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
   var isLoading = false.obs;
@@ -24,13 +26,17 @@ class ExploreCtr extends GetxController {
   var rangeValues = const RangeValues(25, 50).obs;
   var exploreError = "".obs;
 
+  Future<AppdataModel> getAppData() async {
+    var data = await db.collection(kAPPDATA).doc('JrES4WStqiVl6TyV1PqM').get();
+    var appdata = AppdataModel.fromMap(data.data() ?? {});
+    isTestMode.value = appdata.isTest ?? false;
+    update();
+    return appdata;
+  }
+
   getAllUsers() async {
-    var users = await db
-        .collection(kUSER)
-        .where(kREGPROGRESS, isEqualTo: "completed")
-        .get();
-    var data =
-        users.docs.map((data) => UserModel.fromJson(data.data())).toList();
+    var users = await db.collection(kUSER).where(kREGPROGRESS, isEqualTo: "completed").get();
+    var data = users.docs.map((data) => UserModel.fromJson(data.data())).toList();
     allUsers.assignAll(data);
     for (var data in allUsers) {
       appLog("this is all users == >$data");
@@ -53,8 +59,7 @@ class ExploreCtr extends GetxController {
     isLoading.value = true;
     searchedUsers.clear();
     filteredUsers.clear();
-    await Future.delayed(
-        const Duration(seconds: 2), () => isLoading.value = false);
+    await Future.delayed(const Duration(seconds: 2), () => isLoading.value = false);
     for (var vals in allUsers) {
       if (vals.location!.country!.toLowerCase().contains(place.toLowerCase())) {
         searchedUsers.add(vals);
@@ -62,50 +67,40 @@ class ExploreCtr extends GetxController {
       }
     }
     isLoading.value = false;
-    if (searchedUsers.length.isLowerThan(1) ||
-        filteredUsers.length.isLowerThan(1)) {
-      exploreError.value =
-          "Sorry, No Users in this Country Yet. Check Back Later!!";
+    if (searchedUsers.length.isLowerThan(1) || filteredUsers.length.isLowerThan(1)) {
+      exploreError.value = "Sorry, No Users in this Country Yet. Check Back Later!!";
     }
   }
 
   filterUsers() async {
-    await generateNumberList(
-        rangeValues.value.start.toInt(), rangeValues.value.end.toInt());
+    await generateNumberList(rangeValues.value.start.toInt(), rangeValues.value.end.toInt());
 
     isLoading.value = true;
     Get.back();
-    await Future.delayed(
-        const Duration(seconds: 2), () => isLoading.value = false);
-    var filtered =
-        filterUser(searchedUsers, ageRange, education.value, church.value);
+    await Future.delayed(const Duration(seconds: 2), () => isLoading.value = false);
+    var filtered = filterUser(searchedUsers, ageRange, education.value, church.value);
     for (var user in filtered) {
-      debugPrint(
-          'Age: ${user.age}, Education: ${user.educationLevel}, Church: ${user.churchName}');
+      debugPrint('Age: ${user.age}, Education: ${user.educationLevel}, Church: ${user.churchName}');
     }
     searchedUsers.assignAll(filtered);
     if (searchedUsers.isEmpty) {
-      exploreError.value =
-          "There are currently no profiles matching your request!";
+      exploreError.value = "There are currently no profiles matching your request!";
     }
   }
 
-  filterUser(List<UserModel> users, List<int> ageRange, String? education,
-      String? church) {
+  filterUser(List<UserModel> users, List<int> ageRange, String? education, String? church) {
     return users.where((user) {
       bool ageMatch = ageRange.isEmpty || ageRange.contains(user.age);
-      bool churchMatch =
-          church == null || church.isEmpty || user.churchName == church;
-      bool educationMatch = education == null ||
-          education.isEmpty ||
-          user.educationLevel == education;
+      bool churchMatch = church == null || church.isEmpty || user.churchName == church;
+      bool educationMatch =
+          education == null || education.isEmpty || user.educationLevel == education;
       return ageMatch && churchMatch && educationMatch;
     }).toList();
   }
 
   generateNumberList(int startNumber, int endNumber) {
-    ageRange.assignAll(List<int>.generate(
-        endNumber - startNumber + 1, (index) => startNumber + index));
+    ageRange
+        .assignAll(List<int>.generate(endNumber - startNumber + 1, (index) => startNumber + index));
   }
 
   resetFilter() {
@@ -117,15 +112,13 @@ class ExploreCtr extends GetxController {
   }
 
   setOnlineStatus(bool isOnline) {
-    db
-        .collection(kUSER)
-        .doc(auth.currentUser!.uid)
-        .update({"isOnline": isOnline});
+    db.collection(kUSER).doc(auth.currentUser!.uid).update({"isOnline": isOnline});
   }
 
   @override
   void onInit() {
     getAllUsers();
+    getAppData();
     super.onInit();
   }
 }

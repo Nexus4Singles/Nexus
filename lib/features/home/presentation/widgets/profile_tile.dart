@@ -1,8 +1,10 @@
+import 'package:Nexus/features/home/presentation/change_notifier/bottom_nav.dart';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 import '../../../../core/size_boxes.dart';
 import '../../../../core/style.dart';
 import '../../../../router.dart';
@@ -12,8 +14,7 @@ import '../../controllers/notification_controller.dart';
 class ProfileTile extends StatelessWidget {
   ProfileTile({super.key});
 
-  int get notificationsLength =>
-      NotificationController.instance.notifications.length;
+  int get notificationsLength => NotificationController.instance.notifications.length;
 
   final model = HomeController.instance;
 
@@ -26,7 +27,7 @@ class ProfileTile extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                Get.toNamed(AppRoutes.editProfile);
+                Provider.of<BottomNavModel>(context, listen: false).jumpToNavPage(4);
               },
               child: CacheNetworkWidget(
                 height: 50.r,

@@ -1,9 +1,11 @@
 import 'dart:developer';
+import 'package:Nexus/features/home/presentation/change_notifier/bottom_nav.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:provider/provider.dart';
 import '../../../core/constant.dart';
 import '../../../core/models/user.dart';
 import '../../../core/services/api_service.dart';

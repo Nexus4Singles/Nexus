@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Nexus/core/extensions.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -84,15 +85,14 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
             child: Builder(builder: (context) {
               return Form(
                 key: _formkey,
+                autovalidateMode: AutovalidateMode.disabled,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       'Extra Information',
                       style: textStyle8.copyWith(
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700,
-                          color: black),
+                          fontSize: 30, fontWeight: FontWeight.w700, color: black),
                     ),
                     Center(
                       child: Row(
@@ -117,8 +117,8 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                           countryListTheme: CountryListThemeData(
                               textStyle: textStyle14,
                               inputDecoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(50))),
+                                  border:
+                                      OutlineInputBorder(borderRadius: BorderRadius.circular(50))),
                               borderRadius: BorderRadius.circular(24)),
                           context: context,
                           showPhoneCode: false,
@@ -141,7 +141,13 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                       fillColor: white,
                       radius: 12,
                       controller: cityController,
+                      textCapitalization: TextCapitalization.words,
                       hintText: "State or City of Residence (Correct Spelling)",
+                      validator: (value) {
+                        if (value?.isEmpty == true) {
+                          return ' Field is required';
+                        }
+                      },
                     ),
                     const SizedBoxH15(),
                     ProfileDropDown(
@@ -212,27 +218,26 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
               CustomButton(
                 onPressed: () {
                   setState(() {
-                    churchValue =
-                        church == "Other" ? churchController.text : church;
+                    churchValue = church == "Other" ? churchController.text : church;
                   });
 
                   if (isNotEmpty()) {
                     Map<String, dynamic> map = {
                       kCOUNTRY: 'Nigeria', //todo Nigeria as default
-                      kCHURCHNAME: churchValue,
-                      kEDULEVEL: eduLevel,
-                      kSTATEOFORIGIN: state,
-                      kPROFESSION: profession,
+                      kCHURCHNAME: churchValue.toTitleCase(),
+                      kEDULEVEL: eduLevel.toTitleCase(),
+                      kSTATEOFORIGIN: state.toTitleCase(),
+                      kPROFESSION: profession.toTitleCase(),
                       kREGPROGRESS: 'extra',
-                      kCITY: model.city, //todo set city
+                      kCITY: model.city.toTitleCase(), //todo set city
                       kLOCATION: LocationModel(
                               id: "",
                               latitude: 0,
                               longitude: 0,
                               place:
-                                  "${cityController.text} , ${countryController.text}",
-                              country: countryController.text,
-                              city: cityController.text)
+                                  "${cityController.text.toTitleCase()} , ${countryController.text.toTitleCase()}",
+                              country: countryController.text.toTitleCase(),
+                              city: cityController.text.toTitleCase())
                           .toJson(),
                     };
                     model.updateProfile(
