@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/features/subscription/widgets/restriction_modal.dart';
 import 'package:flutter/material.dart';
@@ -110,8 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Consumer<BottomNavModel>(
-                                    builder: (context, model, _) {
+                                Consumer<BottomNavModel>(builder: (context, model, _) {
                                   return EmptyStateWidget(
                                     showClose: false,
                                     height: Get.height * 0.3,
@@ -132,13 +132,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     duration: -homeCtr.calculateCountDownTime(),
                                     separatorType: SeparatorType.title,
                                     slideDirection: SlideDirection.up,
-                                    decoration: const BoxDecoration(
-                                        color: Colors.transparent),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
+                                    decoration: const BoxDecoration(color: Colors.transparent),
+                                    style: const TextStyle(fontWeight: FontWeight.bold),
                                     separatorStyle: const TextStyle(),
-                                    separatorPadding:
-                                        EdgeInsets.symmetric(horizontal: 8.w),
+                                    separatorPadding: EdgeInsets.symmetric(horizontal: 8.w),
                                   );
                                 }),
                               ],
@@ -153,49 +150,37 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Text(
                                       "Daily Recommendations For You",
                                       style: textStyle18.copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600),
+                                          color: Colors.black, fontWeight: FontWeight.w600),
                                     ),
                                   ),
                                   const SizedBoxH10(),
                                   Flexible(
                                     child: CardSwiper(
                                       numberOfCardsDisplayed: 1,
-                                      cardsCount:
-                                          homeCtr.recommendationList.length,
+                                      cardsCount: homeCtr.recommendationList.length,
                                       controller: cardSwiperController,
                                       isLoop: false,
                                       isDisabled: homeCtr.explore.isTestMode.isTrue,
                                       onEnd: () {
-                                        homeCtr.recommendationList
-                                            .assignAll([]);
+                                        homeCtr.recommendationList.assignAll([]);
                                       },
-                                      onSwipe: (int previousIndex,
-                                          int? currentIndex,
+                                      onSwipe: (int previousIndex, int? currentIndex,
                                           CardSwiperDirection direction) {
                                         UserModel user = homeCtr.recommendationList[currentIndex!];
 
                                         if (direction == CardSwiperDirection.right) {
                                           matchCtr.addToUnRecommend(user.id);
-                                        } else if (direction ==
-                                            CardSwiperDirection.left) {
+                                        } else if (direction == CardSwiperDirection.left) {
                                           matchCtr.toggleLike(user);
                                         }
                                         return true;
                                       },
-                                      allowedSwipeDirection:
-                                          const AllowedSwipeDirection.only(
-                                              up: false,
-                                              down: false,
-                                              right: true,
-                                              left: true),
+                                      allowedSwipeDirection: const AllowedSwipeDirection.only(
+                                          up: false, down: false, right: true, left: true),
                                       padding: const EdgeInsets.all(0),
-                                      cardBuilder: (context,
-                                          index,
-                                          percentThresholdX,
-                                          percentThresholdY) {
-                                        UserModel user =
-                                            homeCtr.recommendationList[index];
+                                      cardBuilder:
+                                          (context, index, percentThresholdX, percentThresholdY) {
+                                        UserModel user = homeCtr.recommendationList[index];
 
                                         return UserCard(
                                           userModel: user,

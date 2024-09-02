@@ -39,7 +39,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log('this is the test mode from firebase: ${ctr.isTestMode.value}');
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
