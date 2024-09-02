@@ -101,7 +101,7 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                     //       arguments: {'fromSignUp': true});
                     // });
                   },
-                  text: 'Go to Profile',
+                  text: 'Go to Your Profile',
                 ),
               ),
             ],
