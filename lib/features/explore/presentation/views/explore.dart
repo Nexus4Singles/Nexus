@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:Nexus/core/extensions.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +39,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   @override
   Widget build(BuildContext context) {
+    log('this is the test mode from firebase: ${ctr.isTestMode.value}');
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

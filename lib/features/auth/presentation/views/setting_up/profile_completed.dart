@@ -61,6 +61,23 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                         color: black,
                       ),
                     ),
+              model.user?.username == null
+                  ? const SizedBox(
+                      width: 40 * 4,
+                      height: 10,
+                      child: LinearProgressIndicator(
+                        color: primary,
+                        backgroundColor: secondaryGrey2,
+                      ),
+                    )
+                  : Text(
+                      'Congratulations ${model.user?.username}',
+                      style: textStyle18.copyWith(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: black,
+                      ),
+                    ),
               const SizedBoxH20(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -101,7 +118,7 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                     //       arguments: {'fromSignUp': true});
                     // });
                   },
-                  text: 'Go to Your Profile',
+                  text: 'Go to Profile',
                 ),
               ),
             ],

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 import '../../../../core/size_boxes.dart';
 import '../../../../core/style.dart';
 import '../../../../router.dart';
@@ -28,6 +29,7 @@ class ProfileTile extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
+                Provider.of<BottomNavModel>(context, listen: false).jumpToNavPage(4);
                 Provider.of<BottomNavModel>(context, listen: false).jumpToNavPage(4);
               },
               child: CacheNetworkWidget(
