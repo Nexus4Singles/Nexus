@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,7 +36,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log('this is the test mode from firebase: ${ctr.isTestMode.value}');
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -108,21 +105,27 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   const SizedBoxW10(),
                   InkWell(
                     onTap: () {
-                      if (ctr.isTestMode.value == true) {}
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(25.r),
+                      if (ctr.isTestMode.isTrue) {
+                        comingSoonModal(
+                            "You will be able to search for profiles within any country using filters like Age, Education Level, & Church",
+                            context);
+                      } else {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(25.r),
+                            ),
                           ),
-                        ),
-                        showDragHandle: true,
-                        builder: (context) {
-                          return SizedBox(
-                              height: Get.height / 1.8, child: const ExploreFilterModal());
-                        },
-                      );
+                          showDragHandle: true,
+                          builder: (context) {
+                            return SizedBox(
+                                height: Get.height / 1.8, child: const ExploreFilterModal());
+                          },
+                        );
+                      }
+
                       // showModal(
                       //   'You will be able to filter by Age, Church, Nationality & Education level as soon as we launch.',
                       // );

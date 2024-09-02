@@ -13,11 +13,13 @@ class AudioFilePlayer extends StatefulWidget {
   final AudioPlayer player;
   final VoidCallback onPlay;
   final VoidCallback onPause;
+  final bool isTestMode;
   const AudioFilePlayer({
     super.key,
     required this.player,
     required this.onPlay,
     required this.onPause,
+    this.isTestMode = false,
   });
 
   @override
@@ -31,8 +33,8 @@ class _AudioFilePlayerState extends State<AudioFilePlayer> {
           widget.player.positionStream,
           widget.player.bufferedPositionStream,
           widget.player.durationStream,
-          (position, bufferedPosition, duration) => PositionData(
-              position, bufferedPosition, duration ?? Duration.zero));
+          (position, bufferedPosition, duration) =>
+              PositionData(position, bufferedPosition, duration ?? Duration.zero));
 
   @override
   void dispose() {
@@ -52,20 +54,22 @@ class _AudioFilePlayerState extends State<AudioFilePlayer> {
         children: [
           // SvgPicture.asset('assets/icons/play.svg'),
           InkWell(
-            onTap: () {
-              if (widget.player.playing) {
-                widget.onPause();
-                setState(() {
-                  isPlaying = false;
-                });
-              } else {
-                widget.onPlay();
-                audioStream();
-                setState(() {
-                  isPlaying = true;
-                });
-              }
-            },
+            onTap: widget.isTestMode == true
+                ? null
+                : () {
+                    if (widget.player.playing) {
+                      widget.onPause();
+                      setState(() {
+                        isPlaying = false;
+                      });
+                    } else {
+                      widget.onPlay();
+                      audioStream();
+                      setState(() {
+                        isPlaying = true;
+                      });
+                    }
+                  },
             child: widget.player.processingState == ProcessingState.buffering
                 ? const SizedBox(
                     width: 24,
@@ -91,8 +95,7 @@ class _AudioFilePlayerState extends State<AudioFilePlayer> {
                 return SeekBar(
                   duration: positionData?.duration ?? Duration.zero,
                   position: positionData?.position ?? Duration.zero,
-                  bufferedPosition:
-                      positionData?.bufferedPosition ?? Duration.zero,
+                  bufferedPosition: positionData?.bufferedPosition ?? Duration.zero,
                   onChangeEnd: (newPosition) {
                     widget.player.seek(newPosition);
                   },
