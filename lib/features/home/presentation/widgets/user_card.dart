@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,6 +25,7 @@ class UserCard extends StatefulWidget {
   final VoidCallback onLike;
   final VoidCallback? onSaved;
   final VoidCallback onClick;
+  final bool isTestMode;
   const UserCard({
     super.key,
     required this.userModel,
@@ -32,6 +34,7 @@ class UserCard extends StatefulWidget {
     required this.onRefresh,
     required this.onSaved,
     required this.onClick,
+    this.isTestMode = false,
   });
 
   @override
@@ -93,6 +96,7 @@ class _UserCardState extends State<UserCard> {
 
   @override
   Widget build(BuildContext context) {
+    log('this is testmode: ${widget.isTestMode}');
     return InkWell(
       onTap: widget.onClick,
       child: Container(
@@ -175,30 +179,24 @@ class _UserCardState extends State<UserCard> {
                               ),
                               InkWell(
                                 onTap: widget.onClosed,
-                                child:
-                                    SvgPicture.asset('assets/icons/close.svg'),
+                                child: SvgPicture.asset('assets/icons/close.svg'),
                               ),
                               InkWell(
                                 onTap: widget.onLike,
                                 child: CircleAvatar(
-                                    backgroundColor: ctr.ctr.myProfile.value
-                                                    .myLikes ==
-                                                null ||
+                                    backgroundColor: ctr.ctr.myProfile.value.myLikes == null ||
                                             !ctr.ctr.myProfile.value.myLikes!
                                                 .contains(widget.userModel.id)
                                         ? white
                                         : primary,
                                     radius: 25,
                                     child: SvgPicture.asset(
-                                      ctr.ctr.myProfile.value.matchedUsers ==
-                                                  null ||
-                                              !ctr.ctr.myProfile.value
-                                                  .matchedUsers!
+                                      ctr.ctr.myProfile.value.matchedUsers == null ||
+                                              !ctr.ctr.myProfile.value.matchedUsers!
                                                   .contains(widget.userModel.id)
                                           ? "$svgPath/like.svg"
                                           : '$svgPath/sms.svg',
-                                      color: ctr.ctr.myProfile.value.myLikes ==
-                                                  null ||
+                                      color: ctr.ctr.myProfile.value.myLikes == null ||
                                               !ctr.ctr.myProfile.value.myLikes!
                                                   .contains(widget.userModel.id)
                                           ? primary
@@ -212,18 +210,15 @@ class _UserCardState extends State<UserCard> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     border: Border.all(color: primary),
-                                    color: ctr.ctr.myProfile.value.mySaves ==
-                                                null ||
+                                    color: ctr.ctr.myProfile.value.mySaves == null ||
                                             !ctr.ctr.myProfile.value.mySaves!
                                                 .contains(widget.userModel.id)
                                         ? white
                                         : primary,
                                   ),
-                                  child: SvgPicture.asset(
-                                      "$svgPath/bookmark.svg",
+                                  child: SvgPicture.asset("$svgPath/bookmark.svg",
                                       width: 24,
-                                      color: ctr.ctr.myProfile.value.mySaves ==
-                                                  null ||
+                                      color: ctr.ctr.myProfile.value.mySaves == null ||
                                               !ctr.ctr.myProfile.value.mySaves!
                                                   .contains(widget.userModel.id)
                                           ? primary
@@ -256,13 +251,11 @@ class _UserCardState extends State<UserCard> {
                       children: [
                         Text(
                           'State of Origin: ',
-                          style: textStyle14.copyWith(
-                              fontWeight: FontWeight.w500, color: ash),
+                          style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
                         ),
                         Text(
                           widget.userModel.stateOfOrigin ?? '',
-                          style: textStyle16.copyWith(
-                              fontWeight: FontWeight.w500, color: black),
+                          style: textStyle16.copyWith(fontWeight: FontWeight.w500, color: black),
                         ),
                       ],
                     ),
@@ -271,13 +264,11 @@ class _UserCardState extends State<UserCard> {
                       children: [
                         Text(
                           'Education Level: ',
-                          style: textStyle14.copyWith(
-                              fontWeight: FontWeight.w500, color: ash),
+                          style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
                         ),
                         Text(
                           widget.userModel.educationLevel ?? '',
-                          style: textStyle16.copyWith(
-                              fontWeight: FontWeight.w500, color: black),
+                          style: textStyle16.copyWith(fontWeight: FontWeight.w500, color: black),
                         ),
                       ],
                     ),
@@ -286,15 +277,13 @@ class _UserCardState extends State<UserCard> {
                       children: [
                         Text(
                           'Profession/Industry: ',
-                          style: textStyle14.copyWith(
-                              fontWeight: FontWeight.w500, color: ash),
+                          style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
                         ),
                         Flexible(
                           child: Text(
                             widget.userModel.profession ?? '',
                             overflow: TextOverflow.ellipsis,
-                            style: textStyle16.copyWith(
-                                fontWeight: FontWeight.w500, color: black),
+                            style: textStyle16.copyWith(fontWeight: FontWeight.w500, color: black),
                           ),
                         ),
                       ],
@@ -304,15 +293,13 @@ class _UserCardState extends State<UserCard> {
                       children: [
                         Text(
                           'Church: ',
-                          style: textStyle14.copyWith(
-                              fontWeight: FontWeight.w500, color: ash),
+                          style: textStyle14.copyWith(fontWeight: FontWeight.w500, color: ash),
                         ),
                         Flexible(
                           child: Text(
                             widget.userModel.churchName ?? '',
                             overflow: TextOverflow.ellipsis,
-                            style: textStyle16.copyWith(
-                                fontWeight: FontWeight.w500, color: black),
+                            style: textStyle16.copyWith(fontWeight: FontWeight.w500, color: black),
                           ),
                         ),
                       ],
@@ -373,13 +360,12 @@ class _UserCardState extends State<UserCard> {
                     Text(
                       "1. The summary of ${widget.userModel.username}'s relationship with God",
                       style: textStyle14.copyWith(
-                          color: black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700),
+                          color: black, fontSize: 14, fontWeight: FontWeight.w700),
                     ),
                     const SizedBoxH10(),
                     AudioFilePlayer(
                       player: player,
+                      isTestMode: widget.isTestMode,
                       onPlay: () async {
                         player2.stop();
                         player2.seek(Duration.zero);
@@ -395,13 +381,12 @@ class _UserCardState extends State<UserCard> {
                     Text(
                       "2. ${widget.userModel.username}'s view on Gender roles in marriage",
                       style: textStyle14.copyWith(
-                          color: black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700),
+                          color: black, fontSize: 14, fontWeight: FontWeight.w700),
                     ),
                     const SizedBoxH10(),
                     AudioFilePlayer(
                       player: player2,
+                      isTestMode: widget.isTestMode,
                       onPlay: () async {
                         player.stop();
                         player.seek(Duration.zero);
@@ -417,13 +402,12 @@ class _UserCardState extends State<UserCard> {
                     Text(
                       "3. ${widget.userModel.username}'s favourite qualities about ${widget.userModel.gender.toLowerCase().contains("f") ? "herself" : "himself"}",
                       style: textStyle14.copyWith(
-                          color: black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700),
+                          color: black, fontSize: 14, fontWeight: FontWeight.w700),
                     ),
                     const SizedBoxH10(),
                     AudioFilePlayer(
                       player: player3,
+                      isTestMode: widget.isTestMode,
                       onPlay: () async {
                         player.stop();
                         player.seek(Duration.zero);
@@ -453,16 +437,12 @@ class _UserCardState extends State<UserCard> {
                             borderRadius: BorderRadius.circular(15.r),
                             child: InkWell(
                               onTap: () {
-                                int index =
-                                    widget.userModel.photos!.indexOf(item);
+                                int index = widget.userModel.photos!.indexOf(item);
                                 Get.to(() => PhotoViewScreen(
-                                    selectedIndex: index,
-                                    photos: widget.userModel.photos!));
+                                    selectedIndex: index, photos: widget.userModel.photos!));
                               },
                               child: CacheNetworkWidget(
-                                  width: width(context) * .4,
-                                  height: 100.h,
-                                  imgUrl: item),
+                                  width: width(context) * .4, height: 100.h, imgUrl: item),
                             ),
                           ),
                       ],

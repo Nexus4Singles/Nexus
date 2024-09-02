@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:Nexus/core/extensions.dart';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -90,8 +91,7 @@ class _EditProfileState extends State<EditProfile> {
         backgroundColor: white,
         title: Text(
           'Edit Profile',
-          style: textStyle18.copyWith(
-              fontSize: 24, fontWeight: FontWeight.w700, color: black),
+          style: textStyle18.copyWith(fontSize: 24, fontWeight: FontWeight.w700, color: black),
         ),
         centerTitle: true,
         foregroundColor: black,
@@ -125,8 +125,7 @@ class _EditProfileState extends State<EditProfile> {
                             child: InkWell(
                               onTap: () {
                                 if (allImage.length.isGreaterThan(2)) {
-                                  showConfirmationDialog(
-                                      context, item, allImage);
+                                  showConfirmationDialog(context, item, allImage);
                                 } else {
                                   AppToast().showErrorToast(
                                       "You need to have at least two images on your profile before you can delete any image");
@@ -229,14 +228,11 @@ class _EditProfileState extends State<EditProfile> {
                   InkWell(
                     onTap: () {
                       if (currentUser.value.photos!.length < maxPhotos) {
-                        for (int i = currentUser.value.photos!.length;
-                            i < maxPhotos;
-                            i++) {
+                        for (int i = currentUser.value.photos!.length; i < maxPhotos; i++) {
                           _pickImage();
                         }
                       } else {
-                        AppToast()
-                            .showErrorToast('Maximum of 4 photos allowed');
+                        AppToast().showErrorToast('Maximum of 4 photos allowed');
                       }
                     },
                     child: DottedBorder(
@@ -285,8 +281,7 @@ class _EditProfileState extends State<EditProfile> {
             Wrap(children: [
               ...currentUser.value.hobbies!.map((val) => Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child:
-                        HobbieCard(text: val, isChecked: true, onPress: () {}),
+                    child: HobbieCard(text: val.toTitleCase(), isChecked: true, onPress: () {}),
                   ))
             ]),
             const SizedBoxH15(),
@@ -312,8 +307,7 @@ class _EditProfileState extends State<EditProfile> {
             Wrap(children: [
               ...currentUser.value.desiredQualities!.map((val) => Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child:
-                        HobbieCard(text: val, isChecked: true, onPress: () {}),
+                    child: HobbieCard(text: val.toTitleCase(), isChecked: true, onPress: () {}),
                   ))
             ]),
             const SizedBoxH15(),
@@ -323,8 +317,7 @@ class _EditProfileState extends State<EditProfile> {
                   countryListTheme: CountryListThemeData(
                       textStyle: textStyle14,
                       inputDecoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(50))),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(50))),
                       borderRadius: BorderRadius.circular(24)),
                   context: context,
                   showPhoneCode: false,
@@ -348,6 +341,7 @@ class _EditProfileState extends State<EditProfile> {
               radius: 12,
               controller: ctr.cityCtr,
               hintText: "City of Residence",
+              textCapitalization: TextCapitalization.words,
             ),
             const SizedBoxH15(),
             CustomTextField(
@@ -385,9 +379,7 @@ class _EditProfileState extends State<EditProfile> {
             const SizedBoxH15(),
             ProfileDropDown(
               items: LocalData().church,
-              val: !LocalData().church.contains(ctr.church.value)
-                  ? "Other"
-                  : ctr.church.value,
+              val: !LocalData().church.contains(ctr.church.value) ? "Other" : ctr.church.value,
               hintText: 'Church',
               onChanged: (p0) {
                 ctr.church.value = p0!;
@@ -399,8 +391,7 @@ class _EditProfileState extends State<EditProfile> {
               () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ctr.church.value == "Other" ||
-                          !LocalData().church.contains(ctr.church.value)
+                  ctr.church.value == "Other" || !LocalData().church.contains(ctr.church.value)
                       ? CustomTextField(
                           fillColor: white,
                           radius: 12,
@@ -416,8 +407,7 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                         )
                       : const SizedBox(),
-                  ctr.church.value == "Other" ||
-                          !LocalData().church.contains(ctr.church.value)
+                  ctr.church.value == "Other" || !LocalData().church.contains(ctr.church.value)
                       ? const SizedBoxH15()
                       : const SizedBox(),
                 ],
@@ -438,8 +428,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  void showConfirmationDialog(
-      BuildContext context, String item, List allImage) {
+  void showConfirmationDialog(BuildContext context, String item, List allImage) {
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) {

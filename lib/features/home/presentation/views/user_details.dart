@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Nexus/core/extensions.dart';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -171,7 +172,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                       fontWeight: FontWeight.w500, color: ash),
                                 ),
                                 Text(
-                                  widget.userModel.stateOfOrigin ?? '',
+                                  widget.userModel.stateOfOrigin?.toTitleCase() ?? '',
                                   style: textStyle16.copyWith(
                                       fontWeight: FontWeight.w500,
                                       color: black),
@@ -187,7 +188,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                       fontWeight: FontWeight.w500, color: ash),
                                 ),
                                 Text(
-                                  widget.userModel.educationLevel ?? '',
+                                  widget.userModel.educationLevel?.toTitleCase() ?? '',
                                   style: textStyle16.copyWith(
                                       fontWeight: FontWeight.w500,
                                       color: black),
@@ -204,7 +205,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    widget.userModel.profession ?? '',
+                                    widget.userModel.profession?.toTitleCase() ?? '',
                                     overflow: TextOverflow.ellipsis,
                                     style: textStyle16.copyWith(
                                         fontWeight: FontWeight.w500,
@@ -223,7 +224,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    widget.userModel.churchName ?? '',
+                                    widget.userModel.churchName?.toTitleCase() ?? '',
                                     overflow: TextOverflow.ellipsis,
                                     style: textStyle16.copyWith(
                                         fontWeight: FontWeight.w500,
@@ -247,7 +248,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               children: [
                                 for (var hob in widget.userModel.hobbies!)
                                   TextContainer(
-                                    text: hob,
+                                    text: hob.toTitleCase(),
                                   ),
                               ],
                             ),
@@ -273,7 +274,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                 for (var des
                                     in widget.userModel.desiredQualities!)
                                   TextContainer(
-                                    text: des,
+                                    text: des.toTitleCase(),
                                   ),
                               ],
                             ),
@@ -287,7 +288,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             ),
                             const SizedBoxH15(),
                             Text(
-                              "1. The summary of ${widget.userModel.username}'s relationship with God",
+                              "1. The summary of ${widget.userModel.username.toTitleCase()}'s relationship with God",
                               style: textStyle14.copyWith(
                                   color: black,
                                   fontSize: 14,
@@ -309,7 +310,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             ),
                             const SizedBoxH25(),
                             Text(
-                              "2. ${widget.userModel.username}'s view on Gender roles in marriage",
+                              "2. ${widget.userModel.username.toTitleCase()}'s view on Gender roles in marriage",
                               style: textStyle14.copyWith(
                                   color: black,
                                   fontSize: 14,
@@ -331,7 +332,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             ),
                             const SizedBoxH25(),
                             Text(
-                              "3. Favourite qualities or traits about ${widget.userModel.username}",
+                              "3. Favourite qualities or traits about ${widget.userModel.username.toTitleCase()}",
                               style: textStyle14.copyWith(
                                   color: black,
                                   fontSize: 14,

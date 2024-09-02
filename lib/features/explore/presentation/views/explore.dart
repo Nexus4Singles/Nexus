@@ -1,3 +1,4 @@
+import 'package:Nexus/core/extensions.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -57,8 +58,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                   textStyle: textStyle14,
                                   inputDecoration: InputDecoration(
                                       border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(50))),
+                                          borderRadius: BorderRadius.circular(50))),
                                   borderRadius: BorderRadius.circular(24)),
                               context: context,
                               showPhoneCode: false,
@@ -70,8 +70,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             );
                           },
                           child: CustomTextField(
-                            prefixIcon:
-                                const Icon(Iconsax.location5, color: altoGrey),
+                            prefixIcon: const Icon(Iconsax.location5, color: altoGrey),
                             radius: 215.sp,
                             controller: search,
                             hintText: 'Search by Country of Residence',
@@ -107,21 +106,27 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   const SizedBoxW10(),
                   InkWell(
                     onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(25.r),
+                      if (ctr.isTestMode.isTrue) {
+                        comingSoonModal(
+                            "You will be able to search for profiles within any country using filters like Age, Education Level, & Church",
+                            context);
+                      } else {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(25.r),
+                            ),
                           ),
-                        ),
-                        showDragHandle: true,
-                        builder: (context) {
-                          return SizedBox(
-                              height: Get.height / 1.8,
-                              child: const ExploreFilterModal());
-                        },
-                      );
+                          showDragHandle: true,
+                          builder: (context) {
+                            return SizedBox(
+                                height: Get.height / 1.8, child: const ExploreFilterModal());
+                          },
+                        );
+                      }
+
                       // showModal(
                       //   'You will be able to filter by Age, Church, Nationality & Education level as soon as we launch.',
                       // );
@@ -183,13 +188,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                   ...ctr.searchedUsers.map(
                                     (val) => ExploreUserTile(
                                       image: val.photos![0],
-                                      name: val.username,
+                                      name: val.username.toTitleCase(),
                                       age: val.age.toString(),
-                                      location:
-                                          val.location!.place?.capitalize ?? "",
+                                      location: val.location!.place?.capitalize ?? "",
                                       onPress: () {
-                                        Get.to(() =>
-                                            UserDetailScreen(userModel: val));
+                                        Get.to(() => UserDetailScreen(userModel: val));
                                       },
                                     ),
                                   )

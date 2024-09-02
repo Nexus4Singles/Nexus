@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:Nexus/core/extensions.dart';
 import 'package:Nexus/core/network/digital_ocean_client.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,17 +47,17 @@ class ProfileCtr extends GetxController {
         await sendImageToDb(imageFiles);
       }
       await db.collection(kUSER).doc(auth.currentUser!.uid).update({
-        "username": usernameCtr.text,
-        'education_level': eduLevel.value,
-        'profession': profession.value,
-        'church_name': church.value,
+        "username": usernameCtr.text.toTitleCase(),
+        'education_level': eduLevel.value.toTitleCase(),
+        'profession': profession.value.toTitleCase(),
+        'church_name': church.value.toTitleCase(),
         'location': LocationModel(
                 id: '',
                 latitude: 0,
                 longitude: 0,
-                place: "${cityCtr.text} , ${countryCtr.text}",
-                country: countryCtr.text,
-                city: cityCtr.text)
+                place: "${cityCtr.text.toTitleCase()} , ${countryCtr.text.toTitleCase()}",
+                country: countryCtr.text.toTitleCase(),
+                city: cityCtr.text.toTitleCase())
             .toJson(),
       });
       await Future.delayed(const Duration(seconds: 5),

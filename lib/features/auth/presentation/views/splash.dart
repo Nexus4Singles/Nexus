@@ -7,8 +7,6 @@ import 'package:Nexus/core/constant.dart';
 import 'package:Nexus/core/utils/shared_pref.dart';
 import 'package:Nexus/router.dart';
 
-import '../../../explore/controllers/explore_ctr.dart';
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 

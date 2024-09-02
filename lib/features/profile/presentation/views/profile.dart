@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Nexus/core/extensions.dart';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -150,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '${homeModel.user.value.username}, ${homeModel.user.value.age}',
+                    '${homeModel.user.value.username.toTitleCase()}, ${homeModel.user.value.age}',
                     style: textStyle8.copyWith(
                         color: black,
                         fontSize: 24,
@@ -165,7 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBoxW5(),
                       Flexible(
                         child: Text(
-                          '${homeModel.user.value.location!.place}',
+                          '${homeModel.user.value.location!.place?.toTitleCase()}',
                           overflow: TextOverflow.ellipsis,
                           style: textStyle14.copyWith(
                               fontWeight: FontWeight.w300, color: black),
@@ -192,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
-                    homeModel.user.value.stateOfOrigin ?? '',
+                    homeModel.user.value.stateOfOrigin?.toTitleCase() ?? '',
                     style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: black),
                   ),
@@ -207,7 +208,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
-                    homeModel.user.value.educationLevel ?? '',
+                    homeModel.user.value.educationLevel?.toTitleCase() ?? '',
                     style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: black),
                   ),
@@ -222,7 +223,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
-                    homeModel.user.value.profession ?? '',
+                    homeModel.user.value.profession?.toTitleCase() ?? '',
                     style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: black),
                   ),
@@ -237,7 +238,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w500, color: ash),
                   ),
                   Text(
-                    homeModel.user.value.churchName ?? '',
+                    homeModel.user.value.churchName?.toTitleCase() ?? '',
                     style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500, color: black),
                   ),
@@ -258,7 +259,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   for (var hob in homeModel.user.value.hobbies!)
                     TextContainer(
-                      text: hob,
+                      text: hob.toTitleCase(),
                     ),
                 ],
               ),
@@ -283,7 +284,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   for (var des in homeModel.user.value.desiredQualities!)
                     TextContainer(
-                      text: des,
+                      text: des.toTitleCase(),
                     ),
                 ],
               ),
