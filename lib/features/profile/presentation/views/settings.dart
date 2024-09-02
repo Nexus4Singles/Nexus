@@ -7,10 +7,6 @@ import 'package:Nexus/features/profile/presentation/views/contact_us.dart';
 import 'package:Nexus/router.dart';
 import 'package:Nexus/features/profile/presentation/widgets/login_modal_sheet.dart';
 import 'package:Nexus/features/profile/presentation/widgets/setting_container.dart';
-import 'package:ruut/models/user.model.dart';
-import 'package:ruut/ruut.dart';
-
-import '../../../../core/utils/modals.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -31,26 +27,26 @@ class _SettingScreenState extends State<SettingScreen> {
           style: textStyle18.copyWith(
               fontSize: 24, fontWeight: FontWeight.w700, color: black),
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Get.to(() => Ruut(
-                      ruutToken:
-                          'M9Hp8qy4wYBmPa1HN6EsdYDt', // Replace with your Ruut token
-                      user: RuutUser(
-                        id: '98765434567', // Replace with actual user ID
-                        email:
-                            'user@example.com', // Replace with actual user email
-                        fullName: 'John Doe', // Replace with actual user name
-                        // Additional user fields can be added as needed
-                      ),
-                      onReady: () {
-                        print('Ruut is ready');
-                      },
-                    ));
-              },
-              icon: const Icon(Icons.add))
-        ],
+        // actions: [
+        //   IconButton(
+        //       onPressed: () {
+        //         // Get.to(() => Ruut(
+        //         //       ruutToken:
+        //         //           'M9Hp8qy4wYBmPa1HN6EsdYDt', // Replace with your Ruut token
+        //         //       user: RuutUser(
+        //         //         id: '98765434567', // Replace with actual user ID
+        //         //         email:
+        //         //             'user@example.com', // Replace with actual user email
+        //         //         fullName: 'John Doe', // Replace with actual user name
+        //         //         // Additional user fields can be added as needed
+        //         //       ),
+        //         //       onReady: () {
+        //         //         debugPrint('Ruut is ready');
+        //         //       },
+        //         //     ));
+        //       },
+        //       icon: const Icon(Icons.add))
+        // ],
         centerTitle: true,
         foregroundColor: black,
         elevation: 0,
