@@ -1114,6 +1114,13 @@ PODS:
     - Mantle
     - SDWebImage
     - SDWebImageWebPCoder
+  - flutter_inappwebview_ios (0.0.1):
+    - Flutter
+    - flutter_inappwebview_ios/Core (= 0.0.1)
+    - OrderedSet (~> 5.0)
+  - flutter_inappwebview_ios/Core (0.0.1):
+    - Flutter
+    - OrderedSet (~> 5.0)
   - flutter_local_notifications (0.0.1):
     - Flutter
   - flutter_secure_storage (6.0.0):
@@ -1257,6 +1264,7 @@ PODS:
     - nanopb/encode (= 2.30910.0)
   - nanopb/decode (2.30910.0)
   - nanopb/encode (2.30910.0)
+  - OrderedSet (5.0.0)
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -1301,6 +1309,7 @@ DEPENDENCIES:
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
   - flutter_image_compress_common (from `.symlinks/plugins/flutter_image_compress_common/ios`)
+  - flutter_inappwebview_ios (from `.symlinks/plugins/flutter_inappwebview_ios/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - glassfy_flutter (from `.symlinks/plugins/glassfy_flutter/ios`)
@@ -1348,6 +1357,7 @@ SPEC REPOS:
     - libwebp
     - Mantle
     - nanopb
+    - OrderedSet
     - PromisesObjC
     - PromisesSwift
     - RecaptchaInterop
@@ -1378,6 +1388,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_image_compress_common:
     :path: ".symlinks/plugins/flutter_image_compress_common/ios"
+  flutter_inappwebview_ios:
+    :path: ".symlinks/plugins/flutter_inappwebview_ios/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_secure_storage:
@@ -1437,6 +1449,7 @@ SPEC CHECKSUMS:
   FirebaseStorage: 44f4e25073f6fa0d4d8c09f5bec299ee9e4eb985
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_image_compress_common: ec1d45c362c9d30a3f6a0426c297f47c52007e3e
+  flutter_inappwebview_ios: 97215cf7d4677db55df76782dbd2930c5e1c1ea0
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
   Glassfy: 6c13edc242715212cfd01a0a12c8553f2f06cfcb
@@ -1453,6 +1466,7 @@ SPEC CHECKSUMS:
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
+  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   pay_ios: 8c7beb9c61d885f3f51b61f75f8793023fc8843a
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
