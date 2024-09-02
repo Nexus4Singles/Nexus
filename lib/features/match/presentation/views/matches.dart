@@ -1,3 +1,4 @@
+import 'package:Nexus/core/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -81,9 +82,9 @@ class _MatchScreenState extends State<MatchScreen> {
                                       ...ctr.userData.map((element) {
                                         return MatchedUserCard(
                                           photo: element.photos![0],
-                                          name: element.username,
+                                          name: element.username.toTitleCase(),
                                           age: element.age.toString(),
-                                          location: element.location!.place!,
+                                          location: element.location!.place!.toTitleCase(),
                                           onPress: () {
                                             Get.to(() => UserDetailScreen(
                                                 userModel: element));

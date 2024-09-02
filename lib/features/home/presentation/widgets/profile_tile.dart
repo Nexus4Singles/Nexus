@@ -1,3 +1,4 @@
+import 'package:Nexus/core/extensions.dart';
 import 'package:Nexus/features/home/presentation/change_notifier/bottom_nav.dart';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class ProfileTile extends StatelessWidget {
             ),
             const SizedBoxW10(),
             Text(
-              'Hi ${model.user.value.username} 👋🏽',
+              'Hi ${model.user.value.username.toTitleCase()} 👋🏽',
               style: headerStyle.copyWith(
                 fontSize: 20.sp,
               ),

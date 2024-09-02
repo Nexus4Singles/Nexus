@@ -1,3 +1,4 @@
+import 'package:Nexus/core/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Nexus/core/colors.dart';
@@ -21,7 +22,7 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
               userModel.compatibilitySetted == false
           ? Center(
               child: Text(
-              "${userModel.username} has not set their compatibility data",
+              "${userModel.username.toTitleCase().toTitleCase()} has not set their compatibility data",
               style: textStyle14.copyWith(color: white),
             ))
           : SingleChildScrollView(
@@ -48,36 +49,36 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
                   optionsMenu(
                     userModel.compatibility!.maritalStatus!.toLowerCase() ==
                             "never married"
-                        ? "${userModel.username} has never been married"
-                        : "${userModel.username} has been married before",
+                        ? "${userModel.username.toTitleCase().toTitleCase()} has never been married"
+                        : "${userModel.username.toTitleCase().toTitleCase()} has been married before",
                   ),
                   optionsMenu(
                       userModel.compatibility!.haveKids!.toLowerCase() == "no"
-                          ? "${userModel.username} doesn't have kids"
-                          : "${userModel.username} has kids"),
+                          ? "${userModel.username.toTitleCase()} doesn't have kids"
+                          : "${userModel.username.toTitleCase()} has kids"),
                   optionsMenu(
-                      "${userModel.username} has an ${userModel.compatibility!.genotype} Genotype"),
+                      "${userModel.username.toTitleCase()} has an ${userModel.compatibility!.genotype} Genotype"),
                   optionsMenu(
-                      "${userModel.username} is an ${userModel.compatibility!.personalityType}"),
+                      "${userModel.username.toTitleCase()} is an ${userModel.compatibility!.personalityType}"),
                   optionsMenu(userModel.compatibility!.regularSourceOfIncome!
                               .toLowerCase() ==
                           "yes"
-                      ? "${userModel.username} has a regular source of income"
-                      : "${userModel.username} doesn't have a regular source of income"),
+                      ? "${userModel.username.toTitleCase()} has a regular source of income"
+                      : "${userModel.username.toTitleCase()} doesn't have a regular source of income"),
                   optionsMenu(
-                    "${userModel.username} ${userModel.compatibility!.marrySomeoneNotFS!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
+                    "${userModel.username.toTitleCase()} ${userModel.compatibility!.marrySomeoneNotFS!.contains("Yes") ? "can" : "cannot"} date or marry someone who is not yet financially stable",
                   ),
                   optionsMenu(
-                    "${userModel.username} ${userModel.compatibility!.longDistance!.contains("Yes") ? "is" : "is not"} open to a long distance relationship",
+                    "${userModel.username.toTitleCase()} ${userModel.compatibility!.longDistance!.contains("Yes") ? "is" : "is not"} open to a long distance relationship",
                   ),
                   optionsMenu(
-                    "${userModel.username} ${userModel.compatibility!.believeInCohiabiting!.toLowerCase().contains("yes") ? "believes" : "doesn't believe"} in cohabiting before marriage",
+                    "${userModel.username.toTitleCase()} ${userModel.compatibility!.believeInCohiabiting!.toLowerCase().contains("yes") ? "believes" : "doesn't believe"} in cohabiting before marriage",
                   ),
                   optionsMenu(
-                    "${userModel.username} ${userModel.compatibility!.shouldChristianSpeakInTongue!.toLowerCase().contains("yes") ? "believes" : "doesn't believe"} every Christian should desire to speak in tongues",
+                    "${userModel.username.toTitleCase()} ${userModel.compatibility!.shouldChristianSpeakInTongue!.toLowerCase().contains("yes") ? "believes" : "doesn't believe"} every Christian should desire to speak in tongues",
                   ),
                   optionsMenu(
-                    "${userModel.username} ${userModel.compatibility!.believeInTithing!.toLowerCase().contains("yes") ? "believes" : "doesn't believe"} in tithing",
+                    "${userModel.username.toTitleCase()} ${userModel.compatibility!.believeInTithing!.toLowerCase().contains("yes") ? "believes" : "doesn't believe"} in tithing",
                   )
                 ],
               ),

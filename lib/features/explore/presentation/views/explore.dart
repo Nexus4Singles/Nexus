@@ -1,3 +1,4 @@
+import 'package:Nexus/core/extensions.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -187,7 +188,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                   ...ctr.searchedUsers.map(
                                     (val) => ExploreUserTile(
                                       image: val.photos![0],
-                                      name: val.username,
+                                      name: val.username.toTitleCase(),
                                       age: val.age.toString(),
                                       location: val.location!.place?.capitalize ?? "",
                                       onPress: () {
