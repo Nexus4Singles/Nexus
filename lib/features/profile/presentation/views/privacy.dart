@@ -79,9 +79,9 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
               ),
               const SizedBoxH10(),
               const PrivacyItem(
-                title: 'Matchmaking and User Experience:',
+                title: 'User Experience:',
                 desc:
-                    'Your profile information is used to match you with potential connections who share your Christian values and interests.',
+                    'Your profile information is visible to only opposite gender users on the platform, which is also used to recommend suitable profiles who share your Christian values and interests.',
               ),
               const SizedBoxH10(),
               const PrivacyItem(
@@ -114,13 +114,63 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                 desc:
                     'All data transmitted between your device and our servers is encrypted to ensure the confidentiality of your information.',
               ),
-              const SizedBoxH20(),
+               const SizedBoxH20(),
               Text(
-                'Third-Party Services:',
+                'User Rights',
                 style: textStyle14.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              const SizedBoxH10(),
+              const PrivacyItem(
+                title: 'Consent:',
+                desc:
+                    'By signing up on the app, users provide consent for the collection and processing of their personal data. Users ​have the right to withdraw their consent at any time by deleting their account.',
+              ),
+              const SizedBoxH10(),
+              const PrivacyItem(
+                title: 'Data Retention:',
+                desc:
+                    'We retain user data only for as long as necessary for the purposes outlined in this policy. Users can request ​the deletion of their data when they deactivate their account.',
+              ),
+              const SizedBoxH10(),
+              const PrivacyItem(
+                title: 'User Rights:',
+                desc:
+                    'Users have the right to access, rectify, or erase their personal data. They can exercise these rights through ​in-app settings or by contacting us.',
+              ),
+              const SizedBoxH20(),
+              Text(
+                'Data:',
+                style: textStyle14.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBoxH10(),
+              const PrivacyItem(
+                title: 'International Data Transfers:'
+                desc:
+                    'If we transfer user data outside the European Economic Area (EEA), we ensure an adequate level of protection for the data ​through standard contractual clauses or binding corporate rules.',
+              ),
+              const SizedBoxH10(),
+              const PrivacyItem(
+                title: 'Data Breach Notification:'
+                desc:
+                    'We have procedures in place for detecting, investigating, and notifying users of data breaches in compliance with GDPR's requirement for timely notification of breaches.',
+              ),
+               const SizedBoxH10(),
+              const PrivacyItem(
+                title: 'Cookies and Tracking Technologies:'
+                desc:
+                    'Nexus doesnt use any cookies or tracking technologies to track user data. However, if this changes in the future, it shall be disclosed to all users.',
+                    ),
+              const SizedBoxH10(),
+              const PrivacyItem(
+                title: 'Account Deletion:'
+                desc:
+                    'To delete your account, just sign in to the app with your login credentials and click on settings. Accept the prompt to delete ​your account and your account and all of its data will be deleted.',
+                    ),    
+        
               const SizedBoxH10(),
               const PrivacyItem(
                 title: 'External Links:',
