@@ -66,37 +66,9 @@ class FCMService {
     FirebaseMessaging.onMessageOpenedApp.listen(handleMessageClick);
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      //await flutterLocalNotificationsPlugin.cancelAll();
 
       final notification = message.notification;
-      if (notification != null) {
-        appLog('message received', notification.body.toString());
-        //handleMessage(message);
-        String? senderId;
-        if (message.data.containsKey('senderId')) {
-          senderId = message.data['senderId'] ?? '';
-        }
-        if (message.data.containsKey('conversationId')) {
-          conversationId = message.data['conversationId'] ?? '';
-        }
-        //logger.i(conversationId);
-
-        //logger.i(senderId);
-        //logger.i(ChatManager.activeChatUserId);
-        int notificationId = notification.hashCode;
-
-        // Check if the user is actively chatting with the sender
-        if (ChatManager.activeChatUserId != senderId) {
-          // If not, show the notification
-          showNotification(
-            title: notification.title ?? '',
-            message: notification.body ?? '',
-            id: notificationId,
-          );
-          saveNotification(message);
-          savePushNotification(message);
-        }
-      }
+      handleNotificationDisplay(notification, message);
     });
 
     // if (GetPlatform.isAndroid) {
@@ -135,13 +107,14 @@ class FCMService {
   }
 
   static Future<void> handleBackgroundMessage(RemoteMessage message) async {
-    try {
+  /*  try {
       await Firebase.initializeApp();
-      initPushNotifications();
+      final notification = message.notification;
+      handleNotificationDisplay(notification, message);
       await savePushNotification(message);
     } catch (e) {
       logger.e(e);
-    }
+    }*/
   }
 
   static Future<void> initLocalNotifications() async {
@@ -263,6 +236,40 @@ class FCMService {
       logger.i("FCM token set to null successfully for user: $userId");
     } catch (e) {
       logger.i("Error setting FCM token to null: $e");
+    }
+  }
+
+  static handleNotificationDisplay(RemoteNotification? notification, RemoteMessage message) async {
+    if (notification != null) {
+      String? senderId = message.data['senderId'] ?? '';
+
+      final prefs = await SharedPreferences.getInstance();
+      var activeChatUserId =  prefs.getString('activeChatUserId');
+      print('-----------------current chatting usrId = $activeChatUserId');
+      int notificationId = notification.hashCode;
+
+      if (notification.title == 'New Message') {
+        if (activeChatUserId != senderId) {
+          // Show notification only if the user is not in the chat with the sender
+          showNotification(
+            title: notification.title ?? '',
+            message: notification.body ?? '',
+            id: notificationId,
+          );
+          print('----------------- confirming current chatting usrId = $activeChatUserId');
+
+          saveNotification(message);
+          savePushNotification(message);
+        }
+      } else if (notification.title == 'New Like' || notification.title == 'New Match!') {
+        showNotification(
+          title: notification.title ?? '',
+          message: notification.body ?? '',
+          id: notificationId,
+        );
+        saveNotification(message);
+        savePushNotification(message);
+      }
     }
   }
 }

@@ -45,12 +45,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   FutureOr _init() async {
     var currentUser = homeCtr.user.value;
-    var subProvider = Provider.of<SubscriptionProvider>(context, listen: false);
-    subProvider.initSubDet(currentUser);
     SharedPref.setString("email", currentUser.email);
     NotificationController.instance.getAllNotifications();
     await homeCtr.getFilteredUsers(true);
-    await SubscriptionHelper.isSubscriptionValid(context, currentUser.subExpDate ?? '');
+    WidgetsFlutterBinding.ensureInitialized();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final homeController = HomeController.instance;
+      final user = homeController.user.value;
+      var subProvider = Provider.of<SubscriptionProvider>(context, listen: false);
+      await SubscriptionHelper.onValidateSubscription(subProvider, context);
+      subProvider.initSubDet(user);
+    });
+
     await Future.delayed(const Duration(seconds: 5), () {
       if (homeCtr.user.value.compatibilitySetted == null ||
           homeCtr.user.value.compatibilitySetted == false) {
@@ -83,7 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.all(15.sp),
           child: Consumer<SubscriptionProvider>(
             builder: (context, provider, child) {
-              logger.i('rebuilt');
               provider.initSubDet(homeCtr.user.value);
               return Obx(
                 () => homeCtr.isLoading.value
@@ -206,43 +211,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   : debugPrint("These users are matched");
                                             }
                                           },
-                                          onRefresh: () {
-                                            if (homeCtr.explore.isTestMode.isTrue) {
-                                              comingSoonModal(
-                                                  "You would be able to view profile recommendations when we launch",
-                                                  context);
-                                            } else {
-                                              provider.onPremium
-                                                  ? () {
-                                                      matchCtr.undoUnRecommend(
-                                                          true, cardSwiperController);
-                                                    }
-                                                  : () {
-                                                      restrictionModal(
-                                                        context: context,
-                                                        dismisable: true,
-                                                      );
-                                                    };
-                                            }
-                                          },
-                                          onSaved: () {
-                                            if (homeCtr.explore.isTestMode.isTrue) {
-                                              comingSoonModal(
-                                                  "You would be able to view profile recommendations when we launch",
-                                                  context);
-                                            } else {
-                                              provider.onPremium
-                                                  ? () {
-                                                      matchCtr.toggleSave(user.id);
-                                                    }
-                                                  : () {
-                                                      restrictionModal(
-                                                        context: context,
-                                                        dismisable: true,
-                                                      );
-                                                    };
-                                            }
-                                          },
+                                          onRefresh: ()=> _handleOnRefreshClickEvent(provider, user),
+                                          onSaved: ()=> _handleOnSaveClickEvent(provider, user),
                                           onClick: () {},
                                         );
                                       },
@@ -260,4 +230,59 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  _handleOnSaveClickEvent(SubscriptionProvider provider, UserModel user){
+    if(provider.onPremium == true) {
+      if(provider.isRestricted == true){
+        restrictionModal(context: context, dismisable: true, showButton: false, text: 'Please'
+            ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
+            'Your Subscription -> Restore Subscription.');
+      } else if (provider.isRestricted == false){
+        logger.i('toggke');
+        matchCtr.toggleSave(user.id);
+      }
+
+    } else if (provider.onPremium == false) {
+      if(provider.isRestricted == true){
+        restrictionModal(context: context, dismisable: true, showButton: false, text: 'Please'
+            ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
+            'Your Subscription -> Restore Subscription.');
+      } else if (provider.isRestricted == false){
+        restrictionModal(
+          context: context,
+          dismisable: true,
+        );
+      }
+
+    }
+  }
+
+  _handleOnRefreshClickEvent(SubscriptionProvider provider, UserModel user){
+
+    if(provider.onPremium == true) {
+      if(provider.isRestricted == true){
+        restrictionModal(context: context, dismisable: true, showButton: false, text: 'Please'
+            ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
+            'Your Subscription -> Restore Subscription.');
+      } else if (provider.isRestricted == false){
+        matchCtr.undoUnRecommend(
+            true, cardSwiperController);
+      }
+
+    } else if (provider.onPremium == false) {
+      if(provider.isRestricted == true){
+        restrictionModal(context: context, dismisable: true, showButton: false, text: 'Please'
+            ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
+            'Your Subscription -> Restore Subscription.');
+      } else if (provider.isRestricted == false){
+        restrictionModal(
+          context: context,
+          dismisable: true,
+        );
+      }
+
+    }
+  }
+
+
 }

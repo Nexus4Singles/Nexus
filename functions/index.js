@@ -2,6 +2,40 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 admin.initializeApp();
 
+/**
+ * Helper function to send FCM notification using the v1 API.
+ *
+ * @param {string} token - The FCM token of the recipient device.
+ * @param {Object} payload - The notification payload containing title, body,
+ * sound, and other details.
+ * @return {Promise<void>} - A promise that resolves when the
+ * notification is sent successfully.
+ */
+async function sendFCMNotification(token, payload) {
+  const message = {
+    token: token,
+    notification: {
+      title: payload.notification.title,
+      body: payload.notification.body,
+    },
+    android: {
+      notification: {
+        sound: payload.notification.sound,
+        channel_id: payload.notification.channel_id,
+        icon: payload.notification.icon,
+      },
+    },
+    data: payload.data, // Add custom data if needed
+  };
+
+  try {
+    await admin.messaging().send(message);
+    console.log("Notification sent successfully");
+  } catch (error) {
+    console.error("Error sending notification:", error);
+  }
+}
+
 exports.sendMessageNotification = functions.firestore
     .document("conversations/{conversationId}/messages/{messageId}")
     .onCreate(async (snap, context) => {
@@ -48,8 +82,12 @@ exports.sendMessageNotification = functions.firestore
         const recipientToken = recipientDoc.data().fcm_token;
 
         if (recipientToken) {
-          await admin.messaging().sendToDevice(recipientToken, payload);
-          console.log("Notification sent successfully");
+          try {
+            await sendFCMNotification(recipientToken, payload);
+            console.log("Notification sent successfully");
+          } catch (error) {
+            console.error("Error sending notification:", error);
+          }
         } else {
           console.log("No FCM token for recipient:", rcpId);
         }
@@ -95,12 +133,18 @@ exports.sendMatchNotification = functions.firestore
           },
         };
 
-
-        await admin.messaging().sendToDevice(userTokens[0], payload);
-        await admin.messaging().sendToDevice(userTokens[1], payload);
-
-
-        console.log("Match notification sent successfully");
+        try {
+          await sendFCMNotification(userTokens[0], payload);
+          console.log("1st Match notification sent successfully");
+        } catch (error) {
+          console.error("Error sending 1st match notification:", error);
+        }
+        try {
+          await sendFCMNotification(userTokens[1], payload);
+          console.log("2nd Match notification sent successfully");
+        } catch (error) {
+          console.error("Error sending 2nd match notification:", error);
+        }
       } catch (error) {
         console.error("Error sending match notification:", error);
       }
@@ -152,7 +196,7 @@ exports.sendLikeNotification = functions.firestore
 
           if (recipientToken) {
             // Send notification
-            await admin.messaging().sendToDevice(recipientToken, payload);
+            await sendFCMNotification(recipientToken, payload);
             console.log("Like notification sent successfully");
           } else {
             console.log("No FCM token for recipient:", userId);

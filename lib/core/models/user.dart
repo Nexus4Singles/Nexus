@@ -46,6 +46,7 @@ class UserModel extends UserEntity {
     String? subExpDate,
     bool usedOneFreeText = false,
     String entitledUser = 'null',
+    String subscriberId = 'null',
     String? recommendedTime,
   }) : super(
           id: id,
@@ -87,7 +88,8 @@ class UserModel extends UserEntity {
           usedOneFreeText: usedOneFreeText,
           subExpDate: subExpDate,
           entitledUser: entitledUser,
-          recommendedTime: recommendedTime,
+          subscriberId: subscriberId,
+    recommendedTime: recommendedTime,
         );
 
   factory UserModel.fromJson(Map<String, dynamic> map) =>
