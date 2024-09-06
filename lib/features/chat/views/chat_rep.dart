@@ -207,8 +207,8 @@ class _ChatWithScreenState extends State<ChatWithScreen> with WidgetsBindingObse
                               restrictionModal(context: context,
                                   dismisable: true,
                                   showButton: false,
-                                  text: 'Please'
-                                      ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
+                                  text: 'Your'
+                                      ' device is already linked to an active subscription. Please log in to Google Play Store Account/Apple ID account associated to your subscription &\nRestart the app then head to Settings -> '
                                       'Your Subscription -> Restore Subscription.');
                             } else {
                               _handleSendMessage(message, subProvider);
@@ -302,7 +302,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> with WidgetsBindingObse
                           dismisable: true,
                           showButton: false,
                           text: 'Please'
-                              ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
+                              ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription &\nRestart the app then head to Settings -> '
                               'Your Subscription -> Restore Subscription.');
                     } else {
                       _handleSendMessage(message, subProvider);
