@@ -151,8 +151,8 @@ class SubscriptionHelper {
         restrictionModal(context: context,
             dismisable: true,
             showButton: false,
-            text: 'Your subscription entitlements have been restricted.\nPlease '
-                'log in or switch to the to the Google Play Store Account/Apple ID account as the Primary account.\n Restart the app then head to Settings -> '
+            text: 'Your subscription entitlements have been restricted.\nYour '
+                'device is already linked to an active subscription. To use a different Nexus account, kindly login to your Google Play/Apple ID account that has no active Nexus subscription &\n Relaunch the App -> '
                 'Your Subscription -> Restore Subscription.');
       }
     }
