@@ -54,7 +54,7 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
                   optionsMenu(
                       userModel.compatibility!.haveKids!.toLowerCase() == "no"
                           ? "${userModel.username} doesn't have kids"
-                          : "${userModel.username} has kids"),
+                          : "${userModel.username} has kid(s)"),
                   optionsMenu(
                       "${userModel.username} has an ${userModel.compatibility!.genotype} Genotype"),
                   optionsMenu(
