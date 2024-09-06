@@ -67,7 +67,7 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
                       ),
                       TextSpan(
                         text:
-                            'christian faith, marriage beliefs & personality ',
+                            'christian faith, marriage beliefs & personality. ',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
