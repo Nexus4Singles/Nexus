@@ -95,46 +95,25 @@ subscribeModal(context) {
 }
 
 chatWarningModal(context) {
-  final size = MediaQuery.of(context).size;
   showAdaptiveDialog(
-    context: context,
-    builder: (context) {
-      return Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: size.height * 0.3),
-        child: Stack(children: [
-          Dialog(
-            //insetPadding: EdgeInsets.only(top: 10),
-            backgroundColor: white,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-            child: SizedBox(
-              height: Get.height / 2.7,
-              child: EmptyStateWidget(
-                  buttonText: "",
-                  showClose: true,
-                  buttonFunc: () {},
-                  svgAssetPath: "$svgPath/chatWarning.svg",
-                  message:
-                      'We highly recommend spending enough time getting to know each other here before exchanging personal contacts \n\nHappy Texting!'),
-            ),
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: white,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          child: SizedBox(
+            height: Get.height / 3.19,
+            child: EmptyStateWidget(
+                buttonText: "",
+                showClose: true,
+                buttonFunc: () {},
+                svgAssetPath: "$svgPath/chatWarning.svg",
+                message:
+                    'We highly recommend spending enough time getting to know each other here before exchanging personal contacts \n\nHappy Texting!'),
           ),
-          Positioned(
-            top: size.height * 0.042,
-            right: size.height * 0.059,
-            child: InkWell(
-                onTap: () {
-                  Get.back();
-                },
-                child: const Icon(
-                  Icons.clear,
-                  color: primary,
-                )),
-          ),
-        ]),
-      );
-    },
-  );
+        );
+      });
 }
 
 void comingSoonModal(String text, context) {

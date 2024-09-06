@@ -10,10 +10,6 @@ import 'package:Nexus/core/style.dart';
 import 'package:Nexus/core/utils/empty_state.dart';
 import 'package:Nexus/features/chat/controllers/chat_ctr.dart';
 import 'package:Nexus/features/chat/widget/chat_container.dart';
-import 'package:Nexus/features/subscription/helpers/subscription_helper.dart';
-import 'package:Nexus/features/subscription/provider/subscription_provider.dart';
-import 'package:Nexus/features/subscription/widgets/restriction_modal.dart';
-import 'package:provider/provider.dart';
 import '../../../router.dart';
 import '../../home/presentation/widgets/cache_network_widget.dart';
 import 'chat_rep.dart';
@@ -80,62 +76,8 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
                                 child: Row(
                                   children: [
                                     ...allChatUsers.map((users) {
-                                      var subProvider =
-                                          Provider.of<SubscriptionProvider>(
-                                              context);
-
                                       return InkWell(
                                         onTap: () async {
-                                          bool hasSentMessages = ctr
-                                              .allChatUsers
-                                              .where((val) =>
-                                                  val.lastMessage.isNotEmpty)
-                                              .contains(users);
-                                          if (hasSentMessages) {
-                                            Get.to(() => ChatWithScreen(
-                                                chatModel: users));
-                                            return;
-                                          }
-                                          if (subProvider.onPremium == true) {
-                                            Get.to(() => ChatWithScreen(
-                                                chatModel: users));
-                                          } else if (subProvider.onPremium ==
-                                                  false &&
-                                              subProvider.usedOneFreeText ==
-                                                  false) {
-                                            Get.to(() => ChatWithScreen(
-                                                chatModel: users));
-
-                                            if (hasSentMessages) {
-                                              subProvider.usedOneFreeText =
-                                                  true;
-                                              await SubscriptionHelper
-                                                  .updateFreeTextStatus(
-                                                      subProvider.currentUser,
-                                                      true,
-                                                      context,
-                                                      users.userModel!.id);
-                                            }
-                                          } else if (subProvider.onPremium ==
-                                                  false &&
-                                              subProvider.usedOneFreeText ==
-                                                  true &&
-                                              subProvider.prevSubscribed ==
-                                                  false) {
-                                            restrictionModal(
-                                              context: context,
-                                              dismisable: true,
-                                              text:
-                                                  'You have used up your limit of one (1) chat per matched \nuser on our free version.\nKindly subscribe to chat with other matched users.',
-                                            );
-                                          } else {
-                                            restrictionModal(
-                                              context: context,
-                                              dismisable: true,
-                                              text:
-                                                  'Your subscription has expired!\nKindly subscribe to be able to send messages\nand use other features.',
-                                            );
-                                          }
                                           Get.to(() =>
                                               ChatWithScreen(chatModel: users));
                                         },
