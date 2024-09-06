@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     //TODO: you can see example here
                                     headerText: homeCtr.recommendedState() ==
                                             RecommendedState.hasNotExceededButEmpty
-                                        ? "That's It For Now!!"
+                                        ? "That's It For Today!!"
                                         : "That's It For Now!!",
                                     buttonText: "Go to Explore",
                                     buttonFunc: () async {
