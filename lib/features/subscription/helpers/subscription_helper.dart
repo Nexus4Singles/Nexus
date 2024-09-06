@@ -152,7 +152,7 @@ class SubscriptionHelper {
             dismisable: true,
             showButton: false,
             text: 'Your subscription entitlements have been restricted.\nYour '
-                'device is already linked to an active subscription. To use a different Nexus account, kindly login to your Google Play/Apple ID account that has no active Nexus subscription &\n Relaunch the App -> '
+                'device is already linked to an active subscription. To subscribe with a different Nexus account, kindly login to your Google Play/Apple ID account that has no active Nexus subscription &\n Relaunch the App -> '
                 'Your Subscription -> Restore Subscription.');
       }
     }
