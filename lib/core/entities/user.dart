@@ -45,6 +45,7 @@ class UserEntity extends Equatable {
     this.usedOneFreeText = false,
     this.usersChatWarning,
     this.entitledUser = 'null',
+    this.subscriberId= 'null',
     this.recommendedTime,
   });
 
@@ -107,6 +108,7 @@ class UserEntity extends Equatable {
   final String? subExpDate;
   final bool usedOneFreeText;
   final String? entitledUser;
+  final String? subscriberId;
   final String? recommendedTime;
 
   @override
@@ -150,5 +152,6 @@ class UserEntity extends Equatable {
         subExpDate,
         usedOneFreeText,
         entitledUser,
+        subscriberId,
       ];
 }

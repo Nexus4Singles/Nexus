@@ -103,7 +103,7 @@ chatWarningModal(context) {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           child: SizedBox(
-            height: Get.height / 3.19,
+            height: Get.height / 2.7,
             child: EmptyStateWidget(
                 buttonText: "",
                 showClose: true,

@@ -148,25 +148,25 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
               ),
               const SizedBoxH10(),
               const PrivacyItem(
-                title: 'International Data Transfers:'
+                title: 'International Data Transfers:',
                 desc:
                     'If we transfer user data outside the European Economic Area (EEA), we ensure an adequate level of protection for the data ​through standard contractual clauses or binding corporate rules.',
               ),
               const SizedBoxH10(),
               const PrivacyItem(
-                title: 'Data Breach Notification:'
+                title: 'Data Breach Notification:',
                 desc:
                     'We have procedures in place for detecting, investigating, and notifying users of data breaches in compliance with GDPR\'s requirement for timely notification of breaches.',
               ),
                const SizedBoxH10(),
               const PrivacyItem(
-                title: 'Cookies and Tracking Technologies:'
+                title: 'Cookies and Tracking Technologies:',
                 desc:
                     'Nexus doesnt use any cookies or tracking technologies to track user data. However, if this changes in the future, it shall be disclosed to all users.',
                     ),
               const SizedBoxH10(),
               const PrivacyItem(
-                title: 'Account Deletion:'
+                title: 'Account Deletion:',
                 desc:
                     'To delete your account, just sign in to the app with your login credentials and click on settings. Accept the prompt to delete ​your account and your account and all of its data will be deleted.',
                     ),    
