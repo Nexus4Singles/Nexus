@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: Get.height * 0.3,
                                     headerText: homeCtr.recommendedState() ==
                                             RecommendedState.hasNotExceededButEmpty
-                                        ? "That's It For Now!!"
+                                        ? "That's It For Today!!"
                                         : "That's It For Now!!",
                                     buttonText: "Go to Explore",
                                     buttonFunc: () async {
