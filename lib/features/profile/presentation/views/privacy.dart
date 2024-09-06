@@ -42,7 +42,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
               ),
               const SizedBoxH20(),
               Text(
-                'At Nexus, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy outlines how we collect, use, and safeguard your data when you use our Christian dating app. By accessing or using nexus, you agree to the terms outlined in this policy.',
+                'At Nexus, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy outlines how we collect, use, and safeguard your data when you use our app. By accessing or using nexus, you agree to the terms outlined in this policy.',
                 style: textStyle14.copyWith(color: black),
               ),
               const SizedBoxH20(),
@@ -141,7 +141,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
               ),
               const SizedBoxH20(),
               Text(
-                'Data:',
+                'Data Movement:',
                 style: textStyle14.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -156,7 +156,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
               const PrivacyItem(
                 title: 'Data Breach Notification:'
                 desc:
-                    'We have procedures in place for detecting, investigating, and notifying users of data breaches in compliance with GDPR's requirement for timely notification of breaches.',
+                    'We have procedures in place for detecting, investigating, and notifying users of data breaches in compliance with GDPR\'s requirement for timely notification of breaches.',
               ),
                const SizedBoxH10(),
               const PrivacyItem(
