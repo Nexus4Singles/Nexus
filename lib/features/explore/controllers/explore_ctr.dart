@@ -24,22 +24,34 @@ class ExploreCtr extends GetxController {
   var rangeValues = const RangeValues(25, 50).obs;
   var exploreError = "".obs;
 
-  getAllUsers() async {
-    var users = await db
+  Future<void> getAllUsers() async {
+    var usersSnapshot = await db
         .collection(kUSER)
         .where(kREGPROGRESS, isEqualTo: "completed")
         .get();
-    var data =
-        users.docs.map((data) => UserModel.fromJson(data.data())).toList();
-    allUsers.assignAll(data);
-    for (var data in allUsers) {
-      appLog("this is all users == >$data");
-      if (data.id == auth.currentUser?.uid) {
-        myProfile.value = data;
-        allUsers.where((users) => users.gender != myProfile.value.gender);
-      }
+
+    var fetchedUsers = usersSnapshot.docs
+        .map((doc) => UserModel.fromJson(doc.data()))
+        .toList();
+
+    var currentUserId = auth.currentUser?.uid;
+    if (currentUserId == null) {
+      debugPrint("No authenticated user found");
+      allUsers.assignAll(fetchedUsers);
+      return;
     }
-    debugPrint("this is all users == >${allUsers.length}");
+
+    UserModel? myProfileUser = fetchedUsers.firstWhere(
+        (user) => user.id == currentUserId,
+        orElse: () => myProfile.value);
+    myProfile.value = myProfileUser;
+    debugPrint("My profile gender: ${myProfile.value.gender}");
+
+    var filteredUsers = fetchedUsers
+        .where((user) => user.gender != myProfile.value.gender)
+        .toList();
+
+    allUsers.assignAll(filteredUsers);
   }
 
   getMyProfile() async {
@@ -53,6 +65,7 @@ class ExploreCtr extends GetxController {
     isLoading.value = true;
     searchedUsers.clear();
     filteredUsers.clear();
+    allUsers.where((val) => val.gender != myProfile.value.gender);
     await Future.delayed(
         const Duration(seconds: 2), () => isLoading.value = false);
     for (var vals in allUsers) {

@@ -182,6 +182,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                       location:
                                           val.location!.place?.capitalize ?? "",
                                       onPress: () {
+                                        print(
+                                            "this users gender ==> ${val.gender} Mine ==> ${ctr.myProfile.value.gender}");
                                         Get.to(() =>
                                             UserDetailScreen(userModel: val));
                                       },
