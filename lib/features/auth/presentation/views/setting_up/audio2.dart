@@ -111,20 +111,21 @@ class _Audio2ScreenState extends State<Audio2Screen> {
               padding: const EdgeInsets.only(top: 20),
               child: InkWell(
                 onTap: () {
-                  if (recordingCompleted) {
+                  final isPositionValid =
+                      recPosition?.inSeconds.isGreaterThan(45) ?? false;
+                  if (recordingCompleted || (isPositionValid && !isRecording)) {
+                    player.stop();
                     Get.toNamed(AppRoutes.audio3);
-                  } else if (recPosition!.inSeconds.isGreaterThan(45) &&
-                      isRecording == false) {
-                    Get.toNamed(AppRoutes.audio3);
-                  } else if (recPosition!.inSeconds.isGreaterThan(45)) {
+                  } else if (isPositionValid) {
                     AppToast()
                         .showErrorToast('Stop the audio below to continue');
                   } else {
-                    AppToast().showErrorToast(
-                        'Audio must be not be less than 45 secs');
+                    AppToast()
+                        .showErrorToast('Audio must be at least 45 seconds');
                   }
+
                   debugPrint(
-                      "is completed = > $recordingCompleted ${recPosition!.inSeconds}");
+                      "is completed = > $recordingCompleted ${recPosition?.inSeconds ?? 'N/A'}");
                 },
                 child: Text(
                   'Next',
