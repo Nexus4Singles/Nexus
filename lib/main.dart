@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:isolate';
+import 'package:Nexus/core/utils/helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -12,9 +13,11 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:rename/platform_file_editors/abs_platform_file_editor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'core/di/injection_container.dart';
 import 'core/storage/digital_ocean_keys.dart';
 import 'features/auth/presentation/change_notifier/auth_notifier.dart';
+import 'features/chat/chat_manager.dart';
 import 'features/explore/controllers/explore_ctr.dart';
 import 'features/home/presentation/change_notifier/bottom_nav.dart';
 import 'features/home/presentation/change_notifier/home_notifier.dart';
@@ -34,13 +37,15 @@ Future<void> main() async {
         'en_US', null); // Initialize with your desired locale
 
     await configureDependencies();
+    await Firebase.initializeApp();
+
     try {
       await SubscriptionService.init();
     } catch (e) {
+      BaseHelper.showSnackBar('Error initializing subsccription service: $e');
       logger.e(
           'Error occurred initializing subscription service; ${e.toString()}');
     }
-    await Firebase.initializeApp();
 
     if (kDebugMode) {
       await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
@@ -67,12 +72,14 @@ Future<void> main() async {
   DigitalOceanConfig.initDigitalOcean();
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget with WidgetsBindingObserver {
   MyApp({super.key});
   final ctr = Get.put(ExploreCtr());
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addObserver(this);
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
@@ -81,7 +88,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => sl<AuthNotifier>()),
         ChangeNotifierProvider(create: (_) => sl<HomeNotifier>()),
         ChangeNotifierProvider(create: (_) => SubscriptionProvider()),
-        // ChangeNotifierProvider(create: (_) => ChatManager())
       ],
       child: Consumer<ThemeProvider>(builder: (context, theme, _) {
         return GestureDetector(
@@ -103,5 +109,23 @@ class MyApp extends StatelessWidget {
         );
       }),
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.paused) {
+      logger.i('lifecycle-> paused');
+      await clearSharedPreferences();
+    } else if (state == AppLifecycleState.detached) {
+      // App is terminated
+      logger.i('App is terminated');
+      await clearSharedPreferences();
+    }
+  }
+
+  Future<void> clearSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('activeChatUserId', '');
+    logger.i('Main: Active chat user ID cleared');
   }
 }

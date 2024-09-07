@@ -39,7 +39,7 @@ class _AcknowledgmentScreenState extends State<AcknowledgmentScreen> {
                 width: 100),
             const SizedBoxH20(),
             Text(
-              'Congratulations',
+              'Congratulations!!!',
               style: textStyle18.copyWith(
                 fontSize: 36,
                 fontWeight: FontWeight.bold,
@@ -47,7 +47,7 @@ class _AcknowledgmentScreenState extends State<AcknowledgmentScreen> {
             ),
             const SizedBoxH20(),
             Text(
-              'Your subscription was successful!!!\nPlease allow a few minutes for your subscription to\nbe activated.',
+              'Your subscription was successful!!!\nIf you dont see an active subscription,\n please close the app and relaunch it.',
               textAlign: TextAlign.center,
               style: textStyle18.copyWith(fontSize: 12, height: 2),
             ),

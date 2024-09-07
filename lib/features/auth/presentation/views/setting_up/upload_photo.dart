@@ -62,7 +62,7 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
                 child: Column(
                   children: [
                     Text(
-                      'Add at least 2 photos of yourself. We highly recommend \nuploading your best pictures because first impressions \nreally matter. Profiles with indecent pictures will be deleted. ',
+                      'We recommend using 4 of your best pictures because first impression\n really matters. Profiles with indecent pictures will be deleted. ',
                       textAlign: TextAlign.center,
                       style: textStyle12.copyWith(color: black.withOpacity(.8)),
                     ),

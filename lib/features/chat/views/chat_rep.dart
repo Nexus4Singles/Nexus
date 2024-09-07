@@ -18,6 +18,8 @@ import 'package:Nexus/core/utils/modals.dart';
 import 'package:Nexus/features/chat/controllers/chat_ctr.dart';
 import 'package:Nexus/features/home/presentation/views/user_details.dart';
 import 'package:provider/provider.dart';
+import 'package:rename/platform_file_editors/abs_platform_file_editor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/models/message_model.dart';
 import '../../../core/services/fcm.dart';
 import '../../home/presentation/views/photo_view.dart';
@@ -38,16 +40,19 @@ class ChatWithScreen extends StatefulWidget {
   State<ChatWithScreen> createState() => _ChatWithScreenState();
 }
 
-class _ChatWithScreenState extends State<ChatWithScreen> {
+class _ChatWithScreenState extends State<ChatWithScreen> with WidgetsBindingObserver {
   var ctr = Get.put(ChatCtr());
+  final TextEditingController _textController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ChatManager.openChat(widget.chatModel.userModel!.id);
-      FCMService.clearNotificationsForConversation(widget.chatModel.messageID);
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _initChatState();
+      logger.i('updated from chatscreen on init');
 
+      FCMService.clearNotificationsForConversation(widget.chatModel.messageID);
       if (ctr.exploreCtr.myProfile.value.usersChatWarning == null) {
         chatWarningModal(context);
         ctr.setUserToHaveShowWarning(widget.chatModel.userModel!.id);
@@ -62,15 +67,37 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
   }
 
   @override
-  void dispose() {
-    ChatManager.closeChat();
+  void dispose() async {
     super.dispose();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('activeChatUserId', '');
+    logger.i('cleared from chatscreen on dispose');
+    _textController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
   }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      // When the app resumes, ensure the chat state is updated
+      logger.i('lifecycle-> resumed');
+      await _initChatState();
+      logger.i('updated from chatscreen on resume');
+    }
+  }
+
+  Future<void> _initChatState() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('activeChatUserId', widget.chatModel.userModel!.id);
+    final usrId = prefs.getString('activeChatUserId');
+    logger.i('Active chat user ID set to: $usrId');
+  }
+
 
   @override
   Widget build(BuildContext context) {
     final subProvider =
-        Provider.of<SubscriptionProvider>(context, listen: false);
+    Provider.of<SubscriptionProvider>(context, listen: false);
 
     return Scaffold(
         appBar: AppBar(
@@ -91,7 +118,8 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
               child: const Icon(Icons.report),
               onTap: () {
                 Get.to(
-                    () => ReportUser(userModel: widget.chatModel.userModel!));
+                        () =>
+                        ReportUser(userModel: widget.chatModel.userModel!));
               },
             ),
             const SizedBoxW15()
@@ -158,7 +186,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                 return DashChat(
                   currentUser: ChatUser(id: ctr.auth.currentUser!.uid),
                   inputOptions: InputOptions(
-                      textController: ctr.chatController,
+                      textController: _textController,
                       textInputAction: TextInputAction.newline,
                       alwaysShowSend: true,
                       sendButtonBuilder: (val) {
@@ -166,7 +194,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                           onTap: () {
                             // Trigger the send action with current message
                             var message = ChatMessage(
-                              text: ctr.chatController.text,
+                              text: _textController.text,
                               customProperties: {},
                               medias: [],
                               user: ChatUser(
@@ -174,8 +202,17 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                                   profileImage: ""),
                               createdAt: DateTime.now(),
                             );
-                            // Call the new method to handle sending or restrictions
-                            _handleSendMessage(message, subProvider);
+                            // handle sending or restrictions
+                            if (subProvider.isRestricted == true) {
+                              restrictionModal(context: context,
+                                  dismisable: true,
+                                  showButton: false,
+                                  text: 'Your'
+                                      ' device is already linked to an active subscription. Please log in to Google Play Store Account/Apple ID account associated to your subscription &\nRestart the app then head to Settings -> '
+                                      'Your Subscription -> Restore Subscription.');
+                            } else {
+                              _handleSendMessage(message, subProvider);
+                            }
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -241,14 +278,15 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                               borderSide: const BorderSide(color: grey)))),
                   messageOptions: MessageOptions(
                       onLongPressMessage: (message) {
-                        if (widget.chatModel.userModel!.id == message.user.id) {
-                        } else {
+                        if (widget.chatModel.userModel!.id ==
+                            message.user.id) {} else {
                           openModal(context, message);
                         }
                       },
                       onTapMedia: (media) {
                         if (media.type == MediaType.image) {
-                          Get.to(() => PhotoViewScreen(
+                          Get.to(() =>
+                              PhotoViewScreen(
                                 selectedIndex: 0,
                                 photos: [media.url],
                               ));
@@ -259,7 +297,16 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
                       currentUserContainerColor: whiteblue),
                   onSend: (ChatMessage message) {
                     // Handle sending or showing restriction modal
-                    _handleSendMessage(message, subProvider);
+                    if (subProvider.isRestricted == true) {
+                      restrictionModal(context: context,
+                          dismisable: true,
+                          showButton: false,
+                          text: 'Please'
+                              ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription &\nRestart the app then head to Settings -> '
+                              'Your Subscription -> Restore Subscription.');
+                    } else {
+                      _handleSendMessage(message, subProvider);
+                    }
                   },
                   messages: messages,
                 );
@@ -303,46 +350,48 @@ class _ChatWithScreenState extends State<ChatWithScreen> {
     );
   }
 
-  void _handleSendMessage(
-      ChatMessage message, SubscriptionProvider subProvider) {
-    if (subProvider.onPremium == false &&
-        subProvider.usedOneFreeText == true &&
-        subProvider.prevSubscribed == false &&
-        subProvider.entitledUser != widget.chatModel.userModel?.id) {
-      restrictionModal(
-        context: context,
-        dismisable: true,
-        text:
-            'You have used up your limit of one (1) chat per matched user on our free version.\nKindly subscribe to chat with other matched users.',
-      );
-    } else if (subProvider.onPremium == false &&
-        subProvider.usedOneFreeText == true &&
-        subProvider.prevSubscribed == true &&
-        subProvider.entitledUser != widget.chatModel.userModel?.id) {
-      restrictionModal(
-        context: context,
-        dismisable: true,
-        text:
-            'Your subscription has expired!\nKindly subscribe to be able to send messages\nand user other features.',
-      );
-    } else if (subProvider.onPremium == false &&
-        subProvider.usedOneFreeText == false &&
-        subProvider.prevSubscribed == false) {
-      ctr.sendMessage(widget.chatModel.messageID, message.text,
-          widget.chatModel.userModel!);
+  void _handleSendMessage(ChatMessage message,
+      SubscriptionProvider subProvider) async {
+    // Check if the user has used their one free text
+    if (subProvider.usedOneFreeText) {
+      // If the user has subscribed before but is no longer on a premium subscription
+      if (subProvider.prevSubscribed && !subProvider.onPremium) {
+        restrictionModal(
+          context: context,
+          dismisable: true,
+          text:
+          'Your subscription has expired!\nKindly subscribe to be able to send messages\nand use other features.',
+        );
+        return;
+      }
+      // If the user hasn't subscribed before and they're not chatting with the entitled user
+      else if (!subProvider.prevSubscribed &&
+          subProvider.entitledUser != widget.chatModel.userModel?.id) {
+        restrictionModal(
+          context: context,
+          dismisable: true,
+          text:
+          'You have used up your limit of one (1) chat per matched user on our free version.\nKindly subscribe to chat with other matched users.',
+        );
+        return;
+      }
+    }
+
+    // If the user is allowed to send a message (premium or within the allowed free text)
+    ctr.sendMessage(
+        widget.chatModel.messageID, message.text, widget.chatModel.userModel!);
+    _textController.text = '';
+
+    // If the user is using their one free text, update the status
+    if (!subProvider.usedOneFreeText && !subProvider.prevSubscribed) {
       subProvider.usedOneFreeText = true;
       subProvider.entitledUser = widget.chatModel.userModel?.id;
-      SubscriptionHelper.updateFreeTextStatus(subProvider.currentUser, true,
-          context, widget.chatModel.userModel?.id);
-    } else if (subProvider.onPremium == false &&
-        subProvider.usedOneFreeText == true &&
-        subProvider.prevSubscribed == false &&
-        subProvider.entitledUser == widget.chatModel.userModel?.id) {
-      ctr.sendMessage(widget.chatModel.messageID, message.text,
-          widget.chatModel.userModel!);
-    } else if (subProvider.onPremium == true) {
-      ctr.sendMessage(widget.chatModel.messageID, message.text,
-          widget.chatModel.userModel!);
+      await SubscriptionHelper.updateFreeTextStatus(
+        subProvider.currentUser,
+        true,
+        context,
+        widget.chatModel.userModel?.id,
+      );
     }
   }
 }

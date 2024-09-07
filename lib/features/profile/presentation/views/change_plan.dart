@@ -66,12 +66,7 @@ class _ChangePlanScreenState extends State<ChangePlanScreen> {
                             ),
                             const SizedBoxH10(),
                             Text(
-                              subProvider.subExpDate != null &&
-                                      DateTime.now().isBefore(
-                                          DateFormat('dd/MM/yyyy')
-                                              .parse(subProvider.subExpDate!))
-                                  ? 'Your subscription expires on'
-                                  : 'Your subscription expires on ',
+                              'Your subscription expires on ',
                               style: textStyle18.copyWith(
                                 color: white,
                                 fontSize: 12.sp,
@@ -80,7 +75,7 @@ class _ChangePlanScreenState extends State<ChangePlanScreen> {
                             ),
                             const SizedBoxH5(),
                             Text(
-                              subProvider.subExpDate!,
+                              subProvider.subExpDate! ?? '',
                               style: textStyle12.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: white,

@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:Nexus/core/utils/helper.dart';
+import 'package:Nexus/features/subscription/widgets/restriction_modal.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,6 +13,7 @@ import 'package:pay/pay.dart';
 import 'package:Nexus/core/button.dart';
 import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/core/style.dart';
+import 'package:rename/platform_file_editors/abs_platform_file_editor.dart';
 import '../helpers/subscription_helper.dart';
 import '../provider/subscription_provider.dart';
 
@@ -154,21 +158,40 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   'Backtrack if you mistakenly swiped left',
                   'Access to Advanced Filters on Explore Page',
                 ],
-                onSelectPlan: model.onPremium
-                    ? () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("You are already a Premium User!"),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
-                      }
-                    : () async {
-                        await SubscriptionHelper.onSubscribe(context);
-                      },
+                onSelectPlan: () async {
+                  model.subLoading = true;
+                  try {
+                    await _handleSubscribeAction(model);
+                    model.subLoading = false;
+                  } catch(error){
+                    BaseHelper.showSnackBar('Error occurred while attempting to subscribe.\nPlease ensure you are signed'
+                        'into the Play Store or App Store');
+                    model.subLoading = false;
+
+                  }
+                },
               ),
-              if (model.isLoading) const Center(child: CircularProgressIndicator()),
-            
+              SizedBox(height: 25.h),
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: CustomButton(
+                    onPressed: () async {
+                      model.subLoading = true;
+                      await SubscriptionHelper.restoreSubscriptionEntitlement(context, model);
+                      model.subLoading = false;
+
+                    },
+                    child: const Text(
+                      'Restore Subscription',
+                      style: TextStyle(color: Colors.white, fontSize: 13),
+                    ),
+                  ),
+              ),
+              SizedBox(height: 10.h),
+              if (model.isLoading ||  model.subLoading == true)
+                const Center(child: CircularProgressIndicator(),
+                ),
+
               /*SizedBox(height: 10.h),
                 _buildPlanContainer(
                   title: '\$12/3 months',
@@ -252,6 +275,49 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       ),
     );
   }
+
+  _handleSubscribeAction(SubscriptionProvider subProvider) async {
+    var currentSystemSubscriberId = await SubscriptionHelper.getSubscriberId();
+    if(subProvider.onPremium == false && subProvider.isRestricted == true)
+      {
+        restrictionModal(context: context, dismisable: true, showButton: false, text: 'Please'
+              ' log in or switch to the Google Play Store/App Store account associated to your subscription.\n'
+              'Head back here after restarting the app, click the \'Restore Subscription\' button,  then try again.');
+
+      } else if ( subProvider.currentUser?.subscriberId == 'null' && currentSystemSubscriberId != null)
+        {
+          restrictionModal(context: context, dismisable: true, showButton: false, text: 'Please'
+              ' log in or switch to the Google Play Store Account/Apple ID account that is NOT associated to a subscription.\n'
+              'Head back here after restarting the app, click the\'Restore Subscription\' button then try again.');
+        }
+    else if(subProvider.onPremium == true){
+      BaseHelper.showSnackBar ('You\'re on Premium!');
+    }
+    else {
+      await SubscriptionHelper.onSubscribe(context);
+    }
+  }
+
+  Future<void> addSubscriberIdToUsers() async {
+    // Reference to the users collection
+    CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+
+    try {
+      // Get all documents in the users collection
+      QuerySnapshot querySnapshot = await usersCollection.get();
+
+      // Iterate through each document
+      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+        // Add the 'subscriberId' field and set its value to the string 'null'
+        await doc.reference.update({'subscriberId': 'null'});
+      }
+
+      logger.i('Successfully added subscriberId to all documents in users collection.');
+    } catch (e) {
+      logger.i('Error updating documents: $e');
+    }
+  }
+
 }
 
 class AppCircularProgressIndicator extends StatelessWidget {

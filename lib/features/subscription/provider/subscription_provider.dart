@@ -57,6 +57,24 @@ class SubscriptionProvider extends ChangeNotifier {
 
   String? get subExpDate => _subExpDate;
 
+  String? _subscriberId;
+
+  set subscriberId(String? subscriberId) {
+    _subscriberId = subscriberId;
+    notifyListeners();
+  }
+
+  String? get subscriberId => _subscriberId;
+
+  bool _isRestricted = false;
+
+  set isRestricted(bool isRestricted) {
+    _isRestricted = isRestricted;
+    notifyListeners();
+  }
+
+  bool get isRestricted => _isRestricted;
+
   void initSubDet(UserModel? user) {
     _currentUser = user;
     _onPremium = user?.onPremium ?? false;
@@ -64,6 +82,7 @@ class SubscriptionProvider extends ChangeNotifier {
     _usedOneFreeText = user?.usedOneFreeText ?? false;
     _subExpDate = user?.subExpDate;
     _entitledUser = user?.entitledUser;
+    _subscriberId = user?.subscriberId;
   }
 
   bool _isLoading = false;
@@ -74,4 +93,13 @@ class SubscriptionProvider extends ChangeNotifier {
   }
 
   bool get isLoading => _isLoading;
+
+  bool _subLoading = false;
+
+  set subLoading(bool subLoading) {
+    _subLoading = subLoading;
+    notifyListeners();
+  }
+
+  bool get subLoading => _subLoading;
 }

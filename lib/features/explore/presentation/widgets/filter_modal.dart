@@ -11,6 +11,7 @@ import 'package:Nexus/features/auth/data/data-sources/local-datasource/list_item
 import 'package:Nexus/features/auth/presentation/widgets/drop_down.dart';
 import 'package:provider/provider.dart';
 import '../../../subscription/provider/subscription_provider.dart';
+import '../../../subscription/widgets/restriction_modal.dart';
 import '../../controllers/explore_ctr.dart';
 
 class ExploreFilterModal extends StatefulWidget {
@@ -123,10 +124,20 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
                     onPressed: () {
                       final provider = context.read<SubscriptionProvider>();
                       if (provider.onPremium == true) {
-                        ctr.filterUsers();
+                        if(provider.isRestricted == true)
+                        {
+                          restrictionModal(context: context, showButton: false, text: 'Your subscription entitlements have been restricted.\nPlease'
+                              ' log in to the associated Play Store or App Store account.\nRestart the app then head to Settings -> '
+                              'Your Subscription -> Restore Subscription.');
+                        } else {
+                          ctr.filterUsers();
+                        }
                       } else {
-                        subscribeModal(context);
-                      }
+                        restrictionModal(text: 'This is a premium feature. The free version of Nexus allows you to search by City & Country of Residence. '
+                            'Subscribing gives you access to use advanced filters to narrow down your search.', context: context);
+
+
+                    }
                     },
                     text: 'Apply',
                   ),
