@@ -103,7 +103,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             textCapitalization: TextCapitalization.words,
                             autoCorrect: false,
                             keyboardType: TextInputType.name,
-                            hintText: 'Username (Firstname highly recommended)',
+                            hintText: 'Username (Firstname recommended)',
                             prefixIcon: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
