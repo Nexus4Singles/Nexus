@@ -1,79 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:Nexus/features/subscription/views/subscription.dart';
 import '../../../core/assets.dart';
 import '../../../core/button.dart';
-import '../../../core/colors.dart';
-import '../../../core/style.dart';
-import '../../../core/utils/empty_state.dart';
+import 'package:flutter_svg/flutter_svg.dart'; // Ensure you import this for SVG support
 
-restrictionModal(
-    {context,
-    dismisable = true,
-      showButton = true,
-    text = 'This is a premium feature.\nSubscribe now to use this feature.'}) {
+void restrictionModal({
+  required BuildContext context,
+  bool dismisable = true,
+  bool showButton = true,
+  String text =
+      'This is a premium feature.\nSubscribe now to use this feature.',
+}) {
   showDialog(
     context: context,
     barrierDismissible: dismisable,
-    builder: (context) {
+    builder: (BuildContext context) {
       return Dialog(
         backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent ,
+        shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        child: Padding(
-          padding:  EdgeInsets.symmetric(vertical: Get.height*0.26),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(24)
-            ),
-            padding: const EdgeInsets.only(left: 20.0, right: 12.0, bottom: 12.0, top: 12.0),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-
-                      },
-                      child: const Icon(
-                        Icons.clear,
-                        color: primary,
-                      )),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(24),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+          child: Wrap(
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.clear,
+                    color: Colors.red, // Replace with your primary color
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-               const Spacer(),
-               // const SizedBox(height: 20,),
-                SvgPicture.asset(
+              ),
+              Center(
+                child: SvgPicture.asset(
                   "$svgPath/Empty.svg",
                   height: 100, // Adjust size as needed
-                  width: 100, fit: BoxFit.cover,
+                  width: 100,
+                  fit: BoxFit.cover,
                 ),
-                const Spacer(),
-                Text(
-                  text,
-                  textAlign: TextAlign.center,
-                  style: textStyle14.copyWith(color: dustyGrey),
-                ),
-                const Spacer(),
-                showButton ?
-                CustomButton(
+              ),
+              const SizedBox(height: 16.0),
+              Text(
+                text,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.grey[600]), // Replace with your text style
+              ),
+              if (showButton)
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: CustomButton(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const SubscriptionScreen()),
+                          builder: (context) => const SubscriptionScreen(),
+                        ),
                       );
-                      },
+                    },
                     text: 'Subscribe',
-                    borderRadius: 100)
-                : const SizedBox.shrink(),
-                const Spacer(),
-
-              ],
-            )
+                    borderRadius: 100,
+                  ),
+                ),
+            ],
           ),
         ),
       );
