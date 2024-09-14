@@ -34,7 +34,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'id': '2',
       "title": "Search Profiles",
       "subtitle":
-          "Your profile will only be visible to opposite gender users and you will also be able to directly search & view profiles of opposite gender users living in any country, with the option of filters to narrow down your search. \n\nNexus is open to any unmarried, widowed, or divorced Christian, who desires marriage and is committed to personal development & spiritual growth! \n\nThe app is currently available to Nigerians living anywhere in the world, but we are scaling to other nationalities rapidly. Kindly stay patient, if you are not Nigerian. ",
+          "Your profile will only be visible to opposite gender users and you will also be able to directly search & view profiles of opposite gender users living in any country, with the option of filters to narrow down your search. \n\nNexus is open to any unmarried, widowed, or divorced Christian (21 Years & above), who desires marriage and is committed to personal development & spiritual growth! \n\nThe app is currently available to Nigerians living anywhere in the world, but we are scaling to other nationalities rapidly. Kindly stay patient, if you are not Nigerian. ",
       "image": iOnboard2,
     },
     {
