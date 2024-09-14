@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../core/constant.dart';
@@ -26,6 +27,7 @@ class ChatCtr extends GetxController {
   var imageFile = File('').obs;
   var mediaType = "".obs;
   var mediaFile = "".obs;
+  var isLoading = false.obs;
 
   Stream<QuerySnapshot> getAllMyChats() {
     return db
@@ -212,6 +214,19 @@ class ChatCtr extends GetxController {
       debugPrint("This is the url error  $e");
       return '';
     }
+  }
+
+  blockUnblockAUser(String id, bool isUnblock) async {
+    EasyLoading.show();
+    await db.collection(kUSER).doc(auth.currentUser!.uid).update({
+      'blocked':
+          isUnblock ? FieldValue.arrayRemove([id]) : FieldValue.arrayUnion([id])
+    }).then((val) async {
+      await exploreCtr.getMyProfile();
+      EasyLoading.dismiss();
+    });
+    EasyLoading.dismiss();
+    Get.back();
   }
 
   @override

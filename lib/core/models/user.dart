@@ -23,6 +23,7 @@ class UserModel extends UserEntity {
     List<String>? likeMe,
     List<String>? myLikes,
     List<String>? mySaves,
+    List<String>? blocked,
     List<String>? usersChatWarning,
     List<String>? matchedUsers,
     List<String>? unRecommendUsers,
@@ -55,6 +56,7 @@ class UserModel extends UserEntity {
           email: email,
           profileUrl: profileUrl,
           age: age,
+          blocked: blocked,
           gender: gender,
           unRecommendUsers: unRecommendUsers,
           bestQualotiesOrTraits: bestQualotiesOrTraits,
@@ -89,7 +91,7 @@ class UserModel extends UserEntity {
           subExpDate: subExpDate,
           entitledUser: entitledUser,
           subscriberId: subscriberId,
-    recommendedTime: recommendedTime,
+          recommendedTime: recommendedTime,
         );
 
   factory UserModel.fromJson(Map<String, dynamic> map) =>

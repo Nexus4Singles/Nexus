@@ -1,3 +1,4 @@
+import 'package:Nexus/features/chat/widget/block_user_modal.dart';
 import 'package:Nexus/features/subscription/helpers/subscription_helper.dart';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -23,10 +25,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/models/message_model.dart';
 import '../../../core/services/fcm.dart';
 import '../../home/presentation/views/photo_view.dart';
-import '../../profile/presentation/views/report_user.dart';
 import '../../subscription/provider/subscription_provider.dart';
 import '../../subscription/widgets/restriction_modal.dart';
-import '../chat_manager.dart';
 
 class ChatWithScreen extends StatefulWidget {
   final ChatModel chatModel;
@@ -40,8 +40,10 @@ class ChatWithScreen extends StatefulWidget {
   State<ChatWithScreen> createState() => _ChatWithScreenState();
 }
 
-class _ChatWithScreenState extends State<ChatWithScreen> with WidgetsBindingObserver {
-  var ctr = Get.put(ChatCtr());
+class _ChatWithScreenState extends State<ChatWithScreen>
+    with WidgetsBindingObserver {
+  var ctr = ChatCtr.instance;
+
   final TextEditingController _textController = TextEditingController();
 
   @override
@@ -93,11 +95,18 @@ class _ChatWithScreenState extends State<ChatWithScreen> with WidgetsBindingObse
     logger.i('Active chat user ID set to: $usrId');
   }
 
-
   @override
   Widget build(BuildContext context) {
     final subProvider =
-    Provider.of<SubscriptionProvider>(context, listen: false);
+        Provider.of<SubscriptionProvider>(context, listen: false);
+    var myProfile = ctr.exploreCtr.myProfile.value;
+
+    final isUserBlocked =
+        widget.chatModel.userModel?.blocked?.contains(myProfile.id) ?? false;
+    final isIBlockedUser =
+        myProfile.blocked?.contains(widget.chatModel.userModel?.id) ?? false;
+
+    final isBlocked = isUserBlocked || isIBlockedUser;
 
     return Scaffold(
         appBar: AppBar(
@@ -115,11 +124,21 @@ class _ChatWithScreenState extends State<ChatWithScreen> with WidgetsBindingObse
             ),
             const SizedBoxW20(),
             InkWell(
-              child: const Icon(Icons.report),
+              child: const Icon(Icons.more_vert_rounded),
               onTap: () {
-                Get.to(
-                        () =>
-                        ReportUser(userModel: widget.chatModel.userModel!));
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(25.r),
+                    ),
+                  ),
+                  showDragHandle: true,
+                  builder: (context) {
+                    return BlockUserModal(chatModel: widget.chatModel);
+                  },
+                );
               },
             ),
             const SizedBoxW15()
@@ -154,164 +173,173 @@ class _ChatWithScreenState extends State<ChatWithScreen> with WidgetsBindingObse
             ],
           ),
         ),
-        body: StreamBuilder<QuerySnapshot>(
-            stream: ctr.getMyConversations(widget.chatModel.messageID),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(child: Text("No Message yet!."));
-              } else {
-                var data = snapshot.data!.docs;
-                final message = data
-                    .map((e) =>
-                        MessageModel.fromJson(e.data() as Map<String, dynamic>))
-                    .toList();
-                List<ChatMessage> messages = <ChatMessage>[];
-                for (var element in message) {
-                  messages.add(ChatMessage(
-                      text: element.message,
-                      customProperties: {"id": element.id},
-                      medias: element.media.isEmpty
-                          ? []
-                          : [
-                              ChatMedia(
-                                  url: element.media,
-                                  fileName: element.media,
-                                  type: element.messageType == "Video"
-                                      ? MediaType.video
-                                      : MediaType.image)
-                            ],
-                      user: ChatUser(id: element.sentBy, profileImage: ""),
-                      createdAt: element.timestamp.toDate()));
-                }
-                return DashChat(
-                  currentUser: ChatUser(id: ctr.auth.currentUser!.uid),
-                  inputOptions: InputOptions(
-                      textController: _textController,
-                      textInputAction: TextInputAction.newline,
-                      alwaysShowSend: true,
-                      sendButtonBuilder: (val) {
-                        return InkWell(
-                          onTap: () {
-                            // Trigger the send action with current message
-                            var message = ChatMessage(
-                              text: _textController.text,
-                              customProperties: {},
-                              medias: [],
-                              user: ChatUser(
-                                  id: ctr.auth.currentUser!.uid,
-                                  profileImage: ""),
-                              createdAt: DateTime.now(),
+        body: isBlocked
+            ? const Center(
+                child: Text("Blocked!!!"),
+              )
+            : StreamBuilder<QuerySnapshot>(
+                stream: ctr.getMyConversations(widget.chatModel.messageID),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(child: Text("No Message yet!."));
+                  } else {
+                    var data = snapshot.data!.docs;
+                    final message = data
+                        .map((e) => MessageModel.fromJson(
+                            e.data() as Map<String, dynamic>))
+                        .toList();
+                    List<ChatMessage> messages = <ChatMessage>[];
+                    for (var element in message) {
+                      messages.add(ChatMessage(
+                          text: element.message,
+                          customProperties: {"id": element.id},
+                          medias: element.media.isEmpty
+                              ? []
+                              : [
+                                  ChatMedia(
+                                      url: element.media,
+                                      fileName: element.media,
+                                      type: element.messageType == "Video"
+                                          ? MediaType.video
+                                          : MediaType.image)
+                                ],
+                          user: ChatUser(id: element.sentBy, profileImage: ""),
+                          createdAt: element.timestamp.toDate()));
+                    }
+                    return DashChat(
+                      currentUser: ChatUser(id: ctr.auth.currentUser!.uid),
+                      inputOptions: InputOptions(
+                          textController: _textController,
+                          textInputAction: TextInputAction.newline,
+                          alwaysShowSend: true,
+                          sendButtonBuilder: (val) {
+                            return InkWell(
+                              onTap: () {
+                                // Trigger the send action with current message
+                                var message = ChatMessage(
+                                  text: _textController.text,
+                                  customProperties: {},
+                                  medias: [],
+                                  user: ChatUser(
+                                      id: ctr.auth.currentUser!.uid,
+                                      profileImage: ""),
+                                  createdAt: DateTime.now(),
+                                );
+                                // handle sending or restrictions
+                                if (subProvider.isRestricted == true) {
+                                  restrictionModal(
+                                      context: context,
+                                      dismisable: true,
+                                      showButton: false,
+                                      text: 'Your'
+                                          ' device is already linked to an active subscription. Please log in to Google Play Store Account/Apple ID account associated to your subscription &\nRestart the app then head to Settings -> '
+                                          'Your Subscription -> Restore Subscription.');
+                                } else {
+                                  _handleSendMessage(message, subProvider);
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CircleAvatar(
+                                  backgroundColor: primary,
+                                  child: SvgPicture.asset("$svgPath/send.svg"),
+                                ),
+                              ),
                             );
-                            // handle sending or restrictions
-                            if (subProvider.isRestricted == true) {
-                              restrictionModal(context: context,
-                                  dismisable: true,
-                                  showButton: false,
-                                  text: 'Your'
-                                      ' device is already linked to an active subscription. Please log in to Google Play Store Account/Apple ID account associated to your subscription &\nRestart the app then head to Settings -> '
-                                      'Your Subscription -> Restore Subscription.');
+                          },
+                          inputDecoration: InputDecoration(
+                              hintText: "Send a message",
+                              hintStyle: const TextStyle(color: Colors.grey),
+                              prefixIcon:
+                                  PopupMenuButton<Map<String, IconData>>(
+                                position: PopupMenuPosition.over,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                                onSelected: (item) {},
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: CircleAvatar(
+                                      backgroundColor: primary,
+                                      child: Icon(
+                                        Icons.add_box_rounded,
+                                        color: Colors.white,
+                                      )),
+                                ),
+                                itemBuilder: (BuildContext context) {
+                                  return {
+                                    'Video': Iconsax.video_add5,
+                                    'Image': Iconsax.image1,
+                                  }.entries.map((entry) {
+                                    return PopupMenuItem<Map<String, IconData>>(
+                                      value: {
+                                        entry.key: entry.value
+                                      }, // Map as value
+                                      textStyle:
+                                          textStyle14.copyWith(color: black),
+                                      child: InkWell(
+                                        onTap: () {
+                                          entry.key == "Image"
+                                              ? ctr.pickImage(widget.chatModel)
+                                              : entry.key == "Video"
+                                                  ? ctr.pickVideo(
+                                                      widget.chatModel)
+                                                  : () {};
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Icon(entry.value),
+                                            const SizedBox(width: 8),
+                                            Text(entry.key),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }).toList();
+                                },
+                                // ... rest of your code ...
+                              ),
+                              contentPadding: EdgeInsets.zero,
+                              filled: true,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(100),
+                                  borderSide: const BorderSide(color: grey)))),
+                      messageOptions: MessageOptions(
+                          onLongPressMessage: (message) {
+                            if (widget.chatModel.userModel!.id ==
+                                message.user.id) {
                             } else {
-                              _handleSendMessage(message, subProvider);
+                              openModal(context, message);
                             }
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CircleAvatar(
-                              backgroundColor: primary,
-                              child: SvgPicture.asset("$svgPath/send.svg"),
-                            ),
-                          ),
-                        );
-                      },
-                      inputDecoration: InputDecoration(
-                          hintText: "Send a message",
-                          hintStyle: const TextStyle(color: Colors.grey),
-                          prefixIcon: PopupMenuButton<Map<String, IconData>>(
-                            position: PopupMenuPosition.over,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            onSelected: (item) {},
-                            child: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: CircleAvatar(
-                                  backgroundColor: primary,
-                                  child: Icon(
-                                    Icons.add_box_rounded,
-                                    color: Colors.white,
-                                  )),
-                            ),
-                            itemBuilder: (BuildContext context) {
-                              return {
-                                'Video': Iconsax.video_add5,
-                                'Image': Iconsax.image1,
-                              }.entries.map((entry) {
-                                return PopupMenuItem<Map<String, IconData>>(
-                                  value: {
-                                    entry.key: entry.value
-                                  }, // Map as value
-                                  textStyle: textStyle14.copyWith(color: black),
-                                  child: InkWell(
-                                    onTap: () {
-                                      entry.key == "Image"
-                                          ? ctr.pickImage(widget.chatModel)
-                                          : entry.key == "Video"
-                                              ? ctr.pickVideo(widget.chatModel)
-                                              : () {};
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Icon(entry.value),
-                                        const SizedBox(width: 8),
-                                        Text(entry.key),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }).toList();
-                            },
-                            // ... rest of your code ...
-                          ),
-                          contentPadding: EdgeInsets.zero,
-                          filled: true,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
-                              borderSide: const BorderSide(color: grey)))),
-                  messageOptions: MessageOptions(
-                      onLongPressMessage: (message) {
-                        if (widget.chatModel.userModel!.id ==
-                            message.user.id) {} else {
-                          openModal(context, message);
+                          onTapMedia: (media) {
+                            if (media.type == MediaType.image) {
+                              Get.to(() => PhotoViewScreen(
+                                    selectedIndex: 0,
+                                    photos: [media.url],
+                                  ));
+                            }
+                          },
+                          showOtherUsersAvatar: false,
+                          containerColor: babyPink,
+                          currentUserContainerColor: whiteblue),
+                      onSend: (ChatMessage message) {
+                        // Handle sending or showing restriction modal
+                        if (subProvider.isRestricted == true) {
+                          restrictionModal(
+                              context: context,
+                              dismisable: true,
+                              showButton: false,
+                              text: 'Please'
+                                  ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription &\nRestart the app then head to Settings -> '
+                                  'Your Subscription -> Restore Subscription.');
+                        } else {
+                          _handleSendMessage(message, subProvider);
                         }
                       },
-                      onTapMedia: (media) {
-                        if (media.type == MediaType.image) {
-                          Get.to(() =>
-                              PhotoViewScreen(
-                                selectedIndex: 0,
-                                photos: [media.url],
-                              ));
-                        }
-                      },
-                      showOtherUsersAvatar: false,
-                      containerColor: babyPink,
-                      currentUserContainerColor: whiteblue),
-                  onSend: (ChatMessage message) {
-                    // Handle sending or showing restriction modal
-                    if (subProvider.isRestricted == true) {
-                      restrictionModal(context: context,
-                          dismisable: true,
-                          showButton: false,
-                          text: 'Please'
-                              ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription &\nRestart the app then head to Settings -> '
-                              'Your Subscription -> Restore Subscription.');
-                    } else {
-                      _handleSendMessage(message, subProvider);
-                    }
-                  },
-                  messages: messages,
-                );
-              }
-            }));
+                      messages: messages,
+                    );
+                  }
+                }));
   }
 
   openModal(context, ChatMessage message) {
@@ -350,8 +378,8 @@ class _ChatWithScreenState extends State<ChatWithScreen> with WidgetsBindingObse
     );
   }
 
-  void _handleSendMessage(ChatMessage message,
-      SubscriptionProvider subProvider) async {
+  void _handleSendMessage(
+      ChatMessage message, SubscriptionProvider subProvider) async {
     // Check if the user has used their one free text
     if (subProvider.usedOneFreeText) {
       // If the user has subscribed before but is no longer on a premium subscription
@@ -360,7 +388,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> with WidgetsBindingObse
           context: context,
           dismisable: true,
           text:
-          'Your subscription has expired!\nKindly subscribe to be able to send messages\nand use other features.',
+              'Your subscription has expired!\nKindly subscribe to be able to send messages\nand use other features.',
         );
         return;
       }
@@ -371,7 +399,7 @@ class _ChatWithScreenState extends State<ChatWithScreen> with WidgetsBindingObse
           context: context,
           dismisable: true,
           text:
-          'You have used up your limit of one (1) chat per matched user on our free version.\nKindly subscribe to chat with other matched users.',
+              'You have used up your limit of one (1) chat per matched user on our free version.\nKindly subscribe to chat with other matched users.',
         );
         return;
       }

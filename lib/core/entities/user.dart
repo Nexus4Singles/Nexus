@@ -45,8 +45,9 @@ class UserEntity extends Equatable {
     this.usedOneFreeText = false,
     this.usersChatWarning,
     this.entitledUser = 'null',
-    this.subscriberId= 'null',
+    this.subscriberId = 'null',
     this.recommendedTime,
+    this.blocked,
   });
 
   final String id;
@@ -67,6 +68,7 @@ class UserEntity extends Equatable {
   final String? educationLevel;
   final String? profession;
   final List<String>? hobbies;
+  final List<String>? blocked;
   @JsonKey(name: kUSERCHATWARNING)
   final List<String>? usersChatWarning;
   @JsonKey(name: kMATCHESUSERSKEY)
@@ -117,6 +119,7 @@ class UserEntity extends Equatable {
         email,
         profileUrl,
         name,
+        blocked,
         username,
         isVerified,
         gender,
