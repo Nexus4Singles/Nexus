@@ -229,7 +229,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
 
                 CompatRadio(
                   groupVal: dateWhoIsNotFinanciallyStable,
-                  val: 'Yes, as long as they are diligent & responsible',
+                  val: 'Yes, as long as they are diligent & responsible.',
                   onChanged: (p0) {
                     setState(() {
                       dateWhoIsNotFinanciallyStable = p0!;
@@ -238,7 +238,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                 ),
                 CompatRadio(
                   groupVal: dateWhoIsNotFinanciallyStable,
-                  val: 'No, due to reasons that are important to me',
+                  val: 'No, due to reasons that are important to me.',
                   onChanged: (p0) {
                     setState(() {
                       dateWhoIsNotFinanciallyStable = p0!;
@@ -301,7 +301,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
 
                 CompatRadio(
                   groupVal: shouldChristianSpeakInTongue,
-                  val: 'Yes, it is a very necessary gift for a Christian',
+                  val: 'Yes, it is a very necessary gift for a Christian.',
                   onChanged: (p0) {
                     setState(() {
                       shouldChristianSpeakInTongue = p0!;
@@ -310,7 +310,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                 ),
                 CompatRadio(
                   groupVal: shouldChristianSpeakInTongue,
-                  val: 'No, I don’t think so, salvation is what matters',
+                  val: 'No, It´s a good gift but not that important.',
                   onChanged: (p0) {
                     setState(() {
                       shouldChristianSpeakInTongue = p0!;
@@ -324,7 +324,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                 ),
                 CompatRadio(
                   groupVal: believeInTithing,
-                  val: 'Yes, I take it seriously',
+                  val: 'Yes, I take it seriously.',
                   onChanged: (p0) {
                     setState(() {
                       believeInTithing = p0!;
@@ -333,7 +333,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                 ),
                 CompatRadio(
                   groupVal: believeInTithing,
-                  val: 'No, I prefer giving to the poor or less privileged',
+                  val: 'No, I don´t believe in it.',
                   onChanged: (p0) {
                     setState(() {
                       believeInTithing = p0!;
