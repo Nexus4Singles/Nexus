@@ -333,7 +333,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                 ),
                 CompatRadio(
                   groupVal: believeInTithing,
-                  val: 'No, I don´t believe in it.',
+                  val: 'I am not against it, but I don´t believe in it.',
                   onChanged: (p0) {
                     setState(() {
                       believeInTithing = p0!;
