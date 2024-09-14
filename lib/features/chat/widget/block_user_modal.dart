@@ -24,7 +24,6 @@ class _BlockUserModalState extends State<BlockUserModal> {
     final isIBlockedUser = ctr.exploreCtr.myProfile.value.blocked
             ?.contains(widget.chatModel.userModel?.id) ??
         false;
-
     return SizedBox(
       height: Get.height / 4,
       child: Column(
