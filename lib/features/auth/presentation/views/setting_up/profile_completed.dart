@@ -59,7 +59,7 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                   TextSpan(children: [
                     const TextSpan(
                         text:
-                            "You have successfully created a profile on Nexus! We are launching soon and you will be able to search and view profiles. Kindly tell your Christian single friends about Nexus & follow us on social media "),
+                            "You have successfully created a profile on Nexus! Kindly tell your Christian single friends about Nexus & follow us on social media "),
                     TextSpan(
                         text: " @nexus4singles",
                         style: textStyle18.copyWith(
@@ -92,7 +92,7 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                     //       arguments: {'fromSignUp': true});
                     // });
                   },
-                  text: 'Go to Home',
+                  text: 'Go to Your Profile',
                 ),
               ),
             ],
