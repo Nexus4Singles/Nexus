@@ -141,7 +141,13 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                       fillColor: white,
                       radius: 12,
                       controller: cityController,
+                      textCapitalization: TextCapitalization.words,
                       hintText: "State or City of Residence (Correct Spelling)",
+                      validator: (value) {
+                        if (value?.isEmpty == true) {
+                          return ' Field is required';
+                           }
+                      },
                     ),
                     const SizedBoxH15(),
                     ProfileDropDown(
