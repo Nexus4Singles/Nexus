@@ -36,6 +36,11 @@ class BottomNavModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setInitialPage(int index) {
+    _pageController = PageController(initialPage: index);
+    updateIndex(index);
+  }
+
   void jumpToNavPage(int page) {
     _pageController.jumpToPage(page);
     // notifyListeners();
