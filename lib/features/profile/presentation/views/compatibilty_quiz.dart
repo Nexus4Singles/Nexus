@@ -296,7 +296,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                 const SizedBoxH20(),
                 const CampaTitle(
                   num: '9',
-                  title: 'Should every Christian desire to speak in tongues?',
+                  title: 'Do you believe in speaking in tongues?',
                 ),
 
                 CompatRadio(
@@ -310,7 +310,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                 ),
                 CompatRadio(
                   groupVal: shouldChristianSpeakInTongue,
-                  val: 'No, I don’t think so, salvation is what matters',
+                  val: 'I am not against it, but I don´t believe in it',
                   onChanged: (p0) {
                     setState(() {
                       shouldChristianSpeakInTongue = p0!;
@@ -333,7 +333,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                 ),
                 CompatRadio(
                   groupVal: believeInTithing,
-                  val: 'No, I prefer giving to the poor or less privileged',
+                  val: 'I am not against it, but I don´t believe in it',
                   onChanged: (p0) {
                     setState(() {
                       believeInTithing = p0!;
