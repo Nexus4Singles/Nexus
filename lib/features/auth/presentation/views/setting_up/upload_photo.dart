@@ -54,17 +54,22 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
             children: [
               Text(
                 'Upload Your Photos',
-                style: textStyle8.copyWith(fontSize: 30, fontWeight: FontWeight.w700, color: black),
+                style: textStyle8.copyWith(
+                    fontSize: 30, fontWeight: FontWeight.w700, color: black),
               ),
               const SizedBoxH10(),
               Align(
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    Text(
-                      'We recommend using 4 of your best pictures because first impression\n really matters. Profiles with indecent pictures will be deleted. ',
-                      textAlign: TextAlign.center,
-                      style: textStyle12.copyWith(color: black.withOpacity(.8)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Text(
+                        'We recommend using 4 of your best pictures because first impression really matters. Profiles with indecent pictures will be deleted. ',
+                        textAlign: TextAlign.center,
+                        style:
+                            textStyle12.copyWith(color: black.withOpacity(.8)),
+                      ),
                     ),
                   ],
                 ),
@@ -82,7 +87,8 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
                     InkWell(
                       onTap: () {
                         if (imageFiles.length == 4) {
-                          AppToast().showErrorToast('Maximum of 4 photos allowed');
+                          AppToast()
+                              .showErrorToast('Maximum of 4 photos allowed');
                         } else {
                           _pickImage(model);
                         }
@@ -193,7 +199,8 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
               CustomButton(
                 onPressed: () async {
                   if (imageFiles.length < 2) {
-                    AppToast().showErrorToast('Please select at least 2 photos');
+                    AppToast()
+                        .showErrorToast('Please select at least 2 photos');
                   } else {
                     List imageUrls = [];
                     for (var file in imageFiles) {

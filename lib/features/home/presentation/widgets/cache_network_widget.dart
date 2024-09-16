@@ -24,8 +24,8 @@ class CacheNetworkWidget extends StatelessWidget {
   final BorderRadiusGeometry? borderRadius;
   final Widget? child;
   final Color? color;
-  final Gradient ? gradient;
-  final Decoration ? decoration;
+  final Gradient? gradient;
+  final Decoration? decoration;
 
   @override
   Widget build(BuildContext context) {
@@ -39,27 +39,32 @@ class CacheNetworkWidget extends StatelessWidget {
           height: height,
           width: width,
           clipBehavior: Clip.antiAlias,
-          decoration:
-          decoration ??
-           BoxDecoration(
-            shape: isNotCircle == true ? BoxShape.rectangle : BoxShape.circle,
-            borderRadius: borderRadius,
-            color: color,
-            gradient: gradient,
-            image: DecorationImage(
-              image: CachedNetworkImageProvider(imgUrl),
-              fit: BoxFit.cover,
-              opacity: opacity,
-            ),
-          ),
+          decoration: decoration ??
+              BoxDecoration(
+                shape:
+                    isNotCircle == true ? BoxShape.rectangle : BoxShape.circle,
+                borderRadius: borderRadius,
+                color: color,
+                gradient: gradient,
+                image: DecorationImage(
+                  image: CachedNetworkImageProvider(imgUrl),
+                  fit: BoxFit.cover,
+                  opacity: opacity,
+                ),
+              ),
           child: child,
         );
       },
       progressIndicatorBuilder: (context, url, progress) {
         return Center(
-          child: CircularProgressIndicator(
-            value: progress.progress,
-            color: primary,
+          child: SizedBox(
+            width: 12,
+            height: 12,
+            child: CircularProgressIndicator(
+              value: progress.progress,
+              strokeWidth: 1,
+              color: primary,
+            ),
           ),
         );
       },

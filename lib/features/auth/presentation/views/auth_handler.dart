@@ -42,35 +42,6 @@ class _AuthHandlerState extends State<AuthHandler> {
             children: [
               const SizedBoxH40(),
               Image.asset("$imgPath/newlogo.PNG"),
-              // Column(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   crossAxisAlignment: CrossAxisAlignment.center,
-              //   children: [
-              //     Center(
-              //       child: Text(
-              //         'nexus'.toUpperCase(),
-              //         style: GoogleFonts.novaSquare(
-              //           fontSize: 35.sp,
-              //           color: white,
-              //         ),
-              //       ),
-              //     ),
-              //     const SizedBoxH15(),
-              //     // Image.asset(iLogo),
-              //     SvgPicture.asset("$svgPath/logo.svg"),
-              //     // Image.asset('$svgPath/nexus-logo2.gif'),
-              //
-              //     const SizedBoxH15(),
-              //     Text(
-              //       'Get the Visibility You Need \nto Connect with Your Future Spouse',
-              //       style: GoogleFonts.novaSquare(
-              //         fontSize: 16.sp,
-              //         color: white,
-              //       ),
-              //       textAlign: TextAlign.center,
-              //     )
-              //   ],
-              // ),
               Column(
                 children: [
                   CustomButtonOut(
@@ -137,6 +108,28 @@ class _AuthHandlerState extends State<AuthHandler> {
                     bgColor: white,
                   ),
                   const SizedBoxH15(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Already have an account?',
+                        style: textStyle14.copyWith(
+                            color: white.withOpacity(0.5),
+                            fontWeight: FontWeight.w700),
+                      ),
+                      // const SizedBoxW5(),
+                      TextButton(
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.login);
+                        },
+                        child: Text(
+                          'Sign In',
+                          style: textStyle14.copyWith(
+                              fontWeight: FontWeight.w700, color: white),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ],

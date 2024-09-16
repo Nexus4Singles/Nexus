@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:Nexus/core/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Nexus/core/models/user.dart';
@@ -54,7 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final homeController = HomeController.instance;
       final user = homeController.user.value;
-      var subProvider = Provider.of<SubscriptionProvider>(context, listen: false);
+      var subProvider =
+          Provider.of<SubscriptionProvider>(context, listen: false);
       await SubscriptionHelper.onValidateSubscription(subProvider, context);
       subProvider.initSubDet(user);
     });
@@ -78,11 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // log('this is loggedinTime: ${homeCtr.loggedInTime.value}\nthis is dateTimeNow(): ${DateTime.now().toIso8601String()}');
-    // log('this is the viewedCount: ${homeCtr.viewedCount}\nthis is the recommededList method: ${homeCtr.getRecommendedUsers().length}\nthis is the recommendedList getter: ${homeCtr.recommendationList.length}',
-    //     name: 'state');
-
-    // log('this is the calc time in hours: ${homeCtr.calculateTimeLeftToView()}\nthis is the countdown time: ${homeCtr.calculateCountDownTime().inHours}');
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -105,21 +99,25 @@ class _HomeScreenState extends State<HomeScreen> {
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          if (homeCtr.recommendedState() == RecommendedState.hasExceededForTheDay ||
-                              homeCtr.recommendedState() == RecommendedState.hasNotExceededButEmpty)
+                          if (homeCtr.recommendedState() ==
+                                  RecommendedState.hasExceededForTheDay ||
+                              homeCtr.recommendedState() ==
+                                  RecommendedState.hasNotExceededButEmpty)
 
                             //TODO: USE THE [RecommendedState.hasNotExceededButEmpty] to tell users when their recommendation list is empty even when they are eligible to see recommended[i.e past 12hrs]
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Consumer<BottomNavModel>(builder: (context, model, _) {
+                                Consumer<BottomNavModel>(
+                                    builder: (context, model, _) {
                                   return EmptyStateWidget(
                                     showClose: false,
                                     height: Get.height * 0.3,
                                     //TODO: you can see example here
                                     headerText: homeCtr.recommendedState() ==
-                                            RecommendedState.hasNotExceededButEmpty
+                                            RecommendedState
+                                                .hasNotExceededButEmpty
                                         ? "That's It For Today!!"
                                         : "That's It For Now!!",
                                     buttonText: "Go to Explore",
@@ -137,10 +135,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     duration: -homeCtr.calculateCountDownTime(),
                                     separatorType: SeparatorType.title,
                                     slideDirection: SlideDirection.up,
-                                    decoration: const BoxDecoration(color: Colors.transparent),
-                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                    decoration: const BoxDecoration(
+                                        color: Colors.transparent),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
                                     separatorStyle: const TextStyle(),
-                                    separatorPadding: EdgeInsets.symmetric(horizontal: 8.w),
+                                    separatorPadding:
+                                        EdgeInsets.symmetric(horizontal: 8.w),
                                   );
                                 }),
                               ],
@@ -155,54 +156,82 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Text(
                                       "Daily Recommendations For You",
                                       style: textStyle18.copyWith(
-                                          color: Colors.black, fontWeight: FontWeight.w600),
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600),
                                     ),
                                   ),
                                   const SizedBoxH10(),
                                   Flexible(
                                     child: CardSwiper(
                                       numberOfCardsDisplayed: 1,
-                                      cardsCount: homeCtr.recommendationList.length,
+                                      cardsCount:
+                                          homeCtr.recommendationList.length,
                                       controller: cardSwiperController,
                                       isLoop: false,
                                       onEnd: () {
-                                        homeCtr.recommendationList.assignAll([]);
+                                        homeCtr.recommendationList
+                                            .assignAll([]);
                                       },
-                                      onSwipe: (int previousIndex, int? currentIndex,
+                                      onSwipe: (int previousIndex,
+                                          int? currentIndex,
                                           CardSwiperDirection direction) {
-                                        UserModel user = homeCtr.recommendationList[currentIndex!];
-                                        if (direction == CardSwiperDirection.right) {
+                                        UserModel user = homeCtr
+                                            .recommendationList[currentIndex!];
+                                        if (direction ==
+                                            CardSwiperDirection.right) {
                                           matchCtr.addToUnRecommend(user.id);
-                                        } else if (direction == CardSwiperDirection.left) {
+                                        } else if (direction ==
+                                            CardSwiperDirection.left) {
                                           matchCtr.toggleLike(user);
                                         }
                                         return true;
                                       },
-                                      allowedSwipeDirection: const AllowedSwipeDirection.only(
-                                          up: false, down: false, right: true, left: true),
+                                      allowedSwipeDirection:
+                                          const AllowedSwipeDirection.only(
+                                              up: false,
+                                              down: false,
+                                              right: true,
+                                              left: true),
                                       padding: const EdgeInsets.all(0),
-                                      cardBuilder:
-                                          (context, index, percentThresholdX, percentThresholdY) {
-                                        UserModel user = homeCtr.recommendationList[index];
+                                      cardBuilder: (context,
+                                          index,
+                                          percentThresholdX,
+                                          percentThresholdY) {
+                                        UserModel user =
+                                            homeCtr.recommendationList[index];
 
                                         return UserCard(
                                           userModel: user,
                                           onClosed: () async {
-                                            await matchCtr.addToUnRecommend(user.id).then((val) {
-                                              cardSwiperController.moveTo(index + 1);
+                                            await matchCtr
+                                                .addToUnRecommend(user.id)
+                                                .then((val) {
+                                              cardSwiperController
+                                                  .moveTo(index + 1);
                                             });
                                           },
                                           onLike: () {
-                                            matchCtr.ctr.myProfile.value.matchedUsers == null ||
-                                                    !matchCtr.ctr.myProfile.value.matchedUsers!
+                                            matchCtr.ctr.myProfile.value
+                                                            .matchedUsers ==
+                                                        null ||
+                                                    !matchCtr.ctr.myProfile
+                                                        .value.matchedUsers!
                                                         .contains(user.id)
-                                                ? matchCtr.toggleLike(user).then((val) {
-                                                    cardSwiperController.moveTo(index + 1);
+                                                ? matchCtr
+                                                    .toggleLike(user)
+                                                    .then((val) {
+                                                    cardSwiperController
+                                                        .moveTo(index + 1);
                                                   })
-                                                : debugPrint("These users are matched");
+                                                : debugPrint(
+                                                    "These users are matched");
                                           },
-                                          onRefresh: ()=> _handleOnRefreshClickEvent(provider, user),
-                                          onSaved: ()=> _handleOnSaveClickEvent(provider, user),
+                                          onRefresh: () =>
+                                              _handleOnRefreshClickEvent(
+                                                  provider, user),
+                                          onSaved: () =>
+                                              _handleOnSaveClickEvent(
+                                                  provider, user),
                                           onClick: () {},
                                         );
                                       },
@@ -221,58 +250,66 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _handleOnSaveClickEvent(SubscriptionProvider provider, UserModel user){
-    if(provider.onPremium == true) {
-      if(provider.isRestricted == true){
-        restrictionModal(context: context, dismisable: true, showButton: false, text: 'Please'
-            ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
-            'Your Subscription -> Restore Subscription.');
-      } else if (provider.isRestricted == false){
+  _handleOnSaveClickEvent(SubscriptionProvider provider, UserModel user) {
+    if (provider.onPremium == true) {
+      if (provider.isRestricted == true) {
+        restrictionModal(
+            context: context,
+            dismisable: true,
+            showButton: false,
+            text: 'Please'
+                ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
+                'Your Subscription -> Restore Subscription.');
+      } else if (provider.isRestricted == false) {
         logger.i('toggke');
         matchCtr.toggleSave(user.id);
       }
-
     } else if (provider.onPremium == false) {
-      if(provider.isRestricted == true){
-        restrictionModal(context: context, dismisable: true, showButton: false, text: 'Please'
-            ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
-            'Your Subscription -> Restore Subscription.');
-      } else if (provider.isRestricted == false){
+      if (provider.isRestricted == true) {
+        restrictionModal(
+            context: context,
+            dismisable: true,
+            showButton: false,
+            text: 'Please'
+                ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
+                'Your Subscription -> Restore Subscription.');
+      } else if (provider.isRestricted == false) {
         restrictionModal(
           context: context,
           dismisable: true,
         );
       }
-
     }
   }
 
-  _handleOnRefreshClickEvent(SubscriptionProvider provider, UserModel user){
-
-    if(provider.onPremium == true) {
-      if(provider.isRestricted == true){
-        restrictionModal(context: context, dismisable: true, showButton: false, text: 'Please'
-            ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
-            'Your Subscription -> Restore Subscription.');
-      } else if (provider.isRestricted == false){
-        matchCtr.undoUnRecommend(
-            true, cardSwiperController);
+  _handleOnRefreshClickEvent(SubscriptionProvider provider, UserModel user) {
+    if (provider.onPremium == true) {
+      if (provider.isRestricted == true) {
+        restrictionModal(
+            context: context,
+            dismisable: true,
+            showButton: false,
+            text: 'Please'
+                ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
+                'Your Subscription -> Restore Subscription.');
+      } else if (provider.isRestricted == false) {
+        matchCtr.undoUnRecommend(true, cardSwiperController);
       }
-
     } else if (provider.onPremium == false) {
-      if(provider.isRestricted == true){
-        restrictionModal(context: context, dismisable: true, showButton: false, text: 'Please'
-            ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
-            'Your Subscription -> Restore Subscription.');
-      } else if (provider.isRestricted == false){
+      if (provider.isRestricted == true) {
+        restrictionModal(
+            context: context,
+            dismisable: true,
+            showButton: false,
+            text: 'Please'
+                ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
+                'Your Subscription -> Restore Subscription.');
+      } else if (provider.isRestricted == false) {
         restrictionModal(
           context: context,
           dismisable: true,
         );
       }
-
     }
   }
-
-
 }

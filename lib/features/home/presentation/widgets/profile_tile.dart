@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 import '../../../../core/size_boxes.dart';
 import '../../../../core/style.dart';
 import '../../../../router.dart';
 import '../../controllers/home_controller.dart';
 import '../../controllers/notification_controller.dart';
+import '../change_notifier/bottom_nav.dart';
 
 class ProfileTile extends StatelessWidget {
   ProfileTile({super.key});
@@ -24,17 +26,19 @@ class ProfileTile extends StatelessWidget {
       children: [
         Row(
           children: [
-            InkWell(
-              onTap: () {
-                Get.toNamed(AppRoutes.editProfile);
-              },
-              child: CacheNetworkWidget(
-                height: 50.r,
-                width: 50.r,
-                imgUrl: model.user.value.profileUrl ?? "",
-                isNotCircle: false,
-              ),
-            ),
+            Consumer<BottomNavModel>(builder: (context, models, _) {
+              return InkWell(
+                onTap: () {
+                  models.jumpToNavPage(4);
+                },
+                child: CacheNetworkWidget(
+                  height: 50.r,
+                  width: 50.r,
+                  imgUrl: model.user.value.profileUrl ?? "",
+                  isNotCircle: false,
+                ),
+              );
+            }),
             const SizedBoxW10(),
             Text(
               'Hi ${model.user.value.username} 👋🏽',

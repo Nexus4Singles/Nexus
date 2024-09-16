@@ -40,9 +40,4 @@ class BottomNavModel extends ChangeNotifier {
     _pageController.jumpToPage(page);
     // notifyListeners();
   }
-
-  setActiveTab(int tab) {
-    _tab = tab;
-    notifyListeners();
-  }
 }

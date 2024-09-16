@@ -80,7 +80,14 @@ class _UserCardState extends State<UserCard> {
   }
 
   FutureOr _init() {
+    debugPrint('called againn======..>');
     _setAudioPlayer();
+  }
+
+  stopPlayer() {
+    player.stop();
+    player2.stop();
+    player3.stop();
   }
 
   @override
@@ -93,6 +100,7 @@ class _UserCardState extends State<UserCard> {
 
   @override
   Widget build(BuildContext context) {
+    _init();
     return InkWell(
       onTap: widget.onClick,
       child: Container(
@@ -159,7 +167,10 @@ class _UserCardState extends State<UserCard> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               InkWell(
-                                onTap: widget.onRefresh,
+                                onTap: () {
+                                  stopPlayer();
+                                  widget.onRefresh!();
+                                },
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
@@ -174,12 +185,18 @@ class _UserCardState extends State<UserCard> {
                                 ),
                               ),
                               InkWell(
-                                onTap: widget.onClosed,
+                                onTap: () {
+                                  widget.onClosed();
+                                  stopPlayer();
+                                },
                                 child:
                                     SvgPicture.asset('assets/icons/close.svg'),
                               ),
                               InkWell(
-                                onTap: widget.onLike,
+                                onTap: () {
+                                  stopPlayer();
+                                  widget.onLike();
+                                },
                                 child: CircleAvatar(
                                     backgroundColor: ctr.ctr.myProfile.value
                                                     .myLikes ==

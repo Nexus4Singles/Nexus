@@ -13,6 +13,8 @@ import 'package:Nexus/features/auth/presentation/widgets/social_media.dart';
 import 'package:Nexus/router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../home/presentation/change_notifier/bottom_nav.dart';
+
 class RegSuccessful extends StatefulWidget {
   const RegSuccessful({super.key});
 
@@ -84,6 +86,8 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                 alignment: Alignment.bottomCenter,
                 child: CustomButton(
                   onPressed: () async {
+                    Provider.of<BottomNavModel>(context, listen: false)
+                        .jumpToNavPage(4);
                     Get.offAndToNamed(AppRoutes.mainNav);
                     // await Provider.of<HomeNotifier>(context, listen: false)
                     //     .getProfile()
@@ -92,7 +96,7 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                     //       arguments: {'fromSignUp': true});
                     // });
                   },
-                  text: 'Go to Home',
+                  text: 'Go to Your Profile',
                 ),
               ),
             ],
