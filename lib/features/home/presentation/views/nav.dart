@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../core/colors.dart';
 import '../change_notifier/bottom_nav.dart';
 
@@ -11,7 +11,7 @@ class MainNav extends StatefulWidget {
 
   const MainNav({
     super.key,
-    this.initialPage = 0,
+    this.initialPage,
   });
 
   @override
@@ -22,21 +22,17 @@ class MainNav extends StatefulWidget {
 
 class _MainNav extends State<MainNav> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  // PageController? controller;
   bool internet = false;
+  var initialPage = Get.arguments as int;
 
-  // final _navController = BottomNavModel();
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   int currentPage = 0;
-  //   currentPage = widget.initialPage!;
-  //   controller = PageController(initialPage: currentPage);
-  //   setState(() {
-  //     controller = controller;
-  //   });
-  // }
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final model = Provider.of<BottomNavModel>(context, listen: false);
+      model.jumpToNavPage(widget.initialPage ?? initialPage);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

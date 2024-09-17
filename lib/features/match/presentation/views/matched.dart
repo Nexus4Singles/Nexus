@@ -25,7 +25,7 @@ class Matched extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                Get.offAllNamed(AppRoutes.mainNav);
+                Get.offAllNamed(AppRoutes.mainNav, arguments: 0);
               },
               icon: const Icon(Icons.clear)),
           const SizedBoxW10()
@@ -43,7 +43,7 @@ class Matched extends StatelessWidget {
             ),
             const SizedBoxH20(),
             CacheNetworkWidget(
-              height: Get.height / 2,
+              height: Get.height / 1.6,
               width: Get.width / 1.2,
               imgUrl: userModel.photos![0],
               decoration: BoxDecoration(
@@ -58,13 +58,12 @@ class Matched extends StatelessWidget {
                     fit: BoxFit.cover),
               ),
               child: Transform.translate(
-                  offset: const Offset(0, 70),
+                  offset: const Offset(0, 35),
                   child: Image.asset("$imgPath/matched.png")),
             ),
-            const SizedBox(height: 45),
             Column(
               children: [
-                const SizedBoxH40(),
+                const SizedBoxH20(),
                 Text(
                     "Get more information on your compatibility \nwith ${userModel.username} by clicking the button below!",
                     style: textStyle16,

@@ -86,15 +86,7 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                 alignment: Alignment.bottomCenter,
                 child: CustomButton(
                   onPressed: () async {
-                    Provider.of<BottomNavModel>(context, listen: false)
-                        .setInitialPage(4);
-                    Get.offAndToNamed(AppRoutes.mainNav, arguments: true);
-                    // await Provider.of<HomeNotifier>(context, listen: false)
-                    //     .getProfile()
-                    //     .then((value) {
-                    //   Get.offAndToNamed(AppRoutes.mainNav,
-                    //       arguments: {'fromSignUp': true});
-                    // });
+                    Get.offAndToNamed(AppRoutes.mainNav, arguments: 4);
                   },
                   text: 'Go to Your Profile',
                 ),

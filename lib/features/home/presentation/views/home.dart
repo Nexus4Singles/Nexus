@@ -57,7 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
       await SubscriptionHelper.onValidateSubscription(subProvider, context);
       subProvider.initSubDet(user);
     });
-
     await Future.delayed(const Duration(seconds: 5), () {
       if (homeCtr.user.value.compatibilitySetted == null ||
           homeCtr.user.value.compatibilitySetted == false) {
@@ -105,46 +104,66 @@ class _HomeScreenState extends State<HomeScreen> {
                                   RecommendedState.hasNotExceededButEmpty)
 
                             //TODO: USE THE [RecommendedState.hasNotExceededButEmpty] to tell users when their recommendation list is empty even when they are eligible to see recommended[i.e past 12hrs]
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Consumer<BottomNavModel>(
-                                    builder: (context, model, _) {
-                                  return EmptyStateWidget(
-                                    showClose: false,
-                                    height: Get.height * 0.3,
-                                    //TODO: you can see example here
-                                    headerText: homeCtr.recommendedState() ==
-                                            RecommendedState
-                                                .hasNotExceededButEmpty
-                                        ? "That's It For Today!!"
-                                        : "That's It For Now!!",
-                                    buttonText: "Go to Explore",
-                                    buttonFunc: () async {
-                                      model.jumpToNavPage(1);
-                                    },
-                                    message:
-                                        "Check Back Tomorrow or Use the Explore Page to Search & Filter Profiles Within Other Countries",
-                                  );
-                                }),
-
-                                //TODO: USE THIS COUNTER TO DISPLAY THE REMAINING TIME FOR USERS TO SEE THE RECOMMENDED LIST
-                                Builder(builder: (context) {
-                                  return SlideCountdown(
-                                    duration: -homeCtr.calculateCountDownTime(),
-                                    separatorType: SeparatorType.title,
-                                    slideDirection: SlideDirection.up,
-                                    decoration: const BoxDecoration(
-                                        color: Colors.transparent),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                    separatorStyle: const TextStyle(),
-                                    separatorPadding:
-                                        EdgeInsets.symmetric(horizontal: 8.w),
-                                  );
-                                }),
-                              ],
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ProfileTile(),
+                                  const SizedBoxH20(),
+                                  Center(
+                                    child: Text(
+                                      "Daily Recommendations For You",
+                                      style: textStyle18.copyWith(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Column(
+                                    children: [
+                                      Consumer<BottomNavModel>(
+                                          builder: (context, model, _) {
+                                        return EmptyStateWidget(
+                                          showClose: false,
+                                          height: Get.height * 0.3,
+                                          //TODO: you can see example here
+                                          headerText: homeCtr
+                                                      .recommendedState() ==
+                                                  RecommendedState
+                                                      .hasNotExceededButEmpty
+                                              ? "That's It For Today!!"
+                                              : "That's It For Now!!",
+                                          buttonText: "Go to Explore",
+                                          buttonFunc: () async {
+                                            model.jumpToNavPage(1);
+                                          },
+                                          message:
+                                              "Check Back Tomorrow or Use the Explore Page to Search & Filter Profiles Within Other Countries",
+                                        );
+                                      }),
+                                      //TODO: USE THIS COUNTER TO DISPLAY THE REMAINING TIME FOR USERS TO SEE THE RECOMMENDED LIST
+                                      Builder(builder: (context) {
+                                        return SlideCountdown(
+                                          duration:
+                                              -homeCtr.calculateCountDownTime(),
+                                          separatorType: SeparatorType.title,
+                                          slideDirection: SlideDirection.up,
+                                          decoration: const BoxDecoration(
+                                              color: Colors.transparent),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                          separatorStyle: const TextStyle(),
+                                          separatorPadding:
+                                              EdgeInsets.symmetric(
+                                                  horizontal: 8.w),
+                                        );
+                                      }),
+                                    ],
+                                  ),
+                                  const Spacer(flex: 2),
+                                ],
+                              ),
                             )
                           else
                             Expanded(

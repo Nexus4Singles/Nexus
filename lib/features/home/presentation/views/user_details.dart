@@ -87,18 +87,16 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        leading: IconButton(
-          splashColor: Colors.black26,
-          splashRadius: 24,
-          icon: const Center(
-            child: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: Colors.white,
-            ),
+        leading: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: InkWell(
+            onTap: () {
+              Get.back();
+            },
+            child: const CircleAvatar(
+                backgroundColor: white,
+                child: Icon(Icons.chevron_left_rounded, color: primary)),
           ),
-          onPressed: () {
-            Get.back();
-          },
         ),
         actions: [
           InkWell(
@@ -388,11 +386,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             ),
                             const SizedBoxH25(),
                             Builder(builder: (context) {
-                              var myMatches = ExploreCtr
-                                  .instance.myProfile.value.matchedUsers;
-                              if (myMatches != null &&
-                                  myMatches.contains(widget.userModel.id)) {
-                                return TextButton(
+                              return Center(
+                                child: TextButton(
                                     onPressed: () {
                                       compatibilityModal(
                                           context, widget.userModel);
@@ -408,9 +403,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                         style: textStyle14.copyWith(
                                             fontWeight: FontWeight.bold),
                                       ),
-                                    ));
-                              }
-                              return const SizedBox();
+                                    )),
+                              );
                             }),
                             const SizedBoxH10(),
                           ],

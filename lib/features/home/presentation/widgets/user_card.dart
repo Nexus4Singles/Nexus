@@ -12,6 +12,7 @@ import 'package:Nexus/core/models/user.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
 import 'package:Nexus/core/utils/device.dart';
+import '../../../../core/utils/modals.dart';
 import '../../../auth/presentation/widgets/record_completed.dart';
 import '../../../match/controllers/matches_ctr.dart';
 import '../../../profile/presentation/widgets/text_container.dart';
@@ -164,34 +165,36 @@ class _UserCardState extends State<UserCard> {
                         () => Padding(
                           padding: EdgeInsets.all(15.sp),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              InkWell(
-                                onTap: () {
-                                  stopPlayer();
-                                  widget.onRefresh!();
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: white,
-                                      border: Border.all(color: primary)),
-                                  child: SvgPicture.asset(
-                                    '$svgPath/back.svg',
-                                    width: 24,
-                                    color: primary,
-                                  ),
-                                ),
-                              ),
+                              // InkWell(
+                              //   onTap: () {
+                              //     stopPlayer();
+                              //     widget.onRefresh!();
+                              //   },
+                              //   child: Container(
+                              //     padding: const EdgeInsets.all(8),
+                              //     decoration: BoxDecoration(
+                              //         shape: BoxShape.circle,
+                              //         color: white,
+                              //         border: Border.all(color: primary)),
+                              //     child: SvgPicture.asset(
+                              //       '$svgPath/back.svg',
+                              //       width: 24,
+                              //       color: primary,
+                              //     ),
+                              //   ),
+                              // ),
                               InkWell(
                                 onTap: () {
                                   widget.onClosed();
                                   stopPlayer();
                                 },
-                                child:
-                                    SvgPicture.asset('assets/icons/close.svg'),
+                                child: SvgPicture.asset(
+                                    'assets/icons/close.svg',
+                                    width: 40),
                               ),
+                              const SizedBoxW15(),
                               InkWell(
                                 onTap: () {
                                   stopPlayer();
@@ -222,6 +225,7 @@ class _UserCardState extends State<UserCard> {
                                           : white,
                                     )),
                               ),
+                              const SizedBoxW15(),
                               InkWell(
                                 onTap: widget.onSaved,
                                 child: Container(
@@ -483,6 +487,23 @@ class _UserCardState extends State<UserCard> {
                             ),
                           ),
                       ],
+                    ),
+                    Center(
+                      child: TextButton(
+                          onPressed: () {
+                            compatibilityModal(context, widget.userModel);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                                color: primary.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(100)),
+                            child: Text(
+                              "View Compatibility Data",
+                              style: textStyle14.copyWith(
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )),
                     ),
                     const SizedBox(height: 80)
                   ],

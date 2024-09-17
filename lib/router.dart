@@ -239,6 +239,7 @@ final appRouter = [
   ),
   GetPage(
     name: AppRoutes.mainNav,
+    arguments: 0,
     page: () => const MainNav(),
     binding: HomeBindings(), // here
   ),

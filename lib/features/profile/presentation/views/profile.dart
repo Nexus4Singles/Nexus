@@ -68,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future _setAudioPlayer() async {
     print("this is for audio==>${currentUser.relationshipWithGod}");
-    await player.setUrl(currentUser.relationshipWithGod!);
+    await player.setUrl(currentUser.relationshipWithGod ?? "");
 
     player.durationStream.listen((d) {
       duration = d!;
@@ -140,7 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   CacheNetworkWidget(
                     height: 110.r,
                     width: 110.r,
-                    imgUrl: homeModel.user.value.profileUrl!,
+                    imgUrl: homeModel.user.value.profileUrl ?? "",
                     isNotCircle: false,
                   ),
                 ],
@@ -165,7 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBoxW5(),
                       Flexible(
                         child: Text(
-                          '${homeModel.user.value.location!.place}',
+                          homeModel.user.value.location?.place ?? "",
                           overflow: TextOverflow.ellipsis,
                           style: textStyle14.copyWith(
                               fontWeight: FontWeight.w300, color: black),
@@ -256,7 +256,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 spacing: 15,
                 runSpacing: 15,
                 children: [
-                  for (var hob in homeModel.user.value.hobbies!)
+                  for (var hob in homeModel.user.value.hobbies ?? [])
                     TextContainer(
                       text: hob,
                     ),
@@ -281,7 +281,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 spacing: 15,
                 runSpacing: 15,
                 children: [
-                  for (var des in homeModel.user.value.desiredQualities!)
+                  for (var des in homeModel.user.value.desiredQualities ?? [])
                     TextContainer(
                       text: des,
                     ),
@@ -368,7 +368,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 alignment: WrapAlignment.spaceEvenly,
                 children: [
-                  for (var item in homeModel.user.value.photos!)
+                  for (var item in homeModel.user.value.photos ?? [])
                     InkWell(
                       onTap: () {
                         Get.to(

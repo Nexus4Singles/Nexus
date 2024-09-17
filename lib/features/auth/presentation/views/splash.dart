@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Get.offAndToNamed(AppRoutes.onboardingHandler);
     } else if (email.isNotEmpty) {
       // ctr.allUsers.isNotEmpty : () {}?
-      Get.offAndToNamed(AppRoutes.mainNav);
+      Get.offAndToNamed(AppRoutes.mainNav, arguments: 0);
     } else {
       Get.offAndToNamed(AppRoutes.login);
     }

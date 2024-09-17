@@ -43,6 +43,6 @@ class BottomNavModel extends ChangeNotifier {
 
   void jumpToNavPage(int page) {
     _pageController.jumpToPage(page);
-    // notifyListeners();
+    updateIndex(page);
   }
 }

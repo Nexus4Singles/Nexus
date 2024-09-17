@@ -180,7 +180,8 @@ class AuthNotifier with ChangeNotifier {
 
   Future<void> started() async => await startedUsecase.call(const NoParams());
 
-  Future<bool> hasStarted() async => await hasStratedUsecase.call(const NoParams());
+  Future<bool> hasStarted() async =>
+      await hasStratedUsecase.call(const NoParams());
 
   Future<void> resendResetLink({required String email}) async {
     EasyLoading.show();
@@ -196,7 +197,9 @@ class AuthNotifier with ChangeNotifier {
     }
   }
 
-  Future<void> login({required BuildContext context, required Map<String, dynamic> map}) async {
+  Future<void> login(
+      {required BuildContext context,
+      required Map<String, dynamic> map}) async {
     EasyLoading.show();
     var response = await loginUsecase.call(map);
     response.fold((l) {
@@ -233,7 +236,7 @@ class AuthNotifier with ChangeNotifier {
           case 'completed':
             Get.offAllNamed(
               AppRoutes.mainNav,
-              arguments: {'fromSignUp': false},
+              arguments: 4,
             );
             break;
           default:
@@ -307,7 +310,9 @@ class AuthNotifier with ChangeNotifier {
   }
 
   Future<String> uploadToDigitalOcean(
-      {required String objectName, required String filePath, required String bucketName}) async {
+      {required String objectName,
+      required String filePath,
+      required String bucketName}) async {
     EasyLoading.show();
     try {
       String url = await digitalOceanClient.uploadFileToSpace(
@@ -346,7 +351,9 @@ class AuthNotifier with ChangeNotifier {
   void resendVerificatioLink() async {
     EasyLoading.show();
     try {
-      await FirebaseAuth.instance.currentUser!.sendEmailVerification().then((value) {
+      await FirebaseAuth.instance.currentUser!
+          .sendEmailVerification()
+          .then((value) {
         AppToast().showToast('Email verification link has been sent');
         EasyLoading.dismiss();
       });
