@@ -139,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             model.jumpToNavPage(1);
                                           },
                                           message:
-                                              "Check Back Tomorrow or Use the Explore Page to Search & Filter Profiles Within Other Countries",
+                                              "Check Back Tomorrow or Use the Explore Page to Search & Filter Profiles Within Any Country",
                                         );
                                       }),
                                       //TODO: USE THIS COUNTER TO DISPLAY THE REMAINING TIME FOR USERS TO SEE THE RECOMMENDED LIST
