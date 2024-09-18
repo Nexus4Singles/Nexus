@@ -164,7 +164,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                     model.subLoading = false;
                   } catch(error){
                     BaseHelper.showSnackBar('Error occurred while attempting to subscribe.\nPlease ensure you are signed'
-                        'into the Play Store or App Store');
+                        'in to Play Store or App Store');
                     model.subLoading = false;
 
                   }
