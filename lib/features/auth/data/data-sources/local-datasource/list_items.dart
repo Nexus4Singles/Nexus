@@ -135,7 +135,7 @@ class LocalData {
     'Taraba',
     'Yobe',
     'Zamfara',
-    'Federal Capital Territory'
+    'Federal Capital Territory, Abuja'
   ];
 
   List<String> professions = [
@@ -159,7 +159,7 @@ class LocalData {
     'Event Planning / Management',
     'Fashion',
     'Finance',
-    'Film/Film Making',
+    'Film / Film Making',
     'Food / Food Catering',
     'Government',
     'Health Care / Medical Services',
