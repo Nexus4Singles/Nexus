@@ -56,7 +56,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Kindly answer the questions below. Your responses will not be visible on your profile. It will only be visible to your matched users to provide them with more information on their compatibility with you.',
+                  'Kindly answer the questions below. This will provide users with more information about their compatibility with you.',
                   style: textStyle12,
                   textAlign: TextAlign.center,
                 ),
@@ -296,12 +296,12 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
                 const SizedBoxH20(),
                 const CampaTitle(
                   num: '9',
-                  title: 'Do you believe in speaking in tongues?',
+                  title: 'What are your thoughts on Christians speaking in tongues?',
                 ),
 
                 CompatRadio(
                   groupVal: shouldChristianSpeakInTongue,
-                  val: 'Yes, it is a very necessary gift for a Christian',
+                  val: 'It is a very necessary gift for a Christian',
                   onChanged: (p0) {
                     setState(() {
                       shouldChristianSpeakInTongue = p0!;
