@@ -154,9 +154,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 title: 'Premium',
                 features: [
                   'Unlimited Messaging',
-                  'Save Profiles to View Later',
-                  'Backtrack if you mistakenly swiped left',
                   'Access to Advanced Filters on Explore Page',
+                  'Save Profiles to View Later',
                 ],
                 onSelectPlan: () async {
                   model.subLoading = true;
@@ -281,14 +280,14 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     if(subProvider.onPremium == false && subProvider.isRestricted == true)
       {
         restrictionModal(context: context, dismisable: true, showButton: false, text: 'Please'
-              ' log in or switch to the Google Play Store/App Store account associated to your subscription.\n'
-              'Head back here after restarting the app, click the \'Restore Subscription\' button,  then try again.');
+              ' log in or switch to the Google Account/Apple ID that is tied to your subscription.\n'
+              'Head back here after restarting the app, click the \'Restore Subscription\' button, then try again.');
 
       } else if ( subProvider.currentUser?.subscriberId == 'null' && currentSystemSubscriberId != null)
         {
           restrictionModal(context: context, dismisable: true, showButton: false, text: 'Please'
-              ' log in or switch to the Google Play Store Account/Apple ID account that is NOT associated to a subscription.\n'
-              'Head back here after restarting the app, click the\'Restore Subscription\' button then try again.');
+              ' log in or switch to the Google Account/Apple ID that is NOT associated to a subscription.\n'
+              'Head back here after restarting the app, click the\'Restore Subscription\' button, then try again.');
         }
     else if(subProvider.onPremium == true){
       BaseHelper.showSnackBar ('You\'re on Premium!');
