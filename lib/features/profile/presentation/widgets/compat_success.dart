@@ -38,7 +38,7 @@ class CompatibilitySuccessful extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(10.sp),
             child: Text(
-              'Thanks for your response!! \n\nOnly matched users will be able to see your responses. You will also be able to see the button to view their own responses, when you scroll down to the end of their profiles.',
+              'Thanks for your response!! \n\nThis will help people know more about their compatibility with you. You will also be able to see the button to view their own responses, when you scroll down to the end of their profiles.',
               style: textStyle14.copyWith(
                 color: black,
               ),
