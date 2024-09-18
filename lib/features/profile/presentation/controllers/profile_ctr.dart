@@ -120,8 +120,10 @@ class ProfileCtr extends GetxController {
     try {
       EasyLoading.show();
       await auth.currentUser!.delete();
+      await db.collection(kUSER).doc(auth.currentUser!.uid).delete();
       EasyLoading.dismiss();
       Get.offAllNamed(AppRoutes.login);
+      EasyLoading.showToast("Account successfully deleted");
     } catch (e) {
       AppToast().showErrorToast(e.toString());
       EasyLoading.dismiss();

@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     if (currentUser.compatibilitySetted == null ||
         currentUser.compatibilitySetted == false) {
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 3), () {
         _setAudioPlayer();
         showAdaptiveDialog(
           context: context,
@@ -67,37 +67,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late Duration playerPosition;
 
   Future _setAudioPlayer() async {
-    print("this is for audio==>${currentUser.relationshipWithGod}");
+    debugPrint("this is for audio==>${currentUser.relationshipWithGod}");
     await player.setUrl(currentUser.relationshipWithGod ?? "");
-
     player.durationStream.listen((d) {
       duration = d!;
     });
-
     player.positionStream.listen((p) {
       playerPosition = p;
     });
-    // } else if (playerId == '2') {
     await player2.setUrl(currentUser.roleOfHusband!);
-
     player2.durationStream.listen((d) {
       duration = d!;
     });
-
     player2.positionStream.listen((p) {
       playerPosition = p;
     });
-    // } else {
     await player3.setUrl(currentUser.bestQualotiesOrTraits!);
-
     player3.durationStream.listen((d) {
       duration = d!;
     });
-
     player3.positionStream.listen((p) {
       playerPosition = p;
     });
-    // }
   }
 
   @override

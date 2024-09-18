@@ -110,9 +110,7 @@ class _UserCardState extends State<UserCard> {
         decoration: BoxDecoration(
           color: white,
           borderRadius: BorderRadius.circular(20.r),
-          boxShadow: [
-            boxShadow,
-          ],
+          boxShadow: [boxShadow],
         ),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
