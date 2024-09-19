@@ -74,7 +74,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                             defaultGooglePay,
                           ),
                         )
-                     /* else
+                      else
                         ApplePayButton(
                           width: double.infinity,
                           height: 40,
@@ -92,7 +92,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                               PaymentConfiguration.fromJsonString(
                             defaultApplePay,
                           ),
-                        ),*/
+                        ),
                     ]),
                   )
                 ],
