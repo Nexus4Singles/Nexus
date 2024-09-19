@@ -14,6 +14,7 @@ import 'package:Nexus/features/home/controllers/home_controller.dart';
 import 'package:Nexus/features/home/presentation/views/photo_view.dart';
 import 'package:Nexus/features/profile/presentation/widgets/compatibility_modal.dart';
 import 'package:Nexus/features/profile/presentation/widgets/text_container.dart';
+import '../../../../core/assets.dart';
 import '../../../../router.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -157,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SvgPicture.asset('assets/icons/location.svg'),
+                      SvgPicture.asset('$svgPath/location.svg'),
                       const SizedBoxW5(),
                       Flexible(
                         child: Text(
