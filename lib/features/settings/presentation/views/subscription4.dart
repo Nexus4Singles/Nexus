@@ -46,7 +46,7 @@ class _SubCancelledScreenState extends State<SubCancelledScreen> {
                   children: [
                     Center(
                       child: Text(
-                        'You are back to the free version but\nyou wont be able to chat with new/nmatched users!',
+                        'You are back to the free version but\nyou wont be able to chat with new\nmatched users!',
                         style: textStyle18.copyWith(
                             color: white, fontWeight: FontWeight.w700),
                       ),

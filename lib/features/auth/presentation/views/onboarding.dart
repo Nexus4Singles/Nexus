@@ -34,7 +34,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'id': '2',
       "title": "Search Profiles",
       "subtitle":
-          "Your profile will only be visible to opposite gender users and you will also be able to directly search & view profiles of opposite gender users living in any country, with the option of filters to narrow down your search. \n\nNexus is open to any unmarried, widowed, or divorced Christian (21 Years & above), who desires marriage and is committed to personal development & spiritual growth! \n\nThe app is currently available to Nigerians living anywhere in the world, but we are scaling to other nationalities rapidly. Kindly stay patient, if you are not Nigerian. ",
+          "Your profile will only be visible to opposite gender users and you will also be able to directly search & view profiles of opposite gender users living in any country, with the option of filters to narrow down your search. \n\nNexus is open to any unmarried, widowed, or divorced Christian \n(21 Years & above), who desires marriage and is committed to personal development & spiritual growth! \n\nThe app is currently available to Nigerians living anywhere in the world, but we are scaling to other nationalities rapidly. Kindly stay patient, if you are not Nigerian. ",
       "image": iOnboard2,
     },
     {
@@ -42,7 +42,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       "title": "Find your Match",
       "subtitle": "You will receive notifications of opposite gender users who have liked your profile. However, they would not be able to connect with you until you have equally viewed and liked their profiles, which automatically leads to a MATCH.\n\n"
           "This is to preserve your privacy & security by ensuring only users you approve of are able to connect with you, which  makes it really difficult for people seeking flings or hookups to use this app for such purposes. "
-          "\n\nYou will also be able to view a compatibility data that shows you more information about your compatibility with MATCHED users. ",
+          "\n\nYou will also be able to view a compatibility data that shows you more information about your compatibility with other users. ",
       "image": iOnboard3,
     },
     {

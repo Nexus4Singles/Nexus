@@ -47,7 +47,7 @@ class _RegSuccessfulState extends State<RegSuccessful> {
               SvgPicture.asset('$svgPath/congrats.svg'),
               const SizedBoxH20(),
               Text(
-                'Congratulations ${model.user!.username}',
+                'Congratulations ${model.user!.username}!!!',
                 style: textStyle18.copyWith(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,

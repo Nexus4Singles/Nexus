@@ -127,7 +127,7 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
                         if(provider.isRestricted == true)
                         {
                           restrictionModal(context: context, showButton: false, text: 'Your subscription entitlements have been restricted.\nPlease'
-                              ' log in to the associated Play Store or App Store account.\nRestart the app then head to Settings -> '
+                              ' log in to the account that is linked to your Play Store or App Store account.\nRestart the app, then head to Settings -> '
                               'Your Subscription -> Restore Subscription.');
                         } else {
                           ctr.filterUsers();

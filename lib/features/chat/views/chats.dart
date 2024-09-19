@@ -68,7 +68,7 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
                         return allChatUsers.length.isLowerThan(1)
                             ? const EmptyStateWidget(
                                 shouldShowImage: false,
-                                message: 'No recent matches',
+                                message: 'No Recent Matches',
                               )
                             : SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
