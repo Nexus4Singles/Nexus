@@ -280,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ' log in or switch to the Google Play Store Account/Apple ID account associated to your subscription\nRestart the app then head to Settings -> '
                 'Your Subscription -> Restore Subscription.');
       } else if (provider.isRestricted == false) {
-        logger.i('toggke');
+        logger.i('toggle');
         matchCtr.toggleSave(user.id);
       }
     } else if (provider.onPremium == false) {

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
+import 'package:Nexus/features/subscription/widgets/restriction_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,7 +18,9 @@ import 'package:Nexus/features/auth/presentation/widgets/record_completed.dart';
 import 'package:Nexus/features/match/controllers/matches_ctr.dart';
 import 'package:Nexus/features/profile/presentation/views/report_user.dart';
 import 'package:Nexus/features/profile/presentation/widgets/text_container.dart';
+import 'package:provider/provider.dart';
 
+import '../../../subscription/provider/subscription_provider.dart';
 import 'photo_view.dart';
 
 class UserDetailScreen extends StatefulWidget {
@@ -379,27 +382,35 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               ],
                             ),
                             const SizedBoxH25(),
-                            Builder(builder: (context) {
-                              return Center(
-                                child: TextButton(
-                                    onPressed: () {
-                                      compatibilityModal(
-                                          context, widget.userModel);
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                          color: primary.withOpacity(0.1),
-                                          borderRadius:
+                              Consumer<SubscriptionProvider>(builder: (context, model, _) {
+                                return Builder(builder: (context) {
+                                  return Center(
+                                    child: TextButton(
+                                        onPressed: () {
+                                          if(model.onPremium == true){
+                                            compatibilityModal(
+                                                context, widget.userModel);
+                                          } else {
+                                            restrictionModal(context: context, text: 'Only Matched users can view this data for free.\nYou need to subscribe if you want to view this data on all profiles');
+                                          }
+
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.all(12),
+                                          decoration: BoxDecoration(
+                                              color: primary.withOpacity(0.1),
+                                              borderRadius:
                                               BorderRadius.circular(100)),
-                                      child: Text(
-                                        "View Compatibility Data",
-                                        style: textStyle14.copyWith(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    )),
-                              );
-                            }),
+                                          child: Text(
+                                            "View Compatibility Data",
+                                            style: textStyle14.copyWith(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        )),
+                                  );
+                                });
+                              }
+                            ),
                             const SizedBoxH10(),
                           ],
                         ),
@@ -484,28 +495,37 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             )),
                       ),
                       const SizedBoxW20(),
-                      InkWell(
-                        onTap: () {
-                          ctr.toggleSave(widget.userModel.id);
-                          debugPrint(ctr.ctr.myProfile.value.mySaves!
-                              .contains(widget.userModel.id)
-                              .toString());
-                        },
-                        child: CircleAvatar(
-                          backgroundColor:
-                              ctr.ctr.myProfile.value.mySaves == null ||
-                                      !ctr.ctr.myProfile.value.mySaves!
-                                          .contains(widget.userModel.id)
-                                  ? white
-                                  : primary,
-                          radius: 25,
-                          child: SvgPicture.asset("$svgPath/bookmark.svg",
-                              color: ctr.ctr.myProfile.value.mySaves == null ||
-                                      !ctr.ctr.myProfile.value.mySaves!
-                                          .contains(widget.userModel.id)
-                                  ? primary
-                                  : white),
-                        ),
+                      Consumer<SubscriptionProvider>(builder: (context, model, _) {
+                        return InkWell(
+                          onTap: () {
+                            if(model.onPremium == true){
+                              ctr.toggleSave(widget.userModel.id);
+                              debugPrint(ctr.ctr.myProfile.value.mySaves!
+                                  .contains(widget.userModel.id)
+                                  .toString());
+                            } else {
+                              restrictionModal(context: context);
+                            }
+                          },
+                          child: CircleAvatar(
+                            backgroundColor:
+                            ctr.ctr.myProfile.value.mySaves == null ||
+                                !ctr.ctr.myProfile.value.mySaves!
+                                    .contains(widget.userModel.id)
+                                ? white
+                                : primary,
+                            radius: 25,
+                            child: SvgPicture.asset("$svgPath/bookmark.svg",
+                                color: ctr.ctr.myProfile.value.mySaves ==
+                                    null ||
+                                    !ctr.ctr.myProfile.value.mySaves!
+                                        .contains(widget.userModel.id)
+                                    ? primary
+                                    : white),
+                          ),
+                        );
+                      }
+
                       ),
                     ],
                   )

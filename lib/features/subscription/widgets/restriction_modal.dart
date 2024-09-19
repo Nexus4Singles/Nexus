@@ -26,7 +26,8 @@ void restrictionModal({
             borderRadius: BorderRadius.circular(24),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
-          child: Wrap(
+          child: Column( // Changed from Wrap to Column
+            mainAxisSize: MainAxisSize.min,
             children: [
               Align(
                 alignment: Alignment.topRight,
@@ -49,11 +50,14 @@ void restrictionModal({
                 ),
               ),
               const SizedBox(height: 16.0),
-              Text(
-                text,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.grey[600]), // Replace with your text style
+              Center( // Centering the text
+                child: Text(
+                  text,
+                  textAlign: TextAlign.center, // This ensures text is centered
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                  ),
+                ),
               ),
               if (showButton)
                 Padding(

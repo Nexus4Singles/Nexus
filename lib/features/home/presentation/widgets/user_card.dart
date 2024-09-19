@@ -12,10 +12,13 @@ import 'package:Nexus/core/models/user.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
 import 'package:Nexus/core/utils/device.dart';
+import 'package:provider/provider.dart';
 import '../../../../core/utils/modals.dart';
 import '../../../auth/presentation/widgets/record_completed.dart';
 import '../../../match/controllers/matches_ctr.dart';
 import '../../../profile/presentation/widgets/text_container.dart';
+import '../../../subscription/provider/subscription_provider.dart';
+import '../../../subscription/widgets/restriction_modal.dart';
 import '../views/photo_view.dart';
 
 class UserCard extends StatefulWidget {
@@ -480,21 +483,29 @@ class _UserCardState extends State<UserCard> {
                       ],
                     ),
                     Center(
-                      child: TextButton(
-                          onPressed: () {
-                            compatibilityModal(context, widget.userModel);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                                color: primary.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(100)),
-                            child: Text(
-                              "View Compatibility Data",
-                              style: textStyle14.copyWith(
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          )),
+                      child: Consumer<SubscriptionProvider>(builder: (context, model, _) {
+                        return TextButton(
+                            onPressed: () {
+                              if (model.onPremium == true) {
+                                compatibilityModal(
+                                    context, widget.userModel);
+                              } else {
+                                restrictionModal(context: context, text: 'Only Matched users can view this data for free.\nYou need to subscribe if you want to view this data on all profiles');
+                              }
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                  color: primary.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(100)),
+                              child: Text(
+                                "View Compatibility Data",
+                                style: textStyle14.copyWith(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ));
+                      }
+                      ),
                     ),
                     const SizedBox(height: 80)
                   ],
