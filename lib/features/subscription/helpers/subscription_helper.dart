@@ -135,15 +135,20 @@ class SubscriptionHelper {
       await updateEntitledUserStatus(user, 'null', context);
       subProvider.entitledUser = 'null';
     }
+    //validate sub
+    subValid = await validateSub(context, subProvider, user);
+    subProvider.onPremium = subValid;
+    await updateBackendPremiumStatus(user, subValid, context);
 
-    if (subscriberId != 'null') {
+    /*if (subscriberId != 'null') {
       if (subscriberId == subId) {
         subProvider.isRestricted = false;
         //validate sub
         subValid = await validateSub(context, subProvider, user);
         subProvider.onPremium = subValid;
         await updateBackendPremiumStatus(user, subValid, context);
-      } else {
+      }
+      else {
 
         logger.e(
             'Access Restricted: User not signed in subscribed app distro account');
@@ -162,7 +167,7 @@ class SubscriptionHelper {
       subProvider.isRestricted = false;
       await updateBackendPremiumStatus(user, subValid, context);
       subProvider.onPremium = false;
-    }
+    }*/
 
     return subValid;
   }
@@ -332,7 +337,7 @@ class SubscriptionHelper {
   static Future<void> restoreSubscriptionEntitlement(BuildContext context, SubscriptionProvider subProvider) async
   {
     try {
-      if(subProvider.isRestricted  == false){
+     // if(subProvider.isRestricted  == false){
       var permissions = await Glassfy.restorePurchases();
       for (var p in permissions.all ?? []) {
         logger.i("${p.permissionId} is ${p.isValid}");
@@ -342,8 +347,7 @@ class SubscriptionHelper {
               'Subscription Entitlements restored.Please Restart App!',
             );
           }
-        }
-        if (p.isValid == false) {
+        } else {
           if (context.mounted) {
             logger.i(
               'You currently do not have an active premium plan',
@@ -354,16 +358,17 @@ class SubscriptionHelper {
           'Subscription Entitlements restored.Please Restart App!',
         );
       }
-    }  else {
+    //}
+     /* else {
         BaseHelper.showSnackBar(
           'Please sign into the Google Play Store or Apple ID associated with your subscription.',
         );
-      }
+      }*/
       }
       catch (error) {
-      logger.e("Failed to restore purchases $error");
+      logger.e("Failed to restore Subscription Entitlements $error");
       if (context.mounted) {
-        BaseHelper.showSnackBar('Failed to restore purchases');
+        BaseHelper.showSnackBar('Failed to restore subscription Entitlements');
       }
     }
   }

@@ -276,7 +276,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   }
 
   _handleSubscribeAction(SubscriptionProvider subProvider) async {
-    var currentSystemSubscriberId = await SubscriptionHelper.getSubscriberId();
+   /* var currentSystemSubscriberId = await SubscriptionHelper.getSubscriberId();
     if(subProvider.onPremium == false && subProvider.isRestricted == true)
       {
         restrictionModal(context: context, dismisable: true, showButton: false, text: 'Please'
@@ -289,31 +289,12 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
               ' log in or switch to the Google Account/Apple ID that is NOT associated to a subscription.\n'
               'Head back here after restarting the app, click the\'Restore Subscription\' button, then try again.');
         }
-    else if(subProvider.onPremium == true){
+    else */
+    if(subProvider.onPremium == true){
       BaseHelper.showSnackBar ('You\'re on Premium!');
     }
     else {
       await SubscriptionHelper.onSubscribe(context);
-    }
-  }
-
-  Future<void> addSubscriberIdToUsers() async {
-    // Reference to the users collection
-    CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
-
-    try {
-      // Get all documents in the users collection
-      QuerySnapshot querySnapshot = await usersCollection.get();
-
-      // Iterate through each document
-      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
-        // Add the 'subscriberId' field and set its value to the string 'null'
-        await doc.reference.update({'subscriberId': 'null'});
-      }
-
-      logger.i('Successfully added subscriberId to all documents in users collection.');
-    } catch (e) {
-      logger.i('Error updating documents: $e');
     }
   }
 
