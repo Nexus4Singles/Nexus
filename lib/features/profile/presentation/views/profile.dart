@@ -67,28 +67,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late Duration playerPosition;
 
   Future _setAudioPlayer() async {
-    debugPrint("this is for audio==>${currentUser.relationshipWithGod}");
-    await player.setUrl(currentUser.relationshipWithGod ?? "");
-    player.durationStream.listen((d) {
-      duration = d!;
-    });
-    player.positionStream.listen((p) {
-      playerPosition = p;
-    });
-    await player2.setUrl(currentUser.roleOfHusband!);
-    player2.durationStream.listen((d) {
-      duration = d!;
-    });
-    player2.positionStream.listen((p) {
-      playerPosition = p;
-    });
-    await player3.setUrl(currentUser.bestQualotiesOrTraits!);
-    player3.durationStream.listen((d) {
-      duration = d!;
-    });
-    player3.positionStream.listen((p) {
-      playerPosition = p;
-    });
+    try {
+      Future.wait([
+        player.setUrl(currentUser.relationshipWithGod ?? ""),
+        player2.setUrl(currentUser.roleOfHusband ?? ""),
+        player3.setUrl(currentUser.bestQualotiesOrTraits ?? "")
+      ]);
+      player.durationStream.listen((d) {
+        duration = d!;
+      });
+      player.positionStream.listen((p) {
+        playerPosition = p;
+      });
+      player2.durationStream.listen((d) {
+        duration = d!;
+      });
+      player2.positionStream.listen((p) {
+        playerPosition = p;
+      });
+      player3.durationStream.listen((d) {
+        duration = d!;
+      });
+      player3.positionStream.listen((p) {
+        playerPosition = p;
+      });
+    } catch (e) {
+      debugPrint("this is the loaded audio error ==>${e.toString()}");
+    }
   }
 
   @override

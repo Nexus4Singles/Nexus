@@ -116,10 +116,13 @@ class _AudioFilePlayerState extends State<AudioFilePlayer> {
     widget.player.playerStateStream.listen(
       (state) {
         if (state.playing) {
+          setState(() {
+            isPlaying = true;
+          });
         } else {
-          // setState(() {
-          //   isPlaying = false;
-          // });
+          setState(() {
+            isPlaying = false;
+          });
         }
         switch (state.processingState) {
           case ProcessingState.idle:

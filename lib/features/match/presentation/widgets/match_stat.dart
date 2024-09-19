@@ -60,7 +60,7 @@ class MatchStats extends StatelessWidget {
                     child: Text(
                       ctr.ctr.myProfile.value.myLikes == null
                           ? "0"
-                          : '${ctr.ctr.myProfile.value.myLikes!.length}',
+                          : '${ctr.ctr.allUsers.where((user) => ctr.ctr.myProfile.value.myLikes!.contains(user.id)).toList().length}',
                       style: textStyle16.copyWith(
                         color: white,
                         fontWeight: FontWeight.bold,
@@ -115,7 +115,7 @@ class MatchStats extends StatelessWidget {
                     child: Text(
                       ctr.ctr.myProfile.value.likeMe == null
                           ? "0"
-                          : '${ctr.ctr.myProfile.value.likeMe!.length}',
+                          : '${ctr.ctr.allUsers.where((user) => ctr.ctr.myProfile.value.likeMe!.contains(user.id)).toList().length}',
                       style: textStyle16.copyWith(
                         color: white,
                         fontWeight: FontWeight.bold,
@@ -170,7 +170,7 @@ class MatchStats extends StatelessWidget {
                     child: Text(
                       ctr.ctr.myProfile.value.mySaves == null
                           ? "0"
-                          : '${ctr.ctr.myProfile.value.mySaves!.length}',
+                          : '${ctr.ctr.allUsers.where((user) => ctr.ctr.myProfile.value.mySaves!.contains(user.id)).toList().length}',
                       style: textStyle16.copyWith(
                         color: white,
                         fontWeight: FontWeight.bold,

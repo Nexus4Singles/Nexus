@@ -47,37 +47,30 @@ class _UserCardState extends State<UserCard> {
   late Duration playerPosition;
 
   Future _setAudioPlayer() async {
-    // if (playerId == '1') {
-    await player.setUrl(widget.userModel.relationshipWithGod!);
+    Future.wait([
+      player.setUrl(widget.userModel.relationshipWithGod!),
+      player2.setUrl(widget.userModel.roleOfHusband!),
+      player3.setUrl(widget.userModel.bestQualotiesOrTraits!)
+    ]);
 
     player.durationStream.listen((d) {
       duration = d!;
     });
-
     player.positionStream.listen((p) {
       playerPosition = p;
     });
-    // } else if (playerId == '2') {
-    await player2.setUrl(widget.userModel.roleOfHusband!);
-
     player2.durationStream.listen((d) {
       duration = d!;
     });
-
     player2.positionStream.listen((p) {
       playerPosition = p;
     });
-    // } else {
-    await player3.setUrl(widget.userModel.bestQualotiesOrTraits!);
-
     player3.durationStream.listen((d) {
       duration = d!;
     });
-
     player3.positionStream.listen((p) {
       playerPosition = p;
     });
-    // }
   }
 
   FutureOr _init() {

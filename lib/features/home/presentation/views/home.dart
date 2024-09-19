@@ -142,23 +142,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                               "Check Back Tomorrow or Use the Explore Page to Search & Filter Profiles Within Other Countries",
                                         );
                                       }),
-                                      //TODO: USE THIS COUNTER TO DISPLAY THE REMAINING TIME FOR USERS TO SEE THE RECOMMENDED LIST
-                                      Builder(builder: (context) {
-                                        return SlideCountdown(
-                                          duration:
-                                              -homeCtr.calculateCountDownTime(),
-                                          separatorType: SeparatorType.title,
-                                          slideDirection: SlideDirection.up,
-                                          decoration: const BoxDecoration(
-                                              color: Colors.transparent),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                          separatorStyle: const TextStyle(),
-                                          separatorPadding:
-                                              EdgeInsets.symmetric(
-                                                  horizontal: 8.w),
-                                        );
-                                      }),
+                                      // //TODO: USE THIS COUNTER TO DISPLAY THE REMAINING TIME FOR USERS TO SEE THE RECOMMENDED LIST
+                                      // Builder(builder: (context) {
+                                      //   return SlideCountdown(
+                                      //     duration:
+                                      //         -homeCtr.calculateCountDownTime(),
+                                      //     separatorType: SeparatorType.title,
+                                      //     slideDirection: SlideDirection.up,
+                                      //     decoration: const BoxDecoration(
+                                      //         color: Colors.transparent),
+                                      //     style: const TextStyle(
+                                      //         fontWeight: FontWeight.bold),
+                                      //     separatorStyle: const TextStyle(),
+                                      //     separatorPadding:
+                                      //         EdgeInsets.symmetric(
+                                      //             horizontal: 8.w),
+                                      //   );
+                                      // }),
                                     ],
                                   ),
                                   const Spacer(flex: 2),
@@ -209,8 +209,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           const AllowedSwipeDirection.only(
                                               up: false,
                                               down: false,
-                                              right: true,
-                                              left: true),
+                                              right: false,
+                                              left: false),
                                       padding: const EdgeInsets.all(0),
                                       cardBuilder: (context,
                                           index,

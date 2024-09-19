@@ -14,7 +14,6 @@ import 'package:Nexus/core/style.dart';
 import 'package:Nexus/core/utils/device.dart';
 import 'package:Nexus/core/utils/modals.dart';
 import 'package:Nexus/features/auth/presentation/widgets/record_completed.dart';
-import 'package:Nexus/features/explore/controllers/explore_ctr.dart';
 import 'package:Nexus/features/match/controllers/matches_ctr.dart';
 import 'package:Nexus/features/profile/presentation/views/report_user.dart';
 import 'package:Nexus/features/profile/presentation/widgets/text_container.dart';
@@ -47,35 +46,30 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
   late Duration playerPosition;
 
   Future _setAudioPlayer() async {
-    await player.setUrl(widget.userModel.relationshipWithGod!);
+    Future.wait([
+      player.setUrl(widget.userModel.relationshipWithGod!),
+      player2.setUrl(widget.userModel.roleOfHusband!),
+      player3.setUrl(widget.userModel.bestQualotiesOrTraits!)
+    ]);
 
     player.durationStream.listen((d) {
       duration = d!;
     });
-
     player.positionStream.listen((p) {
       playerPosition = p;
     });
-    await player2.setUrl(widget.userModel.roleOfHusband!);
-
     player2.durationStream.listen((d) {
       duration = d!;
     });
-
     player2.positionStream.listen((p) {
       playerPosition = p;
     });
-    // } else {
-    await player3.setUrl(widget.userModel.bestQualotiesOrTraits!);
-
     player3.durationStream.listen((d) {
       duration = d!;
     });
-
     player3.positionStream.listen((p) {
       playerPosition = p;
     });
-    // }
   }
 
   final ctr = MatchesCtr.instance;

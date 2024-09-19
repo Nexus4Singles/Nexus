@@ -120,80 +120,75 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       //   'You will be able to filter by Age, Church, Nationality & Education level as soon as we launch.',
                       // );
                     },
-                    child: const Icon(
-                      Iconsax.setting_4,
-                    ),
+                    child: const Icon(Iconsax.setting_4),
                   ),
                 ],
               ),
             )),
         title: Text(
           'Explore',
-          style: textStyle18.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: textStyle18.copyWith(fontWeight: FontWeight.bold),
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Obx(
-            () => Column(
-              children: [
-                ctr.isLoading.value
-                    ? const Center(child: CustomCircularProgressIndicator())
-                    : ctr.exploreError.value.isNotEmpty
-                        ? SizedBox(
-                            height: Get.height / 2,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Center(
-                                  child: EmptyStateWidget(
-                                    message: ctr.exploreError.value,
-                                    showClose: false,
-                                  ),
+        child: Obx(
+          () => Column(
+            children: [
+              ctr.isLoading.value
+                  ? const Center(child: CustomCircularProgressIndicator())
+                  : ctr.exploreError.value.isNotEmpty
+                      ? SizedBox(
+                          height: Get.height / 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: EmptyStateWidget(
+                                  message: ctr.exploreError.value,
+                                  showClose: false,
                                 ),
-                              ],
-                            ),
-                          )
-                        : ctr.searchedUsers.isEmpty
-                            ? SizedBox(
-                                width: Get.width,
-                                height: Get.height / 1.5,
-                                child: Center(
-                                  child: Text(
-                                    'Stay in control of profiles you see! Search for profiles within any country and get more desired results using filters',
-                                    style: textStyle14.copyWith(
-                                      color: dustyGrey,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              )
-                            : Column(
-                                children: [
-                                  ...ctr.searchedUsers.map(
-                                    (val) => ExploreUserTile(
-                                      image: val.photos![0],
-                                      name: val.username,
-                                      age: val.age.toString(),
-                                      location:
-                                          val.location!.place?.capitalize ?? "",
-                                      onPress: () {
-                                        print(
-                                            "this users gender ==> ${val.gender} Mine ==> ${ctr.myProfile.value.gender}");
-                                        Get.to(() =>
-                                            UserDetailScreen(userModel: val));
-                                      },
-                                    ),
-                                  )
-                                ],
                               ),
-                const SizedBoxH40()
-              ],
-            ),
+                            ],
+                          ),
+                        )
+                      : ctr.searchedUsers.isEmpty
+                          ? SizedBox(
+                              width: Get.width,
+                              height: Get.height / 1.5,
+                              child: Center(
+                                child: Text(
+                                  'Stay in control of profiles you see! Search for profiles within any country and get more desired results using filters',
+                                  style: textStyle14.copyWith(
+                                    color: dustyGrey,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            )
+                          : Expanded(
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: ctr.searchedUsers.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var val = ctr.searchedUsers[index];
+                                  return ExploreUserTile(
+                                    image: val.photos![0],
+                                    name: val.username,
+                                    age: val.age.toString(),
+                                    location:
+                                        val.location!.place?.capitalize ?? "",
+                                    onPress: () {
+                                      Get.to(() =>
+                                          UserDetailScreen(userModel: val));
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+              const SizedBoxH40()
+            ],
           ),
         ),
       ),

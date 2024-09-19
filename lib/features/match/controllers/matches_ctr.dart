@@ -34,17 +34,19 @@ class MatchesCtr extends GetxController {
     var myLikes = ctr.myProfile.value.myLikes?.toSet() ?? {};
     userData.assignAll(
         ctr.allUsers.where((user) => myLikes.contains(user.id)).toList());
+    print("This is all user data ==> ${userData.length}");
   }
 
   setLikedMe() {
     emptyText.value = "You don't have any likes yet";
-
     isLoading.value = true;
     Future.delayed(const Duration(seconds: 2), () => isLoading.value = false);
     userData.clear();
     var likedMes = ctr.myProfile.value.likeMe?.toSet() ?? {};
+    print("This is all likemes ==> ${likedMes.length}");
     userData.assignAll(
         ctr.allUsers.where((user) => likedMes.contains(user.id)).toList());
+    print("This is all user data ==> ${userData.length}");
   }
 
   setSaved() {
@@ -80,21 +82,18 @@ class MatchesCtr extends GetxController {
     // this is for users that was liked by someone already
     if (ctr.myProfile.value.likeMe != null &&
         ctr.myProfile.value.likeMe!.contains(userModel.id)) {
-      await removeFromLikeMe(userModel.id, false);
-      await removeUserMyLike(userModel.id, false);
       await saveBothToMatched(userModel);
       EasyLoading.dismiss();
-
       notificationController.sendMatchNotification(userModel.id);
       // go to matched user screen & remove the myLike  from the other users & remove like Me from the and create a chat view instead
     } else {
       if (ctr.myProfile.value.myLikes != null &&
           ctr.myProfile.value.myLikes!.contains(userModel.id)) {
-        await removeUserMyLike(userModel.id, true);
-        await removeFromLikeMe(userModel.id, true);
-
+        print("called for toggling likes");
+        await removeLikes(userModel.id);
         EasyLoading.dismiss();
       } else {
+        print("called for add to the toggled likes");
         addUserToMyLike(userModel.id);
         saveCountOfLikeMe(userModel.id);
         addUserToLikeMe(userModel.id);
@@ -108,9 +107,12 @@ class MatchesCtr extends GetxController {
     }
   }
 
-  removeUserMyLike(id, bool isUser) async {
-    await db.collection(kUSER).doc(isUser ? auth.currentUser!.uid : id).update({
-      "myLikes": FieldValue.arrayRemove([isUser ? id : auth.currentUser!.uid])
+  removeLikes(id) async {
+    await db.collection(kUSER).doc(auth.currentUser!.uid).update({
+      "myLikes": FieldValue.arrayRemove([id])
+    });
+    await db.collection(kUSER).doc(id).update({
+      "myLikes": FieldValue.arrayRemove([auth.currentUser?.uid])
     });
   }
 
@@ -121,9 +123,13 @@ class MatchesCtr extends GetxController {
     homeCtr.incrementViews();
   }
 
-  removeFromLikeMe(id, bool isUser) async {
-    await db.collection(kUSER).doc(isUser ? id : auth.currentUser!.uid).update({
-      "likeMe": FieldValue.arrayRemove([isUser ? auth.currentUser!.uid : id])
+  removeFromLikeMe(id, bool isOtherUser) async {
+    await db
+        .collection(kUSER)
+        .doc(isOtherUser ? auth.currentUser!.uid : id)
+        .update({
+      "likeMe":
+          FieldValue.arrayRemove([isOtherUser ? id : auth.currentUser!.uid])
     });
   }
 
@@ -139,8 +145,14 @@ class MatchesCtr extends GetxController {
       db.collection(kUSER).doc(currentUserId).update({
         "matchedUsers": FieldValue.arrayUnion([userModel.id])
       }),
+      db.collection(kUSER).doc(currentUserId).update({
+        "likeMe": FieldValue.arrayRemove([userModel.id])
+      }),
       db.collection(kUSER).doc(userModel.id).update({
         "matchedUsers": FieldValue.arrayUnion([currentUserId])
+      }),
+      db.collection(kUSER).doc(userModel.id).update({
+        "myLikes": FieldValue.arrayRemove([currentUserId])
       }),
     ]);
     await db.collection('matches').add({
@@ -149,6 +161,7 @@ class MatchesCtr extends GetxController {
     });
     var messageID = DateTime.now().millisecondsSinceEpoch;
     await chatCtr.saveToChat(userModel.id, messageID);
+    await ctr.getMyProfile();
     Get.to(() => Matched(userModel: userModel, messageID: messageID));
   }
 
