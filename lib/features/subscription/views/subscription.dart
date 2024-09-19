@@ -145,7 +145,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   'Unlimited Access to Like Profiles',
                   'Unlimited Access to View Profiles You Liked',
                   'Unlimited Access to View Who Liked Your Profile',
-                  'Unlimited Access to View Compatibility Data',
+                  'Access to Compatibility Data of Matched Users',
                   'Limited Access to Chat with Matched Users (1 User)',
                 ],
               ),
@@ -155,6 +155,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 features: [
                   'Unlimited Messaging',
                   'Access to Advanced Filters on Explore Page',
+                  'Access to Compatibility Data on all Profiles'
                   'Save Profiles to View Later',
                 ],
                 onSelectPlan: () async {
