@@ -35,7 +35,7 @@ class _TermsScreenState extends State<TermsScreen> {
         child: Column(
           children: [
             Text(
-              ''' Last Update : 02/12/2023\n\n The use of Nexus constitutes your consent to, and agreement to, abide by the most current version of these terms and conditions (the “Terms”). We may at any time revise these terms and conditions by updating the Terms. You agree to be bound by subsequent revisions and agree to review the Terms periodically for changes to the terms and conditions. The most up to date version of the Terms will always be available for your review under the “Terms of Use” link that appears at the bottom of the Platform.\n\n 
+              ''' Last Update : 20/09/2024\n\n The use of Nexus constitutes your consent to, and agreement to, abide by the most current version of these terms and conditions (the “Terms”). We may at any time revise these terms and conditions by updating the Terms. You agree to be bound by subsequent revisions and agree to review the Terms periodically for changes to the terms and conditions. The most up to date version of the Terms will always be available for your review under the “Terms of Use” link that appears at the bottom of the Platform.\n\n 
               
               ELIGIBILITY OF MEMBERSHIP \n 
               - Use of the Platform is available only to persons who can form legally binding contracts under applicable law. If you are ​under the age of 21 years, you will not be allowed to use the Platform.\n
