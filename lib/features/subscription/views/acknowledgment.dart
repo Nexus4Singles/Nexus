@@ -47,7 +47,7 @@ class _AcknowledgmentScreenState extends State<AcknowledgmentScreen> {
             ),
             const SizedBoxH20(),
             Text(
-              'Your subscription was successful!!!\nIf you dont see an active subscription,\n please close the app and relaunch it.',
+              'Your subscription was successful!\nIf you dont see an active subscription, please close the app and relaunch it.',
               textAlign: TextAlign.center,
               style: textStyle18.copyWith(fontSize: 12, height: 2),
             ),
