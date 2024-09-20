@@ -490,7 +490,7 @@ class _UserCardState extends State<UserCard> {
                                 compatibilityModal(
                                     context, widget.userModel);
                               } else {
-                                restrictionModal(context: context, text: 'Due to the sensitivity of some questions, this data is not available to every user.\nKindly subscribe if you want to view this data on all profiles');
+                                restrictionModal(context: context, text: 'Due to the sensitivity of some questions,\nthis data is not available to every user.\nKindly upgrade to Premium, \nif you want to view this data on all profiles');
                               }
                             },
                             child: Container(
