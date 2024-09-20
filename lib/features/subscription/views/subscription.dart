@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:Nexus/features/profile/presentation/change_notifier/settings_notifier.dart';
 import 'package:Nexus/features/profile/presentation/constants/payment.dart';
 import 'package:provider/provider.dart';
-import 'package:pay/pay.dart';
 import 'package:Nexus/core/button.dart';
 import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/core/style.dart';
@@ -25,84 +24,6 @@ class SubscriptionScreen extends StatefulWidget {
 }
 
 class _SubscriptionScreenState extends State<SubscriptionScreen> {
-  void _showPaymentBottomSheet(BuildContext context, double price) {
-    final paymentProvider =
-        Provider.of<SettingsNotifier>(context, listen: false);
-
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
-        return BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(5)),
-            child: Container(
-              color: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              height: 200,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'Select a Payment Method',
-                    style: TextStyle(
-                      fontSize: 24,
-                    ),
-                  ),
-                  const Divider(),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(children: [
-                      if (Platform.isAndroid)
-                        GooglePayButton(
-                          width: double.infinity,
-                          // height: 40,
-                          paymentItems: paymentProvider.getPaymentItems(price),
-                          theme: GooglePayButtonTheme.dark,
-                          type: GooglePayButtonType.subscribe,
-                          onPaymentResult: paymentProvider.onGooglePayResult,
-                          onPressed: () {
-                            Get.back();
-                          },
-                          loadingIndicator: const Center(
-                            child: AppCircularProgressIndicator(),
-                          ),
-                          paymentConfiguration:
-                              PaymentConfiguration.fromJsonString(
-                            defaultGooglePay,
-                          ),
-                        )
-                      else
-                        ApplePayButton(
-                          width: double.infinity,
-                          height: 40,
-                          paymentItems: paymentProvider.getPaymentItems(price),
-                          style: ApplePayButtonStyle.black,
-                          type: ApplePayButtonType.subscribe,
-                          onPaymentResult: paymentProvider.onApplePayResult,
-                          onPressed: () {
-                            Get.back();
-                          },
-                          loadingIndicator: const Center(
-                            child: AppCircularProgressIndicator(),
-                          ),
-                          paymentConfiguration:
-                              PaymentConfiguration.fromJsonString(
-                            defaultApplePay,
-                          ),
-                        ),
-                    ]),
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

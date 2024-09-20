@@ -1,16 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
-import 'package:pay/pay.dart';
 
 class SettingsNotifier with ChangeNotifier {
-  List<PaymentItem> getPaymentItems(double price) => <PaymentItem>[
+  /*List<PaymentItem> getPaymentItems(double price) => <PaymentItem>[
         PaymentItem(
           label: 'Monthly Subscription',
           type: PaymentItemType.total,
           amount: '$price',
           status: PaymentItemStatus.final_price,
         ),
-      ];
+      ];*/
 
   void onGooglePayResult(paymentResult) {
     _updatePaymentStatus(paymentResult);
