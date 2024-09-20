@@ -71,7 +71,7 @@ class _TermsScreenState extends State<TermsScreen> {
             text: '- You represent and warrant that all required registration information you submit is truthful and accurate, and you will maintain ​the accuracy of such information. You are responsible for maintaining the confidentiality of your Account login information ​and are fully responsible for all activities that occur under your Account. You agree to immediately notify us of any ​unauthorized use, or suspected unauthorized use of your Account or any other breach of security.\n',
           ),
            TextSpan(
-            text: '- Nexus cannot and will not be liable for any loss or damage arising from your failure to comply with the above requirements. ​You must not share your password or other access credentials with any other person or entity that is not authorized to ​access your account. Without limiting the foregoing, you are solely responsible for any activities or actions that occur under ​your Platform account access credentials. We encourage you to use a “strong” password (a password that includes a ​combination of upper and lower case letters, numbers, and symbols) with your account. We cannot and will not be liable for ​any loss or damage arising from your failure to comply with any of the above.\n',
+            text: '- Nexus cannot and will not be liable for any loss or damage arising from your failure to comply with the above requirements. ​You must not share your password or other access credentials with any other person or entity that is not authorized to ​access your account. Without limiting the foregoing, you are solely responsible for any activities or actions that occur under ​your Platform account access credentials. We encourage you to use a “strong” password (a password that includes a ​combination of upper and lower case letters, numbers, and symbols) with your account. We cannot and will not be liable for ​any loss or damage arising from your failure to comply with any of the above.\n\n',
           ),
          
           TextSpan(
@@ -85,7 +85,7 @@ class _TermsScreenState extends State<TermsScreen> {
             text: 'The Platform does not offer refunds for the subscriptions once made by the Users.\n',
           ),
            TextSpan(
-            text: 'Please be aware that if you subscribe to services for a period (the “Initial Term”), then the terms of your subscription will be ​automatically renewed for additional periods of the same duration as the Initial Term on Nexus, then-current fee for such ​services, unless you cancel your subscription.\n',
+            text: 'Please be aware that if you subscribe to services for a period (the “Initial Term”), then the terms of your subscription will be ​automatically renewed for additional periods of the same duration as the Initial Term on Nexus, then-current fee for such ​services, unless you cancel your subscription.\n\n',
           ),
           
           TextSpan(
@@ -102,7 +102,7 @@ class _TermsScreenState extends State<TermsScreen> {
             text: 'You are solely responsible for your use of the Platform, for any content you provide, and for any consequences thereof, ​including, but not limited to, the use of your content by us. Without limiting the foregoing, you represent and warrant that ​you have all the rights, power, and authority necessary to grant the rights granted herein to any Content that you submit.\n',
           ),
           TextSpan(
-            text: 'In addition, so that the Platform can prevent the use of Your Content outside of our Services, you authorize the Company ​to act on your behalf with respect to infringing uses of Your Content taken from our Services by other users or third ​parties. This expressly includes the authority, but not the obligation, to send notices on your behalf if Your Content is taken ​and used by third parties outside of our Services.\n',
+            text: 'In addition, so that the Platform can prevent the use of Your Content outside of our Services, you authorize the Company ​to act on your behalf with respect to infringing uses of Your Content taken from our Services by other users or third ​parties. This expressly includes the authority, but not the obligation, to send notices on your behalf if Your Content is taken ​and used by third parties outside of our Services.\n\n',
           ),
           TextSpan(
             text: 'YOU AGREE AND CONFIRM\n',
@@ -118,7 +118,7 @@ class _TermsScreenState extends State<TermsScreen> {
             text: '- That you are accessing the services available on this Platform and transacting at your sole risk and are using your best and ​prudent judgment before entering into any transaction through this Platform. If upon confirmation ​your details are found not to be true (wholly or partly), we have the right in our sole discretion to reject the registration and ​debar you from using the Services of our Platform and / or other affiliated Platforms without prior intimation whatsoever.\n',
           ),
           TextSpan(
-            text: '- You shall at all times ensure full compliance with the applicable laws regarding your use of our service.\n',
+            text: '- You shall at all times ensure full compliance with the applicable laws regarding your use of our service.\n\n',
           ),
           TextSpan(
             text: 'YOU MAY NOT USE THIS PLATFORM FOR ANY OF THE FOLLOWING PURPOSES\n',
@@ -140,7 +140,7 @@ class _TermsScreenState extends State<TermsScreen> {
             text: '- Interfering or disrupting networks or web sites connected to the Platform.\n',
           ),
           TextSpan(
-            text: '- Making, transmitting or storing electronic copies of materials protected by copyright without the permission of the owner.\n',
+            text: '- Making, transmitting or storing electronic copies of materials protected by copyright without the permission of the owner.\n\n',
           ),
           TextSpan(
             text: 'MODIFICATION OF TERMS & CONDITIONS OF SERVICES\n',
@@ -180,18 +180,15 @@ class _TermsScreenState extends State<TermsScreen> {
            TextSpan(
             text: '- If we find you breaching these terms of service, you may also become liable for an amount of which we have suffered ​losses/damages.\n',
           ),
-        ],
-      ),
-    ),
-  ],
-),
           
+            ], // This ends the children list
+      ), // This closes the TextSpan
+    ), // This closes RichText
+  ], // This closes the Column's children
+); // This closes the Column itself
+        
               style: textStyle14.copyWith(
                   height: 1.5, color: black, fontWeight: FontWeight.w400),
-            ),
-          ],
-        ),
-      ),
-    );
+          
   }
 }
