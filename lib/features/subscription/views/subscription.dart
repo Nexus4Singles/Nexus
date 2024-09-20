@@ -155,7 +155,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 features: [
                   'Unlimited Messaging',
                   'Access to Advanced Filters on Explore Page',
-                  'Access to Compatibility Data on all Profiles'
+                  'Access to Compatibility Data on all Profiles',
                   'Save Profiles to View Later',
                 ],
                 onSelectPlan: () async {
