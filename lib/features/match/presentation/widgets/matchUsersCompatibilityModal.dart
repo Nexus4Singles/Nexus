@@ -77,7 +77,7 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
                     "${userModel.username} ${userModel.compatibility!.shouldChristianSpeakInTongue!.toLowerCase().contains("yes") ? "believes" : "doesn't believe"} speaking in tongues is very necessary",
                   ),
                   optionsMenu(
-                    "${userModel.username} ${userModel.compatibility!.believeInTithing!.toLowerCase().contains("yes") ? "believes" : "doesn't believe"} tithing is important",
+                    "${userModel.username} ${userModel.compatibility!.believeInTithing!.toLowerCase().contains("yes") ? "thinks" : "doesn't think"} tithing is so important",
                   )
                 ],
               ),
