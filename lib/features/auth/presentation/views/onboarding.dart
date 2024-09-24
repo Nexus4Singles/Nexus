@@ -42,7 +42,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       "title": "Find your Match",
       "subtitle": "You will receive notifications of opposite gender users who have liked your profile. However, they would not be able to connect with you until you have equally viewed and liked their profiles, which automatically leads to a MATCH.\n\n"
           "This is to preserve your privacy & security by ensuring only users you approve of are able to connect with you, which  makes it really difficult for people seeking flings or hookups to use this app for such purposes. "
-          "\n\nYou will also be able to view a compatibility data that shows you more information about your compatibility with other users. ",
+          "\n\nYou will also have the option of viewing more important information about your compatibility with other users to aid your decision making on who to connect with.",
       "image": iOnboard3,
     },
     {
