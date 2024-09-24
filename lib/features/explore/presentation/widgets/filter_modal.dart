@@ -38,8 +38,8 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
           children: [
             Center(
               child: Text(
-                'Filters',
-                style: textStyle16.copyWith(
+                'Advanced Filters',
+                style: textStyle18.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
