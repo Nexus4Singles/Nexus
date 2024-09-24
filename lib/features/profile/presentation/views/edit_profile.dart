@@ -172,7 +172,7 @@ class _EditProfileState extends State<EditProfile> {
                                   imageFiles.remove(item);
                                 } else {
                                   AppToast().showErrorToast(
-                                      "You need to have at least two images on this list before you can delete any image");
+                                      "You need to have at least two images on your profile before you can delete any image");
                                 }
                               });
                             },
@@ -270,7 +270,7 @@ class _EditProfileState extends State<EditProfile> {
                 Text(
                   'Hobbies / Interests',
                   style: textStyle14.copyWith(
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w700,
                     color: black,
                   ),
                 ),
@@ -297,7 +297,7 @@ class _EditProfileState extends State<EditProfile> {
                 Text(
                   'Most Desired Qualities',
                   style: textStyle14.copyWith(
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w700,
                     color: black,
                   ),
                 ),
