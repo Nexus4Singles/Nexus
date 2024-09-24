@@ -1,10 +1,12 @@
 import 'package:Nexus/core/services/fcm.dart';
 import 'package:Nexus/features/home/controllers/home_controller.dart';
+import 'package:Nexus/features/subscription/provider/subscription_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import '../../../../core/button.dart';
 import '../../../../core/button_outline.dart';
 import '../../../../core/size_boxes.dart';
@@ -58,14 +60,18 @@ class _LoginModalSheetState extends State<LoginModalSheet> {
                   ),
                   const SizedBoxW15(),
                   Expanded(
-                    child: CustomButton(
-                      onPressed: () async {
-                        await FCMService.setFcmTokenToNull(
-                            HomeController.instance.user.value.id);
-                        Get.offAndToNamed(AppRoutes.login);
-                        SharedPref.deleteAll();
-                      },
-                      text: 'Yes, Logout',
+                    child: Consumer<SubscriptionProvider>(
+                      builder: (context, provider, _) =>
+                          CustomButton(
+                            onPressed: () async {
+                              await FCMService.setFcmTokenToNull(
+                                  HomeController.instance.user.value.id);
+                              SharedPref.deleteAll();
+                              //provider.isLoggingOut = true;
+                              Get.offAllNamed('/');
+                            },
+                            text: 'Yes, Logout',
+                          ),
                     ),
                   ),
                 ],

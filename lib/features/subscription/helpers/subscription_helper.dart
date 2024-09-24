@@ -1,14 +1,19 @@
+import 'package:Nexus/core/di/injection_container.config.dart';
 import 'package:Nexus/core/utils/helper.dart';
 import 'package:Nexus/features/subscription/widgets/restriction_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:glassfy_flutter/glassfy_flutter.dart';
 import 'package:glassfy_flutter/models.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:rename/platform_file_editors/abs_platform_file_editor.dart';
 import '../../../core/models/user.dart';
+import '../../../main.dart';
+import '../../../router.dart';
 import '../../home/controllers/home_controller.dart';
 import '../provider/subscription_provider.dart';
 import '../services/subscription_service.dart';
@@ -45,10 +50,11 @@ class SubscriptionHelper {
                     final transaction =
                     await SubscriptionService.purchaseSku(sku);
 
-                    if (!context.mounted) return;
-
+                    if (!context.mounted){
+                        subProvider.isLoading = false;
+                      return;
+                    }
                     if (transaction != null) {
-                      subProvider.isLoading = true;
                       final permissions = transaction.permissions!.all!;
                       final permission = permissions.firstWhere(
                               (permission) =>
@@ -56,28 +62,25 @@ class SubscriptionHelper {
                       if (permission.isValid!) {
                         subProvider.onPremium = true;
                         String formattedDate = DateFormat('dd/MM/yyyy')
-                            .format(permission!.expireDate!);
+                            .format(permission.expireDate!) ;
                         subProvider.subExpDate = formattedDate;
                         var permit = await Glassfy.permissions();
-                        var subscriberId = permit.subscriberId;
+                        var subscriberId = permit.subscriberId ?? 'null';
                         logger.i('this is subscriber id: $subscriberId');
                         voidUpdateProvider(
                             subProvider, true, true, formattedDate,
                             subscriberId, 'null');
                         await updateSubBackend(subProvider.currentUser, true,
                             true, formattedDate, subscriberId, context);
-                        await updateFreeTextStatus(
-                            subProvider.currentUser, true, context, 'null');
-                        await updateEntitledUserStatus(
-                            subProvider.currentUser, 'null', context);
 
                         subProvider.isLoading = false;
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                              const AcknowledgmentScreen()),
-                        );
+                          MaterialPageRoute(builder: (context) =>  const AcknowledgmentScreen()),
+                        ).then((_) async {
+                          Get.offAllNamed('/');
+                        });
+
                       } else {
                         subProvider.isLoading = false;
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -105,6 +108,7 @@ class SubscriptionHelper {
         );
       }
     } catch (e) {
+      logger.e(e);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -117,16 +121,19 @@ class SubscriptionHelper {
     }
   }
 
-  static Future<bool> onValidateSubscription(SubscriptionProvider subProvider, BuildContext context) async {
+  static Future<bool> onValidateSubscription(BuildContext context) async {
+    var subProvider =
+    Provider.of<SubscriptionProvider>(context, listen: false);
     final homeCtr = HomeController.instance;
     final user = homeCtr.user.value;
-    var subscriberId = user.subscriberId ;
-    logger.i('this is subId at entrance of checking: ${user.subscriberId}');
 
+    logger.i('user is ${user.username}, ${user.age}');
+    logger.i('this is subId from Firebase: ${user.subscriberId}');
 
-    var subId = await getSubscriberId();
-    Clipboard.setData(ClipboardData(text: 'SubscriberId of primary store account: $subId' ?? ''));
-    //BaseHelper.showSnackBar('SubscriberId of primary store account: $subId');
+    var subId = await getSubscriberId() ?? 'null';
+    subProvider.subscriberId = subId;
+    logger.i('this is subId from Store: ${user.subscriberId}');
+
     bool subValid = false;
 
     if (subProvider.onPremium == false &&
@@ -136,9 +143,11 @@ class SubscriptionHelper {
       subProvider.entitledUser = 'null';
     }
     //validate sub
-    subValid = await validateSub(context, subProvider, user);
+    subValid = await validateSub(context, user);
     subProvider.onPremium = subValid;
     await updateBackendPremiumStatus(user, subValid, context);
+    subProvider.initSubDet(HomeController.instance.user.value);
+    return subValid;
 
     /*if (subscriberId != 'null') {
       if (subscriberId == subId) {
@@ -169,7 +178,6 @@ class SubscriptionHelper {
       subProvider.onPremium = false;
     }*/
 
-    return subValid;
   }
 
   static Future<void> updateSubBackend(UserModel? user, bool onP, bool prevSub,
@@ -187,11 +195,14 @@ class SubscriptionHelper {
       'prevSubscribed': prevSub,
       'subExpDate': subExp,
       'subscriberId': subscriberId,
+      'entitledUser': 'null',
+      'usedOneFreeText': true,
     };
 
     try {
       await userDoc.update(data);
     } catch (e) {
+      logger.e(e);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -205,7 +216,8 @@ class SubscriptionHelper {
 
   static void voidUpdateProvider(SubscriptionProvider sp, bool onP,
       bool prevSub, String? subExp, String? subscriberId,
-      [String? entitledUser]) {
+      [String? entitledUser])
+  {
     sp.onPremium = onP;
     sp.prevSubscribed = prevSub;
     sp.subExpDate = subExp;
@@ -269,7 +281,8 @@ class SubscriptionHelper {
   }
 
   static Future<void> updateEntitledUserStatus(UserModel? user,
-      String? entitledUser, BuildContext context) async {
+      String? entitledUser, BuildContext context) async
+  {
     if (user == null) {
       return;
     }
@@ -299,8 +312,6 @@ class SubscriptionHelper {
     try {
       var permissions = await Glassfy.permissions();
       subscriberId = permissions.subscriberId;
-      logger.i(
-          'Returned subscriberId: $subscriberId');
     } catch (e) {
       logger.e(e);
     }
@@ -308,25 +319,24 @@ class SubscriptionHelper {
 
   }
 
-  static Future<bool> validateSub(BuildContext context,
-      SubscriptionProvider subProvider, UserModel user) async {
+  static Future<bool> validateSub(BuildContext context, UserModel user) async
+  {
     try {
+      var subProvider =
+      Provider.of<SubscriptionProvider>(context, listen: false);
       var permissions = await Glassfy.permissions();
-      var subValid = false;
       permissions.all?.forEach((p) async {
         if (p.permissionId == "premium" && p.isValid == true) {
           subProvider.onPremium = true;
           logger.i('subscription valid');
-          subValid = true;
         } else {
           logger.e('subscription no longer valid');
           subProvider.onPremium = false;
-          await SubscriptionHelper.updateBackendPremiumStatus(
-              user, false, context);
-          subValid = false;
+          logger.i(subProvider.onPremium);
+
         }
       });
-      return subValid;
+      return subProvider.onPremium;
     } catch (e) {
       logger.e(e.toString());
       BaseHelper.showSnackBar('Error validating subscription status');
@@ -354,8 +364,9 @@ class SubscriptionHelper {
             );
           }
         }
+        Get.offAllNamed('/');
         BaseHelper.showSnackBar(
-          'Subscription Entitlements restored.Please Restart App!',
+          'Subscription Entitlements restored.',
         );
       }
     //}

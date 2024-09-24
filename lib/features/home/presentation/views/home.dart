@@ -48,16 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
     SharedPref.setString("email", currentUser.email);
     NotificationController.instance.getAllNotifications();
     await homeCtr.getFilteredUsers(true);
-    WidgetsFlutterBinding.ensureInitialized();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final homeController = HomeController.instance;
-      final user = homeController.user.value;
       var subProvider =
-          Provider.of<SubscriptionProvider>(context, listen: false);
-      await SubscriptionHelper.onValidateSubscription(subProvider, context);
-      subProvider.initSubDet(user);
-    });
-    await Future.delayed(const Duration(seconds: 5), () {
+      Provider.of<SubscriptionProvider>(context, listen: false);
+      await SubscriptionHelper.onValidateSubscription(context);
+    });    await Future.delayed(const Duration(seconds: 5), () {
       if (homeCtr.user.value.compatibilitySetted == null ||
           homeCtr.user.value.compatibilitySetted == false) {
         compatibilityQuestions(context);
@@ -66,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
     //logger.i('after 5s');
+
   }
 
   @override
@@ -82,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.all(15.sp),
           child: Consumer<SubscriptionProvider>(
             builder: (context, provider, child) {
-              provider.initSubDet(homeCtr.user.value);
+
               return Obx(
                 () => homeCtr.isLoading.value
                     ? const Center(

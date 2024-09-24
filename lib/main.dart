@@ -42,7 +42,7 @@ Future<void> main() async {
     try {
       await SubscriptionService.init();
     } catch (e) {
-      BaseHelper.showSnackBar('Error initializing subsccription service: $e');
+      BaseHelper.showSnackBar('Error initializing subscription service: $e');
       logger.e(
           'Error occurred initializing subscription service; ${e.toString()}');
     }

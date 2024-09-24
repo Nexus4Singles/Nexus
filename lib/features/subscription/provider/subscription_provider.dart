@@ -82,7 +82,7 @@ class SubscriptionProvider extends ChangeNotifier {
     _usedOneFreeText = user?.usedOneFreeText ?? false;
     _subExpDate = user?.subExpDate;
     _entitledUser = user?.entitledUser;
-    _subscriberId = user?.subscriberId;
+    notifyListeners();
   }
 
   bool _isLoading = false;
@@ -102,4 +102,5 @@ class SubscriptionProvider extends ChangeNotifier {
   }
 
   bool get subLoading => _subLoading;
+
 }

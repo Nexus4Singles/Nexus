@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:Nexus/core/button.dart';
 import 'package:Nexus/core/size_boxes.dart';
+import 'package:rename/platform_file_editors/abs_platform_file_editor.dart';
 import '../../../core/assets.dart';
 import '../../../core/style.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../profile/presentation/views/change_plan.dart';
+import '../helpers/subscription_helper.dart';
 
 class AcknowledgmentScreen extends StatefulWidget {
   const AcknowledgmentScreen({super.key});

@@ -202,9 +202,11 @@ class AuthNotifier with ChangeNotifier {
       required Map<String, dynamic> map}) async {
     EasyLoading.show();
     var response = await loginUsecase.call(map);
-    response.fold((l) {
+    response.fold(
+            (l) {
       EasyLoading.dismiss();
-    }, (r) {
+    },
+            (r) {
       EasyLoading.dismiss();
       user = r;
       notifyListeners();
@@ -236,7 +238,7 @@ class AuthNotifier with ChangeNotifier {
           case 'completed':
             Get.offAllNamed(
               AppRoutes.mainNav,
-              arguments: 4,
+              arguments: 0,
             );
             break;
           default:
@@ -247,6 +249,7 @@ class AuthNotifier with ChangeNotifier {
         Get.offAndToNamed(AppRoutes.congratulations, arguments: "");
       }
     });
+
   }
 
   String filename(String path) {

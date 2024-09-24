@@ -75,7 +75,7 @@ class _ChangePlanScreenState extends State<ChangePlanScreen> {
                             ),
                             const SizedBoxH5(),
                             Text(
-                              subProvider.subExpDate! ?? '',
+                              subProvider.subExpDate ?? '',
                               style: textStyle12.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: white,
