@@ -56,7 +56,7 @@ class _CompatibilityQuizScreenState extends State<CompatibilityQuizScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Kindly answer the questions below. This will provide users with more information about their compatibility with you.',
+                  'Kindly answer the questions below. This will provide users with more information about their compatibility with you. Please cross-check your option selections again before submitting',
                   style: textStyle12,
                   textAlign: TextAlign.center,
                 ),
