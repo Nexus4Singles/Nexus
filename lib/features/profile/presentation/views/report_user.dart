@@ -37,7 +37,7 @@ class ReportUser extends StatelessWidget {
               child: Text(
                   "We want to ensure the quality of users on Nexus are constantly refined. Please assist us to achieve this by reporting any user who was toxic to you, or any user with inappropriate pictures or recordings. Thank you!",
                   textAlign: TextAlign.center,
-                  style: textStyle12),
+                  style: textStyle14),
             ),
             const SizedBoxH25(),
             CustomTextField(
