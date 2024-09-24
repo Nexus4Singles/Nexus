@@ -49,7 +49,7 @@ class _AcknowledgmentScreenState extends State<AcknowledgmentScreen> {
             Text(
               'Your subscription was successful!\nIf you dont see an active subscription, please close the app and relaunch it.',
               textAlign: TextAlign.center,
-              style: textStyle18.copyWith(fontSize: 12, height: 2),
+              style: textStyle18.copyWith(fontSize: 14, height: 2),
             ),
             const SizedBoxH20(),
             CustomButton(
