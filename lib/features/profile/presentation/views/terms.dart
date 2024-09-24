@@ -39,7 +39,7 @@ class _TermsScreenState extends State<TermsScreen> {
                   style: TextStyle(color: Colors.black), // default text style
                   children: [
                   TextSpan(
-                  text: 'Last Update: 20/09/2024\n\nThe use of Nexus constitutes your consent to, and agreement to, abide by the most current version of these terms and conditions (the “Terms”). We may at any time revise these terms and conditions by updating the Terms. You agree to be bound ​by subsequent revisions and agree to review the Terms periodically for changes to the terms and conditions. The most up to ​date version of the Terms will always be available for your review under the “Terms of Use” link that appears at the bottom of the ​Platform.\n\n',
+                  text: 'Last Update: 24/09/2024\n\nThe use of Nexus constitutes your consent to, and agreement to, abide by the most current version of these terms and conditions (the “Terms”). We may at any time revise these terms and conditions by updating the Terms. You agree to be bound ​by subsequent revisions and agree to review the Terms periodically for changes to the terms and conditions. The most up to ​date version of the Terms will always be available for your review under the “Terms of Use” link that appears at the bottom of the ​Platform.\n\n',
                 ),
                 TextSpan(
                   text: 'ELIGIBILITY OF MEMBERSHIP\n',
@@ -99,10 +99,10 @@ class _TermsScreenState extends State<TermsScreen> {
                   text: '- You further agree that this license includes the right for us to modify or adapt your Content in order to transmit, display, or ​distribute it over mobile networks and in various media and/or make changes to your Content as are necessary to conform ​and adapt that Content to any requirements or limitations of any networks, devices, services, or media.\n\n',
                 ),
                 TextSpan(
-                  text: 'You are solely responsible for your use of the Platform, for any content you provide, and for any consequences thereof, ​including, but not limited to, the use of your content by us. Without limiting the foregoing, you represent and warrant that ​you have all the rights, power, and authority necessary to grant the rights granted herein to any Content that you submit.\n\n',
+                  text: '- You are solely responsible for your use of the Platform, for any content you provide, and for any consequences thereof, ​including, but not limited to, the use of your content by us. Without limiting the foregoing, you represent and warrant that ​you have all the rights, power, and authority necessary to grant the rights granted herein to any Content that you submit.\n\n',
                 ),
                 TextSpan(
-                  text: 'In addition, so that the Platform can prevent the use of Your Content outside of our Services, you authorize the Company ​to act on your behalf with respect to infringing uses of Your Content taken from our Services by other users or third ​parties. This expressly includes the authority, but not the obligation, to send notices on your behalf if Your Content is taken ​and used by third parties outside of our Services.\n\n',
+                  text: '- In addition, so that the Platform can prevent the use of Your Content outside of our Services, you authorize the Company ​to act on your behalf with respect to infringing uses of Your Content taken from our Services by other users or third ​parties. This expressly includes the authority, but not the obligation, to send notices on your behalf if Your Content is taken ​and used by third parties outside of our Services.\n\n',
                 ),
                 TextSpan(
                   text: 'YOU AGREE AND CONFIRM\n',
@@ -170,12 +170,12 @@ class _TermsScreenState extends State<TermsScreen> {
                   text: '- We may, at any time and without notice, suspend, cancel, or terminate your right to use the Platform (or any portion of the ​Platform). In the event of suspension, cancellation, or termination, you are no longer authorized to access the part of the ​Platform affected by such suspension, cancellation, or termination. In the event of any suspension, cancellation, or ​termination, the restrictions imposed on you with respect to material downloaded from the Platform and the disclaimers and ​limitations of liabilities set forth in the Agreement, shall survive.\n\n',
                 ),
                 TextSpan(
-                    text: '- Without limiting the foregoing, we may close, suspend or limit your access to our Platform :'
-                    '- if we determine that you have breached, or are acting in breach of, this Agreement;'
-                '- if we determine that you have breached legal liabilities (actual or potential), including infringing someone else’s ​Intellectual Property Rights;'
-            '- if we determine that you have engaged, or are engaging, in fraudulent, or illegal activities;'
-            '- to manage any risk of loss to us, a User, or any other person; or'
-            '- for other similar reasons.\n',
+                    text: '- Without limiting the foregoing, we may close, suspend or limit your access to our Platform:\n\n'
+                    '- if we determine that you have breached, or are acting in breach of, this Agreement;\n\n'
+                '- if we determine that you have breached legal liabilities (actual or potential), including infringing someone else’s ​Intellectual Property Rights;\n\n'
+            '- if we determine that you have engaged, or are engaging, in fraudulent, or illegal activities;\n\n'
+            '- to manage any risk of loss to us, a User, or any other person;\n\n'
+            '- for other similar reasons.\n\n',
             ),
             TextSpan(
               text: '- If we find you breaching these terms of service, you may also become liable for an amount of which we have suffered ​losses/damages.\n',
