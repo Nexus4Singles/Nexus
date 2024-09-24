@@ -59,7 +59,7 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
               children: [
                 Text.rich(
                   TextSpan(
-                    style: textStyle12.copyWith(color: black.withOpacity(.8)),
+                    style: textStyle14.copyWith(color: black.withOpacity(.8)),
                     children: const [
                       TextSpan(
                         text:
