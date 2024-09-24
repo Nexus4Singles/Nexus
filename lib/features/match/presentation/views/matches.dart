@@ -53,7 +53,7 @@ class _MatchScreenState extends State<MatchScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
                     'This is a list of of users you have liked,  users who liked  your profile, as well as profiles you have saved.',
-                    style: textStyle12.copyWith(fontSize: 13),
+                    style: textStyle12.copyWith(fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
                 ),
