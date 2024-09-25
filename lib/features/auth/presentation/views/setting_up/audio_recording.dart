@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:Nexus/core/button.dart';
 import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/utils/toast.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
 import 'package:Nexus/core/utils/device.dart';
@@ -100,7 +101,9 @@ Happy Recording!!''',
                   print(value);
                   if (value.isGranted) {
                     Get.toNamed(AppRoutes.audio1);
-                  } else {}
+                  } else {
+                    AppToast().showErrorToast('Enabling microphone permissions is required');
+                  }
                 });
               },
               child: Text(
