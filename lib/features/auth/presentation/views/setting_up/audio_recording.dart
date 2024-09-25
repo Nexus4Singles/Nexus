@@ -95,28 +95,23 @@ Happy Recording!!''',
           children: [
             CustomButton(
               onPressed: () async {
-              while (true) {
+             // Check the current microphone permission status
+          var status = await Permission.microphone.status;
+
+          if (status.isGranted) {
+            // If permission is granted, navigate to the next screen
+            Get.toNamed(AppRoutes.audio1);
+          } else {
             // Request permission
-            var status = await Permission.microphone.status;
+            final result = await Permission.microphone.request();
 
-            if (status.isGranted) {
-              // If permission is granted, navigate to the next screen
+            // Check the result of the request
+            if (result.isGranted) {
               Get.toNamed(AppRoutes.audio1);
-              break; // Exit the loop
             } else {
-              // If permission is denied, request it
-              await Permission.microphone.request();
-
-              // Check the permission status again
-              status = await Permission.microphone.status;
-              if (!status.isGranted) {
-                // Show error toast if permission is still denied
-                AppToast().showErrorToast('Enabling microphone permissions is required to make recordings');
-              } else {
-                // If permission is granted after re-request, navigate
-                Get.toNamed(AppRoutes.audio1);
-                break; // Exit the loop
-              }  }};
+              // Show error toast only once if permission is denied
+              AppToast().showErrorToast('Enabling microphone permissions is required to make recordings. Please allow access.');
+            }};
               },
               child: Text(
                 'Begin Recording',
