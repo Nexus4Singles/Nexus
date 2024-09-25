@@ -110,7 +110,7 @@ Happy Recording!!''',
               Get.toNamed(AppRoutes.audio1);
             } else {
               // Show error toast only once if permission is denied
-              AppToast().showErrorToast('Enabling microphone permissions is required to make recordings. Please allow access.');
+              AppToast().showErrorToast('Microphone Permission is required to make recordings. Please visit your phone settings to enable permissions for Nexus.');
             }};
               },
               child: Text(
