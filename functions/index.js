@@ -145,6 +145,12 @@ exports.sendMatchNotification = functions.firestore
         } catch (error) {
           console.error("Error sending 2nd match notification:", error);
         }
+        try {
+         await admin.firestore().collection("matches").doc(matchId).delete();
+         console.log(`Match document with ID ${matchId} deleted successfully`);
+       } catch (deleteError) {
+         console.error("Error deleting match document:", deleteError);
+       }
       } catch (error) {
         console.error("Error sending match notification:", error);
       }
