@@ -20,10 +20,16 @@ async function sendFCMNotification(token, payload) {
     },
     android: {
       notification: {
-        sound: payload.notification.sound,
+    
         channel_id: payload.notification.channel_id,
         icon: payload.notification.icon,
       },
+    },
+    apns: { // This is for iOS notifications
+      payload: {
+        aps: {
+        }
+      } 
     },
     data: payload.data, // Add custom data if needed
   };
@@ -48,7 +54,6 @@ exports.sendMessageNotification = functions.firestore
         notification: {
           title: "New Message",
           body: "", // To be set dynamically
-          sound: "beep",
           channel_id: "NEXUS",
           android_channel_id: "NEXUS",
           priority: "high",
@@ -124,7 +129,6 @@ exports.sendMatchNotification = functions.firestore
           notification: {
             title: "New Match!",
             body: "You have a new match😍😍😍",
-            sound: "beep",
             channel_id: "NEXUS",
             android_channel_id: "NEXUS",
             priority: "high",
@@ -183,7 +187,7 @@ exports.sendLikeNotification = functions.firestore
             notification: {
               title: "New Like",
               body: `${likerName} liked your profile.`,
-              sound: "beep",
+              
               channel_id: "NEXUS",
               android_channel_id: "NEXUS",
               priority: "high",
