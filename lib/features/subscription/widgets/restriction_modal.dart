@@ -10,7 +10,7 @@ void restrictionModal({
   bool dismisable = true,
   bool showButton = true,
   String text =
-      'This is a premium feature.\nSubscribe now to use this feature.',
+      'This is a premium feature.\nKindly subscribe to use this feature.',
 }) {
   showDialog(
     context: context,
