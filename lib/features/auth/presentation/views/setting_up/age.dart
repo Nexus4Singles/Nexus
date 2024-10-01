@@ -70,7 +70,7 @@ class _AgeScreenState extends State<AgeScreen> {
                         color: black),
                   ),
                   Text(
-                    "Nexus is for users between the ages of 21 to 70 years \n Kindly note that you won't be able to change this later.\n You will have the option of hiding your age from users soon.",
+                    "Nexus is for users between the ages of 21 to 70 years.\nKindly use your correct age to ensure users within your age bracket find your profile.",
                     style: textStyle14,
                     textAlign: TextAlign.center,
                   ),
