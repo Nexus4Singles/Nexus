@@ -1,5 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const {onRequest} = require("firebase-functions/v2/https");
 admin.initializeApp();
 
 /**
@@ -217,3 +218,45 @@ exports.sendLikeNotification = functions.firestore
       }
       return null;
     });
+
+
+exports.handleUpdateUserSubscriptionStatus = onRequest(
+  { cors: true },
+  async (req, res) => {
+    const secretHash = 'TG2K1ZWUepe6htmbPTDjSkRrCP';
+    const signature = req.headers["verif-hash"];
+    
+    if (!signature || signature !== secretHash) return res.status(401).send('Unauthorized');
+
+    const flutterWavePayload = req.body;
+    if (!flutterWavePayload.status || flutterWavePayload?.status !== 'successful') return res.status(403).send('Payment was not successful');
+
+    try {
+      const userDocSnapshot = await admin.firestore()
+      .collection("users")
+      .where('email', '==', flutterWavePayload?.customer?.email)
+      .get();
+
+      if (userDocSnapshot.empty) return res.status(404).send('User details not found');
+
+      const userDoc = userDocSnapshot.docs[0];
+
+      // setting the exp date for the subscription to 31 days from now
+      const subscriptionExpiresOn = new Intl.DateTimeFormat('en-GB').format(new Date(new Date().setDate(new Date().getDate() + 31)));
+
+      // i am not 100% sure about the remaining fields that need updating, you can add more as needed
+      await userDoc.ref.update({
+        'onPremium': true,
+        'prevSubscribed': true,
+        'subExpDate': subscriptionExpiresOn,
+        // 'subscriberId': 'null',
+        'entitledUser': 'null',
+        'usedOneFreeText': true,
+      });
+
+      return res.status(200).send('Successfully updated user subscription status');
+    } catch (error) {
+      return res.status(500).send("An error occured while trying to update the user's subscription status");
+    }
+  }
+);
