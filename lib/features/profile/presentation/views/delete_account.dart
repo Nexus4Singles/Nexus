@@ -1,3 +1,5 @@
+import 'package:Nexus/features/profile/presentation/widgets/delete_acct_modal_sheet.dart';
+import 'package:Nexus/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -40,7 +42,20 @@ class DeleteAccountScreen extends StatelessWidget {
             const SizedBoxH25(),
             CustomButton(
               onPressed: () {
-                ctr.deleteAccount();
+                showModalBottomSheet(
+                  context: context,
+                  showDragHandle: true,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(25),
+                    ),
+                  ),
+                  backgroundColor: white,
+                  builder: (BuildContext context) {
+                    return DeleteAccountModalSheet();
+                  },
+                );
+                // ctr.deleteAccount();
               },
               bgColor: primary,
               text: 'Delete',

@@ -120,6 +120,13 @@ class ProfileCtr extends GetxController {
   Future deleteAccount() async {
     try {
       EasyLoading.show();
+
+      AuthCredential credential = EmailAuthProvider.credential(
+        email: auth.currentUser!.email!,
+        password: currentPassword.text,
+      );
+
+      await auth.currentUser?.reauthenticateWithCredential(credential);
       await db.collection(kUSER).doc(auth.currentUser!.uid).delete();
       await auth.currentUser!.delete();
       EasyLoading.dismiss();

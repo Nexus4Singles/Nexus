@@ -1,3 +1,4 @@
+import 'package:Nexus/features/profile/presentation/widgets/delete_acct_modal_sheet.dart';
 import 'package:get/get.dart';
 import 'features/auth/presentation/views/auth_handler.dart';
 import 'features/auth/presentation/views/congratulations.dart';
@@ -95,6 +96,7 @@ class AppRoutes {
   static String compatibilityQuiz = '/compatibility_quiz';
   static String userDetails = '/user_details';
   static String photoViews = '/photo_views';
+  static String deleteAcctModalSheet = '/delete_account_modal';
 }
 
 final appRouter = [
@@ -323,6 +325,11 @@ final appRouter = [
     page: () => UserDetailScreen(
       userModel: Get.arguments,
     ),
+    binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.deleteAcctModalSheet,
+    page: () => DeleteAccountModalSheet(),
     binding: BindingsBuilder(() {}),
   ),
   // GetPage(

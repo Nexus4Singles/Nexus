@@ -22,6 +22,7 @@ import '../../../../core/utils/shared_pref.dart';
 import '../../../subscription/provider/subscription_provider.dart';
 import '../../controllers/home_controller.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
+import 'package:upgrader/upgrader.dart';
 
 // Dont show accounts that have been liked.
 
@@ -50,9 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
     await homeCtr.getFilteredUsers(true);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       var subProvider =
-      Provider.of<SubscriptionProvider>(context, listen: false);
+          Provider.of<SubscriptionProvider>(context, listen: false);
       await SubscriptionHelper.onValidateSubscription(context);
-    });    await Future.delayed(const Duration(seconds: 5), () {
+    });
+    await Future.delayed(const Duration(seconds: 5), () {
       if (homeCtr.user.value.compatibilitySetted == null ||
           homeCtr.user.value.compatibilitySetted == false) {
         compatibilityQuestions(context);
@@ -61,7 +63,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
     //logger.i('after 5s');
-
   }
 
   @override
@@ -73,192 +74,194 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(15.sp),
-          child: Consumer<SubscriptionProvider>(
-            builder: (context, provider, child) {
-
-              return Obx(
-                () => homeCtr.isLoading.value
-                    ? const Center(
-                        child: SizedBox(
-                          width: 45,
-                          height: 45,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 3,
-                            color: primary,
-                          ),
-                        ),
-                      )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (homeCtr.recommendedState() ==
-                                  RecommendedState.hasExceededForTheDay ||
-                              homeCtr.recommendedState() ==
-                                  RecommendedState.hasNotExceededButEmpty)
-
-                            //TODO: USE THE [RecommendedState.hasNotExceededButEmpty] to tell users when their recommendation list is empty even when they are eligible to see recommended[i.e past 12hrs]
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ProfileTile(),
-                                  const SizedBoxH20(),
-                                  Center(
-                                    child: Text(
-                                      "Daily Recommendations For You",
-                                      style: textStyle18.copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Column(
-                                    children: [
-                                      Consumer<BottomNavModel>(
-                                          builder: (context, model, _) {
-                                        return EmptyStateWidget(
-                                          showClose: false,
-                                          height: Get.height * 0.3,
-                                          //TODO: you can see example here
-                                          headerText: homeCtr
-                                                      .recommendedState() ==
-                                                  RecommendedState
-                                                      .hasNotExceededButEmpty
-                                              ? "That's It For Today!!"
-                                              : "That's It For Now!!",
-                                          buttonText: "Go to Explore",
-                                          buttonFunc: () async {
-                                            model.jumpToNavPage(1);
-                                          },
-                                          message:
-                                              "Check Back Tomorrow or Use the Explore Page to Search & Filter Profiles Within Any Country",
-                                        );
-                                      }),
-                                      // //TODO: USE THIS COUNTER TO DISPLAY THE REMAINING TIME FOR USERS TO SEE THE RECOMMENDED LIST
-                                      // Builder(builder: (context) {
-                                      //   return SlideCountdown(
-                                      //     duration:
-                                      //         -homeCtr.calculateCountDownTime(),
-                                      //     separatorType: SeparatorType.title,
-                                      //     slideDirection: SlideDirection.up,
-                                      //     decoration: const BoxDecoration(
-                                      //         color: Colors.transparent),
-                                      //     style: const TextStyle(
-                                      //         fontWeight: FontWeight.bold),
-                                      //     separatorStyle: const TextStyle(),
-                                      //     separatorPadding:
-                                      //         EdgeInsets.symmetric(
-                                      //             horizontal: 8.w),
-                                      //   );
-                                      // }),
-                                    ],
-                                  ),
-                                  const Spacer(flex: 2),
-                                ],
-                              ),
-                            )
-                          else
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  ProfileTile(),
-                                  const SizedBoxH20(),
-                                  Center(
-                                    child: Text(
-                                      "Daily Recommendations For You",
-                                      style: textStyle18.copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                  const SizedBoxH10(),
-                                  Flexible(
-                                    child: CardSwiper(
-                                      numberOfCardsDisplayed: 1,
-                                      cardsCount:
-                                          homeCtr.recommendationList.length,
-                                      controller: cardSwiperController,
-                                      isLoop: false,
-                                      onEnd: () {
-                                        homeCtr.recommendationList
-                                            .assignAll([]);
-                                      },
-                                      onSwipe: (int previousIndex,
-                                          int? currentIndex,
-                                          CardSwiperDirection direction) {
-                                        UserModel user = homeCtr
-                                            .recommendationList[currentIndex!];
-                                        if (direction ==
-                                            CardSwiperDirection.right) {
-                                          matchCtr.addToUnRecommend(user.id);
-                                        } else if (direction ==
-                                            CardSwiperDirection.left) {
-                                          matchCtr.toggleLike(user);
-                                        }
-                                        return true;
-                                      },
-                                      allowedSwipeDirection:
-                                          const AllowedSwipeDirection.only(
-                                              up: false,
-                                              down: false,
-                                              right: false,
-                                              left: false),
-                                      padding: const EdgeInsets.all(0),
-                                      cardBuilder: (context,
-                                          index,
-                                          percentThresholdX,
-                                          percentThresholdY) {
-                                        UserModel user =
-                                            homeCtr.recommendationList[index];
-
-                                        return UserCard(
-                                          userModel: user,
-                                          onClosed: () async {
-                                            await matchCtr
-                                                .addToUnRecommend(user.id)
-                                                .then((val) {
-                                              cardSwiperController
-                                                  .moveTo(index + 1);
-                                            });
-                                          },
-                                          onLike: () {
-                                            matchCtr.ctr.myProfile.value
-                                                            .matchedUsers ==
-                                                        null ||
-                                                    !matchCtr.ctr.myProfile
-                                                        .value.matchedUsers!
-                                                        .contains(user.id)
-                                                ? matchCtr
-                                                    .toggleLike(user)
-                                                    .then((val) {
-                                                    cardSwiperController
-                                                        .moveTo(index + 1);
-                                                  })
-                                                : debugPrint(
-                                                    "These users are matched");
-                                          },
-                                          onRefresh: () =>
-                                              _handleOnRefreshClickEvent(
-                                                  provider, user),
-                                          onSaved: () =>
-                                              _handleOnSaveClickEvent(
-                                                  provider, user),
-                                          onClick: () {},
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
+      body: UpgradeAlert(
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(15.sp),
+            child: Consumer<SubscriptionProvider>(
+              builder: (context, provider, child) {
+                return Obx(
+                  () => homeCtr.isLoading.value
+                      ? const Center(
+                          child: SizedBox(
+                            width: 45,
+                            height: 45,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 3,
+                              color: primary,
                             ),
-                        ],
-                      ),
-              );
-            },
+                          ),
+                        )
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (homeCtr.recommendedState() ==
+                                    RecommendedState.hasExceededForTheDay ||
+                                homeCtr.recommendedState() ==
+                                    RecommendedState.hasNotExceededButEmpty)
+
+                              //TODO: USE THE [RecommendedState.hasNotExceededButEmpty] to tell users when their recommendation list is empty even when they are eligible to see recommended[i.e past 12hrs]
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ProfileTile(),
+                                    const SizedBoxH20(),
+                                    Center(
+                                      child: Text(
+                                        "Daily Recommendations For You",
+                                        style: textStyle18.copyWith(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Column(
+                                      children: [
+                                        Consumer<BottomNavModel>(
+                                            builder: (context, model, _) {
+                                          return EmptyStateWidget(
+                                            showClose: false,
+                                            height: Get.height * 0.3,
+                                            //TODO: you can see example here
+                                            headerText: homeCtr
+                                                        .recommendedState() ==
+                                                    RecommendedState
+                                                        .hasNotExceededButEmpty
+                                                ? "That's It For Today!!"
+                                                : "That's It For Now!!",
+                                            buttonText: "Go to Explore",
+                                            buttonFunc: () async {
+                                              model.jumpToNavPage(1);
+                                            },
+                                            message:
+                                                "Check Back Tomorrow or Use the Explore Page to Search & Filter Profiles Within Any Country",
+                                          );
+                                        }),
+                                        // //TODO: USE THIS COUNTER TO DISPLAY THE REMAINING TIME FOR USERS TO SEE THE RECOMMENDED LIST
+                                        // Builder(builder: (context) {
+                                        //   return SlideCountdown(
+                                        //     duration:
+                                        //         -homeCtr.calculateCountDownTime(),
+                                        //     separatorType: SeparatorType.title,
+                                        //     slideDirection: SlideDirection.up,
+                                        //     decoration: const BoxDecoration(
+                                        //         color: Colors.transparent),
+                                        //     style: const TextStyle(
+                                        //         fontWeight: FontWeight.bold),
+                                        //     separatorStyle: const TextStyle(),
+                                        //     separatorPadding:
+                                        //         EdgeInsets.symmetric(
+                                        //             horizontal: 8.w),
+                                        //   );
+                                        // }),
+                                      ],
+                                    ),
+                                    const Spacer(flex: 2),
+                                  ],
+                                ),
+                              )
+                            else
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    ProfileTile(),
+                                    const SizedBoxH20(),
+                                    Center(
+                                      child: Text(
+                                        "Daily Recommendations For You",
+                                        style: textStyle18.copyWith(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                    const SizedBoxH10(),
+                                    Flexible(
+                                      child: CardSwiper(
+                                        numberOfCardsDisplayed: 1,
+                                        cardsCount:
+                                            homeCtr.recommendationList.length,
+                                        controller: cardSwiperController,
+                                        isLoop: false,
+                                        onEnd: () {
+                                          homeCtr.recommendationList
+                                              .assignAll([]);
+                                        },
+                                        onSwipe: (int previousIndex,
+                                            int? currentIndex,
+                                            CardSwiperDirection direction) {
+                                          UserModel user =
+                                              homeCtr.recommendationList[
+                                                  currentIndex!];
+                                          if (direction ==
+                                              CardSwiperDirection.right) {
+                                            matchCtr.addToUnRecommend(user.id);
+                                          } else if (direction ==
+                                              CardSwiperDirection.left) {
+                                            matchCtr.toggleLike(user);
+                                          }
+                                          return true;
+                                        },
+                                        allowedSwipeDirection:
+                                            const AllowedSwipeDirection.only(
+                                                up: false,
+                                                down: false,
+                                                right: false,
+                                                left: false),
+                                        padding: const EdgeInsets.all(0),
+                                        cardBuilder: (context,
+                                            index,
+                                            percentThresholdX,
+                                            percentThresholdY) {
+                                          UserModel user =
+                                              homeCtr.recommendationList[index];
+
+                                          return UserCard(
+                                            userModel: user,
+                                            onClosed: () async {
+                                              await matchCtr
+                                                  .addToUnRecommend(user.id)
+                                                  .then((val) {
+                                                cardSwiperController
+                                                    .moveTo(index + 1);
+                                              });
+                                            },
+                                            onLike: () {
+                                              matchCtr.ctr.myProfile.value
+                                                              .matchedUsers ==
+                                                          null ||
+                                                      !matchCtr.ctr.myProfile
+                                                          .value.matchedUsers!
+                                                          .contains(user.id)
+                                                  ? matchCtr
+                                                      .toggleLike(user)
+                                                      .then((val) {
+                                                      cardSwiperController
+                                                          .moveTo(index + 1);
+                                                    })
+                                                  : debugPrint(
+                                                      "These users are matched");
+                                            },
+                                            onRefresh: () =>
+                                                _handleOnRefreshClickEvent(
+                                                    provider, user),
+                                            onSaved: () =>
+                                                _handleOnSaveClickEvent(
+                                                    provider, user),
+                                            onClick: () {},
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
+                );
+              },
+            ),
           ),
         ),
       ),
