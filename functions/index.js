@@ -248,11 +248,10 @@ exports.handleUpdateUserSubscriptionStatus = onRequest(
       // i am not 100% sure about the remaining fields that need updating, you can add more as needed
       await userDoc.ref.update({
         'onPremium': true,
-        'prevSubscribed': true,
         'subExpDate': subscriptionExpiresOn,
         'hasExternalSubscriptionFlow': true,
-        'entitledUser': 'null',
-        'usedOneFreeText': true,
+        'entitledUser': 'true',
+        
       });
 
       return res.status(200).send('Successfully updated user subscription status');
