@@ -68,6 +68,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       entitledUser: json['entitledUser'] as String? ?? 'null',
       subscriberId: json['subscriberId'] as String? ?? 'null',
       recommendedTime: json['recommendedTime'] as String?,
+      hasExternalSubscriptionFlow:
+          json['hasExternalSubscriptionFlow'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -113,4 +115,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'entitledUser': instance.entitledUser,
       'subscriberId': instance.subscriberId,
       'recommendedTime': instance.recommendedTime,
+      'hasExternalSubscriptionFlow': instance.hasExternalSubscriptionFlow,
     };

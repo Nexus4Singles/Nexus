@@ -34,7 +34,9 @@ Future<void> main() async {
     WidgetsFlutterBinding.ensureInitialized();
     Animate.restartOnHotReload = true;
     await initializeDateFormatting(
-        'en_US', null); // Initialize with your desired locale
+      'en_US',
+      null,
+    ); // Initialize with your desired locale
 
     await configureDependencies();
     await Firebase.initializeApp();

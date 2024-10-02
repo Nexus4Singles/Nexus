@@ -242,14 +242,15 @@ exports.handleUpdateUserSubscriptionStatus = onRequest(
       const userDoc = userDocSnapshot.docs[0];
 
       // setting the exp date for the subscription to 31 days from now
-      const subscriptionExpiresOn = new Intl.DateTimeFormat('en-GB').format(new Date(new Date().setDate(new Date().getDate() + 31)));
+      const today = new Date();
+      const subscriptionExpiresOn = new Intl.DateTimeFormat('en-GB').format(new Date(today.setDate(today.getDate() + 31)));
 
       // i am not 100% sure about the remaining fields that need updating, you can add more as needed
       await userDoc.ref.update({
         'onPremium': true,
         'prevSubscribed': true,
         'subExpDate': subscriptionExpiresOn,
-        // 'subscriberId': 'null',
+        'hasExternalSubscriptionFlow': true,
         'entitledUser': 'null',
         'usedOneFreeText': true,
       });

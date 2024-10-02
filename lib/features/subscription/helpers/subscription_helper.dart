@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:Nexus/core/di/injection_container.config.dart';
 import 'package:Nexus/core/utils/helper.dart';
 import 'package:Nexus/features/subscription/widgets/restriction_modal.dart';
@@ -48,39 +50,38 @@ class SubscriptionHelper {
                   onClickedSku: (sku) async {
                     subProvider.isLoading = true;
                     final transaction =
-                    await SubscriptionService.purchaseSku(sku);
+                        await SubscriptionService.purchaseSku(sku);
 
-                    if (!context.mounted){
-                        subProvider.isLoading = false;
+                    if (!context.mounted) {
+                      subProvider.isLoading = false;
                       return;
                     }
                     if (transaction != null) {
                       final permissions = transaction.permissions!.all!;
                       final permission = permissions.firstWhere(
-                              (permission) =>
-                          permission.permissionId == 'premium');
+                          (permission) => permission.permissionId == 'premium');
                       if (permission.isValid!) {
                         subProvider.onPremium = true;
                         String formattedDate = DateFormat('dd/MM/yyyy')
-                            .format(permission.expireDate!) ;
+                            .format(permission.expireDate!);
                         subProvider.subExpDate = formattedDate;
                         var permit = await Glassfy.permissions();
                         var subscriberId = permit.subscriberId ?? 'null';
                         logger.i('this is subscriber id: $subscriberId');
-                        voidUpdateProvider(
-                            subProvider, true, true, formattedDate,
-                            subscriberId, 'null');
+                        voidUpdateProvider(subProvider, true, true,
+                            formattedDate, subscriberId, 'null');
                         await updateSubBackend(subProvider.currentUser, true,
                             true, formattedDate, subscriberId, context);
 
                         subProvider.isLoading = false;
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) =>  const AcknowledgmentScreen()),
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const AcknowledgmentScreen()),
                         ).then((_) async {
                           Get.offAllNamed('/');
                         });
-
                       } else {
                         subProvider.isLoading = false;
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -90,8 +91,7 @@ class SubscriptionHelper {
                           ),
                         );
                       }
-                    }
-                    else {
+                    } else {
                       subProvider.isLoading = false;
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
@@ -112,8 +112,7 @@ class SubscriptionHelper {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text(
-                'Error occurred check Internet connection.'),
+            content: Text('Error occurred check Internet connection.'),
             duration: Duration(seconds: 2),
           ),
         );
@@ -122,10 +121,10 @@ class SubscriptionHelper {
   }
 
   static Future<bool> onValidateSubscription(BuildContext context) async {
-    var subProvider =
-    Provider.of<SubscriptionProvider>(context, listen: false);
+    var subProvider = Provider.of<SubscriptionProvider>(context, listen: false);
     final homeCtr = HomeController.instance;
     final user = homeCtr.user.value;
+    final DateTime currentDate = DateTime.now();
 
     logger.i('user is ${user.username}, ${user.age}');
     logger.i('this is subId from Firebase: ${user.subscriberId}');
@@ -142,8 +141,21 @@ class SubscriptionHelper {
       await updateEntitledUserStatus(user, 'null', context);
       subProvider.entitledUser = 'null';
     }
+
+    DateTime? expiryDateOfCurrentSubscription = DateFormat(
+      'dd/MM/yyyy',
+    ).tryParse(
+      user.subExpDate ?? '',
+    );
+
     //validate sub
     subValid = await validateSub(context, user);
+
+    if (user.hasExternalSubscriptionFlow == true &&
+        expiryDateOfCurrentSubscription != null) {
+      subValid = currentDate.isBefore(expiryDateOfCurrentSubscription);
+    }
+
     subProvider.onPremium = subValid;
     await updateBackendPremiumStatus(user, subValid, context);
     subProvider.initSubDet(HomeController.instance.user.value);
@@ -177,17 +189,15 @@ class SubscriptionHelper {
       await updateBackendPremiumStatus(user, subValid, context);
       subProvider.onPremium = false;
     }*/
-
   }
 
   static Future<void> updateSubBackend(UserModel? user, bool onP, bool prevSub,
-      String? subExp, String? subscriberId, BuildContext context) async
-  {
+      String? subExp, String? subscriberId, BuildContext context) async {
     if (user == null) {
       return;
     }
     DocumentReference userDoc =
-    FirebaseFirestore.instance.collection('users').doc(user.id);
+        FirebaseFirestore.instance.collection('users').doc(user.id);
 
     // Data to update
     Map<String, dynamic> data = {
@@ -216,8 +226,7 @@ class SubscriptionHelper {
 
   static void voidUpdateProvider(SubscriptionProvider sp, bool onP,
       bool prevSub, String? subExp, String? subscriberId,
-      [String? entitledUser])
-  {
+      [String? entitledUser]) {
     sp.onPremium = onP;
     sp.prevSubscribed = prevSub;
     sp.subExpDate = subExp;
@@ -225,15 +234,14 @@ class SubscriptionHelper {
     sp.subscriberId = subscriberId;
   }
 
-  static Future<void> updateBackendPremiumStatus(UserModel? user, bool onP,
-      BuildContext context) async
-  {
+  static Future<void> updateBackendPremiumStatus(
+      UserModel? user, bool onP, BuildContext context) async {
     if (user == null) {
       return;
     }
 
     DocumentReference userDoc =
-    FirebaseFirestore.instance.collection('users').doc(user.id);
+        FirebaseFirestore.instance.collection('users').doc(user.id);
 
     // Data to update
     Map<String, dynamic> data = {'onPremium': onP};
@@ -253,13 +261,12 @@ class SubscriptionHelper {
   }
 
   static Future<void> updateFreeTextStatus(UserModel? user, bool usedFreeText,
-      BuildContext context, String? entitledUser) async
-  {
+      BuildContext context, String? entitledUser) async {
     if (user == null) {
       return;
     }
     DocumentReference userDoc =
-    FirebaseFirestore.instance.collection('users').doc(user.id);
+        FirebaseFirestore.instance.collection('users').doc(user.id);
     // Data to update
     Map<String, dynamic> data = {
       'usedOneFreeText': usedFreeText,
@@ -280,14 +287,13 @@ class SubscriptionHelper {
     }
   }
 
-  static Future<void> updateEntitledUserStatus(UserModel? user,
-      String? entitledUser, BuildContext context) async
-  {
+  static Future<void> updateEntitledUserStatus(
+      UserModel? user, String? entitledUser, BuildContext context) async {
     if (user == null) {
       return;
     }
     DocumentReference userDoc =
-    FirebaseFirestore.instance.collection('users').doc(user.id);
+        FirebaseFirestore.instance.collection('users').doc(user.id);
     // Data to update
     Map<String, dynamic> data = {
       'entitledUser': entitledUser,
@@ -316,14 +322,12 @@ class SubscriptionHelper {
       logger.e(e);
     }
     return subscriberId;
-
   }
 
-  static Future<bool> validateSub(BuildContext context, UserModel user) async
-  {
+  static Future<bool> validateSub(BuildContext context, UserModel user) async {
     try {
       var subProvider =
-      Provider.of<SubscriptionProvider>(context, listen: false);
+          Provider.of<SubscriptionProvider>(context, listen: false);
       var permissions = await Glassfy.permissions();
       permissions.all?.forEach((p) async {
         if (p.permissionId == "premium" && p.isValid == true) {
@@ -333,7 +337,6 @@ class SubscriptionHelper {
           logger.e('subscription no longer valid');
           subProvider.onPremium = false;
           logger.i(subProvider.onPremium);
-
         }
       });
       return subProvider.onPremium;
@@ -344,10 +347,10 @@ class SubscriptionHelper {
     }
   }
 
-  static Future<void> restoreSubscriptionEntitlement(BuildContext context, SubscriptionProvider subProvider) async
-  {
+  static Future<void> restoreSubscriptionEntitlement(
+      BuildContext context, SubscriptionProvider subProvider) async {
     try {
-     // if(subProvider.isRestricted  == false){
+      // if(subProvider.isRestricted  == false){
       var permissions = await Glassfy.restorePurchases();
       for (var p in permissions.all ?? []) {
         logger.i("${p.permissionId} is ${p.isValid}");
@@ -369,14 +372,13 @@ class SubscriptionHelper {
           'Subscription Entitlements restored.',
         );
       }
-    //}
-     /* else {
+      //}
+      /* else {
         BaseHelper.showSnackBar(
           'Please sign into the Google Play Store or Apple ID associated with your subscription.',
         );
       }*/
-      }
-      catch (error) {
+    } catch (error) {
       logger.e("Failed to restore Subscription Entitlements $error");
       if (context.mounted) {
         BaseHelper.showSnackBar('Failed to restore subscription Entitlements');

@@ -48,6 +48,7 @@ class UserEntity extends Equatable {
     this.subscriberId = 'null',
     this.recommendedTime,
     this.blocked,
+    this.hasExternalSubscriptionFlow = false,
   });
 
   final String id;
@@ -112,6 +113,7 @@ class UserEntity extends Equatable {
   final String? entitledUser;
   final String? subscriberId;
   final String? recommendedTime;
+  final bool? hasExternalSubscriptionFlow;
 
   @override
   List<Object?> get props => [
@@ -156,5 +158,6 @@ class UserEntity extends Equatable {
         usedOneFreeText,
         entitledUser,
         subscriberId,
+        hasExternalSubscriptionFlow,
       ];
 }
