@@ -234,7 +234,7 @@ exports.handleUpdateUserSubscriptionStatus = onRequest(
     try {
       const userDocSnapshot = await admin.firestore()
       .collection("users")
-      .where('email', '==', flutterWavePayload?.customer?.email)
+      .where('email', '==', flutterWavePayload?.customer?.email?.toLocaleLowerCase())
       .get();
 
       if (userDocSnapshot.empty) return res.status(404).send('User details not found');

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:Nexus/core/network/digital_ocean_client.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -119,8 +120,8 @@ class ProfileCtr extends GetxController {
   Future deleteAccount() async {
     try {
       EasyLoading.show();
-      await auth.currentUser!.delete();
       await db.collection(kUSER).doc(auth.currentUser!.uid).delete();
+      await auth.currentUser!.delete();
       EasyLoading.dismiss();
       Get.offAllNamed(AppRoutes.login);
       EasyLoading.showToast("Account successfully deleted");
