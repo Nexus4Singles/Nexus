@@ -21,14 +21,15 @@ async function sendFCMNotification(token, payload) {
     },
     android: {
       notification: {
-    
         channel_id: payload.notification.channel_id,
         icon: payload.notification.icon,
+        sound: "default",
       },
     },
     apns: { // This is for iOS notifications
       payload: {
         aps: {
+           sound: "default",
         }
       } 
     },
