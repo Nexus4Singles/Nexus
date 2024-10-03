@@ -234,15 +234,15 @@ exports.handleUpdateUserSubscriptionStatus = onRequest(
     if (!signature || signature !== secretHash) return res.status(401).send('Unauthorized');
 
     const payload = req.body;
-    if (!payload.status || payload?.status !== 'successful') return res.status(403).send('Payment was not successful');
+    if (!payload?.data?.status || payload?.data?.status !== 'successful') return res.status(200).send('Payment was not successful');
 
     try {
       const userDocSnapshot = await admin.firestore()
       .collection("users")
-      .where('email', '==', payload?.customer?.email?.toLocaleLowerCase())
+      .where('email', '==', payload?.data?.customer?.email?.toLocaleLowerCase())
       .get();
 
-      if (userDocSnapshot.empty) return res.status(404).send('User details not found');
+      if (userDocSnapshot.empty) return res.status(200).send('User details not found');
 
       const userDoc = userDocSnapshot.docs[0];
 
