@@ -29,7 +29,11 @@ async function sendFCMNotification(token, payload) {
     apns: { // This is for iOS notifications
       payload: {
         aps: {
-           sound: "default",
+          alert: {
+            title: payload.notification.title,
+            body: payload.notification.body,
+          },
+            sound: "default",
         }
       } 
     },
