@@ -233,13 +233,13 @@ exports.handleUpdateUserSubscriptionStatus = onRequest(
     
     if (!signature || signature !== secretHash) return res.status(401).send('Unauthorized');
 
-    const flutterWavePayload = req.body;
-    if (!flutterWavePayload.status || flutterWavePayload?.status !== 'successful') return res.status(403).send('Payment was not successful');
+    const payload = req.body;
+    if (!payload.status || payload?.status !== 'successful') return res.status(403).send('Payment was not successful');
 
     try {
       const userDocSnapshot = await admin.firestore()
       .collection("users")
-      .where('email', '==', flutterWavePayload?.customer?.email?.toLocaleLowerCase())
+      .where('email', '==', payload?.customer?.email?.toLocaleLowerCase())
       .get();
 
       if (userDocSnapshot.empty) return res.status(404).send('User details not found');
