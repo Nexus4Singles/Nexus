@@ -65,13 +65,13 @@ class _RegSuccessfulState extends State<RegSuccessful> {
                     TextSpan(
                         text: " @nexus4singles",
                         style: textStyle18.copyWith(
-                            fontSize: 12,
+                            fontSize: 14,
                             fontWeight: FontWeight.w700,
                             color: black)),
                     const TextSpan(text: " to stay updated!"),
                   ]),
                   style: textStyle18.copyWith(
-                      fontSize: 12,
+                      fontSize: 14,
                       height: 1.5,
                       fontWeight: FontWeight.w300,
                       color: black),
