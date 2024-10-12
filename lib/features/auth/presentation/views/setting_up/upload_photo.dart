@@ -65,7 +65,7 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Text(
-                        'We recommend using 4 of your best pictures because first impression really matters. Profiles with indecent pictures\n will be deleted. ',
+                        'We recommend using 4 of your best pictures because first impression really matters. Profiles with indecent or non-human pictures will be deleted. ',
                         textAlign: TextAlign.center,
                         style:
                             textStyle14.copyWith(color: black.withOpacity(.8)),
