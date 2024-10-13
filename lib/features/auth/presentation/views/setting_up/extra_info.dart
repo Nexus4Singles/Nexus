@@ -142,7 +142,7 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                       radius: 12,
                       controller: cityController,
                       textCapitalization: TextCapitalization.words,
-                      hintText: "State or City of Residence (Correct Spelling)",
+                      hintText: "State or City of Residence",
                       validator: (value) {
                         if (value?.isEmpty == true) {
                           return ' Field is required';
