@@ -46,7 +46,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       relationshipWithGod: json['relationship_with_god'] as String?,
       roleOfHusband: json['role_of_husband'] as String?,
       stateOfOrigin: json['state_of_origin'] as String?,
-      isVerified: json['is_verified'] as bool?,
+      isVerified:
+          json['is_verified'] is bool ? json['is_verified'] as bool? : false,
       notificationToken: json['notification_token'] as String?,
       phoneNumber: json['phone_number'] as String?,
       registrationProgress: json['registration_progress'] as String?,
@@ -61,15 +62,20 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
           ? null
           : LocationModel.fromJson(json['location'] as Map<String, dynamic>),
       fcmToken: json['fcm_token'] as String?,
-      onPremium: json['onPremium'] as bool? ?? false,
-      prevSubscribed: json['prevSubscribed'] as bool? ?? false,
+      onPremium: json['onPremium'] is bool ? json['onPremium'] as bool : false,
+      prevSubscribed: json['prevSubscribed'] is bool
+          ? json['prevSubscribed'] as bool
+          : false,
       subExpDate: json['subExpDate'] as String?,
-      usedOneFreeText: json['usedOneFreeText'] as bool? ?? false,
+      usedOneFreeText: json['usedOneFreeText'] is bool
+          ? json['usedOneFreeText'] as bool
+          : false,
       entitledUser: json['entitledUser'] as String? ?? 'null',
       subscriberId: json['subscriberId'] as String? ?? 'null',
       recommendedTime: json['recommendedTime'] as String?,
-      hasExternalSubscriptionFlow:
-          json['hasExternalSubscriptionFlow'] as bool? ?? false,
+      hasExternalSubscriptionFlow: json['hasExternalSubscriptionFlow'] is bool
+          ? json['hasExternalSubscriptionFlow'] as bool?
+          : false,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{

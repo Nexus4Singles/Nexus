@@ -43,6 +43,25 @@ class _UploadPhotoScreenState extends State<UploadPhotoScreen> {
               borderRadius: BorderRadius.circular(20),
             ),
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: InkWell(
+                onTap: () {
+                  Get.toNamed(AppRoutes.audioRecording);
+                },
+                child: Text(
+                  'Skip',
+                  style: textStyle14.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: black,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBoxW20(),
+          ],
+          centerTitle: true,
           elevation: 0,
         ),
         body: SingleChildScrollView(

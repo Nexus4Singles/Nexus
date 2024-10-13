@@ -51,7 +51,8 @@ class _EditProfileState extends State<EditProfile> {
     ctr.churchCtr.text = currentUser.value.churchName!;
     ctr.cityCtr.text = currentUser.value.location!.city!;
     ctr.countryCtr.text = currentUser.value.location!.country!;
-    ctr.usernameCtr.text = currentUser.value.username;
+    // ctr.usernameCtr.text = currentUser.value.username;
+    ctr.ageCtr.text = currentUser.value.age.toString();
     allImage.assignAll(currentUser.value.photos!.toList());
     setState(() {});
   }
@@ -302,10 +303,11 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 ),
                 InkWell(
-                    onTap: () {
-                      desireModal(context);
-                    },
-                    child: SvgPicture.asset('assets/icons/edit.svg'))
+                  onTap: () {
+                    desireModal(context);
+                  },
+                  child: SvgPicture.asset('assets/icons/edit.svg'),
+                )
               ],
             ),
             const SizedBoxH10(),
@@ -348,6 +350,16 @@ class _EditProfileState extends State<EditProfile> {
               radius: 12,
               controller: ctr.cityCtr,
               hintText: "City of Residence",
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter a city of residence';
+                }
+
+                final regex = RegExp(r'^[a-zA-Z]+$');
+                if (!regex.hasMatch(value)) {
+                  return 'Please enter only letters';
+                }
+              },
             ),
             const SizedBoxH15(),
             CustomTextField(
@@ -356,8 +368,24 @@ class _EditProfileState extends State<EditProfile> {
               onChanged: (val) {
                 ctr.isEmpty();
               },
-              controller: ctr.usernameCtr,
-              hintText: "Username",
+              controller: ctr.ageCtr,
+              hintText: "Age",
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter an age';
+                }
+
+                int? isValidAge = int.tryParse(value);
+                if (isValidAge == null) {
+                  return 'Invalid age';
+                }
+
+                if (isValidAge < 21 || isValidAge > 70) {
+                  return 'Oops, you can only enter an age between 21 - 70';
+                }
+
+                return null;
+              },
             ),
             const SizedBoxH15(),
             ProfileDropDown(

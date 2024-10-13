@@ -1,3 +1,4 @@
+import 'package:Nexus/core/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -151,7 +152,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               return null;
                             },
                             onChanged: (value) {
-                              model.setData(kEMAIL, value);
+                              model.setData(kEMAIL, value.toLowerCase());
                             },
                           ),
                           const SizedBoxH15(),
@@ -185,10 +186,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 });
                               },
                               child: Icon(
-                                  showPassword
-                                      ? Iconsax.eye_slash
-                                      : Iconsax.eye,
-                                  color: primary),
+                                showPassword ? Iconsax.eye_slash : Iconsax.eye,
+                                color: primary,
+                              ),
                             ),
                           ),
                           const SizedBoxH10(),
@@ -270,14 +270,21 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               bool validate = _formkey.currentState!.validate();
                               if (validate) {
                                 await SharedPref.setBool(kFirstTime, false);
+
+                                String formattedUsername =
+                                    username.text.toCapitalized;
+                                String formattedEmail =
+                                    email.text.toLowerCase();
+
                                 Map<String, dynamic> map = {
-                                  kEMAIL: email.text,
+                                  kEMAIL: formattedEmail,
                                   kPASSWORD: password.text,
-                                  kUSERNAME: username.text,
+                                  kUSERNAME: formattedUsername,
                                 };
+
                                 model.register(
                                   context: context,
-                                  username: username.text,
+                                  username: formattedUsername,
                                   map: map,
                                 );
                               }

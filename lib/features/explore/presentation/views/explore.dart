@@ -174,7 +174,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                 itemBuilder: (BuildContext context, int index) {
                                   var val = ctr.searchedUsers[index];
                                   return ExploreUserTile(
-                                    image: val.photos![0],
+                                    image: val.photos != null &&
+                                            val.photos!.isNotEmpty
+                                        ? val.photos![0]
+                                        : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
                                     name: val.username,
                                     age: val.age.toString(),
                                     location:

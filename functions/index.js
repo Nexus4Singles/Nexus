@@ -173,10 +173,10 @@ exports.sendLikeNotification = functions.firestore
       const before = change.before.data();
       const after = change.after.data();
       // Check if a new like was added
-      if (before.likeMe.length < after.likeMe.length) {
+      if (before?.likeMe?.length < after?.likeMe?.length) {
         const userId = context.params.userId;
         console.log(userId);
-        const newLikeId = after.likeMe[after.likeMe.length - 1];
+        const newLikeId = after?.likeMe[after?.likeMe?.length - 1];
         console.log(newLikeId);
 
         try {
@@ -193,7 +193,6 @@ exports.sendLikeNotification = functions.firestore
             notification: {
               title: "New Like",
               body: `${likerName} liked your profile.`,
-              
               channel_id: "NEXUS",
               android_channel_id: "NEXUS",
               priority: "high",

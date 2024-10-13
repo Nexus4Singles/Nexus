@@ -16,9 +16,11 @@ import '../../../home/controllers/home_controller.dart';
 
 class ProfileCtr extends GetxController {
   static ProfileCtr get instance => Get.find<ProfileCtr>();
+
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
   final DigitalOceanClient digitalOceanClient = DigitalOceanClient();
+
   TextEditingController usernameCtr = TextEditingController();
   TextEditingController currentPassword = TextEditingController();
   TextEditingController newPassword = TextEditingController();
@@ -26,28 +28,49 @@ class ProfileCtr extends GetxController {
   TextEditingController churchCtr = TextEditingController();
   TextEditingController countryCtr = TextEditingController();
   TextEditingController cityCtr = TextEditingController();
+  TextEditingController ageCtr = TextEditingController();
+
   var eduLevel = "".obs;
   var profession = "".obs;
   var church = "".obs;
+
   List imageUrls = [];
 
   bool isEmpty() {
-    var status = usernameCtr.text.isNotEmpty &&
-        countryCtr.text.isNotEmpty &&
-        cityCtr.text.isNotEmpty &&
-        church.value.isNotEmpty;
+    var status =
+        // usernameCtr.text.isNotEmpty &&
+        ageCtr.text.isNotEmpty &&
+            countryCtr.text.isNotEmpty &&
+            cityCtr.text.isNotEmpty &&
+            church.value.isNotEmpty;
     print('what is the current status $status');
     return status;
   }
 
   Future updateProfile(List<File> imageFiles) async {
+    int? isValidAge = int.tryParse(ageCtr.text);
+    if (isValidAge == null) {
+      return EasyLoading.showToast('Invalid age provided');
+    }
+
+    if (isValidAge < 21 || isValidAge > 70) {
+      return EasyLoading.showToast(
+          'Oops, you can only enter an age between 21 - 70');
+    }
+
+    final regex = RegExp(r'^[a-zA-Z]+$');
+    if (!regex.hasMatch(cityCtr.text)) {
+      return EasyLoading.showToast(
+          'City of residence can only contain letters');
+    }
+
     EasyLoading.show();
     if (isEmpty()) {
       if (imageFiles.isNotEmpty) {
         await sendImageToDb(imageFiles);
       }
       await db.collection(kUSER).doc(auth.currentUser!.uid).update({
-        "username": usernameCtr.text,
+        'age': int.parse(ageCtr.text),
         'education_level': eduLevel.value,
         'profession': profession.value,
         'church_name': church.value,
@@ -67,6 +90,15 @@ class ProfileCtr extends GetxController {
     } else {
       EasyLoading.showToast("Kindly fill all fields");
     }
+  }
+
+  Future updateProfilePic(String profilePic) async {
+    await db.collection(kUSER).doc(auth.currentUser!.uid).update({
+      'profile_url': profilePic,
+    });
+
+    await Future.delayed(const Duration(seconds: 5),
+        () async => await HomeController.instance.getMyProfile());
   }
 
   sendImageToDb(List<File> imageFiles) async {
