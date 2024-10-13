@@ -84,7 +84,7 @@ class _CongratulationScreenState extends State<CongratulationScreen> {
                               ),
                               const SizedBoxH20(),
                               Text(
-                                "You have successfully created an account on Nexus! \nKindly click on the verification link sent to your email inbox/spam to activate your account. If the link doesn´t open on Safari browser, please try other browsers.",
+                                "You have successfully created an account on Nexus! \nKindly click on the verification link sent to your email inbox/spam to activate your account. If the link doesn´t open, please copy & paste it to your browser.",
                                 textAlign: TextAlign.center,
                                 style: textStyle14.copyWith(
                                     fontWeight: FontWeight.w300,
