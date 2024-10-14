@@ -92,17 +92,7 @@ post_install do |installer|
 
       config.build_settings['OTHER_CFLAGS'] ||= ['$(inherited)']
       config.build_settings['OTHER_CFLAGS'].delete('-G')
-
-post_install do |installer|
-      installer.pods_project.targets.each do |target|
-        if target.name == 'BoringSSL-GRPC'
-          target.source_build_phase.files.each do |file|
-            if file.settings && file.settings['COMPILER_FLAGS']
-              flags = file.settings['COMPILER_FLAGS'].split
-              flags.reject! { |flag| flag == '-Wgcc-warn-inhibit-all-warnings' }
-              file.settings['COMPILER_FLAGS'] = flags.join(' ')
-            end
-        end
+    
     end
   end
 end
