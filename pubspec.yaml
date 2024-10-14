@@ -68,7 +68,7 @@ dependencies:
   step_progress_indicator: ^1.0.2
   story: ^1.1.0
   ticket_widget: ^0.0.1
-  url_launcher: ^6.1.12
+  url_launcher: ^6.3.1
   wave: ^0.2.2
   wheel_slider: ^1.2.1
   dash_chat_2: ^0.0.21
