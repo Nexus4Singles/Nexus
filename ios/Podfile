@@ -90,6 +90,8 @@ post_install do |installer|
         # 'PERMISSION_CRITICAL_ALERTS=1',
       ]
 
+      config.build_settings['OTHER_CFLAGS'] ||= ['$(inherited)']
+      config.build_settings['OTHER_CFLAGS'].reject! { |flag| flag == '-G' }
     end
   end
 end
