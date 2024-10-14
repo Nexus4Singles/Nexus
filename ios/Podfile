@@ -91,7 +91,7 @@ post_install do |installer|
       ]
 
       config.build_settings['OTHER_CFLAGS'] ||= ['$(inherited)']
-      config.build_settings['OTHER_CFLAGS'].reject! { |flag| flag == '-G' }
+      config.build_settings['OTHER_CFLAGS'].delete('-G')
     end
   end
 end
