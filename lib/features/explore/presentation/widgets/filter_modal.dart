@@ -137,8 +137,7 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
                         ),
                     
                       /*} else {
-                        restrictionModal(text: 'This is a premium feature. The free version of Nexus allows you to search by City & Country of Residence. '
-                            'Subscribing gives you access to use advanced filters to narrow down your search.', context: context);
+                        restrictionModal(text: 'This is a premium feature. The home page recommends 10 profiles to you per day but the Explore page helps you to narrow down your search using advanced filters.', context: context);
 
 
                     }*/
