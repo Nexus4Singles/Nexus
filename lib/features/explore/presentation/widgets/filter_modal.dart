@@ -137,7 +137,7 @@ class _ExploreFilterModalState extends State<ExploreFilterModal> {
                         ),
                     
                       /*} else {
-                        restrictionModal(text: 'This is a premium feature. The home page recommends 10 profiles to you per day but the Explore page helps you to narrow down your search using advanced filters.', context: context);
+                        restrictionModal(text: 'This is a premium feature. The home page recommends 10 profiles to you daily but you can speed up your search by using advanced filters on this page.', context: context);
 
 
                     }*/
