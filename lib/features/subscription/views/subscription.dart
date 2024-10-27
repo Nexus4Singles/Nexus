@@ -51,7 +51,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             children: [
               SizedBox(height: 10.h),
               Text(
-                'The free version of Nexus provides unlimited access to most features. However, some features have been made premium. We incur some monthly costs to ensure your profiles and audio recordings are securely stored and accessible to users. Hence, we are charging a small subscription fee to access premium features. This is to ensure we are able to maintain our services to you.\n\nIf you live in Nigeria, please note that Naira debit cards may not be supported for subscriptions due to restrictions from Nigerian banks. For more updates on this, kindly follow us on Instagram @nexus4singles.',
+                'The free version of Nexus provides unlimited access to most features. However, some features have been made premium. We incur some monthly costs to ensure your profiles and audio recordings are securely stored and accessible to users. Hence, we are charging a small subscription fee to access premium features. This is to ensure we are able to maintain our services to you.\n\nIf you live in Nigeria, please note that Naira debit cards may not be supported for subscriptions due to restrictions from Nigerian banks but you can find out how to subscribe on our Instagram page @nexus4singles.',
                 style: textStyle14.copyWith(
                   fontSize: 11.sp,
                   color: black,
