@@ -37,28 +37,28 @@ class _NewExploreScreenState extends State<NewExploreScreen> {
   @override
   Widget build(BuildContext context) {
     void handleSearchUsers(SubscriptionProvider provider) {
-      // // UNCOMMENT THIS TO ENABLE PREMIUM_ONLY USERS TO FILTER
-      // if (provider.onPremium == true) {
-      //   if (provider.isRestricted == true) {
-      //     restrictionModal(
-      //       context: context,
-      //       showButton: false,
-      //       text: 'Your subscription entitlements have been restricted.\nPlease'
-      //           ' log in to the account that is linked to your Play Store or App Store account.\nRestart the app, then head to Settings -> '
-      //           'Your Subscription -> Restore Subscription.',
-      //     );
+      // UNCOMMENT THIS TO ENABLE PREMIUM_ONLY USERS TO FILTER
+      if (provider.onPremium == true) {
+        if (provider.isRestricted == true) {
+          restrictionModal(
+            context: context,
+            showButton: false,
+            text: 'Your subscription entitlements have been restricted.\nPlease'
+                ' log in to the account that is linked to your Play Store or App Store account.\nRestart the app, then head to Settings -> '
+                'Your Subscription -> Restore Subscription.',
+          );
 
-      //     return;
-      //   }
-      // } else {
-      //   restrictionModal(
-      //     text:
-      //         'This is a premium feature. The home page recommends 10 profiles to you per day but the Explore page helps you to narrow down your search using advanced filters.',
-      //     context: context,
-      //   );
+          return;
+        }
+      } else {
+        restrictionModal(
+          text:
+              'This is a premium feature. The home page recommends 10 profiles to you per day but the Explore page helps you to narrow down your search using advanced filters.',
+          context: context,
+        );
 
-      //   return;
-      // }
+        return;
+      }
 
       ctr.filterUsers();
       Get.toNamed(AppRoutes.exploreResults);
