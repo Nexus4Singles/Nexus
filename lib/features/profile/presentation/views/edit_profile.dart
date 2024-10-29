@@ -403,7 +403,7 @@ class _EditProfileState extends State<EditProfile> {
             ProfileDropDown(
               items: LocalData().professions,
               val: ctr.profession.value,
-              hintText: 'Profession Level',
+              hintText: 'Profession',
               onChanged: (p0) {
                 setState(() {
                   ctr.profession.value = p0!;
