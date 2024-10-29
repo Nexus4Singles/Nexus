@@ -51,10 +51,10 @@ class ContactUs extends StatelessWidget {
                 style: textStyle14.copyWith(height: 1.8),
               ),
             ),
-            const SizedBoxH20(),
-            const SocialMediaWidget(
-              showOnlyInstagram: true,
-            ),
+            // const SizedBoxH20(),
+            // const SocialMediaWidget(
+            //   showOnlyInstagram: true,
+            // ),
           ],
         ),
       ),
