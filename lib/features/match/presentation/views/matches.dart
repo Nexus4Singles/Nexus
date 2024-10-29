@@ -78,15 +78,21 @@ class _MatchScreenState extends State<MatchScreen> {
                                   crossAxisSpacing: 10.sp,
                                   childAspectRatio: 0.65,
                                   children: [
-                                      ...ctr.userData.map((element) {
+                                      ...ctr.userData.reversed.map((element) {
                                         return MatchedUserCard(
-                                          photo: element.photos![0],
+                                          photo: element.photos != null &&
+                                                  element.photos!.isNotEmpty
+                                              ? element.photos![0]
+                                              : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
                                           name: element.username,
                                           age: element.age.toString(),
                                           location: element.location!.place!,
                                           onPress: () {
-                                            Get.to(() => UserDetailScreen(
-                                                userModel: element));
+                                            Get.to(
+                                              () => UserDetailScreen(
+                                                userModel: element,
+                                              ),
+                                            );
                                           },
                                         );
                                       })

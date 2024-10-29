@@ -50,6 +50,7 @@ class UserModel extends UserEntity {
     String subscriberId = 'null',
     String? recommendedTime,
     bool? hasExternalSubscriptionFlow = false,
+    DateTime? profileCompletionDate,
   }) : super(
           id: id,
           name: name,
@@ -94,6 +95,7 @@ class UserModel extends UserEntity {
           subscriberId: subscriberId,
           recommendedTime: recommendedTime,
           hasExternalSubscriptionFlow: hasExternalSubscriptionFlow,
+          profileCompletionDate: profileCompletionDate,
         );
 
   factory UserModel.fromJson(Map<String, dynamic> map) =>

@@ -1,3 +1,4 @@
+import 'package:Nexus/features/explore/presentation/views/new_explore_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Nexus/features/chat/views/chats.dart';
@@ -16,13 +17,14 @@ class BottomNavModel extends ChangeNotifier {
   late PageController _pageController;
   PageController get controller => _pageController;
 
-  int _tab = 0;
+  final int _tab = 0;
   int get tab => _tab;
 
   //personnal children of the bottom Nav
   final List<Widget> _navs = [
     const HomeScreen(),
-    const ExploreScreen(),
+    const NewExploreScreen(),
+    // const ExploreScreen(),
     const MatchScreen(),
     const ChatsScreen(),
     const ProfileScreen(),

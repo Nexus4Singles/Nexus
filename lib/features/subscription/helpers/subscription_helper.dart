@@ -342,7 +342,7 @@ class SubscriptionHelper {
       return subProvider.onPremium;
     } catch (e) {
       logger.e(e.toString());
-      BaseHelper.showSnackBar('Error validating subscription status');
+      // BaseHelper.showSnackBar('Error validating subscription status');
       return false;
     }
   }

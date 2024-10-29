@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:Nexus/features/subscription/provider/subscription_provider.dart';
+import 'package:Nexus/features/subscription/widgets/restriction_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -10,6 +12,7 @@ import '../../../core/models/chats_model.dart';
 import '../../../core/size_boxes.dart';
 import '../../../core/text_field.dart';
 import '../controllers/chat_ctr.dart';
+import 'package:provider/provider.dart';
 
 class VideoWidget extends StatefulWidget {
   final File videoUrl;
@@ -48,27 +51,71 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final subProvider = Provider.of<SubscriptionProvider>(
+      context,
+      listen: false,
+    );
+
+    void handleSendMessage() {
+      // Check if the user has used their one free text
+      if (subProvider.usedOneFreeText) {
+        // If the user has subscribed before but is no longer on a premium subscription
+        if (subProvider.prevSubscribed && !subProvider.onPremium) {
+          restrictionModal(
+            context: context,
+            dismisable: true,
+            text:
+                'Your subscription has expired!\nKindly subscribe to be able to send messages\nand use other features.',
+          );
+          return;
+        }
+        // If the user hasn't subscribed before and they're not chatting with the entitled user
+        else if (!subProvider.prevSubscribed &&
+            subProvider.entitledUser != widget.chatModel.userModel!.id) {
+          restrictionModal(
+            context: context,
+            dismisable: true,
+            text:
+                'You have used up your limit of one (1) chat per matched user on our free version.\nKindly subscribe to chat with other matched users.',
+          );
+          return;
+        }
+      }
+
+      ctr.sendMessage(
+        widget.chatModel.messageID,
+        ctr.chatController.text,
+        widget.chatModel.userModel!,
+      );
+      Get.back();
+    }
+
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 120.0,
         leading: IconButton(
-            onPressed: () {
-              ctr.imageFile.value = File('');
-              ctr.chatController.clear();
-              Get.back();
-            },
-            icon: const CircleAvatar(
-              backgroundColor: white,
-              child: Icon(
-                Icons.close,
-                color: black,
-                size: 20,
-              ),
-            )),
+          onPressed: () {
+            ctr.imageFile.value = File('');
+            ctr.chatController.clear();
+            Get.back();
+          },
+          icon: const CircleAvatar(
+            radius: 20.0,
+            backgroundColor: white,
+            child: Icon(
+              Icons.close,
+              color: black,
+              size: 20,
+            ),
+          ),
+        ),
       ),
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
-              color: white, borderRadius: BorderRadius.circular(16)),
+            color: white,
+            borderRadius: BorderRadius.circular(16),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,7 +123,7 @@ class _VideoWidgetState extends State<VideoWidget> {
             children: [
               _controller.value.isInitialized
                   ? SizedBox(
-                      height: Get.height / 2.0,
+                      height: Get.height / 2.5,
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
@@ -109,29 +156,30 @@ class _VideoWidgetState extends State<VideoWidget> {
                   : const CircularProgressIndicator(strokeWidth: 1),
               Padding(
                 padding: const EdgeInsets.only(
-                    bottom: 32.0, top: 16, left: 12, right: 12),
+                  bottom: 32.0,
+                  top: 16,
+                  left: 12,
+                  right: 12,
+                ),
                 child: Row(
                   children: [
                     Expanded(
                       child: CustomTextField(
-                          fillColor: grey,
-                          borderColor: Colors.transparent,
-                          controller: ctr.chatController,
-                          hintText: "Add a message"),
+                        fillColor: grey,
+                        borderColor: Colors.transparent,
+                        controller: ctr.chatController,
+                        hintText: "Add a message",
+                        textCapitalization: TextCapitalization.sentences,
+                      ),
                     ),
                     const SizedBoxW10(),
                     InkWell(
-                      onTap: () {
-                        ctr.sendMessage(
-                            widget.chatModel.messageID,
-                            ctr.chatController.text,
-                            widget.chatModel.userModel!);
-                        Get.back();
-                      },
+                      onTap: handleSendMessage,
                       child: CircleAvatar(
-                          radius: 24,
-                          backgroundColor: primary,
-                          child: SvgPicture.asset('$svgPath/send.svg')),
+                        radius: 24,
+                        backgroundColor: primary,
+                        child: SvgPicture.asset('$svgPath/send.svg'),
+                      ),
                     )
                   ],
                 ),

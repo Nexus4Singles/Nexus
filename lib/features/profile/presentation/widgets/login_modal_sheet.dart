@@ -61,17 +61,16 @@ class _LoginModalSheetState extends State<LoginModalSheet> {
                   const SizedBoxW15(),
                   Expanded(
                     child: Consumer<SubscriptionProvider>(
-                      builder: (context, provider, _) =>
-                          CustomButton(
-                            onPressed: () async {
-                              await FCMService.setFcmTokenToNull(
-                                  HomeController.instance.user.value.id);
-                              SharedPref.deleteAll();
-                              //provider.isLoggingOut = true;
-                              Get.offAllNamed('/');
-                            },
-                            text: 'Yes, Logout',
-                          ),
+                      builder: (context, provider, _) => CustomButton(
+                        onPressed: () async {
+                          await FCMService.setFcmTokenToNull(
+                              HomeController.instance.user.value.id);
+                          SharedPref.deleteAll();
+                          //provider.isLoggingOut = true;
+                          Get.offAllNamed(AppRoutes.login);
+                        },
+                        text: 'Yes, Logout',
+                      ),
                     ),
                   ),
                 ],

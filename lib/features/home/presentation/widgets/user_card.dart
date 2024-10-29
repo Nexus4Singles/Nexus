@@ -114,7 +114,10 @@ class _UserCardState extends State<UserCard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CacheNetworkWidget(
-                imgUrl: widget.userModel.photos![0],
+                imgUrl: widget.userModel!.photos != null &&
+                        widget.userModel!.photos!.isNotEmpty
+                    ? widget.userModel!.photos![0]
+                    : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
                 opacity: .4,
                 color: black,
                 height: height(context) * .55,
@@ -470,27 +473,34 @@ class _UserCardState extends State<UserCard> {
                               onTap: () {
                                 int index =
                                     widget.userModel.photos!.indexOf(item);
-                                Get.to(() => PhotoViewScreen(
+                                Get.to(
+                                  () => PhotoViewScreen(
                                     selectedIndex: index,
-                                    photos: widget.userModel.photos!));
+                                    photos: widget.userModel.photos!,
+                                  ),
+                                );
                               },
                               child: CacheNetworkWidget(
-                                  width: width(context) * .4,
-                                  height: 100.h,
-                                  imgUrl: item),
+                                width: width(context) * .4,
+                                height: 100.h,
+                                imgUrl: item,
+                              ),
                             ),
                           ),
                       ],
                     ),
                     Center(
-                      child: Consumer<SubscriptionProvider>(builder: (context, model, _) {
+                      child: Consumer<SubscriptionProvider>(
+                          builder: (context, model, _) {
                         return TextButton(
                             onPressed: () {
                               if (model.onPremium == true) {
-                                compatibilityModal(
-                                    context, widget.userModel);
+                                compatibilityModal(context, widget.userModel);
                               } else {
-                                restrictionModal(context: context, text: 'Due to the sensitivity of some questions,\nthis data is not available to every user.\nKindly upgrade to Premium, \nif you want to view this data on all profiles');
+                                restrictionModal(
+                                    context: context,
+                                    text:
+                                        'Due to the sensitivity of some questions,\nthis data is not available to every user.\nKindly upgrade to Premium, \nif you want to view this data on all profiles');
                               }
                             },
                             child: Container(
@@ -504,8 +514,7 @@ class _UserCardState extends State<UserCard> {
                                     fontWeight: FontWeight.bold),
                               ),
                             ));
-                      }
-                      ),
+                      }),
                     ),
                     const SizedBox(height: 80)
                   ],

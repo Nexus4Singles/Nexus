@@ -1,7 +1,6 @@
 const kTheme = 'theme';
 const kLoginTime = 'login_time';
 
-
 const kToken = 'token';
 const kFirstTime = 'firstTime';
 const kPinSetted = 'pin_setted';
@@ -54,6 +53,7 @@ const kRELATIONSHIPWITHGOD = 'relationship_with_god';
 const kROLEOFHUSBAND = 'role_of_husband';
 const kBESTQUALITIESORTRAITS = 'best_qualities_or_traits';
 const kREGPROGRESS = 'registration_progress';
+const kREGCOMPLETIONDATE = 'profile_completed_on';
 const kCHURCHNAME = 'church_name';
 const kCONVERSATION = 'conversations';
 const kMESSAGES = 'messages';

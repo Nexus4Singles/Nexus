@@ -22,7 +22,9 @@ compatibilityModal(context, UserModel userModel) {
           padding: const EdgeInsets.only(top: 16),
           child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: MatchedUsersCompatibilityModal(userModel: userModel)),
+              child: MatchedUsersCompatibilityModal(
+                userModel: userModel,
+              )),
         ),
       );
     },

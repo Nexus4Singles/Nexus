@@ -16,7 +16,9 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
       height: Get.height / 1.7,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-          color: primary, borderRadius: BorderRadius.circular(20)),
+        color: primary,
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: userModel.compatibilitySetted == null ||
               userModel.compatibilitySetted == false
           ? Center(

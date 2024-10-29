@@ -49,6 +49,7 @@ class UserEntity extends Equatable {
     this.recommendedTime,
     this.blocked,
     this.hasExternalSubscriptionFlow = false,
+    this.profileCompletionDate,
   });
 
   final String id;
@@ -114,6 +115,7 @@ class UserEntity extends Equatable {
   final String? subscriberId;
   final String? recommendedTime;
   final bool? hasExternalSubscriptionFlow;
+  final DateTime? profileCompletionDate;
 
   @override
   List<Object?> get props => [
@@ -159,5 +161,6 @@ class UserEntity extends Equatable {
         entitledUser,
         subscriberId,
         hasExternalSubscriptionFlow,
+        profileCompletionDate,
       ];
 }

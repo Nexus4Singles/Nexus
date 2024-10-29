@@ -118,11 +118,15 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
             },
             blendMode: BlendMode.darken,
             child: CacheNetworkWidget(
-              imgUrl: widget.userModel.photos![0],
+              imgUrl: widget.userModel!.photos != null &&
+                      widget.userModel!.photos!.isNotEmpty
+                  ? widget.userModel!.photos![0]
+                  : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
               height: Get.height / 1.5,
               width: width(context),
               gradient: const LinearGradient(
-                  colors: [Colors.transparent, Colors.transparent, black]),
+                colors: [Colors.transparent, Colors.transparent, black],
+              ),
             ),
           ),
           SingleChildScrollView(
@@ -146,7 +150,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                           ),
                         ),
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
+                          horizontal: 10,
+                          vertical: 10,
+                        ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -368,12 +374,15 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                       onTap: () {
                                         int index = widget.userModel.photos!
                                             .indexOf(item);
-                                        Get.to(() => PhotoViewScreen(
+                                        Get.to(
+                                          () => PhotoViewScreen(
                                             selectedIndex: index,
-                                            photos: widget.userModel.photos!));
+                                            photos: widget.userModel.photos!,
+                                          ),
+                                        );
                                       },
                                       child: CacheNetworkWidget(
-                                        width: width(context) * .4,
+                                        width: width(context) * .45,
                                         height: 100.h,
                                         imgUrl: item,
                                       ),
@@ -382,35 +391,44 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               ],
                             ),
                             const SizedBoxH25(),
-                              Consumer<SubscriptionProvider>(builder: (context, model, _) {
-                                return Builder(builder: (context) {
-                                  return Center(
-                                    child: TextButton(
-                                        onPressed: () {
-                                          if(model.onPremium == true){
-                                            compatibilityModal(
-                                                context, widget.userModel);
-                                          } else {
-                                            restrictionModal(context: context, text: 'Due to the sensitivity of some questions,\nthis data is not available to every user.\nKindly upgrade to Premium, \nif you want to view this data on all profiles');
-                                          }
-
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.all(12),
-                                          decoration: BoxDecoration(
-                                              color: primary.withOpacity(0.1),
-                                              borderRadius:
-                                              BorderRadius.circular(100)),
-                                          child: Text(
-                                            "View Compatibility Data",
-                                            style: textStyle14.copyWith(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        )),
-                                  );
-                                });
-                              }
-                            ),
+                            Consumer<SubscriptionProvider>(
+                                builder: (context, model, _) {
+                              return Builder(builder: (context) {
+                                return Center(
+                                  child: TextButton(
+                                    onPressed: () {
+                                      if (model.onPremium == true) {
+                                        compatibilityModal(
+                                          context,
+                                          widget.userModel,
+                                        );
+                                      } else {
+                                        restrictionModal(
+                                          context: context,
+                                          text:
+                                              'Due to the sensitivity of some questions,\nthis data is not available to every user.\nKindly upgrade to Premium, \nif you want to view this data on all profiles',
+                                        );
+                                      }
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                        color: primary.withOpacity(0.1),
+                                        borderRadius: BorderRadius.circular(
+                                          100,
+                                        ),
+                                      ),
+                                      child: Text(
+                                        "View Compatibility Data",
+                                        style: textStyle14.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              });
+                            }),
                             const SizedBoxH10(),
                           ],
                         ),
@@ -495,10 +513,11 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             )),
                       ),
                       const SizedBoxW20(),
-                      Consumer<SubscriptionProvider>(builder: (context, model, _) {
+                      Consumer<SubscriptionProvider>(
+                          builder: (context, model, _) {
                         return InkWell(
                           onTap: () {
-                            if(model.onPremium == true){
+                            if (model.onPremium == true) {
                               ctr.toggleSave(widget.userModel.id);
                               debugPrint(ctr.ctr.myProfile.value.mySaves!
                                   .contains(widget.userModel.id)
@@ -509,24 +528,22 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                           },
                           child: CircleAvatar(
                             backgroundColor:
-                            ctr.ctr.myProfile.value.mySaves == null ||
-                                !ctr.ctr.myProfile.value.mySaves!
-                                    .contains(widget.userModel.id)
-                                ? white
-                                : primary,
+                                ctr.ctr.myProfile.value.mySaves == null ||
+                                        !ctr.ctr.myProfile.value.mySaves!
+                                            .contains(widget.userModel.id)
+                                    ? white
+                                    : primary,
                             radius: 25,
                             child: SvgPicture.asset("$svgPath/bookmark.svg",
-                                color: ctr.ctr.myProfile.value.mySaves ==
-                                    null ||
-                                    !ctr.ctr.myProfile.value.mySaves!
-                                        .contains(widget.userModel.id)
-                                    ? primary
-                                    : white),
+                                color:
+                                    ctr.ctr.myProfile.value.mySaves == null ||
+                                            !ctr.ctr.myProfile.value.mySaves!
+                                                .contains(widget.userModel.id)
+                                        ? primary
+                                        : white),
                           ),
                         );
-                      }
-
-                      ),
+                      }),
                     ],
                   )
                 : const SizedBox(),

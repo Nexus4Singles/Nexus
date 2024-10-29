@@ -503,4 +503,41 @@ class LocalData {
     "Zion Christian Church",
     "Other"
   ];
+
+  List<String> countryOfResidenceFilters = [
+    'Nigeria',
+    'Diaspora',
+    'Any',
+  ];
+
+  List<String> educationLevelFilters = [
+    'Graduate',
+    'Any Level',
+  ];
+
+  List<String> incomeSourceFilters = [
+    'Yes',
+    'Not Compulsory',
+  ];
+
+  List<String> relationshipDistanceFilters = [
+    'Yes',
+    'No',
+    'Any',
+  ];
+
+  List<String> maritalStatusFilters = [
+    'Never Married',
+    'Any Status',
+  ];
+
+  List<String> hasKidsFilters = [
+    'No kids',
+    "I don't mind",
+  ];
+
+  List<String> genotypeFilters = [
+    'AA only',
+    'Anyone',
+  ];
 }

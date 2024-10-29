@@ -84,7 +84,12 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
                                         child: Padding(
                                           padding: const EdgeInsets.all(12.0),
                                           child: CacheNetworkWidget(
-                                            imgUrl: users.userModel!.photos![0],
+                                            imgUrl: users.userModel!.photos !=
+                                                        null &&
+                                                    users.userModel!.photos!
+                                                        .isNotEmpty
+                                                ? users.userModel!.photos![0]
+                                                : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
                                             height: 50.r,
                                             width: 50.r,
                                             isNotCircle: false,
@@ -127,8 +132,9 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
                                 height: Get.height / 3,
                                 child: const Center(
                                   child: EmptyStateWidget(
-                                      shouldShowImage: false,
-                                      message: 'No Chats Yet'),
+                                    shouldShowImage: false,
+                                    message: 'No Chats Yet',
+                                  ),
                                 ),
                               )
                             : ListView(
@@ -139,7 +145,10 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
                                           (val) => val.lastMessage.isNotEmpty)
                                       .map((val) {
                                     return ChatContainer(
-                                      image: val.userModel!.photos![0],
+                                      image: val.userModel!.photos != null &&
+                                              val.userModel!.photos!.isNotEmpty
+                                          ? val.userModel!.photos![0]
+                                          : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
                                       name: val.userModel!.username,
                                       time: val.timestamp.toDate(),
                                       text: val.lastMessage,

@@ -1,3 +1,4 @@
+import 'package:Nexus/features/explore/presentation/views/explore_results_screen.dart';
 import 'package:Nexus/features/profile/presentation/widgets/delete_acct_modal_sheet.dart';
 import 'package:get/get.dart';
 import 'features/auth/presentation/views/auth_handler.dart';
@@ -97,6 +98,7 @@ class AppRoutes {
   static String userDetails = '/user_details';
   static String photoViews = '/photo_views';
   static String deleteAcctModalSheet = '/delete_account_modal';
+  static String exploreResults = '/explore_results';
 }
 
 final appRouter = [
@@ -331,6 +333,13 @@ final appRouter = [
     name: AppRoutes.deleteAcctModalSheet,
     page: () => DeleteAccountModalSheet(),
     binding: BindingsBuilder(() {}),
+  ),
+  GetPage(
+    name: AppRoutes.exploreResults,
+    page: () => ExploreResultsScreen(),
+    binding: BindingsBuilder(
+      () {},
+    ),
   ),
   // GetPage(
   //   name: AppRoutes.photoViews,

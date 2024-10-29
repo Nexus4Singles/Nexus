@@ -25,7 +25,7 @@ class CompatibilityModel extends CompatibilityEntity {
           longDistance: longDistance,
           believeInCohiabiting: believeInCohiabiting,
           shouldChristianSpeakInTongue: shouldChristianSpeakInTongue,
-          believeInTithing: believeInCohiabiting,
+          believeInTithing: believeInTithing,
         );
 
   factory CompatibilityModel.fromJson(Map<String, dynamic> map) =>

@@ -45,7 +45,10 @@ class Matched extends StatelessWidget {
             CacheNetworkWidget(
               height: Get.height / 1.6,
               width: Get.width / 1.2,
-              imgUrl: userModel.photos![0],
+                                  imgUrl: userModel!.photos != null &&
+                                          userModel!.photos!.isNotEmpty
+                                      ? userModel!.photos![0]
+                                      : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
               decoration: BoxDecoration(
                 boxShadow: [boxShadow],
                 border: Border.all(

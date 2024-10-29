@@ -95,23 +95,26 @@ Happy Recording!!''',
           children: [
             CustomButton(
               onPressed: () async {
-             // Check the current microphone permission status
-          var status = await Permission.microphone.status;
+                // Check the current microphone permission status
+                var status = await Permission.microphone.status;
 
-          if (status.isGranted) {
-            // If permission is granted, navigate to the next screen
-            Get.toNamed(AppRoutes.audio1);
-          } else {
-            // Request permission
-            final result = await Permission.microphone.request();
+                if (status.isGranted) {
+                  // If permission is granted, navigate to the next screen
+                  Get.toNamed(AppRoutes.audio1);
+                } else {
+                  // Request permission
+                  final result = await Permission.microphone.request();
 
-            // Check the result of the request
-            if (result.isGranted) {
-              Get.toNamed(AppRoutes.audio1);
-            } else {
-              // Show error toast only once if permission is denied
-              AppToast().showErrorToast('Microphone Permission is required to make recordings. Please visit your phone settings to enable permissions for Nexus.');
-            }};
+                  // Check the result of the request
+                  if (result.isGranted) {
+                    Get.toNamed(AppRoutes.audio1);
+                  } else {
+                    // Show error toast only once if permission is denied
+                    AppToast().showErrorToast(
+                        'Microphone Permission is required to make recordings. Please visit your phone settings to enable permissions for Nexus.');
+                  }
+                }
+                ;
               },
               child: Text(
                 'Begin Recording',

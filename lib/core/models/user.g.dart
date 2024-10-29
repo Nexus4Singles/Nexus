@@ -76,6 +76,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       hasExternalSubscriptionFlow: json['hasExternalSubscriptionFlow'] is bool
           ? json['hasExternalSubscriptionFlow'] as bool?
           : false,
+      profileCompletionDate: json['profile_completed_on']?.toDate(),
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -122,4 +123,6 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'subscriberId': instance.subscriberId,
       'recommendedTime': instance.recommendedTime,
       'hasExternalSubscriptionFlow': instance.hasExternalSubscriptionFlow,
+      'profileCompletionDate':
+          instance.profileCompletionDate?.toIso8601String(),
     };

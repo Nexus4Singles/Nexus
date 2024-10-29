@@ -101,8 +101,8 @@ class _Audio4ScreenState extends State<Audio4Screen> {
               Center(
                 child: Text(
                   'Audio Recordings',
-                  style:
-                      textStyle8.copyWith(fontSize: 30, fontWeight: FontWeight.w700, color: black),
+                  style: textStyle8.copyWith(
+                      fontSize: 30, fontWeight: FontWeight.w700, color: black),
                 ),
               ),
               const SizedBoxH15(),
@@ -117,13 +117,17 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                   Text(
                     '1. ',
                     style: textStyle14.copyWith(
-                        color: black, fontSize: 13, fontWeight: FontWeight.w600),
+                        color: black,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600),
                   ),
                   Expanded(
                     child: Text(
                       'How would you describe your current relationship with God and why is this relationship important to you?',
                       style: textStyle14.copyWith(
-                          color: black, fontSize: 13, fontWeight: FontWeight.w600),
+                          color: black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
@@ -151,13 +155,17 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                   Text(
                     '2. ',
                     style: textStyle14.copyWith(
-                        color: black, fontSize: 13, fontWeight: FontWeight.w600),
+                        color: black,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600),
                   ),
                   Expanded(
                     child: Text(
                       'What are your thoughts on the role of a husband and a wife in marriage?',
                       style: textStyle14.copyWith(
-                          color: black, fontSize: 13, fontWeight: FontWeight.w600),
+                          color: black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
@@ -185,13 +193,17 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                   Text(
                     '3. ',
                     style: textStyle14.copyWith(
-                        color: black, fontSize: 13, fontWeight: FontWeight.w600),
+                        color: black,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600),
                   ),
                   Expanded(
                     child: Text(
                       'What are your favourite qualities or traits about yourself?',
                       style: textStyle14.copyWith(
-                          color: black, fontSize: 13, fontWeight: FontWeight.w600),
+                          color: black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
@@ -225,7 +237,8 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                 },
                 child: Text(
                   'Complete Profile',
-                  style: textStyle16.copyWith(color: white, fontWeight: FontWeight.bold),
+                  style: textStyle16.copyWith(
+                      color: white, fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBoxH30()
@@ -273,6 +286,7 @@ class _Audio4ScreenState extends State<Audio4Screen> {
               kROLEOFHUSBAND: audio2,
               kBESTQUALITIESORTRAITS: audio3,
               kREGPROGRESS: 'completed',
+              kREGCOMPLETIONDATE: DateTime.now(),
             },
             onCompleted: () {
               Get.offAndToNamed(AppRoutes.regSuccessful);

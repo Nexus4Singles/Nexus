@@ -29,10 +29,11 @@ class ChatImageSelector extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: const Icon(Icons.clear)),
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(Icons.clear),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,22 +41,26 @@ class ChatImageSelector extends StatelessWidget {
         children: [
           const SizedBoxH40(),
           Center(
-            child: Text("Preview your Image before sending",
-                style: textStyle14.copyWith(fontWeight: FontWeight.w700)),
+            child: Text(
+              "Preview your Image before sending",
+              style: textStyle14.copyWith(fontWeight: FontWeight.w700),
+            ),
           ),
           const SizedBoxH20(),
           Container(
             height: Get.height / 2,
             width: Get.width / 1.2,
             decoration: BoxDecoration(
-                boxShadow: [boxShadow],
-                border: Border.all(
-                    color: white,
-                    width: 5,
-                    strokeAlign: BorderSide.strokeAlignOutside),
-                borderRadius: BorderRadius.circular(12),
-                image: DecorationImage(
-                    image: AssetImage(imagePath.path), fit: BoxFit.cover)),
+              boxShadow: [boxShadow],
+              border: Border.all(
+                color: white,
+                width: 5,
+                strokeAlign: BorderSide.strokeAlignOutside,
+              ),
+              borderRadius: BorderRadius.circular(12),
+              image: DecorationImage(
+                  image: AssetImage(imagePath.path), fit: BoxFit.cover),
+            ),
           ),
           Transform.translate(
             offset: const Offset(0, 50),
@@ -69,22 +74,28 @@ class ChatImageSelector extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: CustomTextField(
-                      radius: 100,
-                      fillColor: grey,
-                      suffixIcon: InkWell(
-                        onTap: () {
-                          ctr.sendMessage(messageID, message, userModel);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CircleAvatar(
-                            backgroundColor: black,
-                            child: SvgPicture.asset("$svgPath/send.svg"),
-                          ),
+                    textCapitalization: TextCapitalization.sentences,
+                    radius: 100,
+                    fillColor: grey,
+                    suffixIcon: InkWell(
+                      onTap: () {
+                        ctr.sendMessage(
+                          messageID,
+                          message,
+                          userModel,
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                          backgroundColor: black,
+                          child: SvgPicture.asset("$svgPath/send.svg"),
                         ),
                       ),
-                      controller: TextEditingController(),
-                      hintText: "Send a message"),
+                    ),
+                    controller: TextEditingController(),
+                    hintText: "Send a message",
+                  ),
                 )
               ],
             ),
