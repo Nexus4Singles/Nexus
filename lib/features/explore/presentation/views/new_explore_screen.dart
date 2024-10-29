@@ -53,7 +53,7 @@ class _NewExploreScreenState extends State<NewExploreScreen> {
       } else {
         restrictionModal(
           text:
-              'This is a premium feature\n. The home page recommends 10 profiles to you daily but you can speed up your search by using advanced filters on this page.',
+              'This is a premium feature.\n The home page recommends 10 profiles to you daily but you can speed up your search by using advanced filters on this page.',
           context: context,
         );
 
