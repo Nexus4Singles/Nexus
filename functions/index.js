@@ -224,6 +224,7 @@ exports.sendLikeNotification = functions.firestore
     });
 
 
+// Handle subscription flow using flutterwave
 exports.handleUpdateUserSubscriptionStatus = onRequest(
   { cors: true },
   async (req, res) => {
@@ -264,3 +265,102 @@ exports.handleUpdateUserSubscriptionStatus = onRequest(
     }
   }
 );
+
+// Handle storing unique countries of users currently in the app
+exports.createOrUpdateCollectionOfCountriesInApp = onRequest(
+  { cors: true },
+  async (req, res) => {
+    const allUserCountries = new Set();
+
+    try {
+      const allUsersSnapshot = await admin.firestore()
+      .collection('users')
+      .where('registration_progress', '==', 'completed')
+      .get();
+
+      if (allUsersSnapshot.empty) return res.status(200).send('No users currently available');
+
+      allUsersSnapshot.forEach(userSnapDoc => {
+        const userCountry = userSnapDoc.data().location?.country;
+        if (userCountry) allUserCountries.add(userCountry)
+      });
+
+    } catch (error) {
+      return res.status(500).send('An error occured while creating/updating countries collection');
+    }
+
+    const allUserCountriesArr = [...allUserCountries].sort((a, b) => a.localeCompare(b));
+
+    try {
+      const countriesRef = admin.firestore()
+      .collection('countries')
+      .doc('uniqueCountries');
+      
+      await countriesRef.set({
+        countries: allUserCountriesArr,
+      });
+
+      return res.status(200).json({ 
+        message: 'Successfully updated countries collection!', 
+        countries: allUserCountriesArr,
+      });
+    } catch (error) {
+      return res.status(500).send('An error occured while creating/updating countries collection');
+    }
+  }
+);
+
+// Handle fetching emails for profiles
+exports.getEmailsOfUserProfiles = onRequest(
+  { cors: true },
+  async (req, res) => {
+    const [
+      emailsWithCompleteProfiles,
+      emailsWithIncompleteProfiles,
+    ] = [
+      new Set(),
+      new Set()
+    ];
+
+    try {
+      const usersSnapshot = await Promise.all([
+        admin.firestore()
+          .collection('users')
+          .where('registration_progress', '==', 'completed')
+          .get()
+        ,
+        admin.firestore()
+          .collection('users')
+          .where('registration_progress', '!=', 'completed')
+          .get()
+      ]);
+
+      const [ 
+        snapshotsOfUsersWithCompleteProfile,
+        snapshotsOfUsersWithIncompleteProfile,
+      ] = [
+        usersSnapshot[0],
+        usersSnapshot[1],
+      ];
+
+      snapshotsOfUsersWithCompleteProfile.forEach(userSnapDoc => {
+        const userEmail = userSnapDoc.data().email;
+        if (userEmail) emailsWithCompleteProfiles.add(userEmail)
+      });
+
+      snapshotsOfUsersWithIncompleteProfile.forEach(userSnapDoc => {
+        const userEmail = userSnapDoc.data().email;
+        if (userEmail) emailsWithIncompleteProfiles.add(userEmail)
+      });
+
+    } catch (error) {
+      return res.status(500).send('An error occured while querying complete/incomplete profiles');
+    }
+
+    return res.status(200).json({
+      message: 'Successfully fetched user(s) with complete and incomplete profiles',
+      usersWithCompleteProfile: [...emailsWithCompleteProfiles],
+      usersWithIncompleteProfile: [...emailsWithIncompleteProfiles],
+    });
+  }
+)
