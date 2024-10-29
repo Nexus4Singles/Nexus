@@ -223,7 +223,7 @@ class _NewExploreScreenState extends State<NewExploreScreen> {
                         builder: (context, provider, child) {
                       return CustomButton(
                         onPressed: () => handleSearchUsers(provider),
-                        text: 'Apply',
+                        text: 'Search',
                       );
                     }),
                   ),
