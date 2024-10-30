@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Nexus/core/constant.dart';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -117,7 +118,7 @@ class _UserCardState extends State<UserCard> {
                 imgUrl: widget.userModel!.photos != null &&
                         widget.userModel!.photos!.isNotEmpty
                     ? widget.userModel!.photos![0]
-                    : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
+                    : kDEFAULTUSERPIC,
                 opacity: .4,
                 color: black,
                 height: height(context) * .55,

@@ -1,3 +1,4 @@
+import 'package:Nexus/core/constant.dart';
 import 'package:Nexus/core/services/fcm.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +90,7 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
                                                     users.userModel!.photos!
                                                         .isNotEmpty
                                                 ? users.userModel!.photos![0]
-                                                : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
+                                                : kDEFAULTUSERPIC,
                                             height: 50.r,
                                             width: 50.r,
                                             isNotCircle: false,
@@ -148,7 +149,7 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
                                       image: val.userModel!.photos != null &&
                                               val.userModel!.photos!.isNotEmpty
                                           ? val.userModel!.photos![0]
-                                          : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
+                                          : kDEFAULTUSERPIC,
                                       name: val.userModel!.username,
                                       time: val.timestamp.toDate(),
                                       text: val.lastMessage,
@@ -157,8 +158,11 @@ class _ChatsScreenState extends State<ChatsScreen> with WidgetsBindingObserver {
                                           ? 0
                                           : val.unreadCount,
                                       onPress: () {
-                                        Get.to(() =>
-                                            ChatWithScreen(chatModel: val));
+                                        Get.to(
+                                          () => ChatWithScreen(
+                                            chatModel: val,
+                                          ),
+                                        );
                                       },
                                     );
                                   }).toList(),

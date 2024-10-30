@@ -1,4 +1,5 @@
 import 'package:Nexus/core/colors.dart';
+import 'package:Nexus/core/constant.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
 import 'package:Nexus/core/utils/empty_state.dart';
@@ -80,7 +81,7 @@ class ExploreResultsScreen extends StatelessWidget {
                                   photo: element.photos != null &&
                                           element.photos!.isNotEmpty
                                       ? element.photos![0]
-                                      : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
+                                      : kDEFAULTUSERPIC,
                                   name: element.username,
                                   age: element.age.toString(),
                                   location: element.location!.place!,

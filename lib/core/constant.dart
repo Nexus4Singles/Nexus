@@ -79,3 +79,5 @@ const kUNRECOMMENDUSER = 'unRecommendUsers';
 const kPARTICIPANT = 'participant';
 const kFCMTOKEN = 'fcm_token';
 const mapAPIKey = 'AIzaSyD1YgWNHVJ49A9cSzrv6RxM8ycP5gA0nI4';
+const kDEFAULTUSERPIC =
+    'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg';

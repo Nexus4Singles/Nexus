@@ -1,3 +1,4 @@
+import 'package:Nexus/core/constant.dart';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,13 @@ import 'package:Nexus/router.dart';
 class Matched extends StatelessWidget {
   final UserModel userModel;
   final int messageID;
-  Matched({super.key, required this.userModel, required this.messageID});
   final ctr = ChatCtr.instance;
+
+  Matched({
+    super.key,
+    required this.userModel,
+    required this.messageID,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +30,11 @@ class Matched extends StatelessWidget {
         leading: const SizedBox(),
         actions: [
           IconButton(
-              onPressed: () {
-                Get.offAllNamed(AppRoutes.mainNav, arguments: 0);
-              },
-              icon: const Icon(Icons.clear)),
+            onPressed: () {
+              Get.offAllNamed(AppRoutes.mainNav, arguments: 0);
+            },
+            icon: const Icon(Icons.clear),
+          ),
           const SizedBoxW10()
         ],
       ),
@@ -45,38 +52,42 @@ class Matched extends StatelessWidget {
             CacheNetworkWidget(
               height: Get.height / 1.6,
               width: Get.width / 1.2,
-                                  imgUrl: userModel!.photos != null &&
-                                          userModel!.photos!.isNotEmpty
-                                      ? userModel!.photos![0]
-                                      : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
+              imgUrl: userModel!.photos != null && userModel!.photos!.isNotEmpty
+                  ? userModel!.photos![0]
+                  : kDEFAULTUSERPIC,
               decoration: BoxDecoration(
                 boxShadow: [boxShadow],
                 border: Border.all(
-                    color: white,
-                    width: 5,
-                    strokeAlign: BorderSide.strokeAlignOutside),
+                  color: white,
+                  width: 5,
+                  strokeAlign: BorderSide.strokeAlignOutside,
+                ),
                 borderRadius: BorderRadius.circular(12),
                 image: DecorationImage(
-                    image: CachedNetworkImageProvider(userModel.photos![0]),
-                    fit: BoxFit.cover),
+                  image: CachedNetworkImageProvider(userModel.photos![0]),
+                  fit: BoxFit.cover,
+                ),
               ),
               child: Transform.translate(
-                  offset: const Offset(0, 35),
-                  child: Image.asset("$imgPath/matched.png")),
+                offset: const Offset(0, 35),
+                child: Image.asset("$imgPath/matched.png"),
+              ),
             ),
             Column(
               children: [
                 const SizedBoxH20(),
                 Text(
-                    "Get more information on your compatibility \nwith ${userModel.username} by clicking the button below!",
-                    style: textStyle16,
-                    textAlign: TextAlign.center),
+                  "Get more information on your compatibility \nwith ${userModel.username} by clicking the button below!",
+                  style: textStyle16,
+                  textAlign: TextAlign.center,
+                ),
                 const SizedBoxH10(),
                 TextButton(
-                    onPressed: () {
-                      compatibilityModal(context, userModel);
-                    },
-                    child: Text("View Compatibility Data", style: textStyle16)),
+                  onPressed: () {
+                    compatibilityModal(context, userModel);
+                  },
+                  child: Text("View Compatibility Data", style: textStyle16),
+                ),
               ],
             ),
           ],

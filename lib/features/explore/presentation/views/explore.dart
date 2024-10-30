@@ -1,3 +1,4 @@
+import 'package:Nexus/core/constant.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -177,7 +178,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                     image: val.photos != null &&
                                             val.photos!.isNotEmpty
                                         ? val.photos![0]
-                                        : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
+                                        : kDEFAULTUSERPIC,
                                     name: val.username,
                                     age: val.age.toString(),
                                     location:

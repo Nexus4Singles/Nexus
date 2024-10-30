@@ -1,3 +1,4 @@
+import 'package:Nexus/core/constant.dart';
 import 'package:Nexus/features/chat/widget/block_user_modal.dart';
 import 'package:Nexus/features/subscription/helpers/subscription_helper.dart';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
@@ -148,14 +149,17 @@ class _ChatWithScreenState extends State<ChatWithScreen>
             children: [
               InkWell(
                 onTap: () {
-                  Get.to(() =>
-                      UserDetailScreen(userModel: widget.chatModel.userModel!));
+                  Get.to(
+                    () => UserDetailScreen(
+                      userModel: widget.chatModel.userModel!,
+                    ),
+                  );
                 },
                 child: CacheNetworkWidget(
-                                  imgUrl: widget.chatModel.userModel!.photos != null &&
-                                          widget.chatModel.userModel!.photos!.isNotEmpty
-                                      ? widget.chatModel.userModel!.photos![0]
-                                      : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
+                  imgUrl: widget.chatModel.userModel!.photos != null &&
+                          widget.chatModel.userModel!.photos!.isNotEmpty
+                      ? widget.chatModel.userModel!.photos![0]
+                      : kDEFAULTUSERPIC,
                   height: 40,
                   width: 40,
                   isNotCircle: false,

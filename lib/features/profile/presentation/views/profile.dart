@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:Nexus/core/constant.dart';
 import 'package:Nexus/core/utils/image_compressor.dart';
 import 'package:Nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
@@ -148,7 +149,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     CacheNetworkWidget(
                       height: 110.r,
                       width: 110.r,
-                      imgUrl: homeModel.user.value.profileUrl ?? "",
+                      imgUrl:
+                          homeModel.user.value.profileUrl ?? kDEFAULTUSERPIC,
                       isNotCircle: false,
                     ),
                     InkWell(
@@ -166,9 +168,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Text(
                       '${homeModel.user.value.username}, ${homeModel.user.value.age}',
                       style: textStyle8.copyWith(
-                          color: black,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600),
+                        color: black,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     const SizedBoxH5(),
                     Row(

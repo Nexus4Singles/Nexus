@@ -1,3 +1,4 @@
+import 'package:Nexus/core/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -83,7 +84,7 @@ class _MatchScreenState extends State<MatchScreen> {
                                           photo: element.photos != null &&
                                                   element.photos!.isNotEmpty
                                               ? element.photos![0]
-                                              : 'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg',
+                                              : kDEFAULTUSERPIC,
                                           name: element.username,
                                           age: element.age.toString(),
                                           location: element.location!.place!,
