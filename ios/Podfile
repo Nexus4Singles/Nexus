@@ -31,7 +31,9 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
-pod 'Firebase/Analytics'
+  pod 'Firebase/Analytics'
+
+  pod 'leveldb-library', :git => 'https://github.com/firebase/leveldb.git', :commit => 'f6272399648046e31749d77e9c548712168afcf1'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
@@ -40,14 +42,6 @@ pod 'Firebase/Analytics'
 end
 
 post_install do |installer|
-  leveldb_posix_file = 'Pods/leveldb-library/util/env_posix.cc'
-  if File.exist?(leveldb_posix_file)
-    old_contents = File.read(leveldb_posix_file)
-    new_contents = old_contents.gsub(/std::memory_order::memory_order_relaxed/, "std::memory_order_relaxed")
-    File.chmod(0777, leveldb_posix_file)
-    File.open(leveldb_posix_file, "w") { |file| file.puts new_contents }
-  end
-  
   installer.pods_project.targets.each do |target|
     if target.name == 'BoringSSL-GRPC'
       target.source_build_phase.files.each do |file|
