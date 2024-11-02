@@ -40,6 +40,14 @@ pod 'Firebase/Analytics'
 end
 
 post_install do |installer|
+  leveldb_posix_file = 'Pods/leveldb-library/util/env_posix.cc'
+  if File.exist?(leveldb_posix_file)
+    old_contents = File.read(leveldb_posix_file)
+    new_contents = old_contents.gsub(/std::memory_order::memory_order_relaxed/, "std::memory_order_relaxed")
+    File.chmod(0777, leveldb_posix_file)
+    File.open(leveldb_posix_file, "w") { |file| file.puts new_contents }
+  end
+  
   installer.pods_project.targets.each do |target|
     if target.name == 'BoringSSL-GRPC'
       target.source_build_phase.files.each do |file|
@@ -48,14 +56,6 @@ post_install do |installer|
           flags.reject! { |flag| flag == '-GCC_WARN_INHIBIT_ALL_WARNINGS' }
           file.settings['COMPILER_FLAGS'] = flags.join(' ')
         end
-      end
-    end
-
-    if target.name == 'abseil'
-      Pod::UI.puts "Workaround: Configuring abseil to use gnu++14 language standard for cocoapods 1.16+ compatibility".yellow
-      Pod::UI.puts "            Remove workaround when upstream issue fixed https://github.com/firebase/firebase-ios-sdk/issues/13996".yellow
-      target.build_configurations.each do |config|
-        config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'gnu++14'
       end
     end
 
