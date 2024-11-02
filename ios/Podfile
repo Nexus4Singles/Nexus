@@ -33,8 +33,6 @@ target 'Runner' do
 
   pod 'Firebase/Analytics'
 
-  pod 'leveldb-library', :git => 'https://github.com/firebase/leveldb.git', :commit => 'f6272399648046e31749d77e9c548712168afcf1'
-
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
     inherit! :search_paths
