@@ -74,8 +74,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
               _buildPlanContainer(
                 title: 'Premium',
                 features: [
-                  'Access to Advanced Filters on Explore Page',
                   'Unlimited Access to Chat with Matched Users',
+                  'Access to Contact Information provided by Users',
                   'Access to Compatibility Data on all Profiles',
                   'Save Profiles to View Later',
                 ],
