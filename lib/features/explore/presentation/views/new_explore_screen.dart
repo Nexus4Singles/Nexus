@@ -3,12 +3,14 @@ import 'package:Nexus/core/button_outline.dart';
 import 'package:Nexus/core/colors.dart';
 import 'package:Nexus/core/size_boxes.dart';
 import 'package:Nexus/core/style.dart';
+import 'package:Nexus/core/text_field.dart';
 import 'package:Nexus/features/auth/data/data-sources/local-datasource/list_items.dart';
 import 'package:Nexus/features/auth/presentation/widgets/drop_down.dart';
 import 'package:Nexus/features/explore/controllers/explore_ctr.dart';
 import 'package:Nexus/features/subscription/provider/subscription_provider.dart';
 import 'package:Nexus/features/subscription/widgets/restriction_modal.dart';
 import 'package:Nexus/router.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -38,23 +40,13 @@ class _NewExploreScreenState extends State<NewExploreScreen> {
   Widget build(BuildContext context) {
     void handleSearchUsers(SubscriptionProvider provider) {
       // UNCOMMENT THIS TO ENABLE PREMIUM_ONLY USERS TO FILTER
-      if (provider.onPremium == true) {
-        if (provider.isRestricted == true) {
-          restrictionModal(
-            context: context,
-            showButton: false,
-            text: 'Your subscription entitlements have been restricted.\nPlease'
-                ' log in to the account that is linked to your Play Store or App Store account.\nRestart the app, then head to Settings -> '
-                'Your Subscription -> Restore Subscription.',
-          );
-
-          return;
-        }
-      } else {
+      if (provider.isRestricted == true) {
         restrictionModal(
-          text:
-              'This is a premium feature.\n The home page recommends 10 profiles to you daily but you can speed up your search by using advanced filters on this page.',
           context: context,
+          showButton: false,
+          text: 'Your subscription entitlements have been restricted.\nPlease'
+              ' log in to the account that is linked to your Play Store or App Store account.\nRestart the app, then head to Settings -> '
+              'Your Subscription -> Restore Subscription.',
         );
 
         return;
@@ -144,13 +136,30 @@ class _NewExploreScreenState extends State<NewExploreScreen> {
                 ],
               ),
               const SizedBoxH15(),
-              ProfileDropDown(
-                items: LocalData().countryOfResidenceFilters,
-                val: ctr.country.value,
-                hintText: 'Country of Residence',
-                onChanged: (p0) {
-                  ctr.country.value = p0!;
+              InkWell(
+                onTap: () {
+                  showCountryPicker(
+                    countryListTheme: CountryListThemeData(
+                        textStyle: textStyle14,
+                        inputDecoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(50))),
+                        borderRadius: BorderRadius.circular(24)),
+                    context: context,
+                    showPhoneCode: false,
+                    onSelect: (Country country) {
+                      ctr.country.value = country.name;
+                    },
+                  );
                 },
+                child: CustomTextField(
+                  enabled: false,
+                  fillColor: white,
+                  suffixIcon: const Icon(Icons.arrow_drop_down_outlined),
+                  radius: 12,
+                  controller: TextEditingController(text: ctr.country.value),
+                  hintText: "Country of Residence",
+                ),
               ),
               const SizedBoxH15(),
               ProfileDropDown(

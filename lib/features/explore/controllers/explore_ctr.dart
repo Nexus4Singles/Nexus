@@ -95,7 +95,7 @@ class ExploreCtr extends GetxController {
     if (searchedUsers.length.isLowerThan(1) ||
         filteredUsers.length.isLowerThan(1)) {
       exploreError.value =
-          "Sorry, No Users in this Country Yet. Check Back Later!!";
+          "Sorry, No profiles in this Country Yet. Check Back Later!!";
     }
   }
 

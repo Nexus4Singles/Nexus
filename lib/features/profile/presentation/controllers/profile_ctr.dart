@@ -29,10 +29,22 @@ class ProfileCtr extends GetxController {
   TextEditingController countryCtr = TextEditingController();
   TextEditingController cityCtr = TextEditingController();
   TextEditingController ageCtr = TextEditingController();
+  TextEditingController instagramCtr = TextEditingController();
+  TextEditingController twitterCtr = TextEditingController();
+  TextEditingController facebookCtr = TextEditingController();
+  TextEditingController snapchatCtr = TextEditingController();
+  TextEditingController telegramCtr = TextEditingController();
+  TextEditingController phoneNumberCtr = TextEditingController();
 
   var eduLevel = "".obs;
   var profession = "".obs;
   var church = "".obs;
+  var instagram_username = "".obs;
+  var twitter_username = "".obs;
+  var facebook_username = "".obs;
+  var snapchat_username = "".obs;
+  var telegram_username = "".obs;
+  var phone_number = "".obs;
 
   List imageUrls = [];
 
@@ -42,7 +54,13 @@ class ProfileCtr extends GetxController {
         ageCtr.text.isNotEmpty &&
             countryCtr.text.isNotEmpty &&
             cityCtr.text.isNotEmpty &&
-            church.value.isNotEmpty;
+            church.value.isNotEmpty &&
+            (instagramCtr.text.isNotEmpty ||
+                twitterCtr.text.isNotEmpty ||
+                facebookCtr.text.isNotEmpty ||
+                snapchatCtr.text.isNotEmpty ||
+                telegramCtr.text.isNotEmpty ||
+                phoneNumberCtr.text.isNotEmpty);
     print('what is the current status $status');
     return status;
   }
@@ -64,6 +82,16 @@ class ProfileCtr extends GetxController {
           'City of residence can only contain letters');
     }
 
+    // if (instagramCtr.text.isEmail ||
+    //     twitterCtr.text.isEmail ||
+    //     facebookCtr.text.isEmail ||
+    //     snapchatCtr.text.isEmail ||
+    //     telegramCtr.text.isEmail ||
+    //     phoneNumberCtr.text.isEmail) {
+    //   return EasyLoading.showToast(
+    //       'Please enter at least one valid contact information');
+    // }
+
     EasyLoading.show();
     if (isEmpty()) {
       if (imageFiles.isNotEmpty) {
@@ -74,6 +102,12 @@ class ProfileCtr extends GetxController {
         'education_level': eduLevel.value,
         'profession': profession.value,
         'church_name': church.value,
+        'facebook_username': facebook_username.value,
+        'instagram_username': instagram_username.value,
+        'twitter_username': twitter_username.value,
+        'snapchat_username': snapchat_username.value,
+        'telegram_username': telegram_username.value,
+        'phone_number': phone_number.value,
         'location': LocationModel(
                 id: '',
                 latitude: 0,

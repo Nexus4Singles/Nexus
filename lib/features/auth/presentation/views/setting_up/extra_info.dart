@@ -34,6 +34,7 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
   String country = '';
   String church = '';
   String churchValue = '';
+  String countrySelected = '';
 
   final GlobalKey<FormState> _formkey = GlobalKey();
   TextEditingController cityController = TextEditingController();
@@ -123,7 +124,10 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                           context: context,
                           showPhoneCode: false,
                           onSelect: (Country country) {
-                            countryController.text = country.name;
+                            setState(() {
+                              countryController.text = country.name;
+                              countrySelected = country.name;
+                            });
                           },
                         );
                       },
@@ -136,7 +140,7 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                         hintText: "Country of Residence",
                       ),
                     ),
-                    const SizedBoxH15(),
+                    const SizedBoxH10(),
                     CustomTextField(
                       fillColor: white,
                       radius: 12,
@@ -146,20 +150,26 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
                       validator: (value) {
                         if (value?.isEmpty == true) {
                           return ' Field is required';
-                           }
+                        }
                       },
-                    ),
-                    const SizedBoxH15(),
-                    ProfileDropDown(
-                      items: LocalData().states,
-                      val: state,
-                      hintText: 'State of Origin',
-                      onChanged: (p0) {
+                      onChanged: (value) {
                         setState(() {
-                          state = p0!;
+                          cityController.text = value;
                         });
                       },
                     ),
+                    if (countrySelected == 'Nigeria') const SizedBoxH10(),
+                    if (countrySelected == 'Nigeria')
+                      ProfileDropDown(
+                        items: LocalData().states,
+                        val: state,
+                        hintText: 'State of Origin',
+                        onChanged: (p0) {
+                          setState(() {
+                            state = p0!;
+                          });
+                        },
+                      ),
                     const SizedBoxH10(),
                     ProfileDropDown(
                       items: LocalData().educationalLevels,
@@ -224,7 +234,7 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
 
                   if (isNotEmpty()) {
                     Map<String, dynamic> map = {
-                      kCOUNTRY: 'Nigeria', //todo Nigeria as default
+                      kCOUNTRY: country,
                       kCHURCHNAME: churchValue,
                       kEDULEVEL: eduLevel,
                       kSTATEOFORIGIN: state,
@@ -265,9 +275,11 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
   }
 
   bool isNotEmpty() {
+    if (countryController.text == 'Nigeria' && state.isEmpty) {
+      return false;
+    }
     return countryController.text.isNotEmpty &&
         cityController.text.isNotEmpty &&
-        state.isNotEmpty &&
         eduLevel.isNotEmpty &&
         profession.isNotEmpty &&
         churchValue.isNotEmpty;

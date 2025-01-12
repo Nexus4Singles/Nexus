@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../features/home/presentation/widgets/coming_soon_modal.dart';
+import '../../features/match/presentation/widgets/matchUserContactInfo.dart';
 import '../../features/match/presentation/widgets/matchUsersCompatibilityModal.dart';
 import '../../features/profile/presentation/widgets/compatibility_modal.dart';
 import '../../features/subscription/views/subscription.dart';
@@ -23,6 +24,27 @@ compatibilityModal(context, UserModel userModel) {
           child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: MatchedUsersCompatibilityModal(
+                userModel: userModel,
+              )),
+        ),
+      );
+    },
+  );
+}
+
+contactinfoModal(context, UserModel userModel) {
+  showAdaptiveDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (context) {
+      return Dialog(
+        backgroundColor: white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 16),
+          child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: MatchedUsersContactModal(
                 userModel: userModel,
               )),
         ),

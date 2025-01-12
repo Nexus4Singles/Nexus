@@ -236,7 +236,7 @@ class _Audio4ScreenState extends State<Audio4Screen> {
                   _uploadFiles(model);
                 },
                 child: Text(
-                  'Complete Profile',
+                  'Next',
                   style: textStyle16.copyWith(
                       color: white, fontWeight: FontWeight.bold),
                 ),
@@ -285,11 +285,11 @@ class _Audio4ScreenState extends State<Audio4Screen> {
               kRELATIONSHIPWITHGOD: audi1,
               kROLEOFHUSBAND: audio2,
               kBESTQUALITIESORTRAITS: audio3,
-              kREGPROGRESS: 'completed',
+              kREGPROGRESS: 'contact-info',
               kREGCOMPLETIONDATE: DateTime.now(),
             },
             onCompleted: () {
-              Get.offAndToNamed(AppRoutes.regSuccessful);
+              Get.offAndToNamed(AppRoutes.contactInfo);
             },
           );
         });

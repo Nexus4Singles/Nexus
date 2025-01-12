@@ -59,6 +59,11 @@ const kCONVERSATION = 'conversations';
 const kMESSAGES = 'messages';
 const kCHAT = 'chat';
 const kCOUNTRY = 'country';
+const kFACEBOOKUSERNAME = 'facebook_username';
+const kINSTAGRAMUSERNAME = 'instagram_username';
+const kTWITTERUSERNAME = 'twitter_username';
+const kTELEGRAMUSERNAME = 'telegram_username';
+const kSNAPCHATUSERNAME = 'snapchat_username';
 const kMARITALSTATUS = 'marital_status';
 const kHAVEKIDS = 'have_kids';
 const kGENOTYPE = 'genotype';
@@ -80,4 +85,4 @@ const kPARTICIPANT = 'participant';
 const kFCMTOKEN = 'fcm_token';
 const mapAPIKey = 'AIzaSyD1YgWNHVJ49A9cSzrv6RxM8ycP5gA0nI4';
 const kDEFAULTUSERPIC =
-    'https://i.pinimg.com/474x/76/68/4a/76684ac1fccf120998c15dcc094a07ad.jpg';
+    'https://nexus-userdata.ams3.digitaloceanspaces.com/profile/null_null/compressed_image_picker_FA5C7130-000A-4C13-A770-074C8E36CD91-36087-00000F62F3D047B3.png';

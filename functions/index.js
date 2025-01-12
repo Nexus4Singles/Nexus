@@ -113,6 +113,7 @@ exports.sendMatchNotification = functions.firestore
     .document("matches/{matchId}")
     .onCreate(async (snap, context) => {
       const matchData = snap.data();
+      const matchId = context.params.matchId;  
       const userIds = matchData.matchedUsers;
 
       try {
@@ -256,6 +257,7 @@ exports.handleUpdateUserSubscriptionStatus = onRequest(
         'subExpDate': subscriptionExpiresOn,
         'hasExternalSubscriptionFlow': true,
         'entitledUser': 'true',
+        'prevSubscribed': true
         
       });
 
@@ -295,6 +297,50 @@ exports.createOrUpdateCollectionOfCountriesInApp = onRequest(
       const countriesRef = admin.firestore()
       .collection('countries')
       .doc('uniqueCountries');
+      
+      await countriesRef.set({
+        countries: allUserCountriesArr,
+      });
+
+      return res.status(200).json({ 
+        message: 'Successfully updated countries collection!', 
+        countries: allUserCountriesArr,
+      });
+    } catch (error) {
+      return res.status(500).send('An error occured while creating/updating countries collection');
+    }
+  }
+);
+
+// Handle fetching unique nationality of users currently in the app
+exports.createOrUpdateCollectionOfNationalityInApp = onRequest(
+  { cors: true },
+  async (req, res) => {
+    const allUserNationality = new Set();
+
+    try {
+      const allUsersSnapshot = await admin.firestore()
+      .collection('users')
+      .where('registration_progress', '==', 'completed')
+      .get();
+
+      if (allUsersSnapshot.empty) return res.status(200).send('No users currently available');
+
+      allUsersSnapshot.forEach(userSnapDoc => {
+        const userCountry = userSnapDoc.data().country;
+        if (userCountry) allUserNationality.add(userCountry)
+      });
+
+    } catch (error) {
+      return res.status(500).send('An error occured while creating/updating countries collection');
+    }
+
+    const allUserCountriesArr = [...allUserNationality].sort((a, b) => a.localeCompare(b));
+
+    try {
+      const countriesRef = admin.firestore()
+      .collection('nationality')
+      .doc('uniqueNationality');
       
       await countriesRef.set({
         countries: allUserCountriesArr,

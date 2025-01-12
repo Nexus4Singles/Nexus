@@ -51,6 +51,18 @@ class _EditProfileState extends State<EditProfile> {
     ctr.churchCtr.text = currentUser.value.churchName!;
     ctr.cityCtr.text = currentUser.value.location!.city!;
     ctr.countryCtr.text = currentUser.value.location!.country!;
+    ctr.instagramCtr.text = currentUser.value.instagramUsername!;
+    ctr.instagram_username.value = currentUser.value.instagramUsername!;
+    ctr.telegramCtr.text = currentUser.value.telegramUsername!;
+    ctr.telegram_username.value = currentUser.value.telegramUsername!;
+    ctr.snapchatCtr.text = currentUser.value.snapchatUsername!;
+    ctr.snapchat_username.value = currentUser.value.snapchatUsername!;
+    ctr.phoneNumberCtr.text = currentUser.value.phoneNumber!;
+    ctr.phone_number.value = currentUser.value.phoneNumber!;
+    ctr.facebookCtr.text = currentUser.value.facebookUsername!;
+    ctr.facebook_username.value = currentUser.value.facebookUsername!;
+    ctr.twitterCtr.text = currentUser.value.twitterUsername!;
+    ctr.twitter_username.value = currentUser.value.twitterUsername!;
     // ctr.usernameCtr.text = currentUser.value.username;
     ctr.ageCtr.text = currentUser.value.age.toString();
     allImage.assignAll(currentUser.value.photos!.toList());
@@ -448,6 +460,121 @@ class _EditProfileState extends State<EditProfile> {
                           !LocalData().church.contains(ctr.church.value)
                       ? const SizedBoxH15()
                       : const SizedBox(),
+                  CustomTextField(
+                    fillColor: white,
+                    radius: 12,
+                    controller: ctr.instagramCtr,
+                    onChanged: (val) {
+                      ctr.instagram_username.value = val;
+                      ctr.isEmpty();
+                    },
+                    hintText: "Unavailable",
+                    prefixIcon: SvgPicture.asset(
+                      "$svgPath/ig.svg",
+                      fit: BoxFit.scaleDown,
+                    ),
+                    suffixIcon: SvgPicture.asset(
+                      "$svgPath/edit.svg",
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                  const SizedBoxH15(),
+                  CustomTextField(
+                    fillColor: white,
+                    radius: 12,
+                    controller: ctr.telegramCtr,
+                    onChanged: (val) {
+                      ctr.telegram_username.value = val;
+                      ctr.isEmpty();
+                    },
+                    hintText: "Unavailable",
+                    prefixIcon: SvgPicture.asset(
+                      "$svgPath/x.svg",
+                      height: 15,
+                      width: 15,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    suffixIcon: SvgPicture.asset(
+                      "$svgPath/edit.svg",
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                  const SizedBoxH15(),
+                  CustomTextField(
+                    fillColor: white,
+                    radius: 12,
+                    controller: ctr.snapchatCtr,
+                    onChanged: (val) {
+                      ctr.snapchat_username.value = val;
+                      ctr.isEmpty();
+                    },
+                    hintText: "Unavailable",
+                    prefixIcon: SvgPicture.asset(
+                      "$svgPath/snapchat-logo.svg",
+                      fit: BoxFit.scaleDown,
+                    ),
+                    suffixIcon: SvgPicture.asset(
+                      "$svgPath/edit.svg",
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                  const SizedBoxH15(),
+                  CustomTextField(
+                    fillColor: white,
+                    radius: 12,
+                    controller: ctr.phoneNumberCtr,
+                    onChanged: (val) {
+                      ctr.phone_number.value = val;
+                      ctr.isEmpty();
+                    },
+                    hintText: "Unavailable",
+                    prefixIcon: SvgPicture.asset(
+                      "$svgPath/whatsapp.svg",
+                      fit: BoxFit.scaleDown,
+                    ),
+                    suffixIcon: SvgPicture.asset(
+                      "$svgPath/edit.svg",
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                  const SizedBoxH15(),
+                  CustomTextField(
+                    fillColor: white,
+                    radius: 12,
+                    controller: ctr.facebookCtr,
+                    onChanged: (val) {
+                      ctr.facebook_username.value = val;
+                      ctr.isEmpty();
+                    },
+                    hintText: "Unavailable",
+                    prefixIcon: SvgPicture.asset(
+                      "$svgPath/facebook.svg",
+                      fit: BoxFit.scaleDown,
+                    ),
+                    suffixIcon: SvgPicture.asset(
+                      "$svgPath/edit.svg",
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                  const SizedBoxH15(),
+                  CustomTextField(
+                    fillColor: white,
+                    radius: 12,
+                    controller: ctr.twitterCtr,
+                    onChanged: (val) {
+                      ctr.telegram_username.value = val;
+                      ctr.isEmpty();
+                    },
+                    hintText: "Unavailable",
+                    prefixIcon: SvgPicture.asset(
+                      "$svgPath/tg.svg",
+                      fit: BoxFit.scaleDown,
+                    ),
+                    suffixIcon: SvgPicture.asset(
+                      "$svgPath/edit.svg",
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
                 ],
               ),
             ),

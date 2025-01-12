@@ -1,3 +1,4 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -46,20 +47,21 @@ class _AuthHandlerState extends State<AuthHandler> {
                 children: [
                   CustomButtonOut(
                     onPressed: () {
-                      showModalBottomSheet(
+                      showCountryPicker(
+                        countryListTheme: CountryListThemeData(
+                            textStyle: textStyle14,
+                            inputDecoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(50))),
+                            borderRadius: BorderRadius.circular(24)),
                         context: context,
-                        // backgroundColor: primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(25.sp),
-                          ),
-                        ),
-                        builder: (context) {
-                          return const CountryModal(
-                              // model: model,
-                              );
+                        showPhoneCode: false,
+                        onSelect: (Country country) {
+                          model.setCountry(country.name);
                         },
                       );
+
+
                       // Get.toNamed(AppRoutes.login);
                     },
                     text: 'Sign In',

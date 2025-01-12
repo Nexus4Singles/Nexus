@@ -22,8 +22,6 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
           .toList(),
       hobbies:
           (json['hobbies'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      blocked:
-          (json['blocked'] as List<dynamic>?)?.map((e) => e as String).toList(),
       photos:
           (json['photos'] as List<dynamic>?)?.map((e) => e as String).toList(),
       likeMe:
@@ -32,6 +30,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
           (json['myLikes'] as List<dynamic>?)?.map((e) => e as String).toList(),
       mySaves:
           (json['mySaves'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      blocked:
+          (json['blocked'] as List<dynamic>?)?.map((e) => e as String).toList(),
       usersChatWarning: (json['usersChatWarning'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -46,12 +46,16 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       relationshipWithGod: json['relationship_with_god'] as String?,
       roleOfHusband: json['role_of_husband'] as String?,
       stateOfOrigin: json['state_of_origin'] as String?,
-      isVerified:
-          json['is_verified'] is bool ? json['is_verified'] as bool? : false,
+      isVerified: json['is_verified'] as bool?,
       notificationToken: json['notification_token'] as String?,
       phoneNumber: json['phone_number'] as String?,
       registrationProgress: json['registration_progress'] as String?,
       country: json['country'] as String?,
+      facebookUsername: json['facebook_username'] as String?,
+      instagramUsername: json['instagram_username'] as String?,
+      twitterUsername: json['twitter_username'] as String?,
+      telegramUsername: json['telegram_username'] as String?,
+      snapchatUsername: json['snapchat_username'] as String?,
       churchName: json['church_name'] as String?,
       compatibility: json['compatibility'] == null
           ? null
@@ -62,27 +66,23 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
           ? null
           : LocationModel.fromJson(json['location'] as Map<String, dynamic>),
       fcmToken: json['fcm_token'] as String?,
-      onPremium: json['onPremium'] is bool ? json['onPremium'] as bool : false,
-      prevSubscribed: json['prevSubscribed'] is bool
-          ? json['prevSubscribed'] as bool
-          : false,
+      onPremium: json['onPremium'] as bool? ?? false,
+      prevSubscribed: json['prevSubscribed'] as bool? ?? false,
       subExpDate: json['subExpDate'] as String?,
-      usedOneFreeText: json['usedOneFreeText'] is bool
-          ? json['usedOneFreeText'] as bool
-          : false,
+      usedOneFreeText: json['usedOneFreeText'] as bool? ?? false,
       entitledUser: json['entitledUser'] as String? ?? 'null',
       subscriberId: json['subscriberId'] as String? ?? 'null',
       recommendedTime: json['recommendedTime'] as String?,
-      hasExternalSubscriptionFlow: json['hasExternalSubscriptionFlow'] is bool
-          ? json['hasExternalSubscriptionFlow'] as bool?
-          : false,
-      profileCompletionDate: json['profile_completed_on']?.toDate(),
+      hasExternalSubscriptionFlow:
+          json['hasExternalSubscriptionFlow'] as bool? ?? false,
+      profileCompletionDate: json['profileCompletionDate'] == null
+          ? null
+          : DateTime.parse(json['profileCompletionDate'] as String),
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'blocked': instance.blocked,
       'username': instance.username,
       'email': instance.email,
       'profile_url': instance.profileUrl,
@@ -95,19 +95,25 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'education_level': instance.educationLevel,
       'profession': instance.profession,
       'hobbies': instance.hobbies,
+      'blocked': instance.blocked,
       'usersChatWarning': instance.usersChatWarning,
+      'matchedUsers': instance.matchedUsers,
       'unRecommendUsers': instance.unRecommendUsers,
-      'matchedUsers': instance.matchedUsers ?? [],
       'likeMe': instance.likeMe,
       'myLikes': instance.myLikes,
       'mySaves': instance.mySaves,
       'desired_qualities': instance.desiredQualities,
-      'photos': instance.photos ?? "",
+      'photos': instance.photos,
       'relationship_with_god': instance.relationshipWithGod,
       'role_of_husband': instance.roleOfHusband,
       'best_qualities_or_traits': instance.bestQualotiesOrTraits,
       'notification_token': instance.notificationToken,
       'phone_number': instance.phoneNumber,
+      'facebook_username': instance.facebookUsername,
+      'instagram_username': instance.instagramUsername,
+      'twitter_username': instance.twitterUsername,
+      'telegram_username': instance.telegramUsername,
+      'snapchat_username': instance.snapchatUsername,
       'registration_progress': instance.registrationProgress,
       'country': instance.country,
       'church_name': instance.churchName,

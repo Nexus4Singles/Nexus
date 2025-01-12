@@ -28,6 +28,11 @@ class UserEntity extends Equatable {
     this.roleOfHusband,
     this.notificationToken,
     this.phoneNumber,
+    this.facebookUsername,
+    this.instagramUsername,
+    this.twitterUsername,
+    this.telegramUsername,
+    this.snapchatUsername,
     this.registrationProgress,
     this.country,
     this.churchName,
@@ -94,6 +99,16 @@ class UserEntity extends Equatable {
   final String? notificationToken;
   @JsonKey(name: kPHONENUMBER)
   final String? phoneNumber;
+  @JsonKey(name: kFACEBOOKUSERNAME)
+  final String? facebookUsername;
+  @JsonKey(name: kINSTAGRAMUSERNAME)
+  final String? instagramUsername;
+  @JsonKey(name: kTWITTERUSERNAME)
+  final String? twitterUsername;
+  @JsonKey(name: kTELEGRAMUSERNAME)
+  final String? telegramUsername;
+  @JsonKey(name: kSNAPCHATUSERNAME)
+  final String? snapchatUsername;
   @JsonKey(name: kREGPROGRESS)
   final String? registrationProgress;
   final String? country;
@@ -141,6 +156,11 @@ class UserEntity extends Equatable {
         bestQualotiesOrTraits,
         notificationToken,
         phoneNumber,
+        facebookUsername,
+        instagramUsername,
+        twitterUsername,
+        telegramUsername,
+        snapchatUsername,
         matchedUsers,
         usersChatWarning,
         registrationProgress,

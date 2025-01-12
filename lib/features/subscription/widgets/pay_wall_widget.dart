@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:glassfy_flutter/models.dart';
 import 'package:Nexus/core/colors.dart';
 import 'package:provider/provider.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import '../provider/subscription_provider.dart';
+
 
 class PayWallWidget extends StatefulWidget {
   const PayWallWidget({
     Key? key,
     required this.title,
     required this.description,
-    required this.offer,
-    required this.onClickedSku,
+    required this.offering,
+    required this.onClickedPackage,
   }) : super(key: key);
 
   final String title;
   final String description;
-  final GlassfyOffering offer;
-  final ValueChanged<GlassfySku> onClickedSku;
+  final Offering offering;
+  final ValueChanged<Package> onClickedPackage;
 
   @override
   State<PayWallWidget> createState() => _PayWallWidgetState();
@@ -64,9 +66,9 @@ class _PayWallWidgetState extends State<PayWallWidget> {
                     ListView.builder(
                       shrinkWrap: true,
                       primary: false,
-                      itemCount: widget.offer.skus?.length,
+                      itemCount: widget.offering.availablePackages.length,
                       itemBuilder: (context, index) {
-                        final sku = widget.offer.skus![index];
+                        final package = widget.offering.availablePackages[index];
                         return Card(
                           color: primary,
                           shape: RoundedRectangleBorder(
@@ -75,7 +77,7 @@ class _PayWallWidgetState extends State<PayWallWidget> {
                           child: ListTile(
                             contentPadding: const EdgeInsets.all(8),
                             title: Text(
-                              '${widget.offer.offeringId}',
+                              widget.offering.identifier,
                               style: const TextStyle(
                                 fontSize: 18,
                                 color: Colors.white,
@@ -83,14 +85,14 @@ class _PayWallWidgetState extends State<PayWallWidget> {
                               ),
                             ),
                             subtitle: Text(
-                              '${sku.product?.description}',
+                              package.storeProduct.description,
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,
                               ),
                             ),
                             trailing: Text(
-                              '${sku.product?.price}',
+                              package.storeProduct.priceString,
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,
@@ -98,7 +100,7 @@ class _PayWallWidgetState extends State<PayWallWidget> {
                               ),
                             ),
                             onTap: () {
-                              widget.onClickedSku(sku);
+                              widget.onClickedPackage(package);
                             },
                           ),
                         );

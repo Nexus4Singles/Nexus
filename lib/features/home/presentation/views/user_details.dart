@@ -170,6 +170,22 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Row(
                               children: [
                                 Text(
+                                  'Nationality: ',
+                                  style: textStyle14.copyWith(
+                                      fontWeight: FontWeight.w500, color: ash),
+                                ),
+                                Text(
+                                  widget.userModel.country ?? '',
+                                  style: textStyle14.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      color: black),
+                                ),
+                              ],
+                            ),
+                            const SizedBoxH15(),
+                            Row(
+                              children: [
+                                Text(
                                   'State of Origin: ',
                                   style: textStyle14.copyWith(
                                       fontWeight: FontWeight.w500, color: ash),
@@ -395,38 +411,65 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             Consumer<SubscriptionProvider>(
                                 builder: (context, model, _) {
                               return Builder(builder: (context) {
-                                return Center(
-                                  child: TextButton(
-                                    onPressed: () {
-                                      if (model.onPremium == true) {
-                                        compatibilityModal(
-                                          context,
-                                          widget.userModel,
-                                        );
-                                      } else {
-                                        restrictionModal(
-                                          context: context,
-                                          text:
-                                              'Due to the sensitivity of some questions,\nthis data is not available to every user.\nKindly upgrade to Premium, \nif you want to view this data on all profiles',
-                                        );
-                                      }
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                        color: primary.withOpacity(0.1),
-                                        borderRadius: BorderRadius.circular(
-                                          100,
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        if (model.onPremium == true) {
+                                          compatibilityModal(
+                                            context,
+                                            widget.userModel,
+                                          );
+                                        } else {
+                                          restrictionModal(
+                                            context: context,
+                                            text:
+                                                'Due to the sensitivity of some questions,\nthis data is not available to every user.\nKindly upgrade to Premium, \nif you want to view this data on all profiles',
+                                          );
+                                        }
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(12),
+                                        decoration: BoxDecoration(
+                                          color: primary.withOpacity(0.1),
+                                          borderRadius: BorderRadius.circular(
+                                            100,
+                                          ),
                                         ),
-                                      ),
-                                      child: Text(
-                                        "View Compatibility Data",
-                                        style: textStyle14.copyWith(
-                                          fontWeight: FontWeight.bold,
+                                        child: Text(
+                                          "View Compatibility Data",
+                                          style: textStyle14.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
+                                    TextButton(
+                                        onPressed: () {
+                                          if (model.onPremium == true) {
+                                            contactinfoModal(
+                                                context, widget.userModel);
+                                          } else {
+                                            restrictionModal(
+                                                context: context,
+                                                text:
+                                                    'Due to the sensitivity of some questions,\nthis data is not available to every user.\nKindly upgrade to Premium, \nif you want to view this data on all profiles');
+                                          }
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.all(12),
+                                          decoration: BoxDecoration(
+                                              color: primary.withOpacity(0.1),
+                                              borderRadius:
+                                                  BorderRadius.circular(100)),
+                                          child: Text(
+                                            "Contact info",
+                                            style: textStyle14.copyWith(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        )),
+                                  ],
                                 );
                               });
                             }),

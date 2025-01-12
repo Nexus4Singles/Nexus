@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:Nexus/core/constant.dart';
 import 'package:Nexus/core/utils/image_compressor.dart';
+import 'package:Nexus/core/utils/modals.dart';
 import 'package:Nexus/features/auth/presentation/change_notifier/auth_notifier.dart';
 import 'package:Nexus/features/home/presentation/widgets/cache_network_widget.dart';
 import 'package:Nexus/features/profile/presentation/controllers/profile_ctr.dart';
@@ -204,17 +205,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Row(
                   children: [
                     Text(
-                      'State of Origin: ',
+                      'Nationality: ',
                       style: textStyle14.copyWith(
                           fontWeight: FontWeight.w500, color: ash),
                     ),
                     Text(
-                      homeModel.user.value.stateOfOrigin ?? '',
+                      // homeModel.user.value.country ?? '',
+                      homeModel.user.value.country ?? '',
+
                       style: textStyle14.copyWith(
                           fontWeight: FontWeight.w500, color: black),
                     ),
                   ],
                 ),
+                const SizedBoxH10(),
+                if (homeModel.user.value.country == 'Nigeria')
+                  Row(
+                    children: [
+                      Text(
+                        'State of Origin: ',
+                        style: textStyle14.copyWith(
+                            fontWeight: FontWeight.w500, color: ash),
+                      ),
+                      Text(
+                        homeModel.user.value.stateOfOrigin ?? '',
+                        style: textStyle14.copyWith(
+                            fontWeight: FontWeight.w500, color: black),
+                      ),
+                    ],
+                  ),
                 const SizedBoxH10(),
                 Row(
                   children: [
@@ -406,6 +425,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                   ],
+                ),
+                const SizedBoxH10(),
+                Center(
+                  child: TextButton(
+                    onPressed: () {
+                      contactinfoModal(context, homeModel.user.value);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                          color: primary,
+                          borderRadius: BorderRadius.circular(100)),
+                      child: Text(
+                        "Contact info",
+                        style: textStyle14.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBoxH40(),
                 const SizedBoxH40(),

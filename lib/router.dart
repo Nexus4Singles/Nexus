@@ -14,6 +14,7 @@ import 'features/auth/presentation/views/setting_up/audio2.dart';
 import 'features/auth/presentation/views/setting_up/audio3.dart';
 import 'features/auth/presentation/views/setting_up/audio_recoding_completed.dart';
 import 'features/auth/presentation/views/setting_up/audio_recording.dart';
+import 'features/auth/presentation/views/setting_up/contact_info.dart';
 import 'features/auth/presentation/views/setting_up/desired_quality.dart';
 import 'features/auth/presentation/views/setting_up/extra_info.dart';
 import 'features/auth/presentation/views/setting_up/gender.dart';
@@ -99,6 +100,7 @@ class AppRoutes {
   static String photoViews = '/photo_views';
   static String deleteAcctModalSheet = '/delete_account_modal';
   static String exploreResults = '/explore_results';
+  static String contactInfo = '/contactInfo';
 }
 
 final appRouter = [
@@ -340,6 +342,11 @@ final appRouter = [
     binding: BindingsBuilder(
       () {},
     ),
+  ),
+  GetPage(
+    name: AppRoutes.contactInfo,
+    page: () => const ContactInfoScreen(),
+    binding: BindingsBuilder(() {}),
   ),
   // GetPage(
   //   name: AppRoutes.photoViews,

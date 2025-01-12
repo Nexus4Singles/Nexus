@@ -1,22 +1,28 @@
 import 'package:glassfy_flutter/glassfy_flutter.dart';
 import 'package:glassfy_flutter/models.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 
 class SubscriptionService {
   ///API
-  static const _apiKey = '26ab4f1c3fba4888bb53e14217a7e99c';
+  static const _apiKey = 'goog_mjvhTsGNNSzgnXyRVrIGjCmXwol';
+
 
   static Future<void> init() async {
-    await Glassfy.initialize(_apiKey, watcherMode: false);
+   // await Glassfy.initialize(_apiKey, watcherMode: false);
+  await Purchases.configure(PurchasesConfiguration(_apiKey));
   }
 
 
 
   ///GooglePay
-  static Future<GlassfyTransaction?> purchaseSku(GlassfySku sku) async {
-    try {
-      return await Glassfy.purchaseSku(sku);
-    } catch (e) {
-      return null;
-    }
-  }}
+
+static Future<CustomerInfo?> purchasePackage(Package package) async {
+  try {
+    final result = await Purchases.purchasePackage(package);
+    return result;
+  } catch (e) {
+    return null;
+  }
+  }
+  }

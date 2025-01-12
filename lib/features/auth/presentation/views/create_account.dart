@@ -280,6 +280,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                   kEMAIL: formattedEmail,
                                   kPASSWORD: password.text,
                                   kUSERNAME: formattedUsername,
+                                  kCOUNTRY: model.country,
                                 };
 
                                 model.register(

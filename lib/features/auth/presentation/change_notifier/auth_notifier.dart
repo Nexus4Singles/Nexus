@@ -81,6 +81,10 @@ class AuthNotifier with ChangeNotifier {
     kUSERNAME: '',
     kADDRESS: '',
     kNAME: '',
+    kFACEBOOKUSERNAME: '',
+    kINSTAGRAMUSERNAME: '',
+    kTWITTERUSERNAME: '',
+    kTELEGRAMUSERNAME: '',
     KNOTIFICATIONTOKEN: '',
     KPROFILEURL: '',
     kISVERIFIED: false,
@@ -138,6 +142,10 @@ class AuthNotifier with ChangeNotifier {
       kEMAIL: '',
       kPASSWORD: '',
       kPHONENUMBER: '',
+      kFACEBOOKUSERNAME: '',
+      kINSTAGRAMUSERNAME: '',
+      kTWITTERUSERNAME: '',
+      kTELEGRAMUSERNAME: '',
       kUSERNAME: '',
       kADDRESS: '',
       kNAME: '',
@@ -158,7 +166,7 @@ class AuthNotifier with ChangeNotifier {
       kBESTQUALITIESORTRAITS: '',
       kREGPROGRESS: 'auth',
       kCHURCHNAME: '',
-      kCOUNTRY: 'Nigeria', //todo default country
+      kCOUNTRY: '',
     };
     notifyListeners();
   }
@@ -233,6 +241,9 @@ class AuthNotifier with ChangeNotifier {
           case 'upload':
             Get.toNamed(AppRoutes.audioRecording);
             break;
+          case 'contact-info':
+            Get.toNamed(AppRoutes.contactInfo);
+            break;
           case 'completed':
             Get.offAllNamed(
               AppRoutes.mainNav,
@@ -262,6 +273,8 @@ class AuthNotifier with ChangeNotifier {
       required String username,
       required Map<String, dynamic> map}) async {
     EasyLoading.show();
+    setCountry(map[kCOUNTRY]);
+    _credential[kCOUNTRY] = map[kCOUNTRY];
     registerUsecase.call(_credential).then((value) {
       value.fold((l) {
         EasyLoading.dismiss();

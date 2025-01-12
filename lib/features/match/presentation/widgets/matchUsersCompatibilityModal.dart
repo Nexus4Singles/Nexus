@@ -24,6 +24,7 @@ class MatchedUsersCompatibilityModal extends StatelessWidget {
           ? Center(
               child: Text(
               "${userModel.username} has not set their compatibility data",
+                textAlign: TextAlign.center,
               style: textStyle14.copyWith(color: white),
             ))
           : SingleChildScrollView(

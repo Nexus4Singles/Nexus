@@ -63,12 +63,15 @@ class HomeController extends GetxController {
         .where((u) => !unRecommendUsers.contains(u.id))
         .toList());
     allUsers.shuffle();
-    debugPrint("This is a list of all my recommended users == > ${allUsers.length}");
+    debugPrint(
+        "This is a list of all my recommended users == > ${allUsers.length}");
 
     isLoading.value = false;
   }
 
-  final user = const UserModel(id: "", name: '', username: "", email: "", age: 0, gender: "").obs;
+  final user = const UserModel(
+          id: "", name: '', username: "", email: "", age: 0, gender: "")
+      .obs;
 
   String _backDateRecommendedTime() {
     DateTime now = DateTime.now();
@@ -110,8 +113,8 @@ class HomeController extends GetxController {
   Duration calculateCountDownTime() {
     var dateTimeNow = DateTime.tryParse(loggedInTime.value);
     dateTimeNow ??= DateTime.now();
-    return dateTimeNow
-        .difference(user.value.recommendedTime.toDate().add(const Duration(hours: 12)));
+    return dateTimeNow.difference(
+        user.value.recommendedTime.toDate().add(const Duration(hours: 12)));
   }
 
   int calculateTimeLeftToView() {
@@ -137,19 +140,23 @@ class HomeController extends GetxController {
 
     //IF IT'S NOT IN OUR UNRECOMMENDED
     bool isNotUnrecommendedUsers(String othersUID) {
-      if (myProfile.unRecommendUsers.isNotNull() && othersUID.isNotEmptyOrNull()) {
+      if (myProfile.unRecommendUsers.isNotNull() &&
+          othersUID.isNotEmptyOrNull()) {
         return !myProfile.unRecommendUsers!.contains(othersUID);
       }
       return false;
     }
 
     //FOR GENDER
-    bool isDifferentGender(String gender) => myProfile.gender.toLowerCase() != gender.toLowerCase();
+    bool isDifferentGender(String gender) =>
+        myProfile.gender.toLowerCase() != gender.toLowerCase();
 
     // FOR NATIONALITY
-    bool isSameCountry(String country) => myProfile.country.isNotEmptyOrNull()
-        ? myProfile.country!.toLowerCase() == country.toLowerCase()
-        : false;
+    bool isSameCountry(String country) =>
+        myProfile.location?.country.isNotEmptyOrNull() == true
+            ? myProfile.location?.country?.toLowerCase() ==
+                country.toLowerCase()
+            : false;
 
     // FOR AGE RANGE
     bool ageRange(int otherAge) {
@@ -172,7 +179,7 @@ class HomeController extends GetxController {
     recommendationList = allUsersList
         .where((otherUsers) =>
             isDifferentGender(otherUsers.gender) &&
-            isSameCountry(otherUsers.country ?? '') &&
+            isSameCountry(otherUsers.location?.country ?? '') &&
             isNotUnrecommendedUsers(otherUsers.id) &&
             isNotInMyLikes(otherUsers.id) &&
             // checkTimeIsAbove12hrs() &&
@@ -190,7 +197,8 @@ class HomeController extends GetxController {
   void incrementViews() {
     _viewedCount.value++;
 
-    if (viewedCount >= getRecommendedUsers().length || getRecommendedUsers().isEmpty) {
+    if (viewedCount >= getRecommendedUsers().length ||
+        getRecommendedUsers().isEmpty) {
       db.collection(kUSER).doc(auth.currentUser!.uid).update({
         'recommendedTime': DateTime.now().toIso8601String(),
       });
@@ -216,8 +224,9 @@ class HomeController extends GetxController {
 
 extension StringExtension on String? {
   bool isNotEmptyOrNull() => this != null && this?.isNotEmpty == true;
-  DateTime toDate() =>
-      this != null ? DateTime.parse(this!) : DateTime.now().subtract(const Duration(days: 3));
+  DateTime toDate() => this != null
+      ? DateTime.parse(this!)
+      : DateTime.now().subtract(const Duration(days: 3));
 }
 
 extension ListOfItemsExtension on List? {
