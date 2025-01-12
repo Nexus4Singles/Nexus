@@ -27,7 +27,7 @@ class MatchedUsersContactModal extends StatelessWidget {
               userModel.telegramUsername == null
           ? Center(
               child: Text(
-              "${userModel.username} has not set their contact information",
+              "${userModel.username} has not added any contact information",
               textAlign: TextAlign.center,
               style: textStyle14.copyWith(color: white),
             ))
