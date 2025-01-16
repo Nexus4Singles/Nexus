@@ -280,26 +280,28 @@ class _UserCardState extends State<UserCard> {
                         ),
                         Text(
                           widget.userModel.country ?? '',
-                          style: textStyle14.copyWith(
-                              fontWeight: FontWeight.w500, color: black),
-                        ),
-                      ],
-                    ),
-                    const SizedBoxH15(),
-                    Row(
-                      children: [
-                        Text(
-                          'State of Origin: ',
-                          style: textStyle14.copyWith(
-                              fontWeight: FontWeight.w500, color: ash),
-                        ),
-                        Text(
-                          widget.userModel.stateOfOrigin ?? '',
                           style: textStyle16.copyWith(
                               fontWeight: FontWeight.w500, color: black),
                         ),
                       ],
                     ),
+                    if (widget.userModel.country == 'Nigeria')
+                      const SizedBoxH15(),
+                    if (widget.userModel.country == 'Nigeria')
+                      Row(
+                        children: [
+                          Text(
+                            'State of Origin: ',
+                            style: textStyle14.copyWith(
+                                fontWeight: FontWeight.w500, color: ash),
+                          ),
+                          Text(
+                            widget.userModel.stateOfOrigin ?? '',
+                            style: textStyle16.copyWith(
+                                fontWeight: FontWeight.w500, color: black),
+                          ),
+                        ],
+                      ),
                     const SizedBoxH10(),
                     Row(
                       children: [
@@ -541,7 +543,7 @@ class _UserCardState extends State<UserCard> {
                                     restrictionModal(
                                         context: context,
                                         text:
-                                            'Due to the sensitivity of some questions,\nthis data is not available to every user.\nKindly upgrade to Premium, \nif you want to view this data on all profiles');
+                                            'This is a premium feature. Kindly subscribe to access social media contacts');
                                   }
                                 },
                                 child: Container(

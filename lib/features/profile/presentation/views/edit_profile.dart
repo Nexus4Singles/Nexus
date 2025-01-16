@@ -465,6 +465,12 @@ class _EditProfileState extends State<EditProfile> {
                     radius: 12,
                     controller: ctr.instagramCtr,
                     onChanged: (val) {
+                      if (!val.startsWith("@")) {
+                        ctr.instagramCtr.text = "@${val.replaceAll("@", "")}";
+                        ctr.instagramCtr.selection = TextSelection.fromPosition(
+                          TextPosition(offset: ctr.instagramCtr.text.length),
+                        );
+                      }
                       ctr.instagram_username.value = val;
                       ctr.isEmpty();
                     },
@@ -482,9 +488,15 @@ class _EditProfileState extends State<EditProfile> {
                   CustomTextField(
                     fillColor: white,
                     radius: 12,
-                    controller: ctr.telegramCtr,
+                    controller: ctr.twitterCtr,
                     onChanged: (val) {
-                      ctr.telegram_username.value = val;
+                      if (!val.startsWith("@")) {
+                        ctr.twitterCtr.text = "@${val.replaceAll("@", "")}";
+                        ctr.twitterCtr.selection = TextSelection.fromPosition(
+                          TextPosition(offset: ctr.twitterCtr.text.length),
+                        );
+                      }
+                      ctr.twitter_username.value = val;
                       ctr.isEmpty();
                     },
                     hintText: "Unavailable",
@@ -505,6 +517,12 @@ class _EditProfileState extends State<EditProfile> {
                     radius: 12,
                     controller: ctr.snapchatCtr,
                     onChanged: (val) {
+                      if (!val.startsWith("@")) {
+                        ctr.snapchatCtr.text = "@${val.replaceAll("@", "")}";
+                        ctr.snapchatCtr.selection = TextSelection.fromPosition(
+                          TextPosition(offset: ctr.snapchatCtr.text.length),
+                        );
+                      }
                       ctr.snapchat_username.value = val;
                       ctr.isEmpty();
                     },
@@ -524,6 +542,13 @@ class _EditProfileState extends State<EditProfile> {
                     radius: 12,
                     controller: ctr.phoneNumberCtr,
                     onChanged: (val) {
+                      if (!val.startsWith("+")) {
+                        ctr.phoneNumberCtr.text = "+${val.replaceAll("+", "")}";
+                        ctr.phoneNumberCtr.selection =
+                            TextSelection.fromPosition(
+                          TextPosition(offset: ctr.phoneNumberCtr.text.length),
+                        );
+                      }
                       ctr.phone_number.value = val;
                       ctr.isEmpty();
                     },
@@ -543,6 +568,12 @@ class _EditProfileState extends State<EditProfile> {
                     radius: 12,
                     controller: ctr.facebookCtr,
                     onChanged: (val) {
+                      if (!val.startsWith("@")) {
+                        ctr.facebookCtr.text = "@${val.replaceAll("@", "")}";
+                        ctr.facebookCtr.selection = TextSelection.fromPosition(
+                          TextPosition(offset: ctr.facebookCtr.text.length),
+                        );
+                      }
                       ctr.facebook_username.value = val;
                       ctr.isEmpty();
                     },
@@ -560,8 +591,14 @@ class _EditProfileState extends State<EditProfile> {
                   CustomTextField(
                     fillColor: white,
                     radius: 12,
-                    controller: ctr.twitterCtr,
+                    controller: ctr.telegramCtr,
                     onChanged: (val) {
+                      if (!val.startsWith("@")) {
+                        ctr.telegramCtr.text = "@${val.replaceAll("@", "")}";
+                        ctr.telegramCtr.selection = TextSelection.fromPosition(
+                          TextPosition(offset: ctr.telegramCtr.text.length),
+                        );
+                      }
                       ctr.telegram_username.value = val;
                       ctr.isEmpty();
                     },

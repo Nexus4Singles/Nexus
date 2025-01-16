@@ -234,7 +234,6 @@ class _ExtraInformationScreenState extends State<ExtraInformationScreen> {
 
                   if (isNotEmpty()) {
                     Map<String, dynamic> map = {
-                      kCOUNTRY: country,
                       kCHURCHNAME: churchValue,
                       kEDULEVEL: eduLevel,
                       kSTATEOFORIGIN: state,

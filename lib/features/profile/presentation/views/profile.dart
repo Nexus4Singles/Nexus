@@ -210,7 +210,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontWeight: FontWeight.w500, color: ash),
                     ),
                     Text(
-                      // homeModel.user.value.country ?? '',
                       homeModel.user.value.country ?? '',
 
                       style: textStyle14.copyWith(
@@ -218,7 +217,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ],
                 ),
-                const SizedBoxH10(),
+                if (homeModel.user.value.country == 'Nigeria')
+                  const SizedBoxH10(),
                 if (homeModel.user.value.country == 'Nigeria')
                   Row(
                     children: [
