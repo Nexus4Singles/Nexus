@@ -280,7 +280,7 @@ class _UserCardState extends State<UserCard> {
                         ),
                         Text(
                           widget.userModel.country ?? '',
-                          style: textStyle16.copyWith(
+                          style: textStyle14.copyWith(
                               fontWeight: FontWeight.w500, color: black),
                         ),
                       ],
@@ -297,7 +297,7 @@ class _UserCardState extends State<UserCard> {
                           ),
                           Text(
                             widget.userModel.stateOfOrigin ?? '',
-                            style: textStyle16.copyWith(
+                            style: textStyle14.copyWith(
                                 fontWeight: FontWeight.w500, color: black),
                           ),
                         ],
@@ -312,7 +312,7 @@ class _UserCardState extends State<UserCard> {
                         ),
                         Text(
                           widget.userModel.educationLevel ?? '',
-                          style: textStyle16.copyWith(
+                          style: textStyle14.copyWith(
                               fontWeight: FontWeight.w500, color: black),
                         ),
                       ],
@@ -329,7 +329,7 @@ class _UserCardState extends State<UserCard> {
                           child: Text(
                             widget.userModel.profession ?? '',
                             overflow: TextOverflow.ellipsis,
-                            style: textStyle16.copyWith(
+                            style: textStyle14.copyWith(
                                 fontWeight: FontWeight.w500, color: black),
                           ),
                         ),
@@ -347,7 +347,7 @@ class _UserCardState extends State<UserCard> {
                           child: Text(
                             widget.userModel.churchName ?? '',
                             overflow: TextOverflow.ellipsis,
-                            style: textStyle16.copyWith(
+                            style: textStyle14.copyWith(
                                 fontWeight: FontWeight.w500, color: black),
                           ),
                         ),

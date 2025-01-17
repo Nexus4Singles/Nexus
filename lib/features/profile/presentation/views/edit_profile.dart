@@ -45,24 +45,24 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   init() {
-    ctr.eduLevel.value = currentUser.value.educationLevel!;
+    ctr.eduLevel.value = currentUser.value.educationLevel ?? '';
     ctr.profession.value = currentUser.value.profession!;
     ctr.church.value = currentUser.value.churchName!;
     ctr.churchCtr.text = currentUser.value.churchName!;
     ctr.cityCtr.text = currentUser.value.location!.city!;
-    ctr.countryCtr.text = currentUser.value.location!.country!;
-    ctr.instagramCtr.text = currentUser.value.instagramUsername!;
-    ctr.instagram_username.value = currentUser.value.instagramUsername!;
-    ctr.telegramCtr.text = currentUser.value.telegramUsername!;
-    ctr.telegram_username.value = currentUser.value.telegramUsername!;
-    ctr.snapchatCtr.text = currentUser.value.snapchatUsername!;
-    ctr.snapchat_username.value = currentUser.value.snapchatUsername!;
-    ctr.phoneNumberCtr.text = currentUser.value.phoneNumber!;
-    ctr.phone_number.value = currentUser.value.phoneNumber!;
-    ctr.facebookCtr.text = currentUser.value.facebookUsername!;
-    ctr.facebook_username.value = currentUser.value.facebookUsername!;
-    ctr.twitterCtr.text = currentUser.value.twitterUsername!;
-    ctr.twitter_username.value = currentUser.value.twitterUsername!;
+    ctr.countryCtr.text = currentUser.value.location!.country ?? '';
+    ctr.instagramCtr.text = currentUser.value.instagramUsername ?? '';
+    ctr.instagram_username.value = currentUser.value.instagramUsername ?? '';
+    ctr.telegramCtr.text = currentUser.value.telegramUsername ?? '';
+    ctr.telegram_username.value = currentUser.value.telegramUsername ?? '';
+    ctr.snapchatCtr.text = currentUser.value.snapchatUsername ?? '';
+    ctr.snapchat_username.value = currentUser.value.snapchatUsername ?? '';
+    ctr.phoneNumberCtr.text = currentUser.value.phoneNumber ?? '';
+    ctr.phone_number.value = currentUser.value.phoneNumber ?? '';
+    ctr.facebookCtr.text = currentUser.value.facebookUsername ?? '';
+    ctr.facebook_username.value = currentUser.value.facebookUsername ?? '';
+    ctr.twitterCtr.text = currentUser.value.twitterUsername ?? '';
+    ctr.twitter_username.value = currentUser.value.twitterUsername ?? '';
     // ctr.usernameCtr.text = currentUser.value.username;
     ctr.ageCtr.text = currentUser.value.age.toString();
     allImage.assignAll(currentUser.value.photos!.toList());
@@ -402,7 +402,9 @@ class _EditProfileState extends State<EditProfile> {
             const SizedBoxH15(),
             ProfileDropDown(
               items: LocalData().educationalLevels,
-              val: ctr.eduLevel.value,
+              val: (ctr.eduLevel.value == 'Undergraduate')
+                  ? 'Undergraduate Degree'
+                  : ctr.eduLevel.value,
               hintText: 'Education Level',
               onChanged: (p0) {
                 setState(() {
