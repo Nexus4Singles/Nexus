@@ -43,7 +43,7 @@ dependencies:
   get_it: ^7.7.0
   glassfy_flutter: ^1.6.2
   google_fonts: ^5.1.0
-  purchases_flutter: ^6.0.0
+  purchases_flutter: ^6.17.0
   iconly: ^1.0.1
   iconsax: ^0.0.8
   image_picker: ^1.0.7
