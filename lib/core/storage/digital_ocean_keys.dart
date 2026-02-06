@@ -6,8 +6,8 @@ class DigitalOceanConfig {
       'nexus-userdata.ams3.digitaloceanspaces.com'; 
   static const String spaceName = "nexus-userdata";
   static const String region = "ams3"; 
-  static const String accessKey = 'DO00LCBE9MG72AWRXBJ9';
-  static const String secretKey = 'ldMxMFgJ3kJ+HsphZxVF8S8LgAjiBzGVk8xk5hU/icw';
+  static const String accessKey = 'DO8019XHDU4WJFTWXWD2';
+  static const String secretKey = 'qQWnU+v80uXReJTPHiZBfJ6sn5yqs0H1kAThApY4gQM';
   static void initDigitalOcean() {
     Minio.init(
       endPoint: spacesEndpoint,
